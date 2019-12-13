@@ -1,0 +1,20 @@
+services:
+  _defaults:
+    autowire: true
+
+  Symfony\Component\Filesystem\Filesystem:
+    class: '\Symfony\Component\Filesystem\Filesystem'
+
+  Symfony\Component\Yaml\Parser:
+    class: '\Symfony\Component\Yaml\Parser'
+
+  Orba\Magento2Codegen\:
+    resource: '../src/Orba/Magento2Codegen'
+
+  Orba\Magento2Codegen\Application:
+    public: true
+
+  Orba\Magento2Codegen\Service\FileMergerFactory:
+    calls:
+      - [addMerger, ['/^di\.xml$/', '@Orba\Magento2Codegen\Service\FileMerger\DiXmlMerger']]
+      - [addMerger, ['/^.*\.xml/', '@Orba\Magento2Codegen\Service\FileMerger\GenericXmlMerger']]

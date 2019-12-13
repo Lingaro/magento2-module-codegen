@@ -1,0 +1,16 @@
+{
+  "name": "${vendorname}/magento2-module-${modulename}",
+  "description": "${Vendorname} Magento 2 module ${Modulename}",
+  "require": {
+    "php": "~7.2.0"
+  },
+  "type": "magento2-module",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "${Vendorname}\\${Modulename}\\": ""
+    }
+  }
+}
