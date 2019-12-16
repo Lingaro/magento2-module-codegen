@@ -67,21 +67,21 @@ class TemplatePropertyTest extends TestCase
         }
     }
 
-    public function testAddPropertiesAddsPropertiesToPropertyBag()
+    public function testAddPropertiesAddsPropertiesToPropertyBag(): void
     {
         $propertyBag = new TemplatePropertyBag();
         $this->templateProperty->addProperties($propertyBag, ['foo' => 'bar']);
         $this->assertSame('bar', $propertyBag['foo']);
     }
 
-    public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotAnArray()
+    public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotAnArray(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->yamlParserMock->expects($this->once())->method('parseFile')->willReturn('not array');
         $this->templateProperty->getPropertiesFromYamlFile('filepath');
     }
 
-    public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotFlatArray()
+    public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotFlatArray(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->yamlParserMock->expects($this->once())->method('parseFile')

@@ -123,13 +123,13 @@ class TemplateTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testPreparePropertiesReturnsPropertyBagIfBasePropertyBagWasNotSet()
+    public function testPreparePropertiesReturnsPropertyBagIfBasePropertyBagWasNotSet(): void
     {
         $result = $this->template->prepareProperties('template', $this->getIoMock());
         $this->assertInstanceOf(TemplatePropertyBag::class, $result);
     }
 
-    public function testPreparePropertiesReturnsTheSamePropertyBagObjectThatWasSet()
+    public function testPreparePropertiesReturnsTheSamePropertyBagObjectThatWasSet(): void
     {
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
@@ -137,21 +137,21 @@ class TemplateTest extends TestCase
         $this->assertSame('bar', $result['foo']);
     }
 
-    public function testShouldCreateModuleReturnsFalseIfModuleExists()
+    public function testShouldCreateModuleReturnsFalseIfModuleExists(): void
     {
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(true);
         $result = $this->template->shouldCreateModule('template', $this->getIoMock());
         $this->assertFalse($result);
     }
 
-    public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndTemplateIsAGlobalPackage()
+    public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndTemplateIsAGlobalPackage(): void
     {
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
         $result = $this->template->shouldCreateModule('module', $this->getIoMock());
         $this->assertFalse($result);
     }
 
-    public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndUserDoesNotWantToCreateOne()
+    public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndUserDoesNotWantToCreateOne(): void
     {
         $this->expectException(Exception::class);
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
@@ -160,7 +160,7 @@ class TemplateTest extends TestCase
         $this->template->shouldCreateModule('template', $ioMock);
     }
 
-    public function testShouldCreateModuleReturnsTrueIfModuleDoesNotExistAndUserWantToCreateOne()
+    public function testShouldCreateModuleReturnsTrueIfModuleDoesNotExistAndUserWantToCreateOne(): void
     {
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
         $ioMock = $this->getIoMock();
@@ -169,7 +169,7 @@ class TemplateTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testCreateModuleReturnsTheSamePropertyBagObjectThatWasSet()
+    public function testCreateModuleReturnsTheSamePropertyBagObjectThatWasSet(): void
     {
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
@@ -177,13 +177,13 @@ class TemplateTest extends TestCase
         $this->assertSame('bar', $result['foo']);
     }
 
-    public function testGetBasePropertyBagReturnsEmptyBagIfTemplateIsAGlobalPackage()
+    public function testGetBasePropertyBagReturnsEmptyBagIfTemplateIsAGlobalPackage(): void
     {
         $result = $this->template->getBasePropertyBag('module', $this->getIoMock());
         $this->assertInstanceOf(TemplatePropertyBag::class, $result);
     }
 
-    public function testGetBasePropertyBagReturnsBagTakenFromModuleIfTemplateIsNotAGlobalPackage()
+    public function testGetBasePropertyBagReturnsBagTakenFromModuleIfTemplateIsNotAGlobalPackage(): void
     {
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
