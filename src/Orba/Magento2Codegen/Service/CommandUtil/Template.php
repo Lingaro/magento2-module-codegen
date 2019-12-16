@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Exception;
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Application;
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Helper\IO;
 use Orba\Magento2Codegen\Service\CodeGenerator;
@@ -89,15 +90,24 @@ class Template
     }
 
     public function prepareProperties(
-        string $templateFile,
+        string $templateName,
         IO $io,
         ?TemplatePropertyBag $basePropertyBag = null
     ): TemplatePropertyBag
     {
         $propertyBag = $basePropertyBag ?: $this->propertyBagFactory->create();
-        $this->propertyUtil->setDefaultProperties($propertyBag);
-        //$this->beforeAskInputProperties($propertyBag);
-        $this->propertyUtil->askAndSetInputPropertiesForTemplate($propertyBag, $templateFile, $io);
+        $this->propertyUtil->addProperties(
+            $propertyBag,
+            $this->propertyUtil->getPropertiesFromYamlFile(
+                BP . '/' . Application::CONFIG_FOLDER . '/' . Application::DEFAULT_PROPERTIES_FILENAME
+            )
+        );
+        $templateProperties = $this->propertyUtil->getAllPropertiesInTemplate($templateName);
+        foreach ($templateProperties as $property) {
+            if (!isset($propertyBag[$property])) {
+                $this->propertyUtil->addProperties($propertyBag, [$property => $io->ask($property)]);
+            }
+        }
         return $propertyBag;
     }
 

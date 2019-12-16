@@ -3,8 +3,6 @@
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Application;
-use Orba\Magento2Codegen\Helper\IO;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
@@ -34,31 +32,7 @@ class TemplateProperty
         $this->propertyUtil = $propertyUtil;
     }
 
-    public function setDefaultProperties(TemplatePropertyBag $propertyBag): void
-    {
-        $this->addProperties(
-            $propertyBag,
-            $this->yamlParser->parseFile(
-                BP . '/' . Application::CONFIG_FOLDER . '/' . Application::DEFAULT_PROPERTIES_FILENAME
-            )
-        );
-    }
-
-    public function askAndSetInputPropertiesForTemplate(
-        TemplatePropertyBag $propertyBag,
-        string $templateName,
-        IO $io
-    ): void
-    {
-        $templateProperties = $this->getAllPropertiesInTemplate($templateName);
-        foreach ($templateProperties as $property) {
-            if (!isset($propertyBag[$property])) {
-                $this->addProperties($propertyBag, [$property => $io->ask($property)]);
-            }
-        }
-    }
-
-    private function getAllPropertiesInTemplate(string $templateName): array
+    public function getAllPropertiesInTemplate(string $templateName): array
     {
         $templateNames = array_merge([$templateName], $this->templateFile->getDependencies($templateName, true));
         $templateFiles = $this->templateFile->getTemplateFiles($templateNames);
@@ -73,18 +47,33 @@ class TemplateProperty
         return $propertiesInTemplate;
     }
 
-    /**
-     * @param TemplatePropertyBag $propertyBag
-     * @param mixed $properties
-     * @throws InvalidArgumentException
-     */
-    private function addProperties(TemplatePropertyBag $propertyBag, $properties): void
+    public function addProperties(TemplatePropertyBag $propertyBag, array $properties): void
     {
-        if (!is_array($properties)) {
-            throw new InvalidArgumentException('Properties must be an array.');
-        }
         foreach ($properties as $key => $value) {
             $propertyBag[$key] = $value;
         }
+    }
+
+    /**
+     * @param string $filePath
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    public function getPropertiesFromYamlFile(string $filePath): array
+    {
+        $data = $this->yamlParser->parseFile($filePath);
+        if (!is_array($data)) {
+            throw new InvalidArgumentException(
+                sprintf('YAML file %s must consists of array.', $filePath)
+            );
+        }
+        foreach ($data as $value) {
+            if (!is_scalar($value)) {
+                throw new InvalidArgumentException(
+                    sprintf('YAML file %s must consists of flat array.', $filePath)
+                );
+            }
+        }
+        return $data;
     }
 }

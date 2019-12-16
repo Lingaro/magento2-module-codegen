@@ -1,4 +1,5 @@
-.idea
+/.idea
 /vendor/
 /var/
 /config/default-properties.yml
+/.phpunit.result.cache
