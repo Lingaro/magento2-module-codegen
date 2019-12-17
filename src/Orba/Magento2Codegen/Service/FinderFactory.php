@@ -6,7 +6,7 @@ use Symfony\Component\Finder\Finder;
 
 class FinderFactory
 {
-    public function create()
+    public function create(): Finder
     {
         return new Finder();
     }

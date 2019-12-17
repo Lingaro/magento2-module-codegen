@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IOFactory
 {
-    public function create(InputInterface $input, OutputInterface $output)
+    public function create(InputInterface $input, OutputInterface $output): IO
     {
         return new IO($input, $output);
     }
