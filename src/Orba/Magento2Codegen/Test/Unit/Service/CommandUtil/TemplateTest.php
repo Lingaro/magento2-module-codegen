@@ -1,6 +1,6 @@
 <?php
 
-namespace Orba\Magento2Codegen\Test\Service\CommandUtil;
+namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Exception;
 use InvalidArgumentException;

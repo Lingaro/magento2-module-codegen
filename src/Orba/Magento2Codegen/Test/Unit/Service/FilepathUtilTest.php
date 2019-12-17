@@ -1,6 +1,6 @@
 <?php
 
-namespace Orba\Magento2Codegen\Test\Service;
+namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\FilepathUtil;
