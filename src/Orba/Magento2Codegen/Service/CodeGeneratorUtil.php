@@ -12,20 +12,23 @@ class CodeGeneratorUtil
      */
     private $filesystem;
 
-    public function __construct(Filesystem $filesystem)
+    /**
+     * @var FilepathUtil
+     */
+    private $filepathUtil;
+
+    public function __construct(Filesystem $filesystem, FilepathUtil $filepathUtil)
     {
         $this->filesystem = $filesystem;
+        $this->filepathUtil = $filepathUtil;
     }
 
     public function getDestinationFilePath(string $filePath, ?string $rootDir): string
     {
-        return
-            rtrim($rootDir ?: getcwd(), '/')
-            . preg_replace(
-                '/^\/[^\/]*\//',
-                '/',
-                str_replace(TemplateDir::DIR , '', $filePath)
-            );
+        return $this->filepathUtil->getAbsolutePath(
+            $this->filepathUtil->removeTemplateDirFromPath($filePath),
+            $rootDir
+        );
     }
 
     public function canCopyWithoutOverriding(string $filePath): bool

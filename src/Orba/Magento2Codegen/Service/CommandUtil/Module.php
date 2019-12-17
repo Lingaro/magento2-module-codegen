@@ -2,7 +2,7 @@
 
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Service\CodeGeneratorUtil;
+use Orba\Magento2Codegen\Service\FilepathUtil;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
@@ -10,12 +10,12 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Module
 {
-    const MODULE_REGISTRATION_FILEPATH = '/registration.php';
+    const MODULE_REGISTRATION_FILENAME = 'registration.php';
 
     /**
-     * @var CodeGeneratorUtil
+     * @var FilepathUtil
      */
-    private $codeGeneratorUtil;
+    private $filepathUtil;
 
     /**
      * @var Filesystem
@@ -33,13 +33,13 @@ class Module
     private $propertyBagFactory;
 
     public function __construct(
-        CodeGeneratorUtil $codeGeneratorUtil,
+        FilepathUtil $filepathUtil,
         Filesystem $filesystem,
         TemplateFile $templateFile,
         TemplatePropertyBagFactory $propertyBagFactory
     )
     {
-        $this->codeGeneratorUtil = $codeGeneratorUtil;
+        $this->filepathUtil = $filepathUtil;
         $this->filesystem = $filesystem;
         $this->templateFile = $templateFile;
         $this->propertyBagFactory = $propertyBagFactory;
@@ -48,14 +48,14 @@ class Module
     public function exists(?string $rootDir): bool
     {
         return $this->filesystem->exists(
-            $this->codeGeneratorUtil->getDestinationFilePath(self::MODULE_REGISTRATION_FILEPATH, $rootDir)
+            $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir)
         );
     }
 
     public function getPropertyBag(?string $rootDir): TemplatePropertyBag
     {
         $registrationAbsolutePath =
-            $this->codeGeneratorUtil->getDestinationFilePath(self::MODULE_REGISTRATION_FILEPATH, $rootDir);
+            $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir);
         $content = $this->templateFile->getContent($registrationAbsolutePath);
         preg_match('/\'(.*)_(.*)\'/', $content, $matches);
         $propertyBag = $this->propertyBagFactory->create();

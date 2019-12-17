@@ -2,8 +2,8 @@
 
 namespace Orba\Magento2Codegen\Test\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Service\CodeGeneratorUtil;
 use Orba\Magento2Codegen\Service\CommandUtil\Module;
+use Orba\Magento2Codegen\Service\FilepathUtil;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
@@ -19,9 +19,9 @@ class ModuleTest extends TestCase
     private $module;
 
     /**
-     * @var MockObject|CodeGeneratorUtil
+     * @var MockObject|FilepathUtil
      */
-    private $codeGeneratorUtilMock;
+    private $filepathUtilMock;
 
     /**
      * @var MockObject|Filesystem
@@ -40,7 +40,7 @@ class ModuleTest extends TestCase
 
     public function setUp(): void
     {
-        $this->codeGeneratorUtilMock = $this->getMockBuilder(CodeGeneratorUtil::class)
+        $this->filepathUtilMock = $this->getMockBuilder(FilepathUtil::class)
             ->disableOriginalConstructor()->getMock();
         $this->filesystemMock = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()->getMock();
@@ -49,7 +49,7 @@ class ModuleTest extends TestCase
         $this->propertyBagFactoryMock = $this->getMockBuilder(TemplatePropertyBagFactory::class)
             ->disableOriginalConstructor()->getMock();
         $this->module = new Module(
-            $this->codeGeneratorUtilMock,
+            $this->filepathUtilMock,
             $this->filesystemMock,
             $this->templateFileMock,
             $this->propertyBagFactoryMock
