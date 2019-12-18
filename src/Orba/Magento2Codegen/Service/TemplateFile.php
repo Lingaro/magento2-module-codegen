@@ -2,7 +2,9 @@
 
 namespace Orba\Magento2Codegen\Service;
 
+use InvalidArgumentException;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
 
@@ -53,29 +55,42 @@ class TemplateFile
 
     public function getDescription(string $templateName): string
     {
-        $files = $this->finderFactory->create()
-            ->name(self::DESCRIPTION_FILENAME)
-            ->depth('< 1')
-            ->in($this->templateDir->getPath($templateName) . '/' . self::TEMPLATE_CONFIG_FOLDER);
-        foreach ($files as $file) {
-            /** @var $file SplFileInfo */
-            return $file->getContents();
-        }
-        return '';
+        $this->validateTemplateExistence($templateName);
+        $file = $this->getFileFromTemplateConfig(self::DESCRIPTION_FILENAME, $templateName);
+        return $file ? $file->getContents() : '';
     }
 
+    /**
+     * @param string $templateName
+     * @param bool $nested
+     * @return string[]
+     * @throws InvalidArgumentException
+     */
     public function getDependencies(string $templateName, bool $nested = false): array
     {
+        $this->validateTemplateExistence($templateName);
+        $file = $this->getFileFromTemplateConfig(self::CONFIG_FILENAME, $templateName);
+        if (!$file) {
+            return [];
+        }
         $dependencies = [];
-        $files = $this->finderFactory->create()
-            ->name(self::CONFIG_FILENAME)
-            ->depth('< 1')
-            ->in($this->templateDir->getPath($templateName) . '/' . self::TEMPLATE_CONFIG_FOLDER);
-        foreach ($files as $file) {
-            /** @var $file SplFileInfo */
-            $parsedConfig = $this->yamlParser->parse($file->getContents());
-            if (is_array($parsedConfig) && isset($parsedConfig['dependencies'])) {
-                $dependencies = $parsedConfig['dependencies'];
+        $parsedConfig = $this->yamlParser->parse($file->getContents());
+        if (!is_array($parsedConfig)) {
+            throw new InvalidArgumentException(sprintf('Invalid config file: %s', $file->getPath()));
+        }
+        if (isset($parsedConfig['dependencies'])) {
+            $dependencies = $parsedConfig['dependencies'];
+            foreach ($dependencies as $dependency) {
+                if (!is_scalar($dependency)) {
+                    throw new InvalidArgumentException(
+                        sprintf('Invalid dependencies array in: %s', $file->getPath())
+                    );
+                }
+                if (!$this->exists($dependency)) {
+                    throw new InvalidArgumentException(
+                        sprintf('Dependency does not exist: %s', $dependency)
+                    );
+                }
             }
         }
         if ($nested) {
@@ -88,15 +103,9 @@ class TemplateFile
 
     public function getManualSteps(string $templateName, TemplatePropertyBag $propertyBag): string
     {
-        $files = $this->finderFactory->create()
-            ->name(self::AFTER_GENERATE_FILENAME)
-            ->depth('< 1')
-            ->in($this->templateDir->getPath($templateName) . '/' . self::TEMPLATE_CONFIG_FOLDER);
-        foreach ($files as $file) {
-            /** @var $file SplFileInfo */
-            return $this->propertyUtil->replacePropertiesInText($file->getContents(), $propertyBag);
-        }
-        return '';
+        $this->validateTemplateExistence($templateName);
+        $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);
+        return $file ? $this->propertyUtil->replacePropertiesInText($file->getContents(), $propertyBag) : '';
     }
 
     /**
@@ -107,6 +116,7 @@ class TemplateFile
     {
         $files = [];
         foreach ($templateNames as $templateName) {
+            $this->validateTemplateExistence($templateName);
             foreach ($this->finderFactory->create()
                          ->files()
                          ->in($this->templateDir->getPath($templateName)) as $file) {
@@ -116,21 +126,29 @@ class TemplateFile
         return $files;
     }
 
-    public function getFileName(string $filePath): string
+    /**
+     * @param string $templateName
+     */
+    private function validateTemplateExistence(string $templateName): void
     {
-        return pathinfo($filePath)['basename'];
+        if (!$this->exists($templateName)) {
+            throw new InvalidArgumentException(sprintf('Template does not exist: %s', $templateName));
+        }
     }
 
-    public function getContent(string $filePath): string
+    private function getFileFromTemplateConfig(string $fileName, string $templateName):? SplFileInfo
     {
-        $pathInfo = pathinfo($filePath);
-        foreach ($this->finderFactory->create()
-            ->name($pathInfo['basename'])
-            ->depth('< 1')
-            ->in($pathInfo['dirname']) as $file) {
-            /** @var $file SplFileInfo */
-            return $file->getContents();
+        try {
+            $files = $this->finderFactory->create()
+                ->name($fileName)
+                ->depth('< 1')
+                ->in($this->templateDir->getPath($templateName) . '/' . self::TEMPLATE_CONFIG_FOLDER);
+        } catch (DirectoryNotFoundException $e) {
+            return null;
         }
-        return '';
+        foreach ($files as $file) {
+            return $file;
+        }
+        return null;
     }
 }

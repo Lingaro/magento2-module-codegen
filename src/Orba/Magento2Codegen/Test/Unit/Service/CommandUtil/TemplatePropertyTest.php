@@ -6,9 +6,9 @@ use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
+use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
 

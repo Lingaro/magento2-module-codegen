@@ -11,9 +11,9 @@ use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
+use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 
 class TemplateTest extends TestCase
@@ -48,13 +48,6 @@ class TemplateTest extends TestCase
      */
     private $codeGeneratorMock;
 
-    public static function setUpBeforeClass(): void
-    {
-        if (!defined('BP')) {
-            define('BP', '/base/path');
-        }
-    }
-    
     public function setUp(): void
     {
         $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)

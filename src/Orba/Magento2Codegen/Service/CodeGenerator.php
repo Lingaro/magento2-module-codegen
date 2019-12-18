@@ -29,17 +29,24 @@ class CodeGenerator
      */
     private $fileMergerFactory;
 
+    /**
+     * @var FilepathUtil
+     */
+    private $filepathUtil;
+
     public function __construct(
         TemplateFile $templateFile,
         TemplatePropertyUtil $propertyUtil,
         CodeGeneratorUtil $codeGeneratorUtil,
-        FileMergerFactory $fileMergerFactory
+        FileMergerFactory $fileMergerFactory,
+        FilepathUtil $filepathUtil
     )
     {
         $this->templateFile = $templateFile;
         $this->propertyUtil = $propertyUtil;
         $this->codeGeneratorUtil = $codeGeneratorUtil;
         $this->fileMergerFactory = $fileMergerFactory;
+        $this->filepathUtil = $filepathUtil;
     }
 
     public function execute(string $templateName, TemplatePropertyBag $propertyBag, IO $io): void
@@ -55,10 +62,10 @@ class CodeGenerator
             if (!$dryRun) {
                 try {
                     if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
-                        $merger = $this->fileMergerFactory->create($this->templateFile->getFileName($filePath));
+                        $merger = $this->fileMergerFactory->create($this->filepathUtil->getFileName($filePath));
                         $merged = false;
                         if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath, $io)) {
-                            $fileContent = $merger->merge($this->templateFile->getContent($filePath), $fileContent);
+                            $fileContent = $merger->merge($this->filepathUtil->getContent($filePath), $fileContent);
                             $merged = true;
                         }
                         if (!$merged && !$this->codeGeneratorUtil->shouldOverride($filePath, $io)) {
