@@ -16,5 +16,24 @@ services:
 
   Orba\Magento2Codegen\Service\FileMergerFactory:
     calls:
-      - [addMerger, ['/^di\.xml$/', '@Orba\Magento2Codegen\Service\FileMerger\DiXmlMerger']]
-      - [addMerger, ['/^.*\.xml/', '@Orba\Magento2Codegen\Service\FileMerger\GenericXmlMerger']]
+      -
+        - addMerger
+        -
+          - '/^di\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/preference': 'for'
+              '/config/(type|virtualType)': 'name'
+              '/config/(type|virtualType)/plugin': 'name'
+              '/config/(type|virtualType)/arguments/argument': 'name'
+              '/config/(type|virtualType)/arguments/argument(/item)+': 'name'
+            typeAttributeName: 'xsi:type'
+      -
+        - addMerger
+        -
+          - '/^.*\.xml/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+
+  Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
+    shared: false

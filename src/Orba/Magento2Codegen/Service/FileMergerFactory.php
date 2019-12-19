@@ -11,8 +11,9 @@ class FileMergerFactory
      */
     private $mergers = [];
 
-    public function addMerger(string $fileNameRegex, MergerInterface $merger): void
+    public function addMerger(string $fileNameRegex, MergerInterface $merger, array $params = []): void
     {
+        $merger->setParams($params);
         $this->mergers[$fileNameRegex] = $merger;
     }
 
