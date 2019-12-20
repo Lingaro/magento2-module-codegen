@@ -4,17 +4,18 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Exception;
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Helper\IO;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\CommandUtil\Module;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
+use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TemplateTest extends TestCase
 {
@@ -48,6 +49,11 @@ class TemplateTest extends TestCase
      */
     private $codeGeneratorMock;
 
+    /**
+     * @var MockObject|IO
+     */
+    private $ioMock;
+
     public function setUp(): void
     {
         $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)
@@ -60,33 +66,36 @@ class TemplateTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $this->codeGeneratorMock = $this->getMockBuilder(CodeGenerator::class)
             ->disableOriginalConstructor()->getMock();
+        $this->ioMock = $this->getMockBuilder(IO::class)
+            ->disableOriginalConstructor()->getMock();
         $this->template = new Template(
             $this->templateFileMock,
             $this->propertyUtilMock,
             $this->propertyBagFactoryMock,
             $this->moduleUtilMock,
-            $this->codeGeneratorMock
+            $this->codeGeneratorMock,
+            $this->ioMock
         );
     }
 
     public function testGetTemplateNameReturnsInputArgumentIfItWasEarlierSpecified(): void
     {
-        $ioMock = $this->getIoMock();
         $inputMock = $this->getInputMock();
         $inputMock->expects($this->once())->method('getArgument')->willReturn('old_value');
-        $ioMock->expects($this->once())->method('getInput')->willReturn($inputMock);
-        $result = $this->template->getTemplateName($ioMock);
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($inputMock);
+        $result = $this->template->getTemplateName();
         $this->assertSame('old_value', $result);
     }
 
     public function testGetTemplateNameAsksForValueAndReturnsItIfItWasNotEarlierSpecified(): void
     {
-        $ioMock = $this->getIoMock();
         $inputMock = $this->getInputMock();
         $inputMock->expects($this->once())->method('getArgument')->willReturn(null);
-        $ioMock->expects($this->once())->method('getInput')->willReturn($inputMock);
-        $ioMock->expects($this->once())->method('ask')->willReturn('asked_value');
-        $result = $this->template->getTemplateName($ioMock);
+        $this->ioMock->expects($this->any())->method('getInput')->willReturn($inputMock);
+        $ioInstanceMock = $this->getIoInstanceMock();
+        $ioInstanceMock->expects($this->once())->method('ask')->willReturn('asked_value');
+        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $result = $this->template->getTemplateName();
         $this->assertSame('asked_value', $result);
     }
 
@@ -118,7 +127,7 @@ class TemplateTest extends TestCase
 
     public function testPreparePropertiesReturnsPropertyBagIfBasePropertyBagWasNotSet(): void
     {
-        $result = $this->template->prepareProperties('template', $this->getIoMock());
+        $result = $this->template->prepareProperties('template');
         $this->assertInstanceOf(TemplatePropertyBag::class, $result);
     }
 
@@ -126,21 +135,21 @@ class TemplateTest extends TestCase
     {
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
-        $result = $this->template->prepareProperties('template', $this->getIoMock(), $propertyBag);
+        $result = $this->template->prepareProperties('template', $propertyBag);
         $this->assertSame('bar', $result['foo']);
     }
 
     public function testShouldCreateModuleReturnsFalseIfModuleExists(): void
     {
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(true);
-        $result = $this->template->shouldCreateModule('template', $this->getIoMock());
+        $result = $this->template->shouldCreateModule('template');
         $this->assertFalse($result);
     }
 
     public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndTemplateIsAGlobalPackage(): void
     {
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
-        $result = $this->template->shouldCreateModule('module', $this->getIoMock());
+        $result = $this->template->shouldCreateModule('module');
         $this->assertFalse($result);
     }
 
@@ -148,17 +157,19 @@ class TemplateTest extends TestCase
     {
         $this->expectException(Exception::class);
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
-        $ioMock = $this->getIoMock();
-        $ioMock->expects($this->once())->method('confirm')->willReturn(false);
-        $this->template->shouldCreateModule('template', $ioMock);
+        $ioInstanceMock = $this->getIoInstanceMock();
+        $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(false);
+        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $this->template->shouldCreateModule('template');
     }
 
     public function testShouldCreateModuleReturnsTrueIfModuleDoesNotExistAndUserWantToCreateOne(): void
     {
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
-        $ioMock = $this->getIoMock();
-        $ioMock->expects($this->once())->method('confirm')->willReturn(true);
-        $result = $this->template->shouldCreateModule('template', $ioMock);
+        $ioInstanceMock = $this->getIoInstanceMock();
+        $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(true);
+        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $result = $this->template->shouldCreateModule('template');
         $this->assertTrue($result);
     }
 
@@ -166,13 +177,13 @@ class TemplateTest extends TestCase
     {
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
-        $result = $this->template->createModule($propertyBag, $this->getIoMock());
+        $result = $this->template->createModule($propertyBag);
         $this->assertSame('bar', $result['foo']);
     }
 
     public function testGetBasePropertyBagReturnsEmptyBagIfTemplateIsAGlobalPackage(): void
     {
-        $result = $this->template->getBasePropertyBag('module', $this->getIoMock());
+        $result = $this->template->getBasePropertyBag('module');
         $this->assertInstanceOf(TemplatePropertyBag::class, $result);
     }
 
@@ -181,16 +192,8 @@ class TemplateTest extends TestCase
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
         $this->moduleUtilMock->expects($this->once())->method('getPropertyBag')->willReturn($propertyBag);
-        $result = $this->template->getBasePropertyBag('template', $this->getIoMock());
+        $result = $this->template->getBasePropertyBag('template');
         $this->assertSame('bar', $result['foo']);
-    }
-
-    /**
-     * @return MockObject|IO
-     */
-    private function getIoMock()
-    {
-        return $this->getMockBuilder(IO::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
@@ -199,5 +202,13 @@ class TemplateTest extends TestCase
     private function getInputMock()
     {
         return $this->getMockBuilder(InputInterface::class)->getMockForAbstractClass();
+    }
+
+    /**
+     * @return MockObject|SymfonyStyle
+     */
+    private function getIoInstanceMock()
+    {
+        return $this->getMockBuilder(SymfonyStyle::class)->disableOriginalConstructor()->getMock();
     }
 }

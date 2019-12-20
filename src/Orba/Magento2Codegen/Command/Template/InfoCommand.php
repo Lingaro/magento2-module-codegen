@@ -2,8 +2,7 @@
 
 namespace Orba\Magento2Codegen\Command\Template;
 
-use Orba\Magento2Codegen\Helper\IO;
-use Orba\Magento2Codegen\Service\IOFactory;
+use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Symfony\Component\Console\Command\Command;
@@ -24,11 +23,6 @@ class InfoCommand extends Command
     private $util;
 
     /**
-     * @var IOFactory
-     */
-    private $ioFactory;
-
-    /**
      * @var IO
      */
     private $io;
@@ -38,11 +32,11 @@ class InfoCommand extends Command
      */
     private $templateFile;
 
-    public function __construct(Template $util, IOFactory $ioFactory, TemplateFile $templateFile)
+    public function __construct(Template $util, IO $io, TemplateFile $templateFile)
     {
         parent::__construct();
         $this->util = $util;
-        $this->ioFactory = $ioFactory;
+        $this->io = $io;
         $this->templateFile = $templateFile;
     }
 
@@ -62,8 +56,7 @@ class InfoCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         parent::interact($input, $output);
-        $this->io = $this->ioFactory->create($input, $output);
-        $this->templateName = $this->util->getTemplateName($this->io);
+        $this->templateName = $this->util->getTemplateName();
     }
 
     /**
@@ -79,17 +72,17 @@ class InfoCommand extends Command
 
     private function displayHeader(): void
     {
-        $this->io->writeln('<comment>Template Info</comment>');
-        $this->io->title($this->templateName);
+        $this->io->getInstance()->writeln('<comment>Template Info</comment>');
+        $this->io->getInstance()->title($this->templateName);
     }
 
     private function displayDescription(): void
     {
         $description = $this->templateFile->getDescription($this->templateName);
         if ($description) {
-            $this->io->text($description);
+            $this->io->getInstance()->text($description);
         } else {
-            $this->io->text('Sorry, there is not info defined for this template.');
+            $this->io->getInstance()->text('Sorry, there is not info defined for this template.');
         }
 
     }
@@ -98,8 +91,8 @@ class InfoCommand extends Command
     {
         $dependencies = $this->templateFile->getDependencies($this->templateName);
         if ($dependencies) {
-            $this->io->note('DEPENDENCIES - This module will also load the following templates:');
-            $this->io->text($dependencies);
+            $this->io->getInstance()->note('DEPENDENCIES - This module will also load the following templates:');
+            $this->io->getInstance()->text($dependencies);
         }
     }
 

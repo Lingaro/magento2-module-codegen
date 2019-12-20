@@ -3,9 +3,8 @@
 namespace Orba\Magento2Codegen\Command\Template;
 
 use Exception;
-use Orba\Magento2Codegen\Helper\IO;
 use Orba\Magento2Codegen\Service\CodeGenerator;
-use Orba\Magento2Codegen\Service\IOFactory;
+use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
@@ -32,11 +31,6 @@ class GenerateCommand extends Command
     private $util;
 
     /**
-     * @var IOFactory
-     */
-    private $ioFactory;
-
-    /**
      * @var IO
      */
     private $io;
@@ -58,7 +52,7 @@ class GenerateCommand extends Command
 
     public function __construct(
         Template $util,
-        IOFactory $ioFactory,
+        IO $io,
         TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
         TemplatePropertyBagFactory $propertyBagFactory
@@ -66,7 +60,7 @@ class GenerateCommand extends Command
     {
         parent::__construct();
         $this->util = $util;
-        $this->ioFactory = $ioFactory;
+        $this->io = $io;
         $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;
         $this->propertyBagFactory = $propertyBagFactory;
@@ -101,8 +95,7 @@ class GenerateCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         parent::interact($input, $output);
-        $this->io = $this->ioFactory->create($input, $output);
-        $this->templateName = $this->util->getTemplateName($this->io);
+        $this->templateName = $this->util->getTemplateName();
     }
 
     /**
@@ -115,42 +108,38 @@ class GenerateCommand extends Command
             $basePropertyBag = $this->getBasePropertyBag();
             $this->displayHeader();
             $this->generate($basePropertyBag);
-            $this->io->success('Success!');
+            $this->io->getInstance()->success('Success!');
         } catch (Exception $e) {
-            $this->io->error($e->getMessage());
+            $this->io->getInstance()->error($e->getMessage());
         }
     }
 
     private function displayHeader(): void
     {
-        $this->io->writeln('<comment>Template Generate</comment>');
-        $this->io->title($this->templateName);
+        $this->io->getInstance()->writeln('<comment>Template Generate</comment>');
+        $this->io->getInstance()->title($this->templateName);
     }
 
     private function getBasePropertyBag(): TemplatePropertyBag
     {
-        if ($this->util->shouldCreateModule($this->templateName, $this->io)) {
+        if ($this->util->shouldCreateModule($this->templateName)) {
             return $this->generateModule();
         } else {
-            return $this->util->getBasePropertyBag($this->templateName, $this->io);
+            return $this->util->getBasePropertyBag($this->templateName);
         }
     }
 
     private function generateModule(): TemplatePropertyBag
     {
-        return $this->util->createModule(
-            $this->util->prepareProperties(Template::TEMPLATE_MODULE, $this->io),
-            $this->io
-        );
+        return $this->util->createModule($this->util->prepareProperties(Template::TEMPLATE_MODULE));
     }
 
     private function generate(TemplatePropertyBag $propertyBag): void
     {
         $this->codeGenerator->execute(
             $this->templateName,
-            $this->util->prepareProperties($this->templateName, $this->io, $propertyBag),
-            $this->io
+            $this->util->prepareProperties($this->templateName, $propertyBag)
         );
-        $this->util->showInfoAfterGenerate($this->templateName, $propertyBag, $this->io);
+        $this->util->showInfoAfterGenerate($this->templateName, $propertyBag);
     }
 }

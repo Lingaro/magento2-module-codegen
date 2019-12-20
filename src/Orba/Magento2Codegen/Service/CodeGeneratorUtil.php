@@ -2,7 +2,6 @@
 
 namespace Orba\Magento2Codegen\Service;
 
-use Orba\Magento2Codegen\Helper\IO;
 use Symfony\Component\Filesystem\Filesystem;
 
 class CodeGeneratorUtil
@@ -17,10 +16,16 @@ class CodeGeneratorUtil
      */
     private $filepathUtil;
 
-    public function __construct(Filesystem $filesystem, FilepathUtil $filepathUtil)
+    /**
+     * @var IO
+     */
+    private $io;
+
+    public function __construct(Filesystem $filesystem, FilepathUtil $filepathUtil, IO $io)
     {
         $this->filesystem = $filesystem;
         $this->filepathUtil = $filepathUtil;
+        $this->io = $io;
     }
 
     public function getDestinationFilePath(string $filePath, ?string $rootDir): string
@@ -36,17 +41,17 @@ class CodeGeneratorUtil
         return !$this->filesystem->exists($filePath);
     }
 
-    public function shouldMerge(string $filePath, IO $io): bool
+    public function shouldMerge(string $filePath): bool
     {
-        return $io->confirm(
+        return $this->io->getInstance()->confirm(
             sprintf('%s already exists, would you like to perform a merge?', $filePath),
             true
         );
     }
 
-    public function shouldOverride(string $filePath, IO $io): bool
+    public function shouldOverride(string $filePath): bool
     {
-        return $io->confirm(
+        return $this->io->getInstance()->confirm(
             sprintf('%s already exists, would you like to overwrite it?', $filePath),
             false
         );

@@ -2,7 +2,7 @@
 
 namespace Orba\Magento2Codegen\Command\Template;
 
-use Orba\Magento2Codegen\Service\IOFactory;
+use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\TemplateList;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,18 +11,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ListCommand extends Command
 {
     /**
-     * @var IOFactory
+     * @var IO
      */
-    private $ioFactory;
+    private $io;
 
     /**
      * @var TemplateList
      */
     private $templateList;
 
-    public function __construct(IOFactory $ioFactory, TemplateList $templateList)
+    public function __construct(IO $io, TemplateList $templateList)
     {
-        $this->ioFactory = $ioFactory;
+        $this->io = $io;
         $this->templateList = $templateList;
         parent::__construct();
     }
@@ -40,14 +40,12 @@ class ListCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = $this->ioFactory->create($input, $output);
-        $io->writeln('Templates List');
-
+        $this->io->getInstance()->writeln('Templates List');
         $templates = $this->templateList->getAll();
         if ($templates) {
-            $io->newLine();
+            $this->io->getInstance()->newLine();
             foreach ($templates as $templateName) {
-                $io->writeln('<info>  ' . $templateName . '</info>');
+                $this->io->getInstance()->writeln('<info>  ' . $templateName . '</info>');
             }
         }
     }
