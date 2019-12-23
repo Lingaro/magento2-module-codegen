@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * ${vendorname}_${modulename}_${controllername}_${actionname}.xml
+ *
+ * @copyright Copyright © ${commentsYear} ${CommentsCompanyName}. All rights reserved.
+ * @author    ${commentsUserEmail}
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="${layout_column}" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="${Vendorname}\${Modulename}\Block\${Controllername}\${Actionname}" name="${vendorname}.${modulename}.${controllername}.${actionname}" />
+        </referenceContainer>
+    </body>
+</page>
