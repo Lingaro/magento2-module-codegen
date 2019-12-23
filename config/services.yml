@@ -14,6 +14,9 @@ services:
   Orba\Magento2Codegen\Application:
     public: true
 
+  Orba\Magento2Codegen\Input\Input:
+    public: true
+
   Orba\Magento2Codegen\Service\FileMergerFactory:
     calls:
       -
@@ -37,3 +40,8 @@ services:
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
     shared: false
+
+  Orba\Magento2Codegen\Command\Template\GenerateCommand:
+    arguments:
+      $inputValidators:
+        - '@Orba\Magento2Codegen\Service\Input\RootDirValidator'

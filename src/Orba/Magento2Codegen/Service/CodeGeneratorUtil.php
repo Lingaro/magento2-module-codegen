@@ -28,7 +28,7 @@ class CodeGeneratorUtil
         $this->io = $io;
     }
 
-    public function getDestinationFilePath(string $filePath, ?string $rootDir): string
+    public function getDestinationFilePath(string $filePath, string $rootDir): string
     {
         return $this->filepathUtil->getAbsolutePath(
             $this->filepathUtil->removeTemplateDirFromPath($filePath),
