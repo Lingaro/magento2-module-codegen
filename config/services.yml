@@ -1,0 +1,39 @@
+services:
+  _defaults:
+    autowire: true
+
+  Symfony\Component\Filesystem\Filesystem:
+    class: '\Symfony\Component\Filesystem\Filesystem'
+
+  Symfony\Component\Yaml\Parser:
+    class: '\Symfony\Component\Yaml\Parser'
+
+  Orba\Magento2Codegen\:
+    resource: '../src/Orba/Magento2Codegen'
+
+  Orba\Magento2Codegen\Application:
+    public: true
+
+  Orba\Magento2Codegen\Service\FileMergerFactory:
+    calls:
+      -
+        - addMerger
+        -
+          - '/^di\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/preference': 'for'
+              '/config/(type|virtualType)': 'name'
+              '/config/(type|virtualType)/plugin': 'name'
+              '/config/(type|virtualType)/arguments/argument': 'name'
+              '/config/(type|virtualType)/arguments/argument(/item)+': 'name'
+            typeAttributeName: 'xsi:type'
+      -
+        - addMerger
+        -
+          - '/^.*\.xml/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+
+  Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
+    shared: false

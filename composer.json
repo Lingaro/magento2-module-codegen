@@ -1,0 +1,36 @@
+{
+    "name": "orba/magento2-codegen",
+    "require": {
+        "symfony/dependency-injection": "^4.0",
+        "symfony/config": "^4.0",
+        "symfony/yaml": "^4.0",
+        "symfony/http-kernel": "^4.0",
+        "symfony/filesystem": "^4.0",
+        "symfony/finder": "^4.0",
+        "magento/framework": "^102.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Orba\\Magento2Codegen\\": "src/Orba/Magento2Codegen/"
+        }
+    },
+    "scripts": {
+        "setPermissionsBin": "chmod -R +x bin",
+        "post-install-cmd": [
+            "@setPermissionsBin"
+        ],
+        "post-update-cmd": [
+            "@setPermissionsBin"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^8",
+        "ext-simplexml": "*"
+    }
+}
