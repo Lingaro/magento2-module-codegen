@@ -162,8 +162,8 @@ class Template
         }
     }
 
-    private function getRootDir():? string
+    private function getRootDir(): string
     {
-        return $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR) ?: null;
+        return $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
     }
 }

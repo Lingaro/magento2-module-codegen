@@ -37,14 +37,14 @@ class Module
         $this->propertyBagFactory = $propertyBagFactory;
     }
 
-    public function exists(?string $rootDir): bool
+    public function exists(string $rootDir): bool
     {
         return $this->filesystem->exists(
             $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir)
         );
     }
 
-    public function getPropertyBag(?string $rootDir): TemplatePropertyBag
+    public function getPropertyBag(string $rootDir): TemplatePropertyBag
     {
         $registrationAbsolutePath =
             $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir);

@@ -23,25 +23,25 @@ class FilepathUtilTest extends TestCase
     public function testGetAbsolutePathThrowsExceptionIfFilepathIsEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->filepathUtil->getAbsolutePath('', null);
+        $this->filepathUtil->getAbsolutePath('', '/root/dir');
+    }
+
+    public function testGetAbsolutePathThrowsExceptionIfRootDirIsEmpty(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->filepathUtil->getAbsolutePath('path/file.php', '');
     }
 
     public function testGetAbsolutePathThrowsExceptionIfFilepathStartsWithSlash(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->filepathUtil->getAbsolutePath('/path/file.php', null);
+        $this->filepathUtil->getAbsolutePath('/path/file.php', '/root/dir');
     }
 
     public function testGetAbsolutePathThrowsExceptionIfRootDirDoesNotStartWithSlash(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->filepathUtil->getAbsolutePath('path/file.php', 'root/dir');
-    }
-
-    public function testGetAbsolutePathReturnsPathWithCwdIfRootDirIsNotSpecified(): void
-    {
-        $result = $this->filepathUtil->getAbsolutePath('path/file.php', null);
-        $this->assertSame(getcwd() . '/path/file.php', $result);
     }
 
     public function testGetAbsolutePathReturnsConcatanatedPathIfRootDirIsSpecified(): void

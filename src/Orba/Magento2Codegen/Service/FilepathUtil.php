@@ -16,18 +16,21 @@ class FilepathUtil
         $this->finderFactory = $finderFactory;
     }
 
-    public function getAbsolutePath(string $filePath, ?string $rootDir): string
+    public function getAbsolutePath(string $filePath, string $rootDir): string
     {
         if (empty($filePath)) {
             throw new InvalidArgumentException('File path must not be empty.');
         }
+        if (empty($rootDir)) {
+            throw new InvalidArgumentException('Root dir must not be empty.');
+        }
         if ($filePath[0] === '/') {
             throw new InvalidArgumentException('File path must not start with a slash.');
         }
-        if ($rootDir && $rootDir[0] !== '/') {
+        if ($rootDir[0] !== '/') {
             throw new InvalidArgumentException('Root dir must start with a slash.');
         }
-        return rtrim($rootDir ?: getcwd(), '/') . '/' . ltrim($filePath, '/');
+        return rtrim($rootDir, '/') . '/' . ltrim($filePath, '/');
     }
 
     public function removeTemplateDirFromPath(string $filePath): string

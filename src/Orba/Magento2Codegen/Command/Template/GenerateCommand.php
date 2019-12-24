@@ -2,20 +2,19 @@
 
 namespace Orba\Magento2Codegen\Command\Template;
 
-use Exception;
+use Orba\Magento2Codegen\Command\AbstractCommand;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateCommand extends Command
+class GenerateCommand extends AbstractCommand
 {
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_ROOT_DIR = 'root-dir';
@@ -29,11 +28,6 @@ class GenerateCommand extends Command
      * @var Template
      */
     private $util;
-
-    /**
-     * @var IO
-     */
-    private $io;
 
     /**
      * @var TemplateFile
@@ -55,18 +49,18 @@ class GenerateCommand extends Command
         IO $io,
         TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
-        TemplatePropertyBagFactory $propertyBagFactory
+        TemplatePropertyBagFactory $propertyBagFactory,
+        array $inputValidators = []
     )
     {
-        parent::__construct();
         $this->util = $util;
-        $this->io = $io;
         $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;
         $this->propertyBagFactory = $propertyBagFactory;
+        parent::__construct($io, $inputValidators);
     }
 
-    public function configure()
+    protected function configure()
     {
         $this
             ->setName('template:generate')
@@ -80,7 +74,8 @@ class GenerateCommand extends Command
                 self::OPTION_ROOT_DIR,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'If specified, code is generated on this root directory.'
+                'If specified, code is generated on this root directory.',
+                getcwd()
             )->addOption(
                 self::OPTION_DRY_RUN,
                 null,
@@ -98,20 +93,13 @@ class GenerateCommand extends Command
         $this->templateName = $this->util->getTemplateName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function _execute(InputInterface $input, OutputInterface $output): void
     {
-        try {
-            $this->util->validateTemplate($this->templateName);
-            $basePropertyBag = $this->getBasePropertyBag();
-            $this->displayHeader();
-            $this->generate($basePropertyBag);
-            $this->io->getInstance()->success('Success!');
-        } catch (Exception $e) {
-            $this->io->getInstance()->error($e->getMessage());
-        }
+        $this->util->validateTemplate($this->templateName);
+        $basePropertyBag = $this->getBasePropertyBag();
+        $this->displayHeader();
+        $this->generate($basePropertyBag);
+        $this->io->getInstance()->success('Success!');
     }
 
     private function displayHeader(): void

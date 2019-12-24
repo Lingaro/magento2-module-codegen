@@ -58,7 +58,7 @@ class CodeGenerator
     public function execute(string $templateName, TemplatePropertyBag $propertyBag): void
     {
         $dryRun = $this->io->getInput()->getOption(GenerateCommand::OPTION_DRY_RUN);
-        $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR) ?: null;
+        $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
         foreach ($this->templateFile->getTemplateFiles([$templateName]) as $file) {
             $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
                 $this->propertyUtil->replacePropertiesInText($file->getPathname(), $propertyBag),

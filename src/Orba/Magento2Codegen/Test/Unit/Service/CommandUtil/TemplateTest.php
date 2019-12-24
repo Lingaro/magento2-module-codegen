@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Exception;
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\CommandUtil\Module;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
@@ -141,6 +142,7 @@ class TemplateTest extends TestCase
 
     public function testShouldCreateModuleReturnsFalseIfModuleExists(): void
     {
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(true);
         $result = $this->template->shouldCreateModule('template');
         $this->assertFalse($result);
@@ -148,6 +150,7 @@ class TemplateTest extends TestCase
 
     public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndTemplateIsAGlobalPackage(): void
     {
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
         $result = $this->template->shouldCreateModule('module');
         $this->assertFalse($result);
@@ -156,6 +159,7 @@ class TemplateTest extends TestCase
     public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndUserDoesNotWantToCreateOne(): void
     {
         $this->expectException(Exception::class);
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
         $ioInstanceMock = $this->getIoInstanceMock();
         $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(false);
@@ -169,6 +173,7 @@ class TemplateTest extends TestCase
         $ioInstanceMock = $this->getIoInstanceMock();
         $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(true);
         $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $result = $this->template->shouldCreateModule('template');
         $this->assertTrue($result);
     }
@@ -191,6 +196,7 @@ class TemplateTest extends TestCase
     {
         $propertyBag = new TemplatePropertyBag();
         $propertyBag['foo'] = 'bar';
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('getPropertyBag')->willReturn($propertyBag);
         $result = $this->template->getBasePropertyBag('template');
         $this->assertSame('bar', $result['foo']);
@@ -201,7 +207,10 @@ class TemplateTest extends TestCase
      */
     private function getInputMock()
     {
-        return $this->getMockBuilder(InputInterface::class)->getMockForAbstractClass();
+        $inputMock = $this->getMockBuilder(InputInterface::class)->getMockForAbstractClass();
+        $inputMock->expects($this->any())->method('getOption')
+            ->with(GenerateCommand::OPTION_ROOT_DIR)->willReturn('/root');
+        return $inputMock;
     }
 
     /**
