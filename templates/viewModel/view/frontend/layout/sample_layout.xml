@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <!-- use this code in proper place in your layout file -->
+            <block name="${vendorname}.${modulename}.${viewmodel_name}"
+                   template="${Vendorname}_${Modulename}::${viewmodel_name}.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">${Vendorname}\${Modulename}\ViewModel\${Viewmodel_name}</argument>
+                </arguments>
+            </block>
+            <!-- end use -->
+        </referenceContainer>
+    </body>
+</page>

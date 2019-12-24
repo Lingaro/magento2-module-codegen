@@ -1,0 +1,1 @@
+1. Add block into your layout xml (use sample_layout.xml as a pattern)

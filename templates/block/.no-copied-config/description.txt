@@ -1,0 +1,2 @@
+This template creates a Block and template .phtml file.
+This is old fashion style, for presentation layer please use viewModel template

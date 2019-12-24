@@ -1,0 +1,2 @@
+This template creates a ViewModel and template .phtml file.
+It replaces old fashion Block class with unnecessary inheritance and should be always used in place of Block class
