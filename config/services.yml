@@ -35,6 +35,19 @@ services:
       -
         - addMerger
         -
+          - '/^db_schema\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/schema/table': 'name'
+              '/schema/table/column': 'name'
+              '/schema/table/constraint': 'referenceId'
+              '/schema/table/index': 'referenceId'
+              '/schema/table/index/column': 'name'
+              '/schema/table/constraint/column': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.xml/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
 
