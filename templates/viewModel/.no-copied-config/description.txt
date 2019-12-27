@@ -1,2 +1,3 @@
-This template creates a ViewModel and template .phtml file.
-It replaces old fashion Block class with unnecessary inheritance and should be always used in place of Block class
+This template creates a ViewModel and phtml template file for it.
+It should be used if you simply need to inject your business logic into template file.
+If you need to add some customizations to block processing, use "block" template instead.

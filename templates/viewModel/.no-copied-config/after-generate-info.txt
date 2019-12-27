@@ -1,1 +1,8 @@
-1. Add block into your layout xml (use sample_layout.xml as a pattern)
+1. Add block in your layout xml file:
+
+    <block name="${vendorname}.${modulename}.${viewmodelname}"
+           template="${Vendorname}_${Modulename}::${viewmodelname}.phtml">
+        <arguments>
+            <argument name="view_model" xsi:type="object">${Vendorname}\${Modulename}\ViewModel\${Viewmodelname}</argument>
+        </arguments>
+    </block>

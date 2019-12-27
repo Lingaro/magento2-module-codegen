@@ -1,1 +1,5 @@
-1. Add your block in your layout xml (use sample_layout.xml as a pattern)
+1. Add block in your layout xml file:
+
+    <block class="${Vendorname}\${Modulename}\Block\${Blockname}"
+           name="${vendorname}.${modulename}.${blockname}"
+           template="${Vendorname}_${Modulename}::${blockname}.phtml"/>
