@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @copyright Copyright © ${commentsYear} ${CommentsCompanyName}. All rights reserved.
- * @author    ${commentsUserEmail}
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
 -->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="${vendorname}_${modulename}_${entityname}" resource="default" engine="innodb" comment="${Entityname} Table">
-        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="${entityname} Id"/>
-        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="${Entityname} Name"/>
+    <table name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}" resource="default" engine="innodb" comment="{{ entityName|pascal }} Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="{{ entityName|camel }} Id"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="{{ entityName|pascal }} Name"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
-        <index referenceId="${vendorname}_${modulename}_${entityname}_NAME" indexType="fulltext">
+        <index referenceId="{{ vendorName|upper }}_{{ moduleName|upper }}_{{ entityName|upper }}_NAME" indexType="fulltext">
             <column name="name"/>
         </index>
     </table>

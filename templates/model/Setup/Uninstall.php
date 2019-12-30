@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright © ${commentsYear} ${CommentsCompanyName}. All rights reserved.
- * @author    ${commentsUserEmail}
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
-namespace ${Vendorname}\${Modulename}\Setup;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Setup;
 
 use Magento\Framework\Setup\UninstallInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -20,8 +20,8 @@ class Uninstall implements UninstallInterface
     {
         $setup->startSetup();
 
-        if ($setup->tableExists('${vendorname}_${modulename}_${entityname}')) {
-            $setup->getConnection()->dropTable($setup->getTable('${vendorname}_${modulename}_${entityname}'));
+        if ($setup->tableExists('{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}')) {
+            $setup->getConnection()->dropTable($setup->getTable('{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}'));
         }
 
         $setup->endSetup();
