@@ -5,7 +5,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
+use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -30,21 +30,21 @@ class TemplatePropertyTest extends TestCase
     private $templateFileMock;
 
     /**
-     * @var MockObject|TemplatePropertyUtil
+     * @var MockObject|TemplateProcessorInterface
      */
-    private $templatePropertyUtilMock;
+    private $templateProcessorMock;
 
     public function setUp(): void
     {
         $this->yamlParserMock = $this->getMockBuilder(Parser::class)->disableOriginalConstructor()->getMock();
         $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)->disableOriginalConstructor()
             ->getMock();
-        $this->templatePropertyUtilMock = $this->getMockBuilder(TemplatePropertyUtil::class)
-            ->disableOriginalConstructor()->getMock();
+        $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
+            ->getMockForAbstractClass();
         $this->templateProperty = new TemplateProperty(
             $this->yamlParserMock,
             $this->templateFileMock,
-            $this->templatePropertyUtilMock
+            $this->templateProcessorMock
         );
     }
 
@@ -58,7 +58,7 @@ class TemplatePropertyTest extends TestCase
     {
         $this->templateFileMock->expects($this->once())->method('getTemplateFiles')
             ->willReturn([$this->getFileMock()]);
-        $this->templatePropertyUtilMock->expects($this->exactly(2))->method('getPropertiesInText')
+        $this->templateProcessorMock->expects($this->exactly(2))->method('getPropertiesInText')
             ->willReturnOnConsecutiveCalls(['foo', 'bar'], ['moo', 'bar']);
         $result = $this->templateProperty->getAllPropertiesInTemplate('template');
         $this->assertCount(3, $result);

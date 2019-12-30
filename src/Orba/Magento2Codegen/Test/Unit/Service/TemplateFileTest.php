@@ -6,9 +6,10 @@ use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\FinderFactory;
 use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
+use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -20,13 +21,20 @@ class TemplateFileTest extends TestCase
      */
     private $templateFile;
 
+    /**
+     * @var MockObject|TemplateProcessorInterface
+     */
+    private $templateProcessorMock;
+
     public function setUp(): void
     {
+        $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
+            ->getMockForAbstractClass();
         $this->templateFile = new TemplateFile(
             new TemplateDir(new Filesystem()),
             new FinderFactory(),
             new Parser(),
-            new TemplatePropertyUtil()
+            $this->templateProcessorMock
         );
     }
 
@@ -132,17 +140,11 @@ class TemplateFileTest extends TestCase
         $this->assertSame('', $result);
     }
 
-    public function testGetManualStepsReturnsAfterGenerateFileContentIfFileExistsAndThereAreNoPropertiesSet(): void
+    public function testGetManualStepsReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExists(): void
     {
+        $this->templateProcessorMock->expects($this->once())->method('replacePropertiesInText')
+            ->willReturn('Some info with value');
         $result = $this->templateFile->getManualSteps('example', new TemplatePropertyBag());
-        $this->assertSame('Some info with ${property}', $result);
-    }
-
-    public function testGetManualStepsReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExistsAndThereArePropertiesSet(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $propertyBag['property'] = 'value';
-        $result = $this->templateFile->getManualSteps('example', $propertyBag);
         $this->assertSame('Some info with value', $result);
     }
 

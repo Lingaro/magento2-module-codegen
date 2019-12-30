@@ -1,6 +1,6 @@
 {
-  "name": "${vendorname}/magento2-module-${modulename}",
-  "description": "${Vendorname} Magento 2 module ${Modulename}",
+  "name": "{{ vendorName|lower }}/magento2-module-{{ moduleName|lower }}",
+  "description": "{{ vendorName }} Magento 2 module {{ moduleName }}",
   "require": {
     "php": "~7.2.0"
   },
@@ -10,7 +10,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "${Vendorname}\\${Modulename}\\": ""
+      "{{ vendorName }}\\{{ moduleName }}\\": ""
     }
   }
 }

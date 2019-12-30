@@ -16,12 +16,7 @@ class TemplatePropertyBag implements ArrayAccess
         if (is_null($offset)) {
             $this->container[] = $value;
         } else {
-            $propertyUcFirst = ucfirst($offset);
-            $valueUcFirst = ucfirst($value);
-            $this->container[$propertyUcFirst] = $valueUcFirst;
-            $propertyLcFirst = lcfirst($offset);
-            $valueLowerCase = strtolower($value);
-            $this->container[$propertyLcFirst] = $valueLowerCase;
+            $this->container[$offset] = $value;
         }
     }
 
@@ -38,5 +33,10 @@ class TemplatePropertyBag implements ArrayAccess
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
+    }
+
+    public function toArray(): array
+    {
+        return $this->container;
     }
 }

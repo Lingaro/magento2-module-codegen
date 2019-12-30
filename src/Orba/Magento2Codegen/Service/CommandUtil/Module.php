@@ -52,8 +52,8 @@ class Module
         preg_match('/\'(.*)_(.*)\'/', $content, $matches);
         $propertyBag = $this->propertyBagFactory->create();
         if (isset($matches[1]) && isset($matches[2])) {
-            $propertyBag['vendorname'] = $matches[1];
-            $propertyBag['modulename'] = $matches[2];
+            $propertyBag['vendorName'] = $matches[1];
+            $propertyBag['moduleName'] = $matches[2];
         }
         return $propertyBag;
     }

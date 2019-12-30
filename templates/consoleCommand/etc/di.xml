@@ -3,15 +3,15 @@
 /**
  * di
  *
- * @copyright Copyright © ${commentsYear} ${CommentsCompanyName}. All rights reserved.
- * @author    ${commentsUserEmail}
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="${commandname}" xsi:type="object">${Vendorname}\${Modulename}\Console\Command\${Commandname}Command</item>
+                <item name="{{ commandName|lower }}" xsi:type="object">{{ vendorName }}}\{{ moduleName}}\Console\Command\{{ commandName }}Command</item>
             </argument>
         </arguments>
     </type>
