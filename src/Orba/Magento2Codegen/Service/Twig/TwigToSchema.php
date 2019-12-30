@@ -42,28 +42,27 @@ class TwigToSchema
             case AssignNameExpression::class:
             case NameExpression::class:
                 $vars[$ast->getAttribute('name')] = [
-                    'always_defined' => $ast->getAttribute('always_defined')
+                    'always_defined' => $ast->getAttribute('always_defined'),
+                    'type' => 'scalar'
                 ];
                 break;
             case ForNode::class:
+                $seqNode = $ast->getNode('seq');
+                $seqName = $seqNode->hasAttribute('name') ? $seqNode->getAttribute('name') : null;
+                $valueNode = $ast->getNode('value_target');
+                $valueName = $valueNode->hasAttribute('name') ? $valueNode->getAttribute('name') : null;
                 foreach ($ast as $key => $node) {
                     /** @var Node $node */
                     switch ($key) {
-//                        case 'value_target':
-//                            $vars[$node->getAttribute('name')] = [
-//                                'for_loop_target' => true,
-//                                'always_defined' => $node->getAttribute('always_defined')
-//                            ];
-//                            break;
-                        case 'seq':
-                            try {
-                                $vars[$node->getAttribute('name')] = [
-                                    'always_defined' => $node->getAttribute('always_defined')
-                                ];
-                            } catch (LogicException $e) {}
-                            break;
                         case 'body':
                             $vars = array_merge($vars, $this->visit($node));
+                            if ($seqName && $valueName) {
+                                $vars[$seqName] = [
+                                    'always_defined' => false,
+                                    'type' => 'array',
+                                    'elements' => $this->visitForNode($node, $ast, $valueName)
+                                ];
+                            }
                             break;
                         default:
                             break;
@@ -89,5 +88,19 @@ class TwigToSchema
                 break;
         }
         return $vars;
+    }
+
+    private function visitForNode(Node $currentNode, Node $parentNode, string $name): array
+    {
+        $attributes = [];
+        if (get_class($currentNode) === NameExpression::class && $currentNode->getAttribute('name') === $name) {
+            $attributes[] = $parentNode->getNode('attribute')->getAttribute('value');
+        }
+        if ($currentNode->count()) {
+            foreach ($currentNode as $key => $node) {
+                $attributes = array_merge($attributes, $this->visitForNode($node, $currentNode, $name));
+            }
+        }
+        return $attributes;
     }
 }

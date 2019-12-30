@@ -7,7 +7,6 @@ use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -59,19 +58,12 @@ class TemplatePropertyTest extends TestCase
         $this->templateFileMock->expects($this->once())->method('getTemplateFiles')
             ->willReturn([$this->getFileMock()]);
         $this->templateProcessorMock->expects($this->exactly(2))->method('getPropertiesInText')
-            ->willReturnOnConsecutiveCalls(['foo', 'bar'], ['moo', 'bar']);
+            ->willReturnOnConsecutiveCalls(['foo' => null, 'bar' => null], ['moo' => null, 'bar' => null]);
         $result = $this->templateProperty->getAllPropertiesInTemplate('template');
         $this->assertCount(3, $result);
-        foreach ($result as $value) {
-            $this->assertTrue(in_array($value, ['foo', 'bar', 'moo']));
+        foreach ($result as $key => $value) {
+            $this->assertTrue(in_array($key, ['foo', 'bar', 'moo']));
         }
-    }
-
-    public function testAddPropertiesAddsPropertiesToPropertyBag(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $this->templateProperty->addProperties($propertyBag, ['foo' => 'bar']);
-        $this->assertSame('bar', $propertyBag['foo']);
     }
 
     public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotAnArray(): void

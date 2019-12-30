@@ -5,7 +5,6 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use Symfony\Component\Yaml\Parser;
 
 class TemplateProperty
@@ -44,18 +43,9 @@ class TemplateProperty
         foreach ($templateFiles as $file) {
             $propertiesInFilename = $this->templateProcessor->getPropertiesInText($file->getPath());
             $propertiesInCode = $this->templateProcessor->getPropertiesInText($file->getContents());
-            $propertiesInTemplate = array_unique(
-                array_merge($propertiesInTemplate, $propertiesInFilename, $propertiesInCode)
-            );
+            $propertiesInTemplate = array_merge($propertiesInTemplate, $propertiesInFilename, $propertiesInCode);
         }
         return $propertiesInTemplate;
-    }
-
-    public function addProperties(TemplatePropertyBag $propertyBag, array $properties): void
-    {
-        foreach ($properties as $key => $value) {
-            $propertyBag[$key] = $value;
-        }
     }
 
     /**

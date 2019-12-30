@@ -106,19 +106,27 @@ class Template
     ): TemplatePropertyBag
     {
         $propertyBag = $basePropertyBag ?: $this->propertyBagFactory->create();
-        $this->propertyUtil->addProperties(
-            $propertyBag,
-            $this->propertyUtil->getPropertiesFromYamlFile(
-                BP . '/' . Application::CONFIG_FOLDER . '/' . Application::DEFAULT_PROPERTIES_FILENAME
-            )
-        );
+        $propertyBag->add($this->propertyUtil->getPropertiesFromYamlFile(
+            BP . '/' . Application::CONFIG_FOLDER . '/' . Application::DEFAULT_PROPERTIES_FILENAME
+        ));
         $templateProperties = $this->propertyUtil->getAllPropertiesInTemplate($templateName);
-        foreach ($templateProperties as $property) {
-            if (!isset($propertyBag[$property])) {
-                $this->propertyUtil->addProperties(
-                    $propertyBag,
-                    [$property => $this->io->getInstance()->ask($property)]
-                );
+        foreach ($templateProperties as $key => $elements) {
+            if (!isset($propertyBag[$key])) {
+                if (is_array($elements)) {
+                    $items = [];
+                    $i = 0;
+                    do {
+                        $item = [];
+                        foreach ($elements as $element) {
+                            $item[$element] = $this->io->getInstance()->ask($key . '.' . $i . '.' . $element);
+                        }
+                        $items[] = $item;
+                        $i++;
+                    } while ($this->io->getInstance()->confirm(sprintf('Do you want to add another item to "%s" array?', $key), true));
+                    $propertyBag->add([$key => $items]);
+                } else {
+                    $propertyBag->add([$key => $this->io->getInstance()->ask($key)]);
+                }
             }
         }
         return $propertyBag;

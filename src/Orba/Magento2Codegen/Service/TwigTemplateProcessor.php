@@ -35,9 +35,21 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
 
     public function getPropertiesInText(string $text): array
     {
-        return array_keys(
-            $this->twigToSchema->infer($this->getTwigEnvironment($text), self::TEMPLATE_NAME)
-        );
+        $properties = [];
+        $schema = $this->twigToSchema->infer($this->getTwigEnvironment($text), self::TEMPLATE_NAME);
+        foreach ($schema as $name => $attributes) {
+            switch ($attributes['type']) {
+                case 'scalar':
+                    $properties[$name] = null;
+                    break;
+                case 'array':
+                    $properties[$name] = $attributes['elements'];
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $properties;
     }
 
     public function replacePropertiesInText(string $text, TemplatePropertyBag $properties): string

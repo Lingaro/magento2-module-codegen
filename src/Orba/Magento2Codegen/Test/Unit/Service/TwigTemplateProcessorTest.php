@@ -33,49 +33,49 @@ class TwigTemplateProcessorTest extends TestCase
     public function testGetPropertiesInTextReturnsArrayWithSimplePropertiesFoundInText(): void
     {
         $result = $this->twigTemplateProcessor->getPropertiesInText('i {{ like }} {{ nice }} properties');
-        $this->assertSame(['like', 'nice'], $result);
+        $this->assertSame(['like' => null, 'nice' => null], $result);
     }
 
-    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInIfStatementInText(): void
+    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInIfStatement(): void
     {
         $result = $this->twigTemplateProcessor
             ->getPropertiesInText('some {% if text==\'string\' %}property{% endif %}');
-        $this->assertSame(['text'], $result);
+        $this->assertSame(['text' => null], $result);
     }
 
-    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInIfStatementBodyInText(): void
+    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInIfStatementBody(): void
     {
         $result = $this->twigTemplateProcessor
             ->getPropertiesInText('some {% if 1==1 %}{{ text }}{% endif %}');
-        $this->assertSame(['text'], $result);
+        $this->assertSame(['text' => null], $result);
     }
 
-    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInElseIfStatementInText(): void
+    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInElseIfStatementIn(): void
     {
         $result = $this->twigTemplateProcessor
             ->getPropertiesInText('some {% if 1==2 %}foo{% elseif text==\'string\' %}bar{% endif %}');
-        $this->assertSame(['text'], $result);
+        $this->assertSame(['text' => null], $result);
     }
 
-    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInElseIfStatementBodyInText(): void
+    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInElseIfStatementBody(): void
     {
         $result = $this->twigTemplateProcessor
             ->getPropertiesInText('some {% if 1==2 %}foo{% elseif 1==1 %}{{ text }}{% endif %}');
-        $this->assertSame(['text'], $result);
+        $this->assertSame(['text' => null], $result);
     }
 
-    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInForStatementInText(): void
-    {
-        $result = $this->twigTemplateProcessor
-            ->getPropertiesInText('{% for element in elements %}{{ element }} {% endfor %}');
-        $this->assertSame(['elements'], $result);
-    }
-
-    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInForStatementBodyInText(): void
+    public function testGetPropertiesInTextReturnsArrayWithPropertiesFoundInForStatementBody(): void
     {
         $result = $this->twigTemplateProcessor
             ->getPropertiesInText('{% for i in 0..10 %}{{ text }} {% endfor %}');
-        $this->assertSame(['text'], $result);
+        $this->assertSame(['text' => null], $result);
+    }
+
+    public function testGetPropertiesInTextReturnsArrayWithNestedPropertyBuiltByForInLoop(): void
+    {
+        $result = $this->twigTemplateProcessor
+            ->getPropertiesInText('{% for user in users %}{{ user.firstname }} {{ user.lastname }} {% endfor %}');
+        $this->assertSame(['users' => ['firstname', 'lastname']], $result);
     }
 
     public function testReplacePropertiesInTextReturnsSameStringIfPropertyBagIsEmptyAndTextHasNoProperties(): void

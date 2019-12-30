@@ -35,6 +35,13 @@ class TemplatePropertyBag implements ArrayAccess
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
 
+    public function add(array $properties): void
+    {
+        foreach ($properties as $key => $value) {
+            $this[$key] = $value;
+        }
+    }
+
     public function toArray(): array
     {
         return $this->container;
