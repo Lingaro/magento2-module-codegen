@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright © ${commentsYear} ${CommentsCompanyName}. All rights reserved.
  * @author    ${commentsUserEmail}

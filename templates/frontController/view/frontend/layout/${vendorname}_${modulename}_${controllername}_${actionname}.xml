@@ -10,7 +10,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="${layout_column}" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="${Vendorname}\${Modulename}\Block\${Controllername}\${Actionname}" name="${vendorname}.${modulename}.${controllername}.${actionname}" />
+            <block name="${vendorname}.${modulename}.${controllername}.${actionname}"
+                   template="${Vendorname}_${Modulename}::${controllername}/${actionname}.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">${Vendorname}\${Modulename}\ViewModel\${Actionname}</argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>

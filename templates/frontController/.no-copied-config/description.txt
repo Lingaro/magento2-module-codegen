@@ -1,1 +1,1 @@
-This Template creates a frontend controller with the corresponding Block, routes, layout and template
+This Template creates a frontend controller with the corresponding ViewModel, routes, layout and template
