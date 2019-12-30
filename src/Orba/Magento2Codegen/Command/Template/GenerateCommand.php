@@ -98,6 +98,7 @@ class GenerateCommand extends AbstractCommand
         $this->util->validateTemplate($this->templateName);
         $basePropertyBag = $this->getBasePropertyBag();
         $this->displayHeader();
+        $this->displayTemplateDescription();
         $this->generate($basePropertyBag);
         $this->io->getInstance()->success('Success!');
     }
@@ -106,6 +107,14 @@ class GenerateCommand extends AbstractCommand
     {
         $this->io->getInstance()->writeln('<comment>Template Generate</comment>');
         $this->io->getInstance()->title($this->templateName);
+    }
+
+    private function displayTemplateDescription(): void
+    {
+        $description = $this->templateFile->getDescription($this->templateName);
+        if ($description) {
+            $this->io->getInstance()->text($description);
+        }
     }
 
     private function getBasePropertyBag(): TemplatePropertyBag
