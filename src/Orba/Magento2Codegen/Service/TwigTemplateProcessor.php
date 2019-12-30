@@ -2,12 +2,14 @@
 
 namespace Orba\Magento2Codegen\Service;
 
+use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
 use Orba\Magento2Codegen\Service\Twig\TwigToSchema;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
+use Twig\TwigFilter;
 
 class TwigTemplateProcessor implements TemplateProcessorInterface
 {
@@ -20,35 +22,47 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
      */
     private $twigToSchema;
 
-    public function __construct(TwigToSchema $twigToSchema)
+    /**
+     * @var FiltersExtension
+     */
+    private $filtersExtension;
+
+    public function __construct(TwigToSchema $twigToSchema, FiltersExtension $filtersExtension)
     {
         $this->twigToSchema = $twigToSchema;
+        $this->filtersExtension = $filtersExtension;
     }
 
     public function getPropertiesInText(string $text): array
     {
         return array_keys(
-            $this->twigToSchema->infer($this->createTwigEnvironment($text), self::TEMPLATE_NAME)
+            $this->twigToSchema->infer($this->getTwigEnvironment($text), self::TEMPLATE_NAME)
         );
     }
 
     public function replacePropertiesInText(string $text, TemplatePropertyBag $properties): string
     {
-        $twig = $this->createTwigEnvironment($text);
+        return $this->getTwigEnvironment($text)->render(self::TEMPLATE_NAME, $properties->toArray());
+    }
+
+    private function getTwigEnvironment(string $text): Environment
+    {
+        $loader = new ArrayLoader([self::TEMPLATE_NAME => $text]);
+        $twig = new Environment($loader);
+        $twig->addExtension($this->filtersExtension);
+        $customFilters = [];
+        foreach ($this->filtersExtension->getFilters() as $filter) {
+            /** @var TwigFilter $filter */
+            $customFilters[] = $filter->getName();
+        }
         $twig->addExtension(
             new SandboxExtension(
                 new SecurityPolicy(
-                    self::ALLOWED_TAGS,self::ALLOWED_FILTERS, [], [], []
+                    self::ALLOWED_TAGS, array_merge(self::ALLOWED_FILTERS, $customFilters), [], [], []
                 ),
                 true
             )
         );
-        return $twig->render(self::TEMPLATE_NAME, $properties->toArray());
-    }
-
-    private function createTwigEnvironment(string $text): Environment
-    {
-        $loader = new ArrayLoader([self::TEMPLATE_NAME => $text]);
-        return new Environment($loader);
+        return $twig;
     }
 }

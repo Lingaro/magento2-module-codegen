@@ -11,7 +11,7 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="{{ commandName|lower }}" xsi:type="object">{{ vendorName }}}\{{ moduleName}}\Console\Command\{{ commandName }}Command</item>
+                <item name="{{ commandName|snake }}" xsi:type="object">{{ vendorName|pascal }}\{{ moduleName|pascal }}\Console\Command\{{ commandName|pascal }}Command</item>
             </argument>
         </arguments>
     </type>

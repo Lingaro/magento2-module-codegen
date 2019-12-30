@@ -1,5 +1,5 @@
 1. Add block in your layout xml file:
 
-    <block class="{{ vendorName }}\{{ moduleName }}\Block\{{ blockName }}"
-           name="{{ vendorName|lower }}.{{ moduleName|lower }}.{{ blockName|lower }}"
-           template="{{ vendorName }}_{{ moduleName }}::{{ blockName|lower }}.phtml"/>
+    <block class="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\{{ blockName|pascal }}"
+           name="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ blockName|snake }}"
+           template="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ blockName|snake }}.phtml"/>

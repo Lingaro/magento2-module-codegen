@@ -1,22 +1,22 @@
 <?php
 /**
- * {{ commandName }}Command
+ * {{ commandName|pascal }}Command
  *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName }}\{{ moduleName }}\Console\Command;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class {{ commandName}}Command extends Command
+class {{ commandName|pascal }}Command extends Command
 {
     public function configure()
     {
-        $this->setName('{{ commandName|lower }}')
+        $this->setName('{{ commandName|kebab }}')
             ->setDescription('{{ commandDescription }}');
     }
 

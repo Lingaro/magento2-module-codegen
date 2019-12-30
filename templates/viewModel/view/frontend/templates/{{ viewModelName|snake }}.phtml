@@ -6,8 +6,8 @@
 ?>
 <?php
 use Magento\Framework\View\Element\Template;
-use {{ vendorName }}\{{ moduleName }}\ViewModel\{{ viewModelName }};
-/** @var $viewModel {{ viewModelName }} */
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }};
+/** @var $viewModel {{ viewModelName|pascal }} */
 /** @var $block Template */
 $viewModel = $block->getViewModel();
 // Add your template code here. Use $viewModel for getting your data.

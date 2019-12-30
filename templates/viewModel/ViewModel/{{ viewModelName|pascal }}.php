@@ -4,11 +4,11 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName }}\{{ moduleName }}\ViewModel;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 
-class {{ viewModelName }} implements ArgumentInterface
+class {{ viewModelName|pascal }} implements ArgumentInterface
 {
     // Write your methods here...
 }

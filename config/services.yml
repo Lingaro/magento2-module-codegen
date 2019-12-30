@@ -48,3 +48,11 @@ services:
 
   Orba\Magento2Codegen\Service\TemplateProcessorInterface:
     class: '\Orba\Magento2Codegen\Service\TwigTemplateProcessor'
+
+  Orba\Magento2Codegen\Service\Twig\FiltersExtension:
+    arguments:
+      $filters:
+        camel: '@Orba\Magento2Codegen\Service\StringFilter\CamelCaseFilter'
+        pascal: '@Orba\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
+        snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
+        kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'

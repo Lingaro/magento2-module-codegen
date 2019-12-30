@@ -1,7 +1,7 @@
 1. Add block in your layout xml file:
 
-    <block name="{{ vendorName|lower }}.{{ moduleName|lower }}.{{ viewModelName|lower }}" template="{{ vendorName }}_{{ moduleName }}::{{ viewModelName|lower }}.phtml">
+    <block name="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ viewModelName|snake }}" template="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ viewModelName|snake }}.phtml">
         <arguments>
-            <argument name="view_model" xsi:type="object">{{ vendorName }}\{{ moduleName }}\ViewModel\{{ viewModelName }}</argument>
+            <argument name="view_model" xsi:type="object">{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }}</argument>
         </arguments>
     </block>

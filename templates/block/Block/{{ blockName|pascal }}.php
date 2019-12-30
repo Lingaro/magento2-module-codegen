@@ -4,11 +4,11 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName }}\{{ moduleName }}\Block;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block;
 
 use Magento\Framework\View\Element\Template;
 
-class {{ blockName }} extends Template
+class {{ blockName|pascal }} extends Template
 {
     // Write your methods here...
 }
