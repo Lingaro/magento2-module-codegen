@@ -14,9 +14,9 @@ class CodeGenerator
     private $templateFile;
 
     /**
-     * @var TemplatePropertyUtil
+     * @var TemplateProcessorInterface
      */
-    private $propertyUtil;
+    private $templateProcessor;
 
     /**
      * @var CodeGeneratorUtil
@@ -40,7 +40,7 @@ class CodeGenerator
 
     public function __construct(
         TemplateFile $templateFile,
-        TemplatePropertyUtil $propertyUtil,
+        TemplateProcessorInterface $templateProcessor,
         CodeGeneratorUtil $codeGeneratorUtil,
         FileMergerFactory $fileMergerFactory,
         FilepathUtil $filepathUtil,
@@ -48,7 +48,7 @@ class CodeGenerator
     )
     {
         $this->templateFile = $templateFile;
-        $this->propertyUtil = $propertyUtil;
+        $this->templateProcessor = $templateProcessor;
         $this->codeGeneratorUtil = $codeGeneratorUtil;
         $this->fileMergerFactory = $fileMergerFactory;
         $this->filepathUtil = $filepathUtil;
@@ -61,10 +61,10 @@ class CodeGenerator
         $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
         foreach ($this->templateFile->getTemplateFiles([$templateName]) as $file) {
             $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
-                $this->propertyUtil->replacePropertiesInText($file->getPathname(), $propertyBag),
+                $this->templateProcessor->replacePropertiesInText($file->getPathname(), $propertyBag),
                 $rootDir
             );
-            $fileContent = $this->propertyUtil->replacePropertiesInText($file->getContents(), $propertyBag);
+            $fileContent = $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag);
             if (!$dryRun) {
                 try {
                     if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {

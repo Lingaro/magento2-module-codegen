@@ -66,8 +66,8 @@ class ModuleTest extends TestCase
         $this->filepathUtilMock->expects($this->once())->method('getContent')
             ->willReturn('broken file with not module data');
         $result = $this->module->getPropertyBag('rootDir');
-        $this->assertFalse(isset($result['vendorname']));
-        $this->assertFalse(isset($result['modulename']));
+        $this->assertFalse(isset($result['vendorName']));
+        $this->assertFalse(isset($result['moduleName']));
     }
 
     public function testGetPropertyBagReturnsProperlyFilledBagIfModuleDataFoundInRegistrationFile(): void
@@ -85,7 +85,7 @@ PHP;
         $this->propertyBagFactoryMock->expects($this->once())->method('create')
             ->willReturn(new TemplatePropertyBag());
         $result = $this->module->getPropertyBag('rootDir');
-        $this->assertSame('orba', $result['vendorname']);
-        $this->assertSame('test', $result['modulename']);
+        $this->assertSame('Orba', $result['vendorName']);
+        $this->assertSame('Test', $result['moduleName']);
     }
 }

@@ -31,21 +31,21 @@ class TemplateFile
     private $yamlParser;
 
     /**
-     * @var TemplatePropertyUtil
+     * @var TemplateProcessorInterface
      */
-    private $propertyUtil;
+    private $templateProcessor;
 
     public function __construct(
         TemplateDir $templateDir,
         FinderFactory $finderFactory,
         Parser $yamlParser,
-        TemplatePropertyUtil $propertyUtil
+        TemplateProcessorInterface $templateProcessor
     )
     {
         $this->templateDir = $templateDir;
         $this->finderFactory = $finderFactory;
         $this->yamlParser = $yamlParser;
-        $this->propertyUtil = $propertyUtil;
+        $this->templateProcessor = $templateProcessor;
     }
 
     public function exists(string $templateName): bool
@@ -105,7 +105,7 @@ class TemplateFile
     {
         $this->validateTemplateExistence($templateName);
         $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);
-        return $file ? $this->propertyUtil->replacePropertiesInText($file->getContents(), $propertyBag) : '';
+        return $file ? $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag) : '';
     }
 
     /**

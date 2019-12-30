@@ -4,7 +4,7 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
+use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 use Symfony\Component\Yaml\Parser;
 
@@ -21,15 +21,19 @@ class TemplateProperty
     private $templateFile;
 
     /**
-     * @var TemplatePropertyUtil
+     * @var TemplateProcessorInterface
      */
-    private $propertyUtil;
+    private $templateProcessor;
 
-    public function __construct(Parser $yamlParser, TemplateFile $templateFile, TemplatePropertyUtil $propertyUtil)
+    public function __construct(
+        Parser $yamlParser,
+        TemplateFile $templateFile,
+        TemplateProcessorInterface $templateProcessor
+    )
     {
         $this->yamlParser = $yamlParser;
         $this->templateFile = $templateFile;
-        $this->propertyUtil = $propertyUtil;
+        $this->templateProcessor = $templateProcessor;
     }
 
     public function getAllPropertiesInTemplate(string $templateName): array
@@ -38,8 +42,8 @@ class TemplateProperty
         $templateFiles = $this->templateFile->getTemplateFiles($templateNames);
         $propertiesInTemplate = [];
         foreach ($templateFiles as $file) {
-            $propertiesInFilename = $this->propertyUtil->getPropertiesInText($file->getPath());
-            $propertiesInCode = $this->propertyUtil->getPropertiesInText($file->getContents());
+            $propertiesInFilename = $this->templateProcessor->getPropertiesInText($file->getPath());
+            $propertiesInCode = $this->templateProcessor->getPropertiesInText($file->getContents());
             $propertiesInTemplate = array_unique(
                 array_merge($propertiesInTemplate, $propertiesInFilename, $propertiesInCode)
             );

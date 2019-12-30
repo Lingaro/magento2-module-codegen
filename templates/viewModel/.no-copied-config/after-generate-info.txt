@@ -1,8 +1,7 @@
 1. Add block in your layout xml file:
 
-    <block name="${vendorname}.${modulename}.${viewmodelname}"
-           template="${Vendorname}_${Modulename}::${viewmodelname}.phtml">
+    <block name="{{ vendorName|lower }}.{{ moduleName|lower }}.{{ viewModelName|lower }}" template="{{ vendorName }}_{{ moduleName }}::{{ viewModelName|lower }}.phtml">
         <arguments>
-            <argument name="view_model" xsi:type="object">${Vendorname}\${Modulename}\ViewModel\${Viewmodelname}</argument>
+            <argument name="view_model" xsi:type="object">{{ vendorName }}\{{ moduleName }}\ViewModel\{{ viewModelName }}</argument>
         </arguments>
     </block>

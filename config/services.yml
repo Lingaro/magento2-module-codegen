@@ -45,3 +45,6 @@ services:
     arguments:
       $inputValidators:
         - '@Orba\Magento2Codegen\Service\Input\RootDirValidator'
+
+  Orba\Magento2Codegen\Service\TemplateProcessorInterface:
+    class: '\Orba\Magento2Codegen\Service\TwigTemplateProcessor'
