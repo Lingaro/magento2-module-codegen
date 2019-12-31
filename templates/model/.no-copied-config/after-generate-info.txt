@@ -1,7 +1,3 @@
-1. Add your custom fields in:
-
-    {{ vendorName|pascal }}/{{ moduleName|pascal }}/etc/db_schema.xml
-
-2. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:
+1. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:
 
     bin/magento setup:db-declaration:generate-whitelist --module-name {{ vendorName|pascal }}_{{ moduleName|pascal }}

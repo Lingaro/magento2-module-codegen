@@ -13,9 +13,6 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pasca
 
 class {{ entityName|pascal }} extends AbstractExtensibleModel implements {{ entityName|pascal }}Interface
 {
-    public const NAME = 'name';
-
-    public const ID = 'entity_id';
     /**
      * Initialize resource model
      * @return void
@@ -25,37 +22,24 @@ class {{ entityName|pascal }} extends AbstractExtensibleModel implements {{ enti
         $this->_init('{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}');
     }
 
+    {% for item in fields %}
     /**
      * @inheritDoc
      */
-    public function getName()
+    public function get{{ item.name|pascal }}(): {{ item.type }}
     {
-        return $this->_getData(self::NAME);
+        return $this->getData('{{ item.name }}');
     }
 
     /**
-     * @inheritDoc
-     */
-    public function setName($name)
+    * @inheritDoc
+    */
+    public function set{{ item.name|pascal }}({{ item.type }} $value): $this
     {
-        return $this->setData(self::NAME, $name);
+        $this->setData('{{ item.name }}', $value);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getId()
-    {
-        return $this->_getData(self::ID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setId($id)
-    {
-        return $this->setData(self::ID, $id);
-    }
+    {% endfor %}
 
     /**
      * @inheritDoc

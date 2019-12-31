@@ -11,27 +11,19 @@ use Magento\Framework\Api\ExtensibleDataInterface;
 
 interface {{ entityName|pascal }}Interface extends ExtensibleDataInterface
 {
+    {% for item in fields %}
     /**
-     * @return int|null
+     * @return {{ item.type }}|null
      */
-    public function getId();
+    public function get{{ item.name|pascal }}(): {{ item.type }};
 
     /**
-     * @param int $id
+     * @param {{ item.type }} $value
      * @return $this
      */
-    public function setId($id);
+    public function set{{ item.name|pascal }}({{ item.type }} $value): $this;
 
-    /**
-     * @return string|null
-     */
-    public function getName();
-
-    /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name);
+    {% endfor %}
 
     /**
      * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface|null

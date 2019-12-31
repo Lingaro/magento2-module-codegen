@@ -17,6 +17,6 @@ class {{ entityName|pascal }} extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}', 'entity_id');
+        $this->_init('{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}', {%- for item in fields -%} {%- if item.identity -%}'{{- item.name|snake -}}'{% endif %}{% endfor %});
     }
 }
