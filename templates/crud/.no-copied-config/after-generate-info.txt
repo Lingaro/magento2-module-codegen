@@ -1,0 +1,32 @@
+1. Add your custom fields on:
+
+    {{ vendorName|pascal }}/{{ vendorName|pascal }}/Setup/InstallSchema.php
+
+2. Add your custom columns to the grid
+
+    {{ vendorName|pascal }}/{{ vendorName|pascal }}/view/adminhtml/ui_component/{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}_listing.xml
+
+3. Add your custom fields to the form
+
+    {{ vendorName|pascal }}/{{ vendorName|pascal }}/view/adminhtml/ui_component/{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}_form.xml
+
+4. Set the Admin Menu tab where you want your Module can be found:
+
+    {{ vendorName|pascal }}/{{ vendorName|pascal }}/etc/adminhtml/menu.xml
+
+5. Set From server side Validations:
+
+    {{ vendorName|pascal }}\{{ vendorName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }}\Validate:
+
+    /**
+     * Check if required fields is not empty
+     *
+     * @param array $data
+     */
+    public function validateRequireEntries(array $data)
+    {
+        $requiredFields = [
+            'identifier' => __('{{ entityName|pascal }} Identifier'),
+        ];
+
+        //...
