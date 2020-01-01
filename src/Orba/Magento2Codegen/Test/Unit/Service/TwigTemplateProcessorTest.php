@@ -71,11 +71,42 @@ class TwigTemplateProcessorTest extends TestCase
         $this->assertSame(['text' => null], $result);
     }
 
-    public function testGetPropertiesInTextReturnsArrayWithNestedPropertyBuiltByForInLoop(): void
+    public function testGetPropertiesInTextReturnsArrayWithNestedPropertyBuiltBySimpleForInLoop(): void
     {
         $result = $this->twigTemplateProcessor
             ->getPropertiesInText('{% for user in users %}{{ user.firstname }} {{ user.lastname }} {% endfor %}');
-        $this->assertSame(['users' => ['firstname', 'lastname']], $result);
+        $this->assertCount(2, $result['users']);
+        $this->assertSame(['users'], array_keys($result));
+        foreach (['firstname', 'lastname'] as $key) {
+            $this->assertTrue(in_array($key, $result['users']));
+        }
+    }
+
+    public function testGetPropertiesInTextReturnsArrayWithNestedPropertyBuiltByTwoSimpleForInLoops(): void
+    {
+        $result = $this->twigTemplateProcessor
+            ->getPropertiesInText('
+                Names: {% for user in users %}{{ user.firstname }} {{ user.lastname }} {% endfor %}
+                Birthdays: {% for user in users %}{{ user.birthday }} {% endfor %}
+            ');
+        $this->assertCount(3, $result['users']);
+        $this->assertSame(['users'], array_keys($result));
+        foreach (['firstname', 'lastname', 'birthday'] as $key) {
+            $this->assertTrue(in_array($key, $result['users']));
+        }
+    }
+
+    public function testGetPropertiesInTextReturnsArrayWithNestedPropertyBuiltByForInLoopWithDuplicatedKeys(): void
+    {
+        $result = $this->twigTemplateProcessor
+            ->getPropertiesInText(
+                '{% for user in users %}{{ user.firstname }} {{ user.lastname }} {{ user.firstname }}{% endfor %}'
+            );
+        $this->assertCount(2, $result['users']);
+        $this->assertSame(['users'], array_keys($result));
+        foreach (['firstname', 'lastname'] as $key) {
+            $this->assertTrue(in_array($key, $result['users']));
+        }
     }
 
     public function testReplacePropertiesInTextReturnsSameStringIfPropertyBagIsEmptyAndTextHasNoProperties(): void
