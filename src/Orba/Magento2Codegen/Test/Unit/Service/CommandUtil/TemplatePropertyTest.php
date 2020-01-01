@@ -6,9 +6,9 @@ use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
+use Orba\Magento2Codegen\Service\TemplatePropertyMerger;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
 
 class TemplatePropertyTest extends TestCase
@@ -33,6 +33,11 @@ class TemplatePropertyTest extends TestCase
      */
     private $templateProcessorMock;
 
+    /**
+     * @var MockObject|TemplatePropertyMerger
+     */
+    private $templatePropertyMergerMock;
+
     public function setUp(): void
     {
         $this->yamlParserMock = $this->getMockBuilder(Parser::class)->disableOriginalConstructor()->getMock();
@@ -40,10 +45,13 @@ class TemplatePropertyTest extends TestCase
             ->getMock();
         $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
             ->getMockForAbstractClass();
+        $this->templatePropertyMergerMock = $this->getMockBuilder(TemplatePropertyMerger::class)
+            ->disableOriginalConstructor()->getMock();
         $this->templateProperty = new TemplateProperty(
             $this->yamlParserMock,
             $this->templateFileMock,
-            $this->templateProcessorMock
+            $this->templateProcessorMock,
+            $this->templatePropertyMergerMock
         );
     }
 
@@ -51,19 +59,6 @@ class TemplatePropertyTest extends TestCase
     {
         $result = $this->templateProperty->getAllPropertiesInTemplate('template');
         $this->assertSame([], $result);
-    }
-
-    public function testGetAllPropertiesInTemplateReturnsUniqueArrayIfThereAreDuplicatedPropertiesInTemplateFiles(): void
-    {
-        $this->templateFileMock->expects($this->once())->method('getTemplateFiles')
-            ->willReturn([$this->getFileMock()]);
-        $this->templateProcessorMock->expects($this->exactly(2))->method('getPropertiesInText')
-            ->willReturnOnConsecutiveCalls(['foo' => null, 'bar' => null], ['moo' => null, 'bar' => null]);
-        $result = $this->templateProperty->getAllPropertiesInTemplate('template');
-        $this->assertCount(3, $result);
-        foreach ($result as $key => $value) {
-            $this->assertTrue(in_array($key, ['foo', 'bar', 'moo']));
-        }
     }
 
     public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotAnArray(): void
@@ -79,16 +74,5 @@ class TemplatePropertyTest extends TestCase
         $this->yamlParserMock->expects($this->once())->method('parseFile')
             ->willReturn(['not' => ['flat' => 'array']]);
         $this->templateProperty->getPropertiesFromYamlFile('filepath');
-    }
-
-    /**
-     * @return MockObject|SplFileInfo
-     */
-    private function getFileMock()
-    {
-        $fileMock = $this->getMockBuilder(SplFileInfo::class)->disableOriginalConstructor()->getMock();
-        $fileMock->expects($this->any())->method('getPath')->willReturn('path');
-        $fileMock->expects($this->any())->method('getContents')->willReturn('contents');
-        return $fileMock;
     }
 }
