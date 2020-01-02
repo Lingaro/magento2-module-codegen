@@ -1,17 +1,26 @@
 <?php
 
 /**
- * @copyright Copyright © ${commentsYear} ${CommentsCompanyName}. All rights reserved.
- * @author    ${commentsUserEmail}
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
  
-namespace ${Vendorname}\${Modulename}\Controller\${Controllername};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|pascal }}};
 
 use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\App\Action\Context;
 
-class ${Actionname} extends Action
+class {{ actionName|pascal }} extends Action
+{%- if httpActionGet and httpActionPost %}
+ implements HttpGetActionInterface, HttpPostActionInterface
+{% elseif httpActionGet %}
+ implements HttpGetActionInterface
+{% elseif httpActionPost %}
+ implements HttpPostActionInterface
+{% endif %}
 {
     /**
      * @var PageFactory
