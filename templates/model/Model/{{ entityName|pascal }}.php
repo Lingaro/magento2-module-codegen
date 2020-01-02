@@ -7,54 +7,35 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
-use Magento\Framework\Model\AbstractExtensibleModel;
-use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface;
+use Magento\Framework\Model\AbstractModel;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }} as {{ entityName|pascal }}ResourceModel;
 
-class {{ entityName|pascal }} extends AbstractExtensibleModel implements {{ entityName|pascal }}Interface
+class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pascal }}Interface
 {
     /**
-     * Initialize resource model
      * @return void
      */
     protected function _construct()
     {
-        $this->_init('{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}');
+        $this->_init({{ entityName|pascal }}ResourceModel::class);
     }
+{% for item in fields %}
 
-    {% for item in fields %}
     /**
      * @inheritDoc
      */
-    public function get{{ item.name|pascal }}(): {{ item.type }}
+    public function get{{ item.name|pascal }}(): ?{{ item.php_type }}
     {
-        return $this->getData('{{ item.name }}');
+        return $this->getData('{{ item.name|snake }}');
     }
 
     /**
     * @inheritDoc
     */
-    public function set{{ item.name|pascal }}({{ item.type }} $value): $this
+    public function set{{ item.name|pascal }}({{ item.php_type }} $value): void
     {
-        $this->setData('{{ item.name }}', $value);
+        $this->setData('{{ item.name|snake }}', $value);
     }
-
-    {% endfor %}
-
-    /**
-     * @inheritDoc
-     */
-    public function getExtensionAttributes()
-    {
-        return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setExtensionAttributes({{ entityName|pascal }}ExtensionInterface $extensionAttributes)
-    {
-        $this->_setExtensionAttributes($extensionAttributes);
-        return $this;
-    }
+{% endfor %}
 }

@@ -98,7 +98,7 @@ class TwigToSchema
     {
         $attributes = [];
         if (get_class($currentNode) === NameExpression::class && $currentNode->getAttribute('name') === $name) {
-            $attributes[$parentNode->getNode('attribute')->getAttribute('value')] = $parentNode->getNode('attribute')->getAttribute('value');
+            $attributes[] = $parentNode->getNode('attribute')->getAttribute('value');
         }
         if ($currentNode->count()) {
             foreach ($currentNode as $key => $node) {

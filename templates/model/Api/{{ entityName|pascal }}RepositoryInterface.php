@@ -8,35 +8,34 @@
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}SearchResultInterface;
 
 interface {{ entityName|pascal }}RepositoryInterface
 {
     /**
-     * Get {{ entityName|pascal }} by {{ entityName|pascal }} id
      * @param int $id
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return {{ entityName|pascal }}Interface
+     * @throws NoSuchEntityException
      */
-    public function getById($id);
+    public function getById($id): {{ entityName|pascal }}Interface;
 
     /**
-     * Create or update {{ entityName|pascal }}
-     * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface ${{ entityName|pascal }}
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface
-     */
-    public function save({{ entityName|pascal }}Interface ${{ entityName|pascal }});
-
-    /**
-     * Delete {{ entityName|pascal }}
-     * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface ${{ entityName|pascal }}
+     * @param {{ entityName|pascal }}Interface ${{ entityName|pascal }}
      * @return void
      */
-    public function delete({{ entityName|pascal }}Interface ${{ entityName|pascal }});
+    public function save({{ entityName|pascal }}Interface ${{ entityName|pascal }}): void;
 
     /**
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}SearchResultInterface
+     * @param {{ entityName|pascal }}Interface ${{ entityName|pascal }}
+     * @return void
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function delete({{ entityName|pascal }}Interface ${{ entityName|pascal }}): void;
+
+    /**
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return {{ entityName|pascal }}SearchResultInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): {{ entityName|pascal }}SearchResultInterface;
 }

@@ -7,32 +7,19 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data;
 
-use Magento\Framework\Api\ExtensibleDataInterface;
-
-interface {{ entityName|pascal }}Interface extends ExtensibleDataInterface
+interface {{ entityName|pascal }}Interface
 {
-    {% for item in fields %}
-    /**
-     * @return {{ item.type }}|null
-     */
-    public function get{{ item.name|pascal }}(): {{ item.type }};
+{%- for item in fields %}
 
     /**
-     * @param {{ item.type }} $value
-     * @return $this
+     * @return {{ item.php_type }}|null
      */
-    public function set{{ item.name|pascal }}({{ item.type }} $value): $this;
-
-    {% endfor %}
+    public function get{{ item.name|pascal }}(): ?{{ item.php_type }};
 
     /**
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface|null
+     * @param {{ item.php_type }} $value
+     * @return void
      */
-    public function getExtensionAttributes();
-
-    /**
-     * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(\{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface $extensionAttributes);
+    public function set{{ item.name|pascal }}({{ item.php_type }} $value): void;
+{% endfor %}
 }
