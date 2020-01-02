@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
+use Orba\Magento2Codegen\Service\TemplatePropertyMerger;
 use Symfony\Component\Yaml\Parser;
 
 class TemplateProperty
@@ -24,28 +25,36 @@ class TemplateProperty
      */
     private $templateProcessor;
 
+    /**
+     * @var TemplatePropertyMerger
+     */
+    private $templatePropertyMerger;
+
     public function __construct(
         Parser $yamlParser,
         TemplateFile $templateFile,
-        TemplateProcessorInterface $templateProcessor
+        TemplateProcessorInterface $templateProcessor,
+        TemplatePropertyMerger $templatePropertyMerger
     )
     {
         $this->yamlParser = $yamlParser;
         $this->templateFile = $templateFile;
         $this->templateProcessor = $templateProcessor;
+        $this->templatePropertyMerger = $templatePropertyMerger;
     }
 
     public function getAllPropertiesInTemplate(string $templateName): array
     {
         $templateNames = array_merge([$templateName], $this->templateFile->getDependencies($templateName, true));
         $templateFiles = $this->templateFile->getTemplateFiles($templateNames);
-        $propertiesInTemplate = [];
+        $properties = [];
         foreach ($templateFiles as $file) {
-            $propertiesInFilename = $this->templateProcessor->getPropertiesInText($file->getPath());
-            $propertiesInCode = $this->templateProcessor->getPropertiesInText($file->getContents());
-            $propertiesInTemplate = array_merge($propertiesInTemplate, $propertiesInFilename, $propertiesInCode);
+            $properties = $this->templatePropertyMerger
+                ->merge($properties, $this->templateProcessor->getPropertiesInText($file->getPath()));
+            $properties = $this->templatePropertyMerger
+                ->merge($properties, $this->templateProcessor->getPropertiesInText($file->getContents()));
         }
-        return $propertiesInTemplate;
+        return $properties;
     }
 
     /**

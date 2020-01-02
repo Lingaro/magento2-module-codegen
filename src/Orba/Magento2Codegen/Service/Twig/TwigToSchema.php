@@ -12,7 +12,7 @@ use Twig\Node\ModuleNode;
 use Twig\Node\Node;
 
 /**
- * @see https://stackoverflow.com/a/57758048
+ * Inspired by: https://stackoverflow.com/a/57758048
  */
 class TwigToSchema
 {
@@ -35,9 +35,8 @@ class TwigToSchema
         return $keys;
     }
 
-    private function visit(Node $ast): array
+    private function visit(Node $ast, array $vars = []): array
     {
-        $vars = [];
         switch (get_class($ast)) {
             case AssignNameExpression::class:
             case NameExpression::class:
@@ -55,13 +54,18 @@ class TwigToSchema
                     /** @var Node $node */
                     switch ($key) {
                         case 'body':
-                            $vars = array_merge($vars, $this->visit($node));
+                            $vars = $this->visit($node, $vars);
                             if ($seqName && $valueName) {
-                                $vars[$seqName] = [
-                                    'always_defined' => false,
-                                    'type' => 'array',
-                                    'elements' => $this->visitForNode($node, $ast, $valueName)
-                                ];
+                                $elements = $this->visitForNode($node, $ast, $valueName);
+                                if (isset($vars[$seqName])) {
+                                    $vars[$seqName]['elements'] = array_merge($vars[$seqName]['elements'], $elements);
+                                } else {
+                                    $vars[$seqName] = [
+                                        'always_defined' => false,
+                                        'type' => 'array',
+                                        'elements' => $elements
+                                    ];
+                                }
                             }
                             break;
                         default:
@@ -71,18 +75,18 @@ class TwigToSchema
                 break;
             case IfNode::class:
                 foreach ($ast->getNode('tests') as $key => $test) {
-                    $vars = array_merge($vars, $this->visit($test));
+                    $vars = $this->visit($test, $vars);
                 }
                 try {
                     foreach ($ast->getNode('else') as $key => $else) {
-                        $vars = array_merge($vars, $this->visit($else));
+                        $vars = $this->visit($else, $vars);
                     }
                 } catch (LogicException $e) {}
                 break;
             default:
                 if ($ast->count()) {
                     foreach ($ast as $key => $node) {
-                        $vars = array_merge($vars, $this->visit($node));
+                        $vars = $this->visit($node, $vars);
                     }
                 }
                 break;
@@ -101,6 +105,6 @@ class TwigToSchema
                 $attributes = array_merge($attributes, $this->visitForNode($node, $currentNode, $name));
             }
         }
-        return $attributes;
+        return array_unique($attributes);
     }
 }
