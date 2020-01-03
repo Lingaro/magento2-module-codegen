@@ -59,7 +59,9 @@ class CodeGenerator
     {
         $dryRun = $this->io->getInput()->getOption(GenerateCommand::OPTION_DRY_RUN);
         $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
-        foreach ($this->templateFile->getTemplateFiles([$templateName]) as $file) {
+        foreach ($this->templateFile->getTemplateFiles(
+            array_merge([$templateName], $this->templateFile->getDependencies($templateName, true))
+        ) as $file) {
             $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
                 $this->templateProcessor->replacePropertiesInText($file->getPathname(), $propertyBag),
                 $rootDir
