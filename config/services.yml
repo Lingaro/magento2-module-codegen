@@ -48,6 +48,16 @@ services:
       -
         - addMerger
         -
+          - '/^routes\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/router': 'id'
+              '/config/router/route': 'id'
+              '/config/router/route/module': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.xml/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
 
