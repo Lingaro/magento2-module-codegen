@@ -20,20 +20,39 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
     {
         $this->_init({{ entityName|pascal }}ResourceModel::class);
     }
+
+    /**
+     * @return int|null
+     */
+    public function getId()
+    {
+        return $this->_getData('entity_id');
+    }
+
+    /**
+     * @param int $value
+     * @return void
+     */
+    public function setId($value)
+    {
+        $this->setData('entity_id', $value);
+    }
 {% for item in fields %}
 
     /**
-     * @inheritDoc
+     * @return {% if item.database_type in [ 'int', 'smallint' ] %}int{% else %}string{% endif %}|null
      */
-    public function get{{ item.name|pascal }}(): ?{{ item.php_type }}
+    public function get{{ item.name|pascal }}()
     {
         return $this->getData('{{ item.name|snake }}');
     }
 
     /**
-    * @inheritDoc
-    */
-    public function set{{ item.name|pascal }}({{ item.php_type }} $value): void
+     * @param
+    {%- if item.database_type in [ 'int', 'smallint' ] %} int {% else %} string {% endif %}$value
+     * @return void
+     */
+    public function set{{ item.name|pascal }}({% if item.database_type in [ 'int', 'smallint' ] %}int {% else %}string {% endif %}$value)
     {
         $this->setData('{{ item.name|snake }}', $value);
     }

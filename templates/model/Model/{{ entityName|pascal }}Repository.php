@@ -50,7 +50,7 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
     /**
      * @inheritDoc
      */
-    public function getById($id): {{ entityName|pascal }}Interface
+    public function getById($id)
     {
         ${{ entityName|camel }} = $this->{{ entityName|camel }}Factory->create();
         ${{ entityName|camel }}->getResource()->load(${{ entityName|camel }}, $id);
@@ -64,9 +64,9 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
      * @inheritDoc
      * @throws AlreadyExistsException
      */
-    public function save({{ entityName|pascal }}Interface ${{ entityName|camel }}): void
+    public function save({{ entityName|pascal }}Interface ${{ entityName|camel }})
     {
-        /** @var ${{ entityName|camel }} ${{ entityName|pascal }} **/
+        /** @var ${{ entityName|camel }} {{ entityName|pascal }} **/
         ${{ entityName|camel }}->getResource()->save(${{ entityName|camel }});
     }
 
@@ -74,16 +74,16 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
      * @inheritDoc
      * @throws Exception
      */
-    public function delete({{ entityName|pascal }}Interface ${{ entityName|camel }}): void
+    public function delete({{ entityName|pascal }}Interface ${{ entityName|camel }})
     {
-        /** @var ${{ entityName|camel }} ${{ entityName|pascal }} **/
+        /** @var ${{ entityName|camel }} {{ entityName|pascal }} **/
         ${{ entityName|camel }}->getResource()->delete(${{ entityName|camel }});
     }
 
     /**
      * @inheritDoc
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): {{ entityName|pascal }}SearchResultInterface
+    public function getList(SearchCriteriaInterface $searchCriteria)
     {
         $collection = $this->{{ entityName|camel }}CollectionFactory->create();
         $this->addFiltersToCollection($searchCriteria, $collection);
