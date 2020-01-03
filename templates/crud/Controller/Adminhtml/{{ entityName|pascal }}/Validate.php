@@ -1,11 +1,11 @@
 <?php
+
 /**
- * Validate
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -40,7 +40,11 @@ class Validate extends Action
     public function validateRequireEntries(array $data)
     {
         $requiredFields = [
-            'identifier' => __('{{ entityName|pascal }} Identifier'),
+{% for item in fields %}
+        {% if not item.nullable %}
+            '{{ item.name|snake }}' => '{{ entityName|pascal }} {{ item.name|pascal }}',
+        {% endif %}
+{% endfor %}
         ];
         foreach ($data as $field => $value) {
             if (in_array($field, array_keys($requiredFields)) && $value == '') {

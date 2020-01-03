@@ -1,12 +1,10 @@
 <?php
 
 /**
- * {{ entityName|camel}}Actions.php
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Ui\Component\Listing\Column;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;

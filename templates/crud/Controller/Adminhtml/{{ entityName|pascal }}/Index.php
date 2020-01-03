@@ -1,11 +1,11 @@
 <?php
+
 /**
- * index.php
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;

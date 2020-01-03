@@ -1,17 +1,17 @@
 <?php
+
 /**
- * Edit.php
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Result\PageFactory;
-use {{ vendorName|pascal }}\{{ vendorName|pascal }}\Model\{{ entityName|pascal }}Factory;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}Factory;
 
 class Edit extends Action
 {
@@ -57,18 +57,14 @@ class Edit extends Action
     }
 
     /**
-     * Edit
-     *
      * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function execute()
     {
-        // 1. Get ID
         $id = $this->getRequest()->getParam('entity_id');
         $objectInstance = $this->objectFactory->create();
 
-        // 2. Initial checking
         if ($id) {
             $objectInstance->load($id);
             if (!$objectInstance->getId()) {
@@ -80,16 +76,13 @@ class Edit extends Action
             }
         }
 
-        // 3. Set entered data if was error when we do save
         $data = $this->_session->getFormData(true);
         if (!empty($data)) {
             $objectInstance->addData($data);
         }
 
-        // 4. Register model to use later in blocks
         $this->_coreRegistry->register('entity_id', $id);
 
-        // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}');

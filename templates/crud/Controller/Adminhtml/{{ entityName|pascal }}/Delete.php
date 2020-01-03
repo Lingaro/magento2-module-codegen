@@ -1,15 +1,16 @@
 <?php
+
 /**
- * Delete
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
 
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use {{ vendorName|pascal }}\{{ vendorName|pascal }}\Model\{{ entityName|pascal }}Factory;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}Factory;
 
 class Delete extends Action
 {
@@ -18,11 +19,11 @@ class Delete extends Action
 
     /**
      * @param Context $context
-     * @param {{ entityName|camel}}Factory $objectFactory
+     * @param {{ entityName|pascal}}Factory $objectFactory
      */
     public function __construct(
-    Context $context,
-    {{ entityName|camel}}Factory $objectFactory
+        Context $context,
+        {{ entityName|pascal}}Factory $objectFactory
     ) {
         $this->objectFactory = $objectFactory;
         parent::__construct($context);
@@ -54,7 +55,7 @@ class Delete extends Action
             } else {
                 $this->messageManager->addErrorMessage(__('Record does not exist.'));
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());
         }
         

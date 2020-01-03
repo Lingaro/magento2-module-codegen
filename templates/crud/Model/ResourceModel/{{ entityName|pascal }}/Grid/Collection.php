@@ -1,12 +1,11 @@
 <?php
+
 /**
- * Collection.php
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Grid;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
@@ -16,7 +15,7 @@ use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Search\AggregationInterface;
 use Psr\Log\LoggerInterface;
-use {{ vendorName|pascal }}\{{ vendorName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection as {{ entityName|pascal }}Collection;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection as {{ entityName|pascal }}Collection;
 
 /**
  * Class Collection

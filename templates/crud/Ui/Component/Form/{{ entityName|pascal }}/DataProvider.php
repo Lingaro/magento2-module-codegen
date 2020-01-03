@@ -1,15 +1,15 @@
 <?php
+
 /**
- * DataProvider
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Ui\Component\Form\{{ entityName|pascal }};
+
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Ui\Component\Form\{{ entityName|pascal }};
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use {{ vendorName|pascal }}\{{ vendorName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection;
 
 class DataProvider extends AbstractDataProvider
 {

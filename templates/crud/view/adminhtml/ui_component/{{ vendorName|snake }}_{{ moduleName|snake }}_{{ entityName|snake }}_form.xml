@@ -59,21 +59,23 @@
                 </item>
             </argument>
         </field>
-        <field name="identifier">
+{% for item in fields %}
+        <field name="{{ item.name|snake }}">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string">Identifier</item>
+                    <item name="label" xsi:type="string" translate="true">{{ item.name|pascal }}</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">main_fieldset</item>
+                    {% if not item.nullable %}
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
-                    <item name="sortOrder" xsi:type="number">10</item>
+                    {% endif %}
                 </item>
             </argument>
         </field>
-        <!-- Add your fields here -->
+{% endfor %}
     </fieldset>
 </form>

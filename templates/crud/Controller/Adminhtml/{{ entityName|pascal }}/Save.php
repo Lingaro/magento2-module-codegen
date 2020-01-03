@@ -1,15 +1,15 @@
 <?php
+
 /**
- * Save
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ vendorName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use {{ vendorName|pascal }}\{{ vendorName|pascal }}\Model\{{ entityName|pascal }}Factory;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}Factory;
 
 class Save extends Action
 {
@@ -64,10 +64,6 @@ class Save extends Action
             );
 
             try {
-
-                if($objectInstance->getData('identifier') == null)
-                    $objectInstance->setIdentifier($this->generateRandomString());
-
                 $objectInstance->save();
                 $this->messageManager->addSuccessMessage(__('You saved this record.'));
                 $this->_getSession()->setFormData(false);
