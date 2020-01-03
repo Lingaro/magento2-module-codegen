@@ -7,9 +7,7 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data;
 
-use Magento\Framework\Api\ExtensibleDataInterface;
-
-interface {{ entityName|pascal }}Interface extends ExtensibleDataInterface
+interface {{ entityName|pascal }}Interface
 {
     /**
      * @return int|null
@@ -17,30 +15,22 @@ interface {{ entityName|pascal }}Interface extends ExtensibleDataInterface
     public function getId();
 
     /**
-     * @param int $id
-     * @return $this
+     * @param int $value
+     * @return void
      */
-    public function setId($id);
+    public function setId($value);
+{% for item in fields %}
 
     /**
-     * @return string|null
+     * @return {% if item.database_type in [ 'int', 'smallint' ] %}int{% else %}string{% endif %}|null
      */
-    public function getName();
+    public function get{{ item.name|pascal }}();
 
     /**
-     * @param string $name
-     * @return $this
+     * @param
+     {%- if item.database_type in [ 'int', 'smallint' ] %} int {% else %} string {% endif %}$value
+     * @return void
      */
-    public function setName($name);
-
-    /**
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface|null
-     */
-    public function getExtensionAttributes();
-
-    /**
-     * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(\{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface $extensionAttributes);
+    public function set{{ item.name|pascal }}({% if item.database_type in [ 'int', 'smallint' ] %}int {% else %}string {% endif %}$value);
+{% endfor %}
 }

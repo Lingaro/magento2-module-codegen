@@ -8,13 +8,14 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}" resource="default" engine="innodb" comment="{{ entityName|pascal }} Table">
-        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="{{ entityName|camel }} Id"/>
-        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="{{ entityName|pascal }} Name"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="{{ entityName|pascal }} Id"/>
+{% for item in fields %}
+        <column xsi:type="{{ item.database_type }}" name="{{ item.name|snake }}"
+            {%- if item.database_type in [ 'int', 'smallint', 'timestamp' ] %} padding="{{ item.length }}" unsigned="{{ item.unsigned }}"
+            {%- else %} length="{{ item.length }}"{% endif %} nullable="{{ item.nullable }}" comment="{{ entityName|pascal }} {{ item.name|pascal }}"/>
+{% endfor %}
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
-        <index referenceId="{{ vendorName|upper }}_{{ moduleName|upper }}_{{ entityName|upper }}_NAME" indexType="fulltext">
-            <column name="name"/>
-        </index>
     </table>
 </schema>

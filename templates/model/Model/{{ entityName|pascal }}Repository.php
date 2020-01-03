@@ -8,13 +8,15 @@
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}RepositoryInterface;
+use Exception;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SortOrder;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}SearchResultInterface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}SearchResultInterfaceFactory;
-use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\CollectionFactory as {{ entityName|camel }}CollectionFactory;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\CollectionFactory as {{ entityName|pascal }}CollectionFactory;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection;
 
 class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}RepositoryInterface
@@ -60,18 +62,21 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
 
     /**
      * @inheritDoc
+     * @throws AlreadyExistsException
      */
     public function save({{ entityName|pascal }}Interface ${{ entityName|camel }})
     {
+        /** @var ${{ entityName|camel }} {{ entityName|pascal }} **/
         ${{ entityName|camel }}->getResource()->save(${{ entityName|camel }});
-        return ${{ entityName|camel }};
     }
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     public function delete({{ entityName|pascal }}Interface ${{ entityName|camel }})
     {
+        /** @var ${{ entityName|camel }} {{ entityName|pascal }} **/
         ${{ entityName|camel }}->getResource()->delete(${{ entityName|camel }});
     }
 
