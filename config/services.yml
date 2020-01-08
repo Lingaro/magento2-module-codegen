@@ -10,11 +10,12 @@ services:
 
   Orba\Magento2Codegen\:
     resource: '../src/Orba/Magento2Codegen'
+    exclude: '../src/Orba/Magento2Codegen/Test'
 
   Orba\Magento2Codegen\Application:
     public: true
 
-  Orba\Magento2Codegen\Input\Input:
+  Orba\Magento2Codegen\Service\IO:
     public: true
 
   Orba\Magento2Codegen\Service\FileMergerFactory:
