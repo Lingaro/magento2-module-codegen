@@ -4,7 +4,6 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Exception;
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Application;
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
@@ -12,12 +11,15 @@ use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
 use Orba\Magento2Codegen\Util\TemplatePropertyBag;
 
+/**
+ * Class Template
+ * @package Orba\Magento2Codegen\Service\CommandUtil
+ */
 class Template
 {
-    const ARG_TEMPLATE = 'template';
-
-    const TEMPLATE_MODULE = 'module';
-    const TEMPLATE_LANGUAGE = 'language';
+    public const ARG_TEMPLATE = 'template';
+    public const TEMPLATE_MODULE = 'module';
+    public const TEMPLATE_LANGUAGE = 'language';
 
     /**
      * @var array
@@ -31,11 +33,6 @@ class Template
      * @var TemplateFile
      */
     private $templateFile;
-
-    /**
-     * @var TemplateProperty
-     */
-    private $propertyUtil;
 
     /**
      * @var TemplatePropertyBagFactory
@@ -57,9 +54,16 @@ class Template
      */
     private $io;
 
+    /**
+     * Template constructor.
+     * @param TemplateFile $templateFile
+     * @param TemplatePropertyBagFactory $propertyBagFactory
+     * @param Module $module
+     * @param CodeGenerator $codeGenerator
+     * @param IO $io
+     */
     public function __construct(
         TemplateFile $templateFile,
-        TemplateProperty $propertyUtil,
         TemplatePropertyBagFactory $propertyBagFactory,
         Module $module,
         CodeGenerator $codeGenerator,
@@ -67,13 +71,15 @@ class Template
     )
     {
         $this->templateFile = $templateFile;
-        $this->propertyUtil = $propertyUtil;
         $this->propertyBagFactory = $propertyBagFactory;
         $this->module = $module;
         $this->codeGenerator = $codeGenerator;
         $this->io = $io;
     }
 
+    /**
+     * @return string
+     */
     public function getTemplateName(): string
     {
         $template = $this->io->getInput()->getArgument(self::ARG_TEMPLATE);
@@ -100,38 +106,11 @@ class Template
         return true;
     }
 
-    public function prepareProperties(
-        string $templateName,
-        ?TemplatePropertyBag $basePropertyBag = null
-    ): TemplatePropertyBag
-    {
-        $propertyBag = $basePropertyBag ?: $this->propertyBagFactory->create();
-        $propertyBag->add($this->propertyUtil->getPropertiesFromYamlFile(
-            BP . '/' . Application::CONFIG_FOLDER . '/' . Application::DEFAULT_PROPERTIES_FILENAME
-        ));
-        $templateProperties = $this->propertyUtil->getAllPropertiesInTemplate($templateName);
-        foreach ($templateProperties as $key => $elements) {
-            if (!isset($propertyBag[$key])) {
-                if (is_array($elements)) {
-                    $items = [];
-                    $i = 0;
-                    do {
-                        $item = [];
-                        foreach ($elements as $element) {
-                            $item[$element] = $this->io->getInstance()->ask($key . '.' . $i . '.' . $element);
-                        }
-                        $items[] = $item;
-                        $i++;
-                    } while ($this->io->getInstance()->confirm(sprintf('Do you want to add another item to "%s" array?', $key), true));
-                    $propertyBag->add([$key => $items]);
-                } else {
-                    $propertyBag->add([$key => $this->io->getInstance()->ask($key)]);
-                }
-            }
-        }
-        return $propertyBag;
-    }
-
+    /**
+     * @param string $templateName
+     * @return bool
+     * @throws Exception
+     */
     public function shouldCreateModule(string $templateName): bool
     {
         if (!$this->module->exists($this->getRootDir())
@@ -146,12 +125,20 @@ class Template
         return false;
     }
 
+    /**
+     * @param TemplatePropertyBag $propertyBag
+     * @return TemplatePropertyBag
+     */
     public function createModule(TemplatePropertyBag $propertyBag): TemplatePropertyBag
     {
         $this->codeGenerator->execute(Template::TEMPLATE_MODULE, $propertyBag);
         return $propertyBag;
     }
 
+    /**
+     * @param string $templateName
+     * @return TemplatePropertyBag
+     */
     public function getBasePropertyBag(string $templateName): TemplatePropertyBag
     {
         if (in_array($templateName, $this->moduleNoRequiredTemplates)) {
@@ -161,6 +148,10 @@ class Template
         }
     }
 
+    /**
+     * @param string $templateName
+     * @param TemplatePropertyBag $propertyBag
+     */
     public function showInfoAfterGenerate(string $templateName, TemplatePropertyBag $propertyBag): void
     {
         $manualSteps = $this->templateFile->getManualSteps($templateName, $propertyBag);
@@ -170,6 +161,9 @@ class Template
         }
     }
 
+    /**
+     * @return string
+     */
     private function getRootDir(): string
     {
         return $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);

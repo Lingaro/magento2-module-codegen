@@ -31,11 +31,6 @@ class TemplateTest extends TestCase
     private $templateFileMock;
 
     /**
-     * @var MockObject|TemplateProperty
-     */
-    private $propertyUtilMock;
-
-    /**
      * @var MockObject|TemplatePropertyBagFactory
      */
     private $propertyBagFactoryMock;
@@ -59,8 +54,6 @@ class TemplateTest extends TestCase
     {
         $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)
             ->disableOriginalConstructor()->getMock();
-        $this->propertyUtilMock = $this->getMockBuilder(TemplateProperty::class)
-            ->disableOriginalConstructor()->getMock();
         $this->propertyBagFactoryMock = $this->getMockBuilder(TemplatePropertyBagFactory::class)
             ->disableOriginalConstructor()->getMock();
         $this->moduleUtilMock = $this->getMockBuilder(Module::class)
@@ -71,7 +64,6 @@ class TemplateTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $this->template = new Template(
             $this->templateFileMock,
-            $this->propertyUtilMock,
             $this->propertyBagFactoryMock,
             $this->moduleUtilMock,
             $this->codeGeneratorMock,
@@ -124,74 +116,6 @@ class TemplateTest extends TestCase
         $this->templateFileMock->expects($this->once())->method('exists')->willReturn(true);
         $result = $this->template->validateTemplate('template');
         $this->assertTrue($result);
-    }
-
-    public function testPreparePropertiesReturnsPropertyBagIfBasePropertyBagWasNotSet(): void
-    {
-        $result = $this->template->prepareProperties('template');
-        $this->assertInstanceOf(TemplatePropertyBag::class, $result);
-    }
-
-    public function testPreparePropertiesReturnsTheSamePropertyBagObjectThatWasSet(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $propertyBag['foo'] = 'bar';
-        $result = $this->template->prepareProperties('template', $propertyBag);
-        $this->assertSame('bar', $result['foo']);
-    }
-
-    public function testPreparePropertiesReturnsPropertyBagWithScalarPropertyTakenFromTemplate(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $this->propertyUtilMock->expects($this->once())->method('getAllPropertiesInTemplate')
-            ->willReturn(['foo' => null]);
-        $ioInstanceMock = $this->getIoInstanceMock();
-        $ioInstanceMock->expects($this->once())->method('ask')->willReturn('bar');
-        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
-        $result = $this->template->prepareProperties('template', $propertyBag);
-        $this->assertSame('bar', $result['foo']);
-    }
-
-    public function testPreparePropertiesReturnsPropertyBagWithOneItemOneElementArrayPropertyTakenFromTemplate(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $this->propertyUtilMock->expects($this->once())->method('getAllPropertiesInTemplate')
-            ->willReturn(['foo' => ['bar']]);
-        $ioInstanceMock = $this->getIoInstanceMock();
-        $ioInstanceMock->expects($this->once())->method('ask')->willReturn('moo');
-        $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(false);
-        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
-        $result = $this->template->prepareProperties('template', $propertyBag);
-        $this->assertSame([['bar' => 'moo']], $result['foo']);
-    }
-
-    public function testPreparePropertiesReturnsPropertyBagWithOneItemTwoElementsArrayPropertyTakenFromTemplate(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $this->propertyUtilMock->expects($this->once())->method('getAllPropertiesInTemplate')
-            ->willReturn(['foo' => ['bar', 'gar']]);
-        $ioInstanceMock = $this->getIoInstanceMock();
-        $ioInstanceMock->expects($this->any())->method('ask')
-            ->willReturnOnConsecutiveCalls('moo', 'goo');
-        $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(false);
-        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
-        $result = $this->template->prepareProperties('template', $propertyBag);
-        $this->assertSame([['bar' => 'moo', 'gar' => 'goo']], $result['foo']);
-    }
-
-    public function testPreparePropertiesReturnsPropertyBagWithTwoItemOneElementArrayPropertyTakenFromTemplate(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $this->propertyUtilMock->expects($this->once())->method('getAllPropertiesInTemplate')
-            ->willReturn(['foo' => ['bar']]);
-        $ioInstanceMock = $this->getIoInstanceMock();
-        $ioInstanceMock->expects($this->any())->method('ask')
-            ->willReturnOnConsecutiveCalls('moo', 'goo');
-        $ioInstanceMock->expects($this->any())->method('confirm')
-            ->willReturnOnConsecutiveCalls(true, false);
-        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
-        $result = $this->template->prepareProperties('template', $propertyBag);
-        $this->assertSame([['bar' => 'moo'], ['bar' => 'goo']], $result['foo']);
     }
 
     public function testShouldCreateModuleReturnsFalseIfModuleExists(): void
