@@ -134,11 +134,12 @@ class TemplateProperty
     }
 
     /**
+     * Read properties and property extension
      * @param string $filePath
+     * @param bool $ifCheckArrayFlat
      * @return array
-     * @throws InvalidArgumentException
      */
-    private function getPropertiesFromYamlFile(string $filePath): array
+    private function readYamlFile(string $filePath, bool $ifCheckArrayFlat = true): array
     {
         $data = $this->yamlParser->parseFile($filePath);
         if (!is_array($data)) {
@@ -146,11 +147,13 @@ class TemplateProperty
                 sprintf('YAML file %s must consists of array.', $filePath)
             );
         }
-        foreach ($data as $value) {
-            if (!is_scalar($value)) {
-                throw new InvalidArgumentException(
-                    sprintf('YAML file %s must consists of flat array.', $filePath)
-                );
+        if ($ifCheckArrayFlat) {
+            foreach ($data as $value) {
+                if (!is_scalar($value)) {
+                    throw new InvalidArgumentException(
+                        sprintf('YAML file %s must consists of flat array.', $filePath)
+                    );
+                }
             }
         }
         return $data;
@@ -183,8 +186,7 @@ class TemplateProperty
     }
 
     /**
-     * Read from file PROPERTIES_EXTENSION_FILENAME additional information about properties in the given template
-     * but set only information which has key specified in EXTENSION_KEYS
+     * Read from file PROPERTIES_EXTENSION_FILENAME additional information about properties
      * @return void
      */
     private function loadExtensions(): void
@@ -192,18 +194,19 @@ class TemplateProperty
         if (is_null($this->properties)) {
             $this->getAllPropertiesInTemplate();
         }
-        $path = $this->templateDir->getPath($this->templateName)
-            . '/' . TemplateFile::TEMPLATE_CONFIG_FOLDER
-            . '/' . self::PROPERTIES_EXTENSION_FILENAME;
         $this->nullExtensions();
-        if (is_file($path)) {
-            $data = $this->yamlParser->parseFile(
-                $this->templateDir->getPath($this->templateName)
+        $data = [];
+        //prefer extension information from $this->templateName
+        $templateNames = array_merge($this->templateFile->getDependencies($this->templateName, true), [$this->templateName]);
+        foreach ($templateNames as $templateName) {
+            $path = $this->templateDir->getPath($templateName)
                 . '/' . TemplateFile::TEMPLATE_CONFIG_FOLDER
-                . '/' . self::PROPERTIES_EXTENSION_FILENAME
-            );
-            $this->fillExtensions($data);
+                . '/' . self::PROPERTIES_EXTENSION_FILENAME;
+            if (is_file($path)) {
+                $data = array_merge($data, $this->readYamlFile($path, false));
+            }
         }
+        $this->fillExtensions($data);
     }
 
     /**
@@ -214,6 +217,9 @@ class TemplateProperty
      */
     private function fillExtensions(array $data): void
     {
+        if (empty($data)) {
+            return;
+        }
         foreach ($this->properties as $propertyName => $propertyVal) {
             if (array_key_exists($propertyName, $data)) {
                 foreach ($data[$propertyName] as $key => $value) {
@@ -247,7 +253,7 @@ class TemplateProperty
     public function prepareProperties(?TemplatePropertyBag $basePropertyBag = null): TemplatePropertyBag
     {
         $propertyBag = $basePropertyBag ?: $this->propertyBagFactory->create();
-        $propertyBag->add($this->getPropertiesFromYamlFile(
+        $propertyBag->add($this->readYamlFile(
             BP . '/' . Application::CONFIG_FOLDER . '/' . Application::DEFAULT_PROPERTIES_FILENAME
         ));
         $templateProperties = $this->getAllPropertiesInTemplate();
