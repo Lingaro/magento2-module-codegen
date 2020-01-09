@@ -13,7 +13,8 @@ class FrontPageControllerTest extends TestCase
     public function testGeneratedPageIsAccessibleAndContainsCorrectElements(): void
     {
         $client = HttpClient::create(['verify_peer' => false, 'verify_host' => false]);
-        $response = $client->request('GET', $_ENV['MAGENTO_BASE_URL'] . 'foobar_page/foo/bar');
+        //frontName controllerName actionName
+        $response = $client->request('GET', $_ENV['MAGENTO_BASE_URL'] . 'foo_bar/foobarpage/foo');
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
         $this->assertSame(200, $statusCode);
