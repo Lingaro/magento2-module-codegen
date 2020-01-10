@@ -79,3 +79,4 @@ services:
         pascal: '@Orba\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
         snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
+        capital: '@Orba\Magento2Codegen\Service\StringFilter\CapitalCaseFilter'

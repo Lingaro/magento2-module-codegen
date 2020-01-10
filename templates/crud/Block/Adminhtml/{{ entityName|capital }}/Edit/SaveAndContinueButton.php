@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|pascal }}\Edit;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|capital }}\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 

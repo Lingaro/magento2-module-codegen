@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+Kurwa!
+
+<!--
+/**
+ * @copyright Copyright © 2020 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="avendor_amodule_aentity" resource="default" engine="innodb" comment="Aentity Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Aentity Id"/>
+        <column xsi:type="int" name="int" padding="10" unsigned=""
+ nullable="" comment="Aentity Int"/>
+        <column xsi:type="int" name="int_l" padding="1" unsigned=""
+ nullable="" comment="Aentity IntL"/>
+        <column xsi:type="varchar" name="varchar" length="255" nullable="" comment="Aentity Varchar"/>
+        <column xsi:type="varchar" name="varchar_l" length="1" nullable="" comment="Aentity VarcharL"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

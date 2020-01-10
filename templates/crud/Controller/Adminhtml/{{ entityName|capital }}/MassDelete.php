@@ -4,7 +4,7 @@
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;

@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|pascal }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
 
 use Exception;
 use Magento\Backend\App\Action;

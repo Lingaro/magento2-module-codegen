@@ -11,8 +11,15 @@
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="{{ entityName|pascal }} Id"/>
 {% for item in fields %}
         <column xsi:type="{{ item.database_type }}" name="{{ item.name|snake }}"
-            {%- if item.database_type in [ 'int', 'smallint', 'timestamp' ] %} padding="{{ item.length }}" unsigned="{{ item.unsigned }}"
-            {%- else %} length="{{ item.length }}"{% endif %} nullable="{{ item.nullable }}" comment="{{ entityName|pascal }} {{ item.name|pascal }}"/>
+{%- if item.length -%}
+{% if item.database_type in [ 'int', 'smallint', 'timestamp' ] %} padding="{{ item.length }}" unsigned="{{ item.unsigned }}"
+{% else %} length="{{ item.length }}"{% endif %}
+{% else %}
+{% if item.database_type == 'int' %} padding="10" unsigned="{{ item.unsigned }}"
+{% elseif item.database_type == 'smallint' %} padding="5" unsigned="{{ item.unsigned }}"
+{% elseif item.database_type == 'timestamp' %} padding="10" unsigned="{{ item.unsigned }}"
+{% else %} length="255"
+{% endif %}{% endif %} nullable="{{ item.nullable }}" comment="{{ entityName|pascal }} {{ item.name|pascal }}"/>
 {% endfor %}
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
