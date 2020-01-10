@@ -11,7 +11,7 @@ use PhpParser\PrettyPrinter;
 class PhpMerger extends AbstractMerger implements MergerInterface
 {
 
-    /** @var NodeHandler */
+    /** @var NodeTree */
     private $_tree;
 
     public function __construct(
