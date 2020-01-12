@@ -10,6 +10,7 @@ class Module implements TaskInterface
 {
     public function execute(): void
     {
+        // Arguments: vendorName, moduleName
         CommandTesterRunner::run(
             'module',
             'EmptyModule',

@@ -15,6 +15,7 @@ class Block implements TaskInterface
             'Block',
             [TestExtension::TEST_VENDOR_NAME, 'Block']
         );
+        // Arguments: blockName
         CommandTesterRunner::run(
             'block',
             'Block',

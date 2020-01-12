@@ -15,11 +15,11 @@ class FrontPageController implements TaskInterface
             'FrontPageController',
             [TestExtension::TEST_VENDOR_NAME, 'FrontPageController']
         );
-        //Arguments: pageLayout, controllerName, actionName, viewModelName, frontName
+        // Arguments: frontName, controllerName, actionName, pageLayout, viewModelName
         CommandTesterRunner::run(
             'frontPageController',
             'FrontPageController',
-            ['1column', 'foobarpage', 'foo', 'bar', 'foo_bar']
+            ['foo_bar', 'foobarpage', 'foo', '1column', 'bar']
         );
 
         $viewModelPath = $_ENV['MAGENTO_ROOT_DIR'] . 'app/code/' . TestExtension::TEST_VENDOR_NAME

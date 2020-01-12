@@ -15,6 +15,7 @@ class ViewModel implements TaskInterface
             'ViewModel',
             [TestExtension::TEST_VENDOR_NAME, 'ViewModel']
         );
+        // Arguments: viewModelName
         CommandTesterRunner::run(
             'viewModel',
             'ViewModel',

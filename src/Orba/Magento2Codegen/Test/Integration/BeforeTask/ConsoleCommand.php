@@ -15,6 +15,7 @@ class ConsoleCommand implements TaskInterface
             'ConsoleCommand',
             [TestExtension::TEST_VENDOR_NAME, 'ConsoleCommand']
         );
+        // Arguments: commandName, commandDescription
         CommandTesterRunner::run(
             'consoleCommand',
             'ConsoleCommand',
