@@ -14,7 +14,7 @@ class TemplatePropertyMerger
                     $this->throwMixedPropertyTypesException();
                 }
                 $arr[$key] = $value;
-            } else if (is_array($value)) {
+            } elseif (is_array($value)) {
                 if (!array_key_exists($key, $arr)) {
                     $arr[$key] = $value;
                 } else {

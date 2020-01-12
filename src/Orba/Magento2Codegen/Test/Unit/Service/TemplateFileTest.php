@@ -8,7 +8,7 @@ use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
@@ -125,18 +125,18 @@ class TemplateFileTest extends TestCase
     public function testGetManualStepsThrowsExceptionIfTemplateDoesNotExist(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->templateFile->getManualSteps('nonexistent', new TemplatePropertyBag());
+        $this->templateFile->getManualSteps('nonexistent', new PropertyBag());
     }
 
     public function testGetManualStepsReturnsEmptyStringIfConfigDirDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('noconfig', new TemplatePropertyBag());
+        $result = $this->templateFile->getManualSteps('noconfig', new PropertyBag());
         $this->assertSame('', $result);
     }
 
     public function testGetManualStepsReturnsEmptyStringIfAfterGenerateFileDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('emptyconfig', new TemplatePropertyBag());
+        $result = $this->templateFile->getManualSteps('emptyconfig', new PropertyBag());
         $this->assertSame('', $result);
     }
 
@@ -144,7 +144,7 @@ class TemplateFileTest extends TestCase
     {
         $this->templateProcessorMock->expects($this->once())->method('replacePropertiesInText')
             ->willReturn('Some info with value');
-        $result = $this->templateFile->getManualSteps('example', new TemplatePropertyBag());
+        $result = $this->templateFile->getManualSteps('example', new PropertyBag());
         $this->assertSame('Some info with value', $result);
     }
 

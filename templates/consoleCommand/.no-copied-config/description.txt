@@ -1,1 +1,1 @@
-This Template creates code to set a new Console Command
+This template is used to create a custom console command.
