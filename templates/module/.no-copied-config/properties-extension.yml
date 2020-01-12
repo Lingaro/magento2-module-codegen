@@ -1,6 +1,0 @@
-vendorName:
-  default: Orba
-  description: Vendor is main part of component naming
-moduleName:
-  default: testModule
-  description: each module in vendor namespace must have unique name

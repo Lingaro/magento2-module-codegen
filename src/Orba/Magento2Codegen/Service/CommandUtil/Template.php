@@ -5,11 +5,13 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 use Exception;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
+use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Service\PropertyBagFactory;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 /**
  * Class Template
@@ -35,7 +37,7 @@ class Template
     private $templateFile;
 
     /**
-     * @var TemplatePropertyBagFactory
+     * @var PropertyBagFactory
      */
     private $propertyBagFactory;
 
@@ -55,19 +57,23 @@ class Template
     private $io;
 
     /**
-     * Template constructor.
-     * @param TemplateFile $templateFile
-     * @param TemplatePropertyBagFactory $propertyBagFactory
-     * @param Module $module
-     * @param CodeGenerator $codeGenerator
-     * @param IO $io
+     * @var TemplateProperty
      */
+    private $templatePropertyUtil;
+
+    /**
+     * @var CollectorFactory
+     */
+    private $propertyValueCollectorFactory;
+
     public function __construct(
         TemplateFile $templateFile,
-        TemplatePropertyBagFactory $propertyBagFactory,
+        PropertyBagFactory $propertyBagFactory,
         Module $module,
         CodeGenerator $codeGenerator,
-        IO $io
+        IO $io,
+        TemplateProperty $templatePropertyUtil,
+        CollectorFactory $propertyValueCollectorFactory
     )
     {
         $this->templateFile = $templateFile;
@@ -75,6 +81,8 @@ class Template
         $this->module = $module;
         $this->codeGenerator = $codeGenerator;
         $this->io = $io;
+        $this->templatePropertyUtil = $templatePropertyUtil;
+        $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
     }
 
     /**
@@ -126,10 +134,10 @@ class Template
     }
 
     /**
-     * @param TemplatePropertyBag $propertyBag
-     * @return TemplatePropertyBag
+     * @param PropertyBag $propertyBag
+     * @return PropertyBag
      */
-    public function createModule(TemplatePropertyBag $propertyBag): TemplatePropertyBag
+    public function createModule(PropertyBag $propertyBag): PropertyBag
     {
         $this->codeGenerator->execute(Template::TEMPLATE_MODULE, $propertyBag);
         return $propertyBag;
@@ -137,9 +145,9 @@ class Template
 
     /**
      * @param string $templateName
-     * @return TemplatePropertyBag
+     * @return PropertyBag
      */
-    public function getBasePropertyBag(string $templateName): TemplatePropertyBag
+    public function getBasePropertyBag(string $templateName): PropertyBag
     {
         if (in_array($templateName, $this->moduleNoRequiredTemplates)) {
             return $this->propertyBagFactory->create();
@@ -150,15 +158,30 @@ class Template
 
     /**
      * @param string $templateName
-     * @param TemplatePropertyBag $propertyBag
+     * @param PropertyBag $propertyBag
      */
-    public function showInfoAfterGenerate(string $templateName, TemplatePropertyBag $propertyBag): void
+    public function showInfoAfterGenerate(string $templateName, PropertyBag $propertyBag): void
     {
         $manualSteps = $this->templateFile->getManualSteps($templateName, $propertyBag);
         if ($manualSteps) {
             $this->io->getInstance()->note('This template needs you to take care of the following manual steps:');
             $this->io->getInstance()->text($manualSteps);
         }
+    }
+
+    public function prepareProperties(string $templateName, ?PropertyBag $basePropertyBag = null): PropertyBag
+    {
+        $propertyBag = $basePropertyBag ?: $this->propertyBagFactory->create();
+        $properties = array_merge(
+            $this->templatePropertyUtil->collectConstProperties(),
+            $this->templatePropertyUtil->collectInputProperties($templateName)
+        );
+        foreach ($properties as $property) {
+            /** @var PropertyInterface $property */
+            $valueCollector = $this->propertyValueCollectorFactory->create($property);
+            $propertyBag[$property->getName()] = $valueCollector->collectValue($property);
+        }
+        return $propertyBag;
     }
 
     /**

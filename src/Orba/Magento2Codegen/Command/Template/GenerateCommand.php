@@ -4,13 +4,10 @@ namespace Orba\Magento2Codegen\Command\Template;
 
 use Orba\Magento2Codegen\Command\AbstractCommand;
 use Orba\Magento2Codegen\Service\CodeGenerator;
-use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
-use Orba\Magento2Codegen\Service\CommandUtil\TemplatePropertyFactory;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -41,22 +38,17 @@ class GenerateCommand extends AbstractCommand
      */
     private $codeGenerator;
 
-    /** @var TemplateProperty */
-    private $templateProperty;
-
     public function __construct(
         Template $templateUtil,
         IO $io,
         TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
-        TemplateProperty $templateProperty,
         array $inputValidators = []
     )
     {
         $this->templateUtil = $templateUtil;
         $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;
-        $this->templateProperty = $templateProperty;
         parent::__construct($io, $inputValidators);
     }
 
@@ -113,11 +105,11 @@ class GenerateCommand extends AbstractCommand
     {
         $description = $this->templateFile->getDescription($this->templateName);
         if ($description) {
-            $this->io->getInstance()->block($description, 'Template description');
+            $this->io->getInstance()->text(explode("\n", $description));
         }
     }
 
-    private function getBasePropertyBag(): TemplatePropertyBag
+    private function getBasePropertyBag(): PropertyBag
     {
         if ($this->templateUtil->shouldCreateModule($this->templateName)) {
             return $this->generateModule();
@@ -126,18 +118,18 @@ class GenerateCommand extends AbstractCommand
         }
     }
 
-    private function generateModule(): TemplatePropertyBag
+    private function generateModule(): PropertyBag
     {
         return $this->templateUtil->createModule(
-            $this->templateProperty->withTemplateName(Template::TEMPLATE_MODULE)->prepareProperties()
+            $this->templateUtil->prepareProperties(Template::TEMPLATE_MODULE)
         );
     }
 
-    private function generate(TemplatePropertyBag $propertyBag): void
+    private function generate(PropertyBag $propertyBag): void
     {
         $this->codeGenerator->execute(
             $this->templateName,
-            $this->templateProperty->withTemplateName($this->templateName)->prepareProperties($propertyBag)
+            $this->templateUtil->prepareProperties($this->templateName, $propertyBag)
         );
         $this->templateUtil->showInfoAfterGenerate($this->templateName, $propertyBag);
     }
