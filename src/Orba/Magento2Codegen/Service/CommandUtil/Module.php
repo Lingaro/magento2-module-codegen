@@ -3,8 +3,8 @@
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Service\PropertyBagFactory;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Module
@@ -22,14 +22,14 @@ class Module
     private $filesystem;
 
     /**
-     * @var TemplatePropertyBagFactory
+     * @var PropertyBagFactory
      */
     private $propertyBagFactory;
 
     public function __construct(
         FilepathUtil $filepathUtil,
         Filesystem $filesystem,
-        TemplatePropertyBagFactory $propertyBagFactory
+        PropertyBagFactory $propertyBagFactory
     )
     {
         $this->filepathUtil = $filepathUtil;
@@ -44,7 +44,7 @@ class Module
         );
     }
 
-    public function getPropertyBag(string $rootDir): TemplatePropertyBag
+    public function getPropertyBag(string $rootDir): PropertyBag
     {
         $registrationAbsolutePath =
             $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir);

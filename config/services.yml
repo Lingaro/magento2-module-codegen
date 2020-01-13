@@ -8,6 +8,9 @@ services:
   Symfony\Component\Yaml\Parser:
     class: '\Symfony\Component\Yaml\Parser'
 
+  Symfony\Component\Config\Definition\Processor:
+    class: '\Symfony\Component\Config\Definition\Processor'
+
   Orba\Magento2Codegen\:
     resource: '../src/Orba/Magento2Codegen'
 
@@ -97,3 +100,29 @@ services:
         snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
         capital: '@Orba\Magento2Codegen\Service\StringFilter\CapitalCaseFilter'
+
+  Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
+    arguments:
+      $map:
+        'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
+        'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector'
+        'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector'
+
+  Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector:
+    calls:
+      - method: setCollectorFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
+
+  Orba\Magento2Codegen\Service\PropertyFactory:
+    arguments:
+      $map:
+        const: '@Orba\Magento2Codegen\Service\PropertyFactory\ConstFactory'
+        string: '@Orba\Magento2Codegen\Service\PropertyFactory\StringFactory'
+        array: '@Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory'
+
+  Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory:
+    calls:
+      - method: setPropertyFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\PropertyFactory'

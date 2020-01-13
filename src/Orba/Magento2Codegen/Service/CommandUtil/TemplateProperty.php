@@ -2,18 +2,19 @@
 
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
-use InvalidArgumentException;
+use Orba\Magento2Codegen\Model\ConstProperty;
+use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Service\Config;
+use Orba\Magento2Codegen\Service\PropertyFactory;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
-use Orba\Magento2Codegen\Service\TemplatePropertyMerger;
-use Symfony\Component\Yaml\Parser;
 
 class TemplateProperty
 {
     /**
-     * @var Parser
+     * @var Config
      */
-    private $yamlParser;
+    private $config;
 
     /**
      * @var TemplateFile
@@ -21,62 +22,58 @@ class TemplateProperty
     private $templateFile;
 
     /**
-     * @var TemplateProcessorInterface
+     * @var CollectorFactory
      */
-    private $templateProcessor;
+    private $propertyValueCollectorFactory;
 
     /**
-     * @var TemplatePropertyMerger
+     * @var PropertyFactory
      */
-    private $templatePropertyMerger;
+    private $propertyFactory;
 
     public function __construct(
-        Parser $yamlParser,
+        Config $config,
         TemplateFile $templateFile,
-        TemplateProcessorInterface $templateProcessor,
-        TemplatePropertyMerger $templatePropertyMerger
-    )
-    {
-        $this->yamlParser = $yamlParser;
+        CollectorFactory $propertyValueCollectorFactory,
+        PropertyFactory $propertyFactory
+    ) {
+        $this->config = $config;
         $this->templateFile = $templateFile;
-        $this->templateProcessor = $templateProcessor;
-        $this->templatePropertyMerger = $templatePropertyMerger;
+        $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
+        $this->propertyFactory = $propertyFactory;
     }
 
-    public function getAllPropertiesInTemplate(string $templateName): array
+    /**
+     * @return PropertyInterface[]
+     */
+    public function collectConstProperties(): array
     {
-        $templateNames = array_merge([$templateName], $this->templateFile->getDependencies($templateName, true));
-        $templateFiles = $this->templateFile->getTemplateFiles($templateNames);
         $properties = [];
-        foreach ($templateFiles as $file) {
-            $properties = $this->templatePropertyMerger
-                ->merge($properties, $this->templateProcessor->getPropertiesInText($file->getPath()));
-            $properties = $this->templatePropertyMerger
-                ->merge($properties, $this->templateProcessor->getPropertiesInText($file->getContents()));
+        foreach ($this->config['defaultProperties'] as $defaultProperty) {
+            $properties[$defaultProperty['name']] = $this->propertyFactory
+                ->create(
+                    $defaultProperty['name'],
+                    ['type' => ConstProperty::TYPE, 'value' => $defaultProperty['value']]
+                );
         }
         return $properties;
     }
 
     /**
-     * @param string $filePath
-     * @return array
-     * @throws InvalidArgumentException
+     * @param string $template
+     * @return PropertyInterface[]
      */
-    public function getPropertiesFromYamlFile(string $filePath): array
+    public function collectInputProperties(string $template): array
     {
-        $data = $this->yamlParser->parseFile($filePath);
-        if (!is_array($data)) {
-            throw new InvalidArgumentException(
-                sprintf('YAML file %s must consists of array.', $filePath)
-            );
+        $propertiesConfig = [];
+        $templateNames = array_merge([$template], $this->templateFile->getDependencies($template, true));
+        foreach ($templateNames as $templateName) {
+            $propertiesConfig = array_merge($propertiesConfig, $this->templateFile->getPropertiesConfig($templateName));
         }
-        foreach ($data as $value) {
-            if (!is_scalar($value)) {
-                throw new InvalidArgumentException(
-                    sprintf('YAML file %s must consists of flat array.', $filePath)
-                );
-            }
+        $properties = [];
+        foreach ($propertiesConfig as $propertyName => $propertyConfig) {
+            $properties[$propertyName] = $this->propertyFactory->create($propertyName, $propertyConfig);
         }
-        return $data;
+        return $properties;
     }
 }
