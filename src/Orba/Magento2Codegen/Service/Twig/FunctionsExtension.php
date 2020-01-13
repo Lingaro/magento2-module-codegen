@@ -43,7 +43,7 @@ class FunctionsExtension extends AbstractExtension
     public function columnDefinition(string $databaseType, ?string $length, ?string $unsigned, ?string $nullable, ?string $precision, ?string $scale): string
     {
         $databaseType = $this->normalizeDatabaseType($databaseType);
-        $def=  preg_replace('/\s+/', ' ',
+        $def=  preg_replace('/\s+/', ' ', trim(
             $this->getXsiType($databaseType) . " "
             . $this->getPadding($databaseType, $length) . " "
             . $this->getLength($databaseType, $length) . " "
@@ -51,6 +51,7 @@ class FunctionsExtension extends AbstractExtension
             . $this->getNullable($nullable) . " "
             . $this->getPrecision($databaseType, $precision) . " "
             . $this->getScale($databaseType, $scale)
+            )
         );
         return $def;
     }

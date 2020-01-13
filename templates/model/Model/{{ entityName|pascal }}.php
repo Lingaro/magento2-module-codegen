@@ -40,7 +40,7 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
 {% for item in fields %}
 
     /**
-     * @return {{ databaseTypeToPHP(item.database_type) }}|null
+     * @return {{ databaseTypeToPHP(item.databaseType) }}|null
      */
     public function get{{ item.name|pascal }}()
     {
@@ -48,10 +48,10 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
     }
 
     /**
-     * @param {{ databaseTypeToPHP(item.database_type) }} $value
+     * @param {{ databaseTypeToPHP(item.databaseType) }} $value
      * @return void
      */
-    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.database_type) }} $value)
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value)
     {
         $this->setData('{{ item.name|snake }}', $value);
     }

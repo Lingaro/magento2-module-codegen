@@ -22,14 +22,14 @@ interface {{ entityName|pascal }}Interface
 {% for item in fields %}
 
     /**
-     * @return {{ databaseTypeToPHP(item.database_type) }}|null
+     * @return {{ databaseTypeToPHP(item.databaseType) }}|null
      */
     public function get{{ item.name|pascal }}();
 
     /**
-     * @param {{ databaseTypeToPHP(item.database_type) }} $value
+     * @param {{ databaseTypeToPHP(item.databaseType) }} $value
      * @return void
      */
-    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.database_type) }} $value);
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value);
 {% endfor %}
 }
