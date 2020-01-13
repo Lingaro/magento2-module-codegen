@@ -2,11 +2,9 @@
 
 namespace Orba\Magento2Codegen\Service;
 
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 interface TemplateProcessorInterface
 {
-    public function getPropertiesInText(string $text): array;
-
-    public function replacePropertiesInText(string $text, TemplatePropertyBag $properties): string;
+    public function replacePropertiesInText(string $text, PropertyBag $properties): string;
 }

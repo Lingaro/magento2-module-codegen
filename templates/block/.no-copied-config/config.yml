@@ -1,0 +1,4 @@
+properties:
+  blockName:
+    type: string
+    description: A short name describing block

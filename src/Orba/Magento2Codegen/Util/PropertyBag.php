@@ -4,7 +4,7 @@ namespace Orba\Magento2Codegen\Util;
 
 use ArrayAccess;
 
-class TemplatePropertyBag implements ArrayAccess
+class PropertyBag implements ArrayAccess
 {
     /**
      * @var array

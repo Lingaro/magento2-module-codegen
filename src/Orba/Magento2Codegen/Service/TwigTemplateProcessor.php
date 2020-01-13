@@ -4,8 +4,7 @@ namespace Orba\Magento2Codegen\Service;
 
 use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
 use Orba\Magento2Codegen\Service\Twig\FunctionsExtension;
-use Orba\Magento2Codegen\Service\Twig\TwigToSchema;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
@@ -20,44 +19,19 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
     public const ALLOWED_FUNCTIONS = ['columnDefinition', 'databaseTypeToPHP'];
 
     /**
-     * @var TwigToSchema
-     */
-    private $twigToSchema;
-
-    /**
      * @var FiltersExtension
      */
     private $filtersExtension;
 
     private $functionsExtension;
 
-    public function __construct(TwigToSchema $twigToSchema, FiltersExtension $filtersExtension, FunctionsExtension $functionsExtension)
+    public function __construct(FiltersExtension $filtersExtension, FunctionsExtension $functionsExtension)
     {
-        $this->twigToSchema = $twigToSchema;
         $this->filtersExtension = $filtersExtension;
         $this->functionsExtension = $functionsExtension;
     }
 
-    public function getPropertiesInText(string $text): array
-    {
-        $properties = [];
-        $schema = $this->twigToSchema->infer($this->getTwigEnvironment($text), self::TEMPLATE_NAME);
-        foreach ($schema as $name => $attributes) {
-            switch ($attributes['type']) {
-                case 'scalar':
-                    $properties[$name] = null;
-                    break;
-                case 'array':
-                    $properties[$name] = $attributes['elements'];
-                    break;
-                default:
-                    break;
-            }
-        }
-        return $properties;
-    }
-
-    public function replacePropertiesInText(string $text, TemplatePropertyBag $properties): string
+    public function replacePropertiesInText(string $text, PropertyBag $properties): string
     {
         return $this->getTwigEnvironment($text)->render(self::TEMPLATE_NAME, $properties->toArray());
     }
