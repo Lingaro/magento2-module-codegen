@@ -22,15 +22,14 @@ interface {{ entityName|pascal }}Interface
 {% for item in fields %}
 
     /**
-     * @return {% if item.database_type in [ 'int', 'smallint' ] %}int{% else %}string{% endif %}|null
+     * @return {{ databaseTypeToPHP(item.database_type) }}|null
      */
     public function get{{ item.name|pascal }}();
 
     /**
-     * @param
-     {%- if item.database_type in [ 'int', 'smallint' ] %} int {% else %} string {% endif %}$value
+     * @param {{ databaseTypeToPHP(item.database_type) }} $value
      * @return void
      */
-    public function set{{ item.name|pascal }}({% if item.database_type in [ 'int', 'smallint' ] %}int {% else %}string {% endif %}$value);
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.database_type) }} $value);
 {% endfor %}
 }

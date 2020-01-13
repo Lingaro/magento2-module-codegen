@@ -40,7 +40,7 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
 {% for item in fields %}
 
     /**
-     * @return {% if item.database_type in [ 'int', 'smallint' ] %}int{% else %}string{% endif %}|null
+     * @return {{ databaseTypeToPHP(item.database_type) }}|null
      */
     public function get{{ item.name|pascal }}()
     {
@@ -48,11 +48,10 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
     }
 
     /**
-     * @param
-    {%- if item.database_type in [ 'int', 'smallint' ] %} int {% else %} string {% endif %}$value
+     * @param {{ databaseTypeToPHP(item.database_type) }} $value
      * @return void
      */
-    public function set{{ item.name|pascal }}({% if item.database_type in [ 'int', 'smallint' ] %}int {% else %}string {% endif %}$value)
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.database_type) }} $value)
     {
         $this->setData('{{ item.name|snake }}', $value);
     }
