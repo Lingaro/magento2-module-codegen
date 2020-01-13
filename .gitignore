@@ -1,5 +1,5 @@
 /.idea
 /vendor/
 /var/
-/config/default-properties.yml
+/config/codegen.yml
 /.phpunit.result.cache

@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Application extends \Symfony\Component\Console\Application
 {
     const CONFIG_FOLDER = 'config';
+    const INPUT_PROPERTIES_FILENAME = 'input-properties.yml';
     const DEFAULT_PROPERTIES_FILENAME = 'default-properties.yml';
 
     /**
