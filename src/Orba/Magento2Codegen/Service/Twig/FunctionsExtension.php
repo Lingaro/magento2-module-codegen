@@ -12,10 +12,11 @@ use Twig\TwigFunction;
  */
 class FunctionsExtension extends AbstractExtension
 {
-    private const INT_TYPES = ['int', 'smallint', 'timestamp'];
-    private const DECIMAL_TYPES = ['decimal', 'float', 'real'];
-    private const ALLOWED_TYPES = ['blob', 'boolean', 'date', 'datetime',
-'decimal', 'float', 'int', 'real', 'smallint', 'text', 'timestamp',
+    private const INT_TYPES = ['int', 'smallint', 'bigint', 'tinyint', 'timestamp'];
+    private const DECIMAL_TYPES = ['decimal', 'float', 'double'];
+    private const BOOLEAN_TYPES = ['boolean'];
+    private const ALLOWED_TYPES = ['bigint', 'blob', 'boolean', 'date', 'datetime',
+'decimal', 'double', 'float', 'int', 'smallint', 'text', 'timestamp', 'tinyint',
 'varbinary', 'varchar'];
 
     /**
@@ -31,7 +32,7 @@ class FunctionsExtension extends AbstractExtension
 
     /**
      * @param string $databaseType
-     * @param string $length |null
+     * @param string|null $length
      * @param string|null $unsigned
      * @param string|null $nullable
      * @param string|null $precision
@@ -42,15 +43,17 @@ class FunctionsExtension extends AbstractExtension
     public function columnDefinition(string $databaseType, ?string $length, ?string $unsigned, ?string $nullable, ?string $precision, ?string $scale): string
     {
         $databaseType = $this->normalizeDatabaseType($databaseType);
-        return trim(
-            $this->getXsiType($databaseType)
-            . $this->getPadding($databaseType, $length)
-            . $this->getLength($databaseType, $length)
-            . $this->getUnsigned($databaseType, $unsigned)
-            . $this->getNullable($nullable)
-            . $this->getPrecision($databaseType, $precision)
+        $def=  preg_replace('/\s+/', ' ', trim(
+            $this->getXsiType($databaseType) . " "
+            . $this->getPadding($databaseType, $length) . " "
+            . $this->getLength($databaseType, $length) . " "
+            . $this->getUnsigned($databaseType, $unsigned) . " "
+            . $this->getNullable($nullable) . " "
+            . $this->getPrecision($databaseType, $precision) . " "
             . $this->getScale($databaseType, $scale)
+            )
         );
+        return $def;
     }
 
     /**
@@ -103,10 +106,10 @@ class FunctionsExtension extends AbstractExtension
 
     /**
      * @param string $databaseType
-     * @param string $length
+     * @param string|null $length
      * @return string
      */
-    private function getPadding(string $databaseType, string $length)
+    private function getPadding(string $databaseType, ?string $length): string
     {
         if (!in_array($databaseType, self::INT_TYPES)) {
             return '';
@@ -120,6 +123,8 @@ class FunctionsExtension extends AbstractExtension
                 case 'smallint':
                     $length = 5;
                     break;
+                default:
+                    $length = 10;
             }
         }
         return $this->format('padding', $length);
@@ -127,12 +132,12 @@ class FunctionsExtension extends AbstractExtension
 
     /**
      * @param string $databaseType
-     * @param string $length
+     * @param string|null $length
      * @return string
      */
-    private function getLength(string $databaseType, string $length)
+    private function getLength(string $databaseType, ?string $length): string
     {
-        if (in_array($databaseType, self::INT_TYPES)) {
+        if (in_array($databaseType, array_merge(self::INT_TYPES, self::DECIMAL_TYPES, self::BOOLEAN_TYPES))) {
             return '';
         }
         if (empty($length)) {
@@ -143,10 +148,10 @@ class FunctionsExtension extends AbstractExtension
 
     /**
      * @param string $databaseType
-     * @param string $unsigned
+     * @param string|null $unsigned
      * @return string
      */
-    private function getUnsigned(string $databaseType, string $unsigned)
+    private function getUnsigned(string $databaseType, ?string $unsigned): string
     {
         if (!in_array($databaseType, array_merge(self::INT_TYPES, self::DECIMAL_TYPES))) {
             return '';
@@ -155,53 +160,45 @@ class FunctionsExtension extends AbstractExtension
     }
 
     /**
-     * @param string $nullable
+     * @param string|null $nullable
      * @return string
      */
-    private function getNullable(string $nullable): string
+    private function getNullable(?string $nullable): string
     {
         return $this->format('nullable', $this->getStringBoolean($nullable));
     }
 
     /**
      * @param string $databaseType
-     * @param string $precision
+     * @param string|null $precision
      * @return string
      */
-    private function getPrecision(string $databaseType, string $precision): string
+    private function getPrecision(string $databaseType, ?string $precision): string
     {
-        if (!in_array($databaseType, self::DECIMAL_TYPES)) {
+        if (!in_array($databaseType, self::DECIMAL_TYPES) || empty($precision)) {
             return '';
-        }
-        if (!$precision) {
-            //as mysql default
-            $precision = '10';
         }
         return $this->format('precision', $precision);
     }
 
     /**
      * @param string $databaseType
-     * @param string $scale
+     * @param string|null $scale
      * @return string
      */
-    private function getScale(string $databaseType, string $scale): string
+    private function getScale(string $databaseType, ?string $scale): string
     {
-        if (!in_array($databaseType, self::DECIMAL_TYPES)) {
+        if (!in_array($databaseType, self::DECIMAL_TYPES) || empty($scale)) {
             return '';
-        }
-        if (!$scale) {
-            //as mysql default
-            $scale = '0';
         }
         return $this->format('scale', $scale);
     }
 
     /**
-     * @param string $in
+     * @param string|null $in
      * @return string
      */
-    private function getStringBoolean(string $in): string
+    private function getStringBoolean(?string $in): string
     {
         if ((strtolower($in)) == 'false') {
             return 'false';
@@ -213,8 +210,13 @@ class FunctionsExtension extends AbstractExtension
         }
     }
 
-    private function format($token, $value)
+    /**
+     * @param $token
+     * @param $value
+     * @return string
+     */
+    private function format($token, $value): string
     {
-        return $token . '="' . $value . '" ';
+        return $token . '="' . $value . '"';
     }
 }

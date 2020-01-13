@@ -10,7 +10,7 @@
     <table name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}" resource="default" engine="innodb" comment="{{ entityName|pascal }} Table">
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="{{ entityName|pascal }} Id"/>
 {% for item in fields %}
-        <column {{ columnDefinition(item.database_type, item.length, item.unsigned, item.nullable, item.precision, item.scale) }} name="{{ item.name|snake }}" comment="{{ entityName|pascal }} {{ item.name|pascal }}" />
+        <column {{ columnDefinition(item.databaseType, item.length, item.unsigned, item.nullable, item.precision, item.scale)|raw }} name="{{ item.name|snake }}" comment="{{ entityName|pascal }} {{ item.name|pascal }}"/>
 {% endfor %}
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>

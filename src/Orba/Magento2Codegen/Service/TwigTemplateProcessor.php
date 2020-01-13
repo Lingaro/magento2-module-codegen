@@ -14,7 +14,7 @@ use Twig\TwigFilter;
 class TwigTemplateProcessor implements TemplateProcessorInterface
 {
     const ALLOWED_TAGS = ['if', 'for'];
-    const ALLOWED_FILTERS = ['escape', 'upper', 'lower'];
+    const ALLOWED_FILTERS = ['escape', 'upper', 'lower', 'raw'];
     const TEMPLATE_NAME = 'template';
     public const ALLOWED_FUNCTIONS = ['columnDefinition', 'databaseTypeToPHP'];
 

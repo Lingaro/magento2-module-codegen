@@ -55,7 +55,7 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
         ${{ entityName|camel }} = $this->{{ entityName|camel }}Factory->create();
         ${{ entityName|camel }}->getResource()->load(${{ entityName|camel }}, $id);
         if (!${{ entityName|camel }}->getId()) {
-            throw new NoSuchEntityException(__('Unable to find {{ entityName|camel }} with ID "%1"', $id));
+            throw new NoSuchEntityException(__('Unable to find {{ entityName|pascal }} with ID "%1"', $id));
         }
         return ${{ entityName|camel }};
     }
