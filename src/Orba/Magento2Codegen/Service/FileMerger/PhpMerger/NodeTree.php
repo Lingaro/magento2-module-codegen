@@ -2,73 +2,155 @@
 
 namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger;
 
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Order;
+use Exception;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Root;
+use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
 use Orba\Magento2Codegen\Service\FileMerger\PhpParser\NodeWrapper;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Namespace_;
+use ReflectionException;
 
+/**
+ * Class NodeTree
+ * @package Orba\Magento2Codegen\Service\FileMerger\PhpMerger
+ */
 class NodeTree
 {
-    /** @var Order */
-    private $_order;
-
     /** @var Root */
     private $_root;
 
-    public $iteration = 0;
+    /** @var array */
+    private $_roots = [];
+
+    const EXPECTED_BRANCHES = [
+        Namespace_::class,
+        Class_::class
+    ];
 
     /**
      * NodeTree constructor.
-     * @param Order $order
-     * @param Root $root
+     * @param RootFactory $rootFactory
      */
     public function __construct(
-        Order $order,
-        Root $root
+        RootFactory $rootFactory
     ) {
-        $this->_order = $order;
-        $this->_root = $root;
+        $this->_root = $rootFactory->create('root');
     }
 
-    public function handle(NodeWrapper $wrapper)
+    /**
+     * @param NodeWrapper $wrapper
+     * @return $this
+     * @throws ReflectionException
+     */
+    public function grow(NodeWrapper $wrapper): self
     {
-        $this->grow($this->_root, $wrapper);
-        $this->_root->resolve();
+        if (!$wrapper->isWrapped()) {
+            throw new Exception("Wrapper has no wrapped nodes");
+        }
+
+        foreach ($wrapper->getSubNodeNames() as $propertyName) {
+            $this->_grow($this->_root, $wrapper, $propertyName);
+        }
+
+        return $this;
     }
 
-    public function getName(Node $node)
+    public function resolve(): ?self
     {
-        $reflection = new \ReflectionClass(get_class($node));
-        if ($reflection->hasMethod('__toString') === true) {
-            return (string)$node;
+        if ($this->_canResolve()) {
+            $this->_root->resolve();
+            return $this;
         }
-        if ($reflection->hasProperty('name')) {
-            return (string)$node->name;
-        }
-        if ($reflection->hasProperty('var')) {
-            return (string)$node->var->name;
-        }
-        if ($reflection->hasProperty('expr')) {
-            return (string)$node->expr->var->name;
-        }
-
-        return Root::GROUP_MARKER . get_class($node);
+        return null;
     }
 
-    public function grow(Root $root, Node $node, $param = 'stmts')
+    /**
+     * @param Root $root
+     * @param Node $node
+     * @param $parentParamName
+     * @return $this
+     * @throws ReflectionException
+     */
+    private function _grow(Root $root, Node $node, $parentParamName): self
     {
-        $root = $root->down($this->getName($node));
-        $root->addNode($node, $param);
+        $root = $root->handleNode($node, $parentParamName);
 
         foreach ($node->getSubNodeNames() as $propertyName) {
             if (is_array($node->$propertyName)) {
-                foreach ($node->$propertyName as $single) {
-                    if ($single instanceof Node) {
-                        $this->grow($root, $single, $propertyName);
+                foreach ($node->$propertyName as $subNode) {
+                    if ($subNode instanceof Node) {
+                        $this->_grow($root, $subNode, $propertyName);
                     }
                 }
             }
         };
+
+        $this->_collectRoot($root);
         return $this;
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    private function _canResolve(): bool
+    {
+        $gathered = $this->_getRoots();
+        if (empty($gathered)) {
+            throw new Exception("No tree gathered roots");
+        }
+
+        foreach (self::EXPECTED_BRANCHES as $class) {
+            $classes = $this->_getRoots($class);
+            if (count($classes) === 1) {
+                throw new Exception("To few expected Nodes");
+            }
+            $prev = null;
+            foreach ($classes as $one) {
+                if (!$prev) {
+                    $prev = $one;
+                    continue;
+                }
+                if ($prev !== $one) {
+                    throw new Exception("Mismatched Node names");
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param Root $root
+     * @return $this
+     */
+    private function _collectRoot(Root $root)
+    {
+        $hash = $this->_rootHash();
+        $class = get_class($root->getLastNode());
+        $this->_roots[$hash][$class][] = $root->getFullPath();
+        return $this;
+    }
+
+    /**
+     * @param string|null $class
+     * @return array|mixed
+     */
+    private function _getRoots(string $class = null)
+    {
+        $hash = $this->_rootHash();
+        if ($class) {
+            return $this->_roots[$hash][$class];
+        }
+        return $this->_roots[$hash];
+    }
+
+    /**
+     * @return string
+     */
+    private function _rootHash(): string
+    {
+        return spl_object_hash($this->_root);
     }
 }

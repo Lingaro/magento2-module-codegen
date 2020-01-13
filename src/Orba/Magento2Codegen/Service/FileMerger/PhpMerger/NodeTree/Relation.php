@@ -4,50 +4,51 @@ namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
 use PhpParser\Node;
 
+/**
+ * Class Relation
+ * @package Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree
+ */
 class Relation
 {
     /** @var Node */
-    private $_parent, $_child;
+    private $_parent;
 
     /** @var string */
     private $_param;
 
-    public function setParent(Node $node = null)
+    /**
+     * @param Node|null $node
+     * @return $this
+     */
+    public function setParent(Node $node = null): self
     {
-
         $this->_parent = $node;
         return $this;
     }
 
-    public function getParent()
+    /**
+     * @return Node
+     */
+    public function getParent(): ?Node
     {
         return $this->_parent;
     }
 
-    public function setChild(Node $node)
-    {
-        $this->_child = $node;
-        return $this;
-    }
-
-    public function getChild()
-    {
-        return $this->_child;
-    }
-
-    public function setParam(string $param)
+    /**
+     * @param string $param
+     * @return $this
+     */
+    public function setParam(string $param): self
     {
         $this->_param = $param;
         return $this;
     }
 
-    public function getParam()
+    /**
+     * @return string
+     */
+    public function getParam(): string
     {
         return $this->_param;
-    }
-
-    public static function create(): self
-    {
-        return new self();
     }
 }

@@ -15,48 +15,39 @@ use PhpParser\Node\Stmt\Use_;
 class Order
 {
     const ORDER = [
-        Namespace_::class => [
-            Use_::class,
-            Const_::class,
-            Class_::class
-        ],
-        Class_::class => [
-            TraitUse::class,
-            Property::class,
-            ClassConst::class,
-            ClassMethod::class
-        ]
+        Namespace_::class,
+        Use_::class,
+        Const_::class,
+        Class_::class,
+        TraitUse::class,
+        Property::class,
+        ClassConst::class,
+        ClassMethod::class
     ];
 
     private $_orderTable = [];
 
+    /**
+     * Order constructor.
+     */
     public function __construct()
     {
-        foreach (self::ORDER as $class => $subSet) {
-            foreach ($subSet as $oneClass) {
-                $this->_orderTable[$oneClass] = [];
-            }
+        foreach (self::ORDER as $class) {
+            $this->_orderTable[$class] = [];
         }
     }
 
-    public function sort($sortable)
+    /**
+     * @param $nodes
+     * @return array
+     */
+    public function sort(array $nodes): array
     {
-        if (!is_iterable($sortable)) {
-            return $sortable;
-        }
-
-        $orderTable = $this->getOrderTable();
-
-        foreach ($sortable as $one) {
+        $orderTable = $this->_orderTable;
+        foreach ($nodes as $one) {
             $class = get_class($one);
             $orderTable[$class][] = $one;
         }
-
         return array_merge(...array_values($orderTable));
-    }
-
-    private function getOrderTable()
-    {
-        return $this->_orderTable;
     }
 }
