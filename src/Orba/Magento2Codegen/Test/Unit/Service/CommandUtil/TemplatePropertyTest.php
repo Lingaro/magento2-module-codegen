@@ -2,14 +2,14 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
-use InvalidArgumentException;
+use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
+use Orba\Magento2Codegen\Service\Config;
+use Orba\Magento2Codegen\Service\PropertyFactory;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Yaml\Parser;
 
 class TemplatePropertyTest extends TestCase
 {
@@ -19,9 +19,9 @@ class TemplatePropertyTest extends TestCase
     private $templateProperty;
 
     /**
-     * @var MockObject|Parser
+     * @var MockObject|Config
      */
-    private $yamlParserMock;
+    private $configMock;
 
     /**
      * @var MockObject|TemplateFile
@@ -29,66 +29,60 @@ class TemplatePropertyTest extends TestCase
     private $templateFileMock;
 
     /**
-     * @var MockObject|TemplateProcessorInterface
+     * @var MockObject|CollectorFactory
      */
-    private $templateProcessorMock;
+    private $propertyValueCollectorFactoryMock;
+
+    /**
+     * @var MockObject|PropertyFactory
+     */
+    private $propertyFactoryMock;
 
     public function setUp(): void
     {
-        $this->yamlParserMock = $this->getMockBuilder(Parser::class)->disableOriginalConstructor()->getMock();
+        $this->configMock = $this->getMockBuilder(Config::class)->disableOriginalConstructor()->getMock();
         $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)->disableOriginalConstructor()
             ->getMock();
-        $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
-            ->getMockForAbstractClass();
+        $this->propertyValueCollectorFactoryMock = $this->getMockBuilder(CollectorFactory::class)
+            ->disableOriginalConstructor()->getMock();
+        $this->propertyFactoryMock = $this->getMockBuilder(PropertyFactory::class)
+            ->disableOriginalConstructor()->getMock();
         $this->templateProperty = new TemplateProperty(
-            $this->yamlParserMock,
+            $this->configMock,
             $this->templateFileMock,
-            $this->templateProcessorMock
+            $this->propertyValueCollectorFactoryMock,
+            $this->propertyFactoryMock
         );
     }
 
-    public function testGetAllPropertiesInTemplateReturnsEmptyArrayIfThereAreNoPropertiesInTemplateFiles(): void
+    public function testCollectConstPropertiesReturnsEmptyArrayIfDefaultPropertiesConfigIsEmpty(): void
     {
-        $result = $this->templateProperty->getAllPropertiesInTemplate('template');
+        $this->configMock->expects($this->once())->method('offsetGet')->willReturn([]);
+        $result = $this->templateProperty->collectConstProperties();
         $this->assertSame([], $result);
     }
 
-    public function testGetAllPropertiesInTemplateReturnsUniqueArrayIfThereAreDuplicatedPropertiesInTemplateFiles(): void
+    public function testCollectConstPropertiesReturnsArrayWithPropertyIfDefaultPropertiesConfigIsNotEmpty(): void
     {
-        $this->templateFileMock->expects($this->once())->method('getTemplateFiles')
-            ->willReturn([$this->getFileMock()]);
-        $this->templateProcessorMock->expects($this->exactly(2))->method('getPropertiesInText')
-            ->willReturnOnConsecutiveCalls(['foo' => null, 'bar' => null], ['moo' => null, 'bar' => null]);
-        $result = $this->templateProperty->getAllPropertiesInTemplate('template');
-        $this->assertCount(3, $result);
-        foreach ($result as $key => $value) {
-            $this->assertTrue(in_array($key, ['foo', 'bar', 'moo']));
-        }
+        $this->configMock->expects($this->once())->method('offsetGet')
+            ->willReturn([['name' => 'foo', 'value' => 'bar']]);
+        $result = $this->templateProperty->collectConstProperties();
+        $this->assertCount(1, $result);
+        $this->assertContainsOnlyInstancesOf(PropertyInterface::class, $result);
     }
 
-    public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotAnArray(): void
+    public function testCollectInputPropertiesReturnsEmptyArrayIfTemplatePropertiesConfigIsEmpty(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->yamlParserMock->expects($this->once())->method('parseFile')->willReturn('not array');
-        $this->templateProperty->getPropertiesFromYamlFile('filepath');
+        $result = $this->templateProperty->collectInputProperties('template');
+        $this->assertSame([], $result);
     }
 
-    public function testGetPropertiesFromYamlFileThrowsExceptionIfParserResultIsNotFlatArray(): void
+    public function testCollectInputPropertiesReturnsArrayWithPropertiesIfTemplatePropertiesConfigIsNotEmpty(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->yamlParserMock->expects($this->once())->method('parseFile')
-            ->willReturn(['not' => ['flat' => 'array']]);
-        $this->templateProperty->getPropertiesFromYamlFile('filepath');
-    }
-
-    /**
-     * @return MockObject|SplFileInfo
-     */
-    private function getFileMock()
-    {
-        $fileMock = $this->getMockBuilder(SplFileInfo::class)->disableOriginalConstructor()->getMock();
-        $fileMock->expects($this->any())->method('getPath')->willReturn('path');
-        $fileMock->expects($this->any())->method('getContents')->willReturn('contents');
-        return $fileMock;
+        $this->templateFileMock->expects($this->once())->method('getPropertiesConfig')
+            ->willReturn([['name' => 'foo', 'description' => 'bar']]);
+        $result = $this->templateProperty->collectInputProperties('template');
+        $this->assertCount(1, $result);
+        $this->assertContainsOnlyInstancesOf(PropertyInterface::class, $result);
     }
 }

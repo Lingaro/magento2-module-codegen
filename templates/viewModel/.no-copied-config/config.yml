@@ -1,0 +1,4 @@
+properties:
+  viewModelName:
+    type: string
+    description: A short name describing view model

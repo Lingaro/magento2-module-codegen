@@ -4,9 +4,9 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Service\CommandUtil\Module;
 use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
+use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -28,7 +28,7 @@ class ModuleTest extends TestCase
     private $filesystemMock;
 
     /**
-     * @var MockObject|TemplatePropertyBagFactory
+     * @var MockObject|PropertyBagFactory
      */
     private $propertyBagFactoryMock;
 
@@ -38,7 +38,7 @@ class ModuleTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $this->filesystemMock = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()->getMock();
-        $this->propertyBagFactoryMock = $this->getMockBuilder(TemplatePropertyBagFactory::class)
+        $this->propertyBagFactoryMock = $this->getMockBuilder(PropertyBagFactory::class)
             ->disableOriginalConstructor()->getMock();
         $this->module = new Module(
             $this->filepathUtilMock,
@@ -83,7 +83,7 @@ PHP;
         $this->filepathUtilMock->expects($this->once())->method('getContent')
             ->willReturn($registrationFileContent);
         $this->propertyBagFactoryMock->expects($this->once())->method('create')
-            ->willReturn(new TemplatePropertyBag());
+            ->willReturn(new PropertyBag());
         $result = $this->module->getPropertyBag('rootDir');
         $this->assertSame('Orba', $result['vendorName']);
         $this->assertSame('Test', $result['moduleName']);

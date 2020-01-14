@@ -1,1 +1,1 @@
-This template creates a model with the corresponding resourceModel, Collection and db_schema.xml
+This template creates a model with the corresponding repository, searchResult, resourceModel, collection, db_schema.xml and API

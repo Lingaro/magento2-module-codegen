@@ -7,54 +7,53 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
-use Magento\Framework\Model\AbstractExtensibleModel;
-use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface;
+use Magento\Framework\Model\AbstractModel;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }} as {{ entityName|pascal }}ResourceModel;
 
-class {{ entityName|pascal }} extends AbstractExtensibleModel implements {{ entityName|pascal }}Interface
+class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pascal }}Interface
 {
     /**
-     * Initialize resource model
      * @return void
      */
     protected function _construct()
     {
-        $this->_init('{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}');
+        $this->_init({{ entityName|pascal }}ResourceModel::class);
     }
 
-    {% for item in fields %}
     /**
-     * @inheritDoc
+     * @return int|null
      */
-    public function get{{ item.name|pascal }}(): {{ item.type }}
+    public function getId()
     {
-        return $this->getData('{{ item.name }}');
+        return $this->_getData('entity_id');
     }
 
     /**
-    * @inheritDoc
-    */
-    public function set{{ item.name|pascal }}({{ item.type }} $value): $this
-    {
-        $this->setData('{{ item.name }}', $value);
-    }
-
-    {% endfor %}
-
-    /**
-     * @inheritDoc
+     * @param int $value
+     * @return void
      */
-    public function getExtensionAttributes()
+    public function setId($value)
     {
-        return $this->_getExtensionAttributes();
+        $this->setData('entity_id', $value);
+    }
+{% for item in fields %}
+
+    /**
+     * @return {{ databaseTypeToPHP(item.databaseType) }}|null
+     */
+    public function get{{ item.name|pascal }}()
+    {
+        return $this->getData('{{ item.name|snake }}');
     }
 
     /**
-     * @inheritDoc
+     * @param {{ databaseTypeToPHP(item.databaseType) }} $value
+     * @return void
      */
-    public function setExtensionAttributes({{ entityName|pascal }}ExtensionInterface $extensionAttributes)
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value)
     {
-        $this->_setExtensionAttributes($extensionAttributes);
-        return $this;
+        $this->setData('{{ item.name|snake }}', $value);
     }
+{% endfor %}
 }

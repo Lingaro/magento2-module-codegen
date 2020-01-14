@@ -1,0 +1,2 @@
+This template is used to create a frontend controller that renders custom page.
+It also adds route, layout, view model and phtml template.

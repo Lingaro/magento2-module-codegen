@@ -7,32 +7,29 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data;
 
-use Magento\Framework\Api\ExtensibleDataInterface;
-
-interface {{ entityName|pascal }}Interface extends ExtensibleDataInterface
+interface {{ entityName|pascal }}Interface
 {
-    {% for item in fields %}
     /**
-     * @return {{ item.type }}|null
+     * @return int|null
      */
-    public function get{{ item.name|pascal }}(): {{ item.type }};
+    public function getId();
 
     /**
-     * @param {{ item.type }} $value
-     * @return $this
+     * @param int $value
+     * @return void
      */
-    public function set{{ item.name|pascal }}({{ item.type }} $value): $this;
-
-    {% endfor %}
-
-    /**
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface|null
-     */
-    public function getExtensionAttributes();
+    public function setId($value);
+{% for item in fields %}
 
     /**
-     * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface $extensionAttributes
-     * @return $this
+     * @return {{ databaseTypeToPHP(item.databaseType) }}|null
      */
-    public function setExtensionAttributes(\{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}ExtensionInterface $extensionAttributes);
+    public function get{{ item.name|pascal }}();
+
+    /**
+     * @param {{ databaseTypeToPHP(item.databaseType) }} $value
+     * @return void
+     */
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value);
+{% endfor %}
 }

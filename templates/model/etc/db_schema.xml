@@ -8,16 +8,12 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}" resource="default" engine="innodb" comment="{{ entityName|pascal }} Table">
-        {% for item in fields %}
-        <column xsi:type="{{ item.type }}" name="{{ item.name|snake }}"
-            {%- if item.type in [ 'int', 'smallint', 'timestamp' ] %} padding="{{ item.length }}"
-            {%- else %} length="{{ item.length }}"{% endif %} unsigned="{{ item.unsigned }}" nullable="{{ item.nullable }}"
-            {%- if item.identity %} identity="{{ item.identity }}"{% endif %} comment="{{ entityName|pascal }} {{ item.name|pascal }}"/>
-        {% if item.identity %}
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="{{ entityName|pascal }} Id"/>
+{% for item in fields %}
+        <column {{ columnDefinition(item.databaseType, item.length, item.unsigned, item.nullable, item.precision, item.scale)|raw }} name="{{ item.name|snake }}" comment="{{ entityName|pascal }} {{ item.name|pascal }}"/>
+{% endfor %}
         <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="{{ item.name|snake }}"/>
+            <column name="entity_id"/>
         </constraint>
-        {% endif %}
-        {% endfor %}
     </table>
 </schema>
