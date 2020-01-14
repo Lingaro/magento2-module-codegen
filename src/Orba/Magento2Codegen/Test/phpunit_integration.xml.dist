@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="../../../../vendor/autoload.php">
+    <testsuites>
+        <testsuite name="Integration Tests">
+            <directory>Integration</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <!-- Fill in with your empty Magento data -->
+        <env name="MAGENTO_ROOT_DIR" value="/path/to/magento"/>
+        <env name="MAGENTO_CONSOLE_COMMAND_PATH" value="/path/to/magento/bin/magento"/>
+        <env name="MAGENTO_BASE_URL" value="https://magento.local/"/>
+    </php>
+    <extensions>
+        <extension class="Orba\Magento2Codegen\Test\Integration\TestExtension" />
+    </extensions>
+</phpunit>
