@@ -84,6 +84,12 @@ services:
         snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
 
+  Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
+    arguments:
+      $functions:
+        columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
+        databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
+
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:
       $map:
