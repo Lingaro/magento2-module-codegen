@@ -98,7 +98,7 @@ class FunctionsExtension extends AbstractExtension
      * @return string|void
      * @throws ErrorException
      */
-    public function fullTextIndex(string $vendorName, string $moduleName, string $entityName, array $fields): string
+    public function fullTextIndex(string $vendorName, string $moduleName, string $entityName, array $fields)
     {
         $cols = [];
         foreach ($fields as $field) {
