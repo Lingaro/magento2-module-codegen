@@ -7,10 +7,14 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
 
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
-use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection;
+use Magento\Framework\Controller\ResultInterface;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}RepositoryInterface;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }};
 
 /**
  * Grid inline edit controller
@@ -20,35 +24,33 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
 class InlineEdit extends Action
 {
 
-    /** @var JsonFactory $jsonFactory */
-    protected $jsonFactory;
+    /** @var JsonFactory */
+    private $jsonFactory;
 
-    /**
-     * @var Collection
-     */
-    protected $objectCollection;
+    /** @var {{ entityName|pascal }}RepositoryInterface */
+    private $repository;
 
     /**
      * @param Context $context
-     * @param Collection $objectCollection
      * @param JsonFactory $jsonFactory
+     * @param {{ entityName|pascal }}RepositoryInterface $repository
      */
     public function __construct(
         Context $context,
-        Collection $objectCollection,
-        JsonFactory $jsonFactory
+        JsonFactory $jsonFactory,
+        {{ entityName|pascal }}RepositoryInterface $repository
     ) {
         parent::__construct($context);
         $this->jsonFactory = $jsonFactory;
-        $this->objectCollection = $objectCollection;
+        $this->repository = $repository;
     }
 
     /**
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
-        /** @var \Magento\Framework\Controller\Result\Json $resultJson */
+        /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
         $error = false;
         $messages = [];
@@ -62,10 +64,13 @@ class InlineEdit extends Action
         }
 
         try {
-            $this->objectCollection
-                ->addFieldToFilter('entity_id', array('in' => array_keys($postItems)))
-                ->walk('saveCollection', array($postItems));
-        } catch (\Exception $e) {
+            foreach (array_keys($postItems) as ${{ entityName|camel }}Id) {
+                /** @var  {{ entityName|pascal }} ${{ entityName|camel }} */
+                ${{ entityName|camel }} = $this->repository->getById(${{ entityName|camel }}Id);
+                ${{ entityName|camel }}->setData(array_merge(${{ entityName|camel }}->getData(), $postItems[${{ entityName|camel }}Id]));
+                $this->repository->save(${{ entityName|camel }});
+            }
+        } catch (Exception $e) {
             $messages[] = __('There was an error saving the data: ') . $e->getMessage();
             $error = true;
         }

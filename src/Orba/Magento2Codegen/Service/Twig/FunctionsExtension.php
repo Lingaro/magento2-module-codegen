@@ -3,6 +3,7 @@
 namespace Orba\Magento2Codegen\Service\Twig;
 
 use ErrorException;
+use Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -15,9 +16,18 @@ class FunctionsExtension extends AbstractExtension
     private const INT_TYPES = ['int', 'smallint', 'bigint', 'tinyint', 'timestamp'];
     private const DECIMAL_TYPES = ['decimal', 'float', 'double'];
     private const BOOLEAN_TYPES = ['boolean'];
+    private const TEXT_TYPES = ['text', 'varchar'];
     private const ALLOWED_TYPES = ['bigint', 'blob', 'boolean', 'date', 'datetime',
 'decimal', 'double', 'float', 'int', 'smallint', 'text', 'timestamp', 'tinyint',
 'varbinary', 'varchar'];
+
+    /** @var SnakeCaseFilter */
+    private $snakeCaseFilter;
+
+    public function __construct(SnakeCaseFilter $snakeCaseFilter)
+    {
+        $this->snakeCaseFilter = $snakeCaseFilter;
+    }
 
     /**
      * @return array|TwigFunction[]
@@ -27,6 +37,7 @@ class FunctionsExtension extends AbstractExtension
         return [
             new TwigFunction('columnDefinition', [$this, 'columnDefinition']),
             new TwigFunction('databaseTypeToPHP', [$this, 'databaseTypeToPHP']),
+            new TwigFunction('fullTextIndex', [$this, 'fullTextIndex'])
         ];
     }
 
@@ -76,6 +87,34 @@ class FunctionsExtension extends AbstractExtension
                 return 'float';
             default:
                 return 'string';
+        }
+    }
+
+    /**
+     * @param string $vendorName
+     * @param string $moduleName
+     * @param string $entityName
+     * @param array $fields
+     * @return string|void
+     * @throws ErrorException
+     */
+    public function fullTextIndex(string $vendorName, string $moduleName, string $entityName, array $fields): string
+    {
+        $cols = [];
+        foreach ($fields as $field) {
+            $dbType = $this->normalizeDatabaseType($field['databaseType']);
+            if (in_array($dbType, self::TEXT_TYPES)) {
+                $cols[] = '<column name="' . $this->snakeCaseFilter->filter($field['name']) . '"/>';
+            }
+        }
+        if ($cols) {
+            return '<index referenceId="FTI_'
+                . $this->snakeCaseFilter->filter($vendorName) . '_'
+                . $this->snakeCaseFilter->filter($moduleName) . '_'
+                . $this->snakeCaseFilter->filter($entityName) . '" '
+                . 'indexType="fulltext">' . "\n"
+                . implode("\n", $cols) . "\n"
+                . '</index>';
         }
     }
 
