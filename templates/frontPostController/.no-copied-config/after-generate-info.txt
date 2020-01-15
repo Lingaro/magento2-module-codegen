@@ -1,0 +1,3 @@
+Your action has following address:
+http://YOUR_STORE_URL//{{ frontName|snake }}/{{ controllerName|lower }}/{{ actionName|lower }}
+To test it you have to use POST request!

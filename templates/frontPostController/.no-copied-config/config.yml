@@ -1,0 +1,13 @@
+properties:
+  frontName:
+    type: string
+    default: frontName
+    description: First part of of action's URL after store url ...front_name/controllername/actionname
+  controllerName:
+    type: string
+    default: controllerName
+    description: Second part of action's URL. It should be one word. Name of directory within Controller folder
+  actionName:
+    type: string
+    default: actionName
+    description: Third part of action's URL. Name of class to do the job
