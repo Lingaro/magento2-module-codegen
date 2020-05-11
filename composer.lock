@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e57618dbac7fbe69921586768d077df7",
+    "content-hash": "a8de390d9ea045c00267793d8e486ced",
     "packages": [
         {
             "name": "psr/container",
@@ -2999,6 +2999,8 @@
         "ext-libxml": "*"
     },
     "platform-dev": {
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
     }
 }
