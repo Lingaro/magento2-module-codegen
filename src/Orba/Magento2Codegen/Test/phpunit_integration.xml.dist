@@ -12,6 +12,11 @@
         <env name="MAGENTO_ROOT_DIR" value="/path/to/magento/"/>
         <env name="MAGENTO_CONSOLE_COMMAND_PATH" value="/path/to/magento/bin/magento"/>
         <env name="MAGENTO_BASE_URL" value="https://magento.local/"/>
+        <env name="MAGENTO_DATABASE_HOST" value="db_host"/>
+        <env name="MAGENTO_DATABASE_PORT" value="3306"/>
+        <env name="MAGENTO_DATABASE_NAME" value="db_name"/>
+        <env name="MAGENTO_DATABASE_USERNAME" value="db_user"/>
+        <env name="MAGENTO_DATABASE_PASSWORD" value="db_pass"/>
     </php>
     <extensions>
         <extension class="Orba\Magento2Codegen\Test\Integration\TestExtension" />
