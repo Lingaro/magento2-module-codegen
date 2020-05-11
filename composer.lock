@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4625c33ec11ef277cddfd0e56db6f46d",
+    "content-hash": "a8de390d9ea045c00267793d8e486ced",
     "packages": [
         {
             "name": "psr/container",
@@ -2994,10 +2994,13 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+        "php": "~7.2",
         "ext-dom": "*",
         "ext-libxml": "*"
     },
     "platform-dev": {
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
     }
 }

@@ -85,6 +85,12 @@ services:
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
         capital: '@Orba\Magento2Codegen\Service\StringFilter\CapitalCaseFilter'
 
+  Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
+    arguments:
+      $functions:
+        columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
+        databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
+
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:
       $map:

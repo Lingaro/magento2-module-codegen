@@ -21,6 +21,7 @@ class TestExtension implements BeforeFirstTestHook, AfterLastTestHook
     {
         $this->checkEnvParams();
         $this->removeGeneratedFiles();
+        $this->cleanMagentoDatabase();
         $this->executeTasks('Before');
         $this->runMagentoSetupUpgrade();
     }
@@ -30,6 +31,7 @@ class TestExtension implements BeforeFirstTestHook, AfterLastTestHook
         $this->executeTasks('After');
         $this->removeGeneratedFiles();
         $this->runMagentoSetupUpgrade();
+        $this->cleanMagentoDatabase();
     }
 
     private function checkEnvParams(): void
@@ -57,8 +59,21 @@ class TestExtension implements BeforeFirstTestHook, AfterLastTestHook
         exec('rm -rf ' . $_ENV['MAGENTO_ROOT_DIR'] . 'app/code/' . self::TEST_VENDOR_NAME);
     }
 
-    private static function runMagentoSetupUpgrade(): void
+    private function runMagentoSetupUpgrade(): void
     {
         exec($_ENV['MAGENTO_CONSOLE_COMMAND_PATH'] . ' setup:upgrade');
+    }
+
+    private function cleanMagentoDatabase()
+    {
+        MysqlConnection::getInstance()->exec('SET FOREIGN_KEY_CHECKS = 0');
+        $tables = MysqlConnection::getInstance()->query('SHOW TABLES')->fetchAll();
+        foreach ($tables as $table) {
+            if (strstr($table[0], 'codegen_')) {
+                MysqlConnection::getInstance()->exec('DROP TABLE ' . $table[0]);
+            }
+        }
+        MysqlConnection::getInstance()->exec('DELETE FROM patch_list WHERE patch_name LIKE "Codegen%"');
+        MysqlConnection::getInstance()->exec('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
