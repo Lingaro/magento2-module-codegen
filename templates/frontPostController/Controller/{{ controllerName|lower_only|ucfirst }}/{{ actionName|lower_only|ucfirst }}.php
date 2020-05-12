@@ -5,12 +5,12 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|lower_only|ucfirst }};
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 
-class {{ actionName|pascal }} extends Action implements HttpPostActionInterface
+class {{ actionName|lower_only|ucfirst }} extends Action implements HttpPostActionInterface
 {
     public function execute()
     {

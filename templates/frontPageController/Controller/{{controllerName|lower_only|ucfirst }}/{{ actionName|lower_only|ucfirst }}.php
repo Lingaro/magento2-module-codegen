@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
  
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|lower_only|ucfirst }};
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -13,7 +13,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-class {{ actionName|pascal }} extends Action implements HttpGetActionInterface
+class {{ actionName|lower_only|ucfirst }} extends Action implements HttpGetActionInterface
 {
     /**
      * @var PageFactory
