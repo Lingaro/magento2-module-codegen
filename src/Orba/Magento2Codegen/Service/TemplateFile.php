@@ -91,7 +91,7 @@ class TemplateFile
         return $dependencies;
     }
 
-    public function getManualSteps(string $templateName, PropertyBag $propertyBag): string
+    public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): string
     {
         $this->validateTemplateExistence($templateName);
         $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);

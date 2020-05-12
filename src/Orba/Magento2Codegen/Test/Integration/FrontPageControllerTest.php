@@ -14,7 +14,7 @@ class FrontPageControllerTest extends TestCase
     {
         $client = HttpClient::create(['verify_peer' => false, 'verify_host' => false]);
         //frontName controllerName actionName
-        $response = $client->request('GET', $_ENV['MAGENTO_BASE_URL'] . 'foo_bar/foobarpage/foo');
+        $response = $client->request('GET', $_ENV['MAGENTO_BASE_URL'] . 'one_two/threefour/fivesix');
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
         $this->assertSame(200, $statusCode);

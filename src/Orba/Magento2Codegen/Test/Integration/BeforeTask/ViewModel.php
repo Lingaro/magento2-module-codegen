@@ -45,20 +45,10 @@ class ViewModel implements TaskInterface
         $layoutDir = $_ENV['MAGENTO_ROOT_DIR'] . 'app/code/' . TestExtension::TEST_VENDOR_NAME
             . '/ViewModel/view/frontend/layout';
         $layoutPath = $layoutDir . '/default.xml';
-        $layoutSource = '<?xml version="1.0" encoding="UTF-8"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
-        <referenceContainer name="content">
-             <block name="' . strtolower(TestExtension::TEST_VENDOR_NAME) . '.test.view.model"
-                    template="' . TestExtension::TEST_VENDOR_NAME . '_ViewModel::test.phtml">
-                 <arguments>
-                      <argument name="view_model" xsi:type="object">' . TestExtension::TEST_VENDOR_NAME . '\ViewModel\ViewModel\Test</argument>
-                 </arguments>
-             </block>
-        </referenceContainer>
-    </body>
-</page>';
-        mkdir($layoutDir);
+        $layoutSource = file_get_contents(
+            BP . '/src/Orba/Magento2Codegen/Test/Integration/_files/ViewModel/view/frontend/layout/default.xml'
+        );
+        mkdir($layoutDir, 0777, true);
         file_put_contents($layoutPath, $layoutSource);
     }
 }

@@ -125,18 +125,18 @@ class TemplateFileTest extends TestCase
     public function testGetManualStepsThrowsExceptionIfTemplateDoesNotExist(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->templateFile->getManualSteps('nonexistent', new PropertyBag());
+        $this->templateFile->getAfterGenerate('nonexistent', new PropertyBag());
     }
 
     public function testGetManualStepsReturnsEmptyStringIfConfigDirDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('noconfig', new PropertyBag());
+        $result = $this->templateFile->getAfterGenerate('noconfig', new PropertyBag());
         $this->assertSame('', $result);
     }
 
     public function testGetManualStepsReturnsEmptyStringIfAfterGenerateFileDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('emptyconfig', new PropertyBag());
+        $result = $this->templateFile->getAfterGenerate('emptyconfig', new PropertyBag());
         $this->assertSame('', $result);
     }
 
@@ -144,7 +144,7 @@ class TemplateFileTest extends TestCase
     {
         $this->templateProcessorMock->expects($this->once())->method('replacePropertiesInText')
             ->willReturn('Some info with value');
-        $result = $this->templateFile->getManualSteps('example', new PropertyBag());
+        $result = $this->templateFile->getAfterGenerate('example', new PropertyBag());
         $this->assertSame('Some info with value', $result);
     }
 

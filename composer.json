@@ -1,6 +1,7 @@
 {
     "name": "orba/magento2-codegen",
     "require": {
+        "php": "~7.2",
         "ext-dom": "*",
         "ext-libxml": "*",
         "symfony/dependency-injection": "^5.0",
@@ -10,7 +11,8 @@
         "symfony/http-kernel": "^5.0",
         "symfony/filesystem": "^5.0",
         "symfony/finder": "^5.0",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "nikic/php-parser": "^4.3"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +36,8 @@
     ],
     "require-dev": {
         "ext-simplexml": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
         "phpunit/phpunit": "^8",
         "symfony/http-client": "^5.0"
     }

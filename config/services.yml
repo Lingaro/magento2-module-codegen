@@ -81,8 +81,17 @@ services:
         -
           - '/^.*\.xml/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+      -
+        - addMerger
+        -
+          - '/^.*\.php/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
+
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
+    shared: false
+
+  Orba\Magento2Codegen\Service\FileMerger\PhpMerger:
     shared: false
 
   Orba\Magento2Codegen\Command\Template\GenerateCommand:
@@ -100,7 +109,14 @@ services:
         pascal: '@Orba\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
         snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
-        capital: '@Orba\Magento2Codegen\Service\StringFilter\CapitalCaseFilter'
+        lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
+        ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
+
+  Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
+    arguments:
+      $functions:
+        columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
+        databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
 
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:

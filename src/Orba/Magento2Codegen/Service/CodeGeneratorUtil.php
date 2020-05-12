@@ -41,11 +41,14 @@ class CodeGeneratorUtil
         return !$this->filesystem->exists($filePath);
     }
 
-    public function shouldMerge(string $filePath): bool
+    public function shouldMerge(string $filePath, bool $isMergerExperimental): bool
     {
         return $this->io->getInstance()->confirm(
-            sprintf('%s already exists, would you like to perform a merge?', $filePath),
-            true
+            sprintf('%s already exists, would you like to perform a merge?', $filePath)
+            . ($isMergerExperimental
+                ? "\n <fg=yellow>Watchout! Experimental merger will be used. You will probably need to clean the file a little bit after merge.</>"
+                : ''),
+            !$isMergerExperimental
         );
     }
 
