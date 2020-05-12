@@ -2,18 +2,19 @@
 
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
-use InvalidArgumentException;
+use Orba\Magento2Codegen\Model\ConstProperty;
+use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Service\Config;
+use Orba\Magento2Codegen\Service\PropertyFactory;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
-use Symfony\Component\Yaml\Parser;
 
 class TemplateProperty
 {
     /**
-     * @var Parser
+     * @var Config
      */
-    private $yamlParser;
+    private $config;
 
     /**
      * @var TemplateFile
@@ -21,59 +22,58 @@ class TemplateProperty
     private $templateFile;
 
     /**
-     * @var TemplatePropertyUtil
+     * @var CollectorFactory
      */
-    private $propertyUtil;
+    private $propertyValueCollectorFactory;
 
-    public function __construct(Parser $yamlParser, TemplateFile $templateFile, TemplatePropertyUtil $propertyUtil)
-    {
-        $this->yamlParser = $yamlParser;
+    /**
+     * @var PropertyFactory
+     */
+    private $propertyFactory;
+
+    public function __construct(
+        Config $config,
+        TemplateFile $templateFile,
+        CollectorFactory $propertyValueCollectorFactory,
+        PropertyFactory $propertyFactory
+    ) {
+        $this->config = $config;
         $this->templateFile = $templateFile;
-        $this->propertyUtil = $propertyUtil;
-    }
-
-    public function getAllPropertiesInTemplate(string $templateName): array
-    {
-        $templateNames = array_merge([$templateName], $this->templateFile->getDependencies($templateName, true));
-        $templateFiles = $this->templateFile->getTemplateFiles($templateNames);
-        $propertiesInTemplate = [];
-        foreach ($templateFiles as $file) {
-            $propertiesInFilename = $this->propertyUtil->getPropertiesInText($file->getPath());
-            $propertiesInCode = $this->propertyUtil->getPropertiesInText($file->getContents());
-            $propertiesInTemplate = array_unique(
-                array_merge($propertiesInTemplate, $propertiesInFilename, $propertiesInCode)
-            );
-        }
-        return $propertiesInTemplate;
-    }
-
-    public function addProperties(TemplatePropertyBag $propertyBag, array $properties): void
-    {
-        foreach ($properties as $key => $value) {
-            $propertyBag[$key] = $value;
-        }
+        $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
+        $this->propertyFactory = $propertyFactory;
     }
 
     /**
-     * @param string $filePath
-     * @return array
-     * @throws InvalidArgumentException
+     * @return PropertyInterface[]
      */
-    public function getPropertiesFromYamlFile(string $filePath): array
+    public function collectConstProperties(): array
     {
-        $data = $this->yamlParser->parseFile($filePath);
-        if (!is_array($data)) {
-            throw new InvalidArgumentException(
-                sprintf('YAML file %s must consists of array.', $filePath)
-            );
-        }
-        foreach ($data as $value) {
-            if (!is_scalar($value)) {
-                throw new InvalidArgumentException(
-                    sprintf('YAML file %s must consists of flat array.', $filePath)
+        $properties = [];
+        foreach ($this->config['defaultProperties'] as $defaultProperty) {
+            $properties[$defaultProperty['name']] = $this->propertyFactory
+                ->create(
+                    $defaultProperty['name'],
+                    ['type' => ConstProperty::TYPE, 'value' => $defaultProperty['value']]
                 );
-            }
         }
-        return $data;
+        return $properties;
+    }
+
+    /**
+     * @param string $template
+     * @return PropertyInterface[]
+     */
+    public function collectInputProperties(string $template): array
+    {
+        $propertiesConfig = [];
+        $templateNames = array_merge([$template], $this->templateFile->getDependencies($template, true));
+        foreach ($templateNames as $templateName) {
+            $propertiesConfig = array_merge($propertiesConfig, $this->templateFile->getPropertiesConfig($templateName));
+        }
+        $properties = [];
+        foreach ($propertiesConfig as $propertyName => $propertyConfig) {
+            $properties[$propertyName] = $this->propertyFactory->create($propertyName, $propertyConfig);
+        }
+        return $properties;
     }
 }

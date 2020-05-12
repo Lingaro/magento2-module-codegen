@@ -1,1 +1,1 @@
-Some info with ${property}
+Some info with {{ property }}

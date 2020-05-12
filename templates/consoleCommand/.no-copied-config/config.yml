@@ -1,0 +1,7 @@
+properties:
+  commandName:
+    type: string
+    description: A short name describing command. It will be used insdie "bin/magento".
+  commandDescription:
+    type: string
+    description: A short description explaining feature behind generated command.

@@ -2,8 +2,7 @@
 
 namespace Orba\Magento2Codegen\Service\Magento;
 
-use Magento\Framework\Config\Dom;
-use Orba\Magento2Codegen\Util\Magento\Config\ValidationState;
+use Orba\Magento2Codegen\Util\Magento\Config\Dom;
 
 class ConfigMergerFactory
 {
@@ -14,6 +13,6 @@ class ConfigMergerFactory
         string $schemaFile = null
     ): Dom
     {
-        return new Dom($initialContent, new ValidationState(), $idAttributes, $typeAttributeName, $schemaFile);
+        return new Dom($initialContent, $idAttributes, $typeAttributeName, $schemaFile);
     }
 }

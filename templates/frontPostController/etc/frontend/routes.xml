@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="{{ vendorName|snake }}_{{ moduleName|snake }}" frontName="{{ frontName|snake }}">
+            <module name="{{ vendorName|pascal }}_{{ moduleName|pascal }}"/>
+        </route>
+    </router>
+</config>

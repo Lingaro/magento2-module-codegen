@@ -1,0 +1,8 @@
+properties:
+  vendorName:
+    type: string
+    default: Orba
+    description: Typically a company name
+  moduleName:
+    type: string
+    description: A short name describing module

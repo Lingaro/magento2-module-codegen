@@ -16,5 +16,6 @@ $kernel = new Kernel('dev', true);
 $kernel->boot();
 
 $container = $kernel->getContainer();
+/** @var Application $application */
 $application = $container->get(Application::class);
 $application->run();

@@ -2,20 +2,18 @@
 
 namespace Orba\Magento2Codegen\Command\Template;
 
-use Exception;
+use Orba\Magento2Codegen\Command\AbstractCommand;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
-use Symfony\Component\Console\Command\Command;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateCommand extends Command
+class GenerateCommand extends AbstractCommand
 {
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_ROOT_DIR = 'root-dir';
@@ -28,12 +26,7 @@ class GenerateCommand extends Command
     /**
      * @var Template
      */
-    private $util;
-
-    /**
-     * @var IO
-     */
-    private $io;
+    private $templateUtil;
 
     /**
      * @var TemplateFile
@@ -45,28 +38,21 @@ class GenerateCommand extends Command
      */
     private $codeGenerator;
 
-    /**
-     * @var TemplatePropertyBagFactory
-     */
-    private $propertyBagFactory;
-
     public function __construct(
-        Template $util,
+        Template $templateUtil,
         IO $io,
         TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
-        TemplatePropertyBagFactory $propertyBagFactory
+        array $inputValidators = []
     )
     {
-        parent::__construct();
-        $this->util = $util;
-        $this->io = $io;
+        $this->templateUtil = $templateUtil;
         $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;
-        $this->propertyBagFactory = $propertyBagFactory;
+        parent::__construct($io, $inputValidators);
     }
 
-    public function configure()
+    protected function configure()
     {
         $this
             ->setName('template:generate')
@@ -80,7 +66,8 @@ class GenerateCommand extends Command
                 self::OPTION_ROOT_DIR,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'If specified, code is generated on this root directory.'
+                'If specified, code is generated on this root directory.',
+                getcwd()
             )->addOption(
                 self::OPTION_DRY_RUN,
                 null,
@@ -95,23 +82,17 @@ class GenerateCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         parent::interact($input, $output);
-        $this->templateName = $this->util->getTemplateName();
+        $this->templateName = $this->templateUtil->getTemplateName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function _execute(InputInterface $input, OutputInterface $output): void
     {
-        try {
-            $this->util->validateTemplate($this->templateName);
-            $basePropertyBag = $this->getBasePropertyBag();
-            $this->displayHeader();
-            $this->generate($basePropertyBag);
-            $this->io->getInstance()->success('Success!');
-        } catch (Exception $e) {
-            $this->io->getInstance()->error($e->getMessage());
-        }
+        $this->templateUtil->validateTemplate($this->templateName);
+        $basePropertyBag = $this->getBasePropertyBag();
+        $this->displayHeader();
+        $this->displayTemplateDescription();
+        $this->generate($basePropertyBag);
+        $this->io->getInstance()->success('Success!');
     }
 
     private function displayHeader(): void
@@ -120,26 +101,36 @@ class GenerateCommand extends Command
         $this->io->getInstance()->title($this->templateName);
     }
 
-    private function getBasePropertyBag(): TemplatePropertyBag
+    private function displayTemplateDescription(): void
     {
-        if ($this->util->shouldCreateModule($this->templateName)) {
-            return $this->generateModule();
-        } else {
-            return $this->util->getBasePropertyBag($this->templateName);
+        $description = $this->templateFile->getDescription($this->templateName);
+        if ($description) {
+            $this->io->getInstance()->text(explode("\n", $description));
         }
     }
 
-    private function generateModule(): TemplatePropertyBag
+    private function getBasePropertyBag(): PropertyBag
     {
-        return $this->util->createModule($this->util->prepareProperties(Template::TEMPLATE_MODULE));
+        if ($this->templateUtil->shouldCreateModule($this->templateName)) {
+            return $this->generateModule();
+        } else {
+            return $this->templateUtil->getBasePropertyBag($this->templateName);
+        }
     }
 
-    private function generate(TemplatePropertyBag $propertyBag): void
+    private function generateModule(): PropertyBag
+    {
+        return $this->templateUtil->createModule(
+            $this->templateUtil->prepareProperties(Template::TEMPLATE_MODULE)
+        );
+    }
+
+    private function generate(PropertyBag $propertyBag): void
     {
         $this->codeGenerator->execute(
             $this->templateName,
-            $this->util->prepareProperties($this->templateName, $propertyBag)
+            $this->templateUtil->prepareProperties($this->templateName, $propertyBag)
         );
-        $this->util->showInfoAfterGenerate($this->templateName, $propertyBag);
+        $this->templateUtil->showInfoAfterGenerate($this->templateName, $propertyBag);
     }
 }

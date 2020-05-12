@@ -8,10 +8,17 @@ services:
   Symfony\Component\Yaml\Parser:
     class: '\Symfony\Component\Yaml\Parser'
 
+  Symfony\Component\Config\Definition\Processor:
+    class: '\Symfony\Component\Config\Definition\Processor'
+
   Orba\Magento2Codegen\:
     resource: '../src/Orba/Magento2Codegen'
+    exclude: '../src/Orba/Magento2Codegen/Test'
 
   Orba\Magento2Codegen\Application:
+    public: true
+
+  Orba\Magento2Codegen\Service\IO:
     public: true
 
   Orba\Magento2Codegen\Service\FileMergerFactory:
@@ -32,6 +39,29 @@ services:
       -
         - addMerger
         -
+          - '/^db_schema\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/schema/table': 'name'
+              '/schema/table/column': 'name'
+              '/schema/table/constraint': 'referenceId'
+              '/schema/table/index': 'referenceId'
+              '/schema/table/index/column': 'name'
+              '/schema/table/constraint/column': 'name'
+      -
+        - addMerger
+        -
+          - '/^routes\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/router': 'id'
+              '/config/router/route': 'id'
+              '/config/router/route/module': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.xml/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
       -
@@ -43,5 +73,56 @@ services:
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
     shared: false
+
   Orba\Magento2Codegen\Service\FileMerger\PhpMerger:
     shared: false
+
+  Orba\Magento2Codegen\Command\Template\GenerateCommand:
+    arguments:
+      $inputValidators:
+        - '@Orba\Magento2Codegen\Service\Input\RootDirValidator'
+
+  Orba\Magento2Codegen\Service\TemplateProcessorInterface:
+    class: '\Orba\Magento2Codegen\Service\TwigTemplateProcessor'
+
+  Orba\Magento2Codegen\Service\Twig\FiltersExtension:
+    arguments:
+      $filters:
+        camel: '@Orba\Magento2Codegen\Service\StringFilter\CamelCaseFilter'
+        pascal: '@Orba\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
+        snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
+        kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
+        lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
+        ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
+
+  Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
+    arguments:
+      $functions:
+        columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
+        databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
+
+  Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
+    arguments:
+      $map:
+        'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
+        'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector'
+        'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector'
+
+  Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector:
+    calls:
+      - method: setCollectorFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
+
+  Orba\Magento2Codegen\Service\PropertyFactory:
+    arguments:
+      $map:
+        const: '@Orba\Magento2Codegen\Service\PropertyFactory\ConstFactory'
+        string: '@Orba\Magento2Codegen\Service\PropertyFactory\StringFactory'
+        array: '@Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory'
+
+  Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory:
+    calls:
+      - method: setPropertyFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\PropertyFactory'

@@ -2,29 +2,23 @@
 
 namespace Orba\Magento2Codegen\Command\Template;
 
+use Orba\Magento2Codegen\Command\AbstractCommand;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\TemplateList;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListCommand extends Command
+class ListCommand extends AbstractCommand
 {
-    /**
-     * @var IO
-     */
-    private $io;
-
     /**
      * @var TemplateList
      */
     private $templateList;
 
-    public function __construct(IO $io, TemplateList $templateList)
+    public function __construct(IO $io, TemplateList $templateList, array $inputValidators = [])
     {
-        $this->io = $io;
         $this->templateList = $templateList;
-        parent::__construct();
+        parent::__construct($io, $inputValidators);
     }
 
     public function configure()
@@ -35,10 +29,7 @@ class ListCommand extends Command
             ->setHelp("This command checks all available templates to generate code from.");
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function _execute(InputInterface $input, OutputInterface $output): void
     {
         $this->io->getInstance()->writeln('Templates List');
         $templates = $this->templateList->getAll();

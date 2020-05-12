@@ -6,9 +6,10 @@ use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\FinderFactory;
 use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyUtil;
+use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -20,13 +21,20 @@ class TemplateFileTest extends TestCase
      */
     private $templateFile;
 
+    /**
+     * @var MockObject|TemplateProcessorInterface
+     */
+    private $templateProcessorMock;
+
     public function setUp(): void
     {
+        $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
+            ->getMockForAbstractClass();
         $this->templateFile = new TemplateFile(
             new TemplateDir(new Filesystem()),
             new FinderFactory(),
             new Parser(),
-            new TemplatePropertyUtil()
+            $this->templateProcessorMock
         );
     }
 
@@ -117,32 +125,26 @@ class TemplateFileTest extends TestCase
     public function testGetManualStepsThrowsExceptionIfTemplateDoesNotExist(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->templateFile->getManualSteps('nonexistent', new TemplatePropertyBag());
+        $this->templateFile->getAfterGenerate('nonexistent', new PropertyBag());
     }
 
     public function testGetManualStepsReturnsEmptyStringIfConfigDirDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('noconfig', new TemplatePropertyBag());
+        $result = $this->templateFile->getAfterGenerate('noconfig', new PropertyBag());
         $this->assertSame('', $result);
     }
 
     public function testGetManualStepsReturnsEmptyStringIfAfterGenerateFileDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('emptyconfig', new TemplatePropertyBag());
+        $result = $this->templateFile->getAfterGenerate('emptyconfig', new PropertyBag());
         $this->assertSame('', $result);
     }
 
-    public function testGetManualStepsReturnsAfterGenerateFileContentIfFileExistsAndThereAreNoPropertiesSet(): void
+    public function testGetManualStepsReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExists(): void
     {
-        $result = $this->templateFile->getManualSteps('example', new TemplatePropertyBag());
-        $this->assertSame('Some info with ${property}', $result);
-    }
-
-    public function testGetManualStepsReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExistsAndThereArePropertiesSet(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $propertyBag['property'] = 'value';
-        $result = $this->templateFile->getManualSteps('example', $propertyBag);
+        $this->templateProcessorMock->expects($this->once())->method('replacePropertiesInText')
+            ->willReturn('Some info with value');
+        $result = $this->templateFile->getAfterGenerate('example', new PropertyBag());
         $this->assertSame('Some info with value', $result);
     }
 

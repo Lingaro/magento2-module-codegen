@@ -4,15 +4,17 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Exception;
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\CommandUtil\Module;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplatePropertyBagFactory;
+use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -30,12 +32,7 @@ class TemplateTest extends TestCase
     private $templateFileMock;
 
     /**
-     * @var MockObject|TemplateProperty
-     */
-    private $propertyUtilMock;
-
-    /**
-     * @var MockObject|TemplatePropertyBagFactory
+     * @var MockObject|PropertyBagFactory
      */
     private $propertyBagFactoryMock;
 
@@ -54,13 +51,21 @@ class TemplateTest extends TestCase
      */
     private $ioMock;
 
+    /**
+     * @var MockObject|TemplateProperty
+     */
+    private $templatePropertyUtilMock;
+
+    /**
+     * @var MockObject
+     */
+    private $propertyValueCollectorFactoryMock;
+
     public function setUp(): void
     {
         $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)
             ->disableOriginalConstructor()->getMock();
-        $this->propertyUtilMock = $this->getMockBuilder(TemplateProperty::class)
-            ->disableOriginalConstructor()->getMock();
-        $this->propertyBagFactoryMock = $this->getMockBuilder(TemplatePropertyBagFactory::class)
+        $this->propertyBagFactoryMock = $this->getMockBuilder(PropertyBagFactory::class)
             ->disableOriginalConstructor()->getMock();
         $this->moduleUtilMock = $this->getMockBuilder(Module::class)
             ->disableOriginalConstructor()->getMock();
@@ -68,13 +73,18 @@ class TemplateTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $this->ioMock = $this->getMockBuilder(IO::class)
             ->disableOriginalConstructor()->getMock();
+        $this->templatePropertyUtilMock = $this->getMockBuilder(TemplateProperty::class)
+            ->disableOriginalConstructor()->getMock();
+        $this->propertyValueCollectorFactoryMock = $this->getMockBuilder(CollectorFactory::class)
+            ->disableOriginalConstructor()->getMock();
         $this->template = new Template(
             $this->templateFileMock,
-            $this->propertyUtilMock,
             $this->propertyBagFactoryMock,
             $this->moduleUtilMock,
             $this->codeGeneratorMock,
-            $this->ioMock
+            $this->ioMock,
+            $this->templatePropertyUtilMock,
+            $this->propertyValueCollectorFactoryMock
         );
     }
 
@@ -125,22 +135,9 @@ class TemplateTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testPreparePropertiesReturnsPropertyBagIfBasePropertyBagWasNotSet(): void
-    {
-        $result = $this->template->prepareProperties('template');
-        $this->assertInstanceOf(TemplatePropertyBag::class, $result);
-    }
-
-    public function testPreparePropertiesReturnsTheSamePropertyBagObjectThatWasSet(): void
-    {
-        $propertyBag = new TemplatePropertyBag();
-        $propertyBag['foo'] = 'bar';
-        $result = $this->template->prepareProperties('template', $propertyBag);
-        $this->assertSame('bar', $result['foo']);
-    }
-
     public function testShouldCreateModuleReturnsFalseIfModuleExists(): void
     {
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(true);
         $result = $this->template->shouldCreateModule('template');
         $this->assertFalse($result);
@@ -148,6 +145,7 @@ class TemplateTest extends TestCase
 
     public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndTemplateIsAGlobalPackage(): void
     {
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
         $result = $this->template->shouldCreateModule('module');
         $this->assertFalse($result);
@@ -156,6 +154,7 @@ class TemplateTest extends TestCase
     public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndUserDoesNotWantToCreateOne(): void
     {
         $this->expectException(Exception::class);
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('exists')->willReturn(false);
         $ioInstanceMock = $this->getIoInstanceMock();
         $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(false);
@@ -169,13 +168,14 @@ class TemplateTest extends TestCase
         $ioInstanceMock = $this->getIoInstanceMock();
         $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(true);
         $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $result = $this->template->shouldCreateModule('template');
         $this->assertTrue($result);
     }
 
     public function testCreateModuleReturnsTheSamePropertyBagObjectThatWasSet(): void
     {
-        $propertyBag = new TemplatePropertyBag();
+        $propertyBag = new PropertyBag();
         $propertyBag['foo'] = 'bar';
         $result = $this->template->createModule($propertyBag);
         $this->assertSame('bar', $result['foo']);
@@ -184,15 +184,30 @@ class TemplateTest extends TestCase
     public function testGetBasePropertyBagReturnsEmptyBagIfTemplateIsAGlobalPackage(): void
     {
         $result = $this->template->getBasePropertyBag('module');
-        $this->assertInstanceOf(TemplatePropertyBag::class, $result);
+        $this->assertInstanceOf(PropertyBag::class, $result);
     }
 
     public function testGetBasePropertyBagReturnsBagTakenFromModuleIfTemplateIsNotAGlobalPackage(): void
     {
-        $propertyBag = new TemplatePropertyBag();
+        $propertyBag = new PropertyBag();
         $propertyBag['foo'] = 'bar';
+        $this->ioMock->expects($this->once())->method('getInput')->willReturn($this->getInputMock());
         $this->moduleUtilMock->expects($this->once())->method('getPropertyBag')->willReturn($propertyBag);
         $result = $this->template->getBasePropertyBag('template');
+        $this->assertSame('bar', $result['foo']);
+    }
+
+    public function testPreparePropertiesReturnsPropertyBagIfBasePropertyBagWasNotSet(): void
+    {
+        $result = $this->template->prepareProperties('template');
+        $this->assertInstanceOf(PropertyBag::class, $result);
+    }
+
+    public function testPreparePropertiesReturnsTheSamePropertyBagObjectThatWasSet(): void
+    {
+        $propertyBag = new PropertyBag();
+        $propertyBag['foo'] = 'bar';
+        $result = $this->template->prepareProperties('template', $propertyBag);
         $this->assertSame('bar', $result['foo']);
     }
 
@@ -201,7 +216,10 @@ class TemplateTest extends TestCase
      */
     private function getInputMock()
     {
-        return $this->getMockBuilder(InputInterface::class)->getMockForAbstractClass();
+        $inputMock = $this->getMockBuilder(InputInterface::class)->getMockForAbstractClass();
+        $inputMock->expects($this->any())->method('getOption')
+            ->with(GenerateCommand::OPTION_ROOT_DIR)->willReturn('/root');
+        return $inputMock;
     }
 
     /**

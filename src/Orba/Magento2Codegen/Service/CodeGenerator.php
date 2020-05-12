@@ -4,7 +4,7 @@ namespace Orba\Magento2Codegen\Service;
 
 use Exception;
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 class CodeGenerator
 {
@@ -14,9 +14,9 @@ class CodeGenerator
     private $templateFile;
 
     /**
-     * @var TemplatePropertyUtil
+     * @var TemplateProcessorInterface
      */
-    private $propertyUtil;
+    private $templateProcessor;
 
     /**
      * @var CodeGeneratorUtil
@@ -40,7 +40,7 @@ class CodeGenerator
 
     public function __construct(
         TemplateFile $templateFile,
-        TemplatePropertyUtil $propertyUtil,
+        TemplateProcessorInterface $templateProcessor,
         CodeGeneratorUtil $codeGeneratorUtil,
         FileMergerFactory $fileMergerFactory,
         FilepathUtil $filepathUtil,
@@ -48,23 +48,25 @@ class CodeGenerator
     )
     {
         $this->templateFile = $templateFile;
-        $this->propertyUtil = $propertyUtil;
+        $this->templateProcessor = $templateProcessor;
         $this->codeGeneratorUtil = $codeGeneratorUtil;
         $this->fileMergerFactory = $fileMergerFactory;
         $this->filepathUtil = $filepathUtil;
         $this->io = $io;
     }
 
-    public function execute(string $templateName, TemplatePropertyBag $propertyBag): void
+    public function execute(string $templateName, PropertyBag $propertyBag): void
     {
         $dryRun = $this->io->getInput()->getOption(GenerateCommand::OPTION_DRY_RUN);
-        $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR) ?: null;
-        foreach ($this->templateFile->getTemplateFiles([$templateName]) as $file) {
+        $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
+        foreach ($this->templateFile->getTemplateFiles(
+            array_merge([$templateName], $this->templateFile->getDependencies($templateName, true))
+        ) as $file) {
             $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
-                $this->propertyUtil->replacePropertiesInText($file->getPathname(), $propertyBag),
+                $this->templateProcessor->replacePropertiesInText($file->getPathname(), $propertyBag),
                 $rootDir
             );
-            $fileContent = $this->propertyUtil->replacePropertiesInText($file->getContents(), $propertyBag);
+            $fileContent = $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag);
             if (!$dryRun) {
                 try {
                     if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {

@@ -1,6 +1,5 @@
 {
-  "name": "${vendorname}/magento2-module-${modulename}",
-  "description": "${Vendorname} Magento 2 module ${Modulename}",
+  "name": "{{ vendorName|kebab }}/magento2-module-{{ moduleName|kebab }}",
   "require": {
     "php": "~7.2.0"
   },
@@ -10,7 +9,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "${Vendorname}\\${Modulename}\\": ""
+      "{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\": ""
     }
   }
 }

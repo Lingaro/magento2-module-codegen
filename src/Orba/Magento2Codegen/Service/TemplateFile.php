@@ -3,7 +3,7 @@
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Util\TemplatePropertyBag;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -31,21 +31,21 @@ class TemplateFile
     private $yamlParser;
 
     /**
-     * @var TemplatePropertyUtil
+     * @var TemplateProcessorInterface
      */
-    private $propertyUtil;
+    private $templateProcessor;
 
     public function __construct(
         TemplateDir $templateDir,
         FinderFactory $finderFactory,
         Parser $yamlParser,
-        TemplatePropertyUtil $propertyUtil
+        TemplateProcessorInterface $templateProcessor
     )
     {
         $this->templateDir = $templateDir;
         $this->finderFactory = $finderFactory;
         $this->yamlParser = $yamlParser;
-        $this->propertyUtil = $propertyUtil;
+        $this->templateProcessor = $templateProcessor;
     }
 
     public function exists(string $templateName): bool
@@ -68,23 +68,13 @@ class TemplateFile
      */
     public function getDependencies(string $templateName, bool $nested = false): array
     {
-        $this->validateTemplateExistence($templateName);
-        $file = $this->getFileFromTemplateConfig(self::CONFIG_FILENAME, $templateName);
-        if (!$file) {
-            return [];
-        }
+        $parsedConfig = $this->getParsedConfig($templateName);
         $dependencies = [];
-        $parsedConfig = $this->yamlParser->parse($file->getContents());
-        if (!is_array($parsedConfig)) {
-            throw new InvalidArgumentException(sprintf('Invalid config file: %s', $file->getPath()));
-        }
         if (isset($parsedConfig['dependencies'])) {
             $dependencies = $parsedConfig['dependencies'];
             foreach ($dependencies as $dependency) {
                 if (!is_scalar($dependency)) {
-                    throw new InvalidArgumentException(
-                        sprintf('Invalid dependencies array in: %s', $file->getPath())
-                    );
+                    throw new InvalidArgumentException('Invalid dependencies array');
                 }
                 if (!$this->exists($dependency)) {
                     throw new InvalidArgumentException(
@@ -101,11 +91,21 @@ class TemplateFile
         return $dependencies;
     }
 
-    public function getManualSteps(string $templateName, TemplatePropertyBag $propertyBag): string
+    public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): string
     {
         $this->validateTemplateExistence($templateName);
         $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);
-        return $file ? $this->propertyUtil->replacePropertiesInText($file->getContents(), $propertyBag) : '';
+        return $file ? $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag) : '';
+    }
+
+    public function getPropertiesConfig(string $templateName): array
+    {
+        $parsedConfig = $this->getParsedConfig($templateName);
+        $properties = [];
+        if (isset($parsedConfig['properties'])) {
+            $properties = $parsedConfig['properties'];
+        }
+        return $properties;
     }
 
     /**
@@ -150,5 +150,19 @@ class TemplateFile
             return $file;
         }
         return null;
+    }
+
+    private function getParsedConfig(string $templateName)
+    {
+        $this->validateTemplateExistence($templateName);
+        $file = $this->getFileFromTemplateConfig(self::CONFIG_FILENAME, $templateName);
+        if (!$file) {
+            return [];
+        }
+        $parsedConfig = $this->yamlParser->parse($file->getContents());
+        if (!is_array($parsedConfig)) {
+            throw new InvalidArgumentException(sprintf('Invalid config file: %s', $file->getPath()));
+        }
+        return $parsedConfig;
     }
 }

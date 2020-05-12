@@ -2,15 +2,15 @@
 
 namespace Orba\Magento2Codegen\Command\Template;
 
+use Orba\Magento2Codegen\Command\AbstractCommand;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InfoCommand extends Command
+class InfoCommand extends AbstractCommand
 {
     /**
      * @var string|null
@@ -23,21 +23,15 @@ class InfoCommand extends Command
     private $util;
 
     /**
-     * @var IO
-     */
-    private $io;
-
-    /**
      * @var TemplateFile
      */
     private $templateFile;
 
-    public function __construct(Template $util, IO $io, TemplateFile $templateFile)
+    public function __construct(Template $util, IO $io, TemplateFile $templateFile, array $inputValidators = [])
     {
-        parent::__construct();
         $this->util = $util;
-        $this->io = $io;
         $this->templateFile = $templateFile;
+        parent::__construct($io, $inputValidators);
     }
 
     public function configure()
@@ -59,10 +53,7 @@ class InfoCommand extends Command
         $this->templateName = $this->util->getTemplateName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function _execute(InputInterface $input, OutputInterface $output): void
     {
         $this->util->validateTemplate($this->templateName);
         $this->displayHeader();
