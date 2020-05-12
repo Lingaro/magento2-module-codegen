@@ -64,8 +64,17 @@ services:
         -
           - '/^.*\.xml/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+      -
+        - addMerger
+        -
+          - '/^.*\.php/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
+
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
+    shared: false
+
+  Orba\Magento2Codegen\Service\FileMerger\PhpMerger:
     shared: false
 
   Orba\Magento2Codegen\Command\Template\GenerateCommand:
