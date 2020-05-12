@@ -83,6 +83,8 @@ services:
         pascal: '@Orba\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
         snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
+        lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
+        ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
 
   Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
     arguments:

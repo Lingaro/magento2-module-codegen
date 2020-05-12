@@ -39,7 +39,12 @@ class TestExtension implements BeforeFirstTestHook, AfterLastTestHook
         foreach ([
                      'MAGENTO_ROOT_DIR',
                      'MAGENTO_CONSOLE_COMMAND_PATH',
-                     'MAGENTO_BASE_URL'
+                     'MAGENTO_BASE_URL',
+                     'MAGENTO_DATABASE_HOST',
+                     'MAGENTO_DATABASE_PORT',
+                     'MAGENTO_DATABASE_NAME',
+                     'MAGENTO_DATABASE_USERNAME',
+                     'MAGENTO_DATABASE_PASSWORD'
                  ] as $param) {
             if (empty($_ENV[$param])) {
                 throw new RuntimeException(sprintf('PHP env param "%s" not set in PHPUnit config.', $param));

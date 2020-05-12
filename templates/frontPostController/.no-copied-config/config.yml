@@ -1,15 +1,13 @@
-dependencies:
-  - viewModel
 properties:
   frontName:
     type: string
+    default: frontName
     description: First part of action's URL
   controllerName:
     type: string
+    default: controllerName
     description: Second part of action's URL
   actionName:
     type: string
+    default: actionName
     description: Third part of action's URL
-  pageLayout:
-    type: string
-    description: Layout type, eg. "1column", "2columns".
