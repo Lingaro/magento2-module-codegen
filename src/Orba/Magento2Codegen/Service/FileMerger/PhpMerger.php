@@ -15,6 +15,8 @@ use PhpParser\PrettyPrinter;
  */
 class PhpMerger extends AbstractMerger implements MergerInterface
 {
+    protected $experimental = true;
+
     /** @var Parser\Multiple */
     private $_parser;
 
