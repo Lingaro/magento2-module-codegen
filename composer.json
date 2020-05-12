@@ -12,7 +12,6 @@
         "symfony/filesystem": "^5.0",
         "symfony/finder": "^5.0",
         "twig/twig": "^3.0",
-        "magento/framework": "^102.0",
         "nikic/php-parser": "^4.3"
     },
     "autoload": {
