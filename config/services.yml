@@ -62,8 +62,20 @@ services:
       -
         - addMerger
         -
-          - '/^.*\.xml/'
+          - '/^menu\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/menu/add': 'id'
+      -
+        - addMerger
+        -
+          - '/^acl\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/acl/resources/resource': 'id'
+              '/config/acl/resources/resource/resource': 'id'
       -
         - addMerger
         -
@@ -100,6 +112,7 @@ services:
       $functions:
         columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
         databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
+        fullTextIndex: '@Orba\Magento2Codegen\Service\StringFunction\FullTextIndexFunction'
 
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:
