@@ -1,3 +1,11 @@
-1. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:
+1. Management of generated entity is available in admin panel in "Content" submenu. You should move it to the proper place and customize label by editing the following file:
+
+    app/code/{{ vendorName|pascal }}/{{ moduleName|pascal }}/etc/adminhtml/menu.xml
+
+2. For management of generated entity top level ACL {{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }} was created. You should move it to proper place and customize label by editing the following file:
+
+    app/code/{{ vendorName|pascal }}/{{ moduleName|pascal }}/etc/acl.xml
+
+3. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:
 
     bin/magento setup:db-declaration:generate-whitelist --module-name {{ vendorName|pascal }}_{{ moduleName|pascal }}
