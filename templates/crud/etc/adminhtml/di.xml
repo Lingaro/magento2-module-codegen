@@ -20,13 +20,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}_listing_data_source" xsi:type="string">{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Grid\Collection</item>
-            </argument>
-        </arguments>
-    </type>
     <type name="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}</argument>

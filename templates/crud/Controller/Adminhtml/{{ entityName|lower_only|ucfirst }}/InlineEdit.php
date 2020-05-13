@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Exception;
 use Magento\Backend\App\Action;
@@ -23,11 +23,16 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }
  */
 class InlineEdit extends Action
 {
+    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
 
-    /** @var JsonFactory */
+    /**
+     * @var JsonFactory
+     */
     private $jsonFactory;
 
-    /** @var {{ entityName|pascal }}RepositoryInterface */
+    /**
+     * @var {{ entityName|pascal }}RepositoryInterface
+     */
     private $repository;
 
     /**

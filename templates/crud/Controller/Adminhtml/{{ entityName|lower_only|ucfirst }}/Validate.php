@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -13,10 +13,16 @@ use Magento\Framework\Controller\Result\JsonFactory;
 
 class Validate extends Action
 {
-    /** @var JsonFactory $jsonFactory */
+    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+
+    /**
+     * @var JsonFactory $jsonFactory
+     */
     protected $jsonFactory;
 
-    /** @var  \Magento\Framework\DataObject $response */
+    /**
+     * @var  \Magento\Framework\DataObject $response
+     */
     protected $response;
 
     /**
@@ -42,7 +48,7 @@ class Validate extends Action
         $requiredFields = [
 {% for item in fields %}
         {% if not item.nullable %}
-            '{{ item.name|snake }}' => '{{ entityName|pascal }} {{ item.name|pascal }}',
+            '{{ item.name|snake }}' => '{{ item.name|pascal }}',
         {% endif %}
 {% endfor %}
         ];

@@ -4,6 +4,7 @@
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
@@ -16,7 +17,7 @@ class {{ entityName|pascal }}Actions extends Column
     /**
      * Url path
      */
-    const URL_PATH_EDIT = '{{ vendorName|snake }}_{{ moduleName|snake }}/{{ entityName|snake }}/edit';
+    const URL_PATH_EDIT = '{{ vendorName|snake }}_{{ moduleName|snake }}/{{ entityName|lower_only }}/edit';
 
     /**
      * @var UrlInterface

@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Exception;
 use Magento\Backend\App\Action;
@@ -14,7 +14,11 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }
 
 class Delete extends Action
 {
-    /** @var {{ entityName|camel }}Factory $objectFactory */
+    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+
+    /**
+     * @var {{ entityName|camel }}Factory $objectFactory
+     */
     protected $objectFactory;
 
     /**
@@ -27,14 +31,6 @@ class Delete extends Action
     ) {
         $this->objectFactory = $objectFactory;
         parent::__construct($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}');
     }
 
     /**

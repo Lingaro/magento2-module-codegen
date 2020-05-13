@@ -3,7 +3,7 @@
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|capital }}\Edit;
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|pascal }}\Edit;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Registry;
@@ -47,6 +47,10 @@ class DeleteButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
+        if (!$this->registry->registry('entity_id')) {
+            return [];
+        }
+
         $data = [
             'label' => __('Delete'),
             'class' => 'delete',
@@ -54,7 +58,7 @@ class DeleteButton implements ButtonProviderInterface
             'data_attribute' => [
                 'url' => $this->getDeleteUrl()
             ],
-            'on_click' => 'deleteConfirm(\'' . __("Are you sure you want to do this?") . '\', \'' . $this->getDeleteUrl() . '\')',
+            'on_click' => 'deleteConfirm(\'' . __("Are you sure you want to do delete this entity?") . '\', \'' . $this->getDeleteUrl() . '\')',
             'sort_order' => 20,
         ];
         return $data;

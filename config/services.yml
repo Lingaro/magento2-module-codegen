@@ -79,11 +79,6 @@ services:
       -
         - addMerger
         -
-          - '/^.*\.xml/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
-      -
-        - addMerger
-        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
 
@@ -117,6 +112,7 @@ services:
       $functions:
         columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
         databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
+        fullTextIndex: '@Orba\Magento2Codegen\Service\StringFunction\FullTextIndexFunction'
 
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:

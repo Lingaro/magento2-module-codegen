@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -13,7 +13,11 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }
 
 class Save extends Action
 {
-    /** @var {{ entityName|camel}}Factory $objectFactory */
+    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+
+    /**
+     * @var {{ entityName|camel}}Factory $objectFactory
+     */
     protected $objectFactory;
 
     /**
@@ -26,14 +30,6 @@ class Save extends Action
     ) {
         $this->objectFactory = $objectFactory;
         parent::__construct($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}');
     }
 
     /**

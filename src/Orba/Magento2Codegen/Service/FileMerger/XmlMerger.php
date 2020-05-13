@@ -30,6 +30,21 @@ class XmlMerger extends AbstractMerger implements MergerInterface
         } catch (Throwable $t) {
             throw new InvalidArgumentException('Root nodes cannot be different.');
         }
-        return $merger->getDom()->saveXML();
+        $outXML = $merger->getDom()->saveXML();
+
+        return $this->prettyPrint($outXML);
+    }
+
+    /**
+     * @param string $xml
+     * @return string
+     */
+    private function prettyPrint(string $xml)
+    {
+        $dom = new \DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadXML($xml);
+        return str_replace('  ', "\t", $dom->saveXML());
     }
 }

@@ -5,7 +5,7 @@
  * @author    {{ commentsUserEmail }}
  */
 
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -15,9 +15,9 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }
 
 class Edit extends Action
 {
+    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+
     /**
-     * Core registry
-     *
      * @var Registry
      */
     protected $_coreRegistry = null;
@@ -27,7 +27,9 @@ class Edit extends Action
      */
     protected $resultPageFactory;
 
-    /** @var {{ entityName|camel }}Factory $objectFactory */
+    /**
+     * @var {{ entityName|camel }}Factory $objectFactory
+     */
     protected $objectFactory;
 
     /**
@@ -46,14 +48,6 @@ class Edit extends Action
         $this->_coreRegistry = $registry;
         $this->objectFactory = $objectFactory;
         parent::__construct($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}');
     }
 
     /**

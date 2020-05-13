@@ -4,7 +4,7 @@
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|capital }};
+namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -17,12 +17,16 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
  */
 class MassDelete extends Action
 {
+    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+
     /**
      * @var Filter
      */
     protected $filter;
 
-    /** @var Collection $objectCollection */
+    /**
+     * @var Collection $objectCollection
+     */
     protected $objectCollection;
 
     /**
