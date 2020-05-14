@@ -113,6 +113,7 @@ services:
         columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
         databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
         fullTextIndex: '@Orba\Magento2Codegen\Service\StringFunction\FullTextIndexFunction'
+        folderScope: '@Orba\Magento2Codegen\Service\StringFunction\FolderScopeFunction'
 
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:

@@ -10,13 +10,14 @@ use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class TwigTemplateProcessor implements TemplateProcessorInterface
 {
     const ALLOWED_TAGS = ['if', 'for'];
     const ALLOWED_FILTERS = ['escape', 'upper', 'lower', 'raw'];
     const TEMPLATE_NAME = 'template';
-    private const ALLOWED_FUNCTIONS = ['columnDefinition', 'databaseTypeToPHP', 'fullTextIndex'];
+    const ALLOWED_FUNCTIONS = [];
 
     /**
      * @var FiltersExtension
@@ -44,13 +45,20 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
         $twig->addExtension($this->functionsExtension);
         $customFilters = [];
         foreach ($this->filtersExtension->getFilters() as $filter) {
-            /** @var TwigFilter $filter */
             $customFilters[] = $filter->getName();
+        }
+        $customFunctions = [];
+        foreach ($this->functionsExtension->getFunctions() as $function) {
+            $customFunctions[] = $function->getName();
         }
         $twig->addExtension(
             new SandboxExtension(
                 new SecurityPolicy(
-                    self::ALLOWED_TAGS, array_merge(self::ALLOWED_FILTERS, $customFilters), [], [], self::ALLOWED_FUNCTIONS
+                    self::ALLOWED_TAGS,
+                    array_merge(self::ALLOWED_FILTERS, $customFilters),
+                    [],
+                    [],
+                    array_merge(self::ALLOWED_FUNCTIONS, $customFunctions)
                 ),
                 true
             )
