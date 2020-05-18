@@ -3,10 +3,10 @@
   <component name="PhpInterpreters">
     <interpreters>
       <interpreter id="orba-interpreter" name="orba interpreter" home="docker://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="orbaco/magento-php-v2:2.3.4-p2-dev" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="orbaco/magento-php-v2:2.3.4-p2-dev" DOCKER_REMOTE_PROJECT_PATH="/var/www/magento" />
       </interpreter>
       <interpreter id="codegen-interpreter" name="codegen interpreter" home="docker://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="orbaco/magento-php-v2:2.3.4-p2-dev" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="orbaco/magento-php-v2:2.3.4-p2-dev" DOCKER_REMOTE_PROJECT_PATH="/var/www/magento" />
       </interpreter>
     </interpreters>
   </component>
