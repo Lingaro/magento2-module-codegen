@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="App Code Unit - acme" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+  <configuration default="false" name="App Code Unit - orba" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
     <CommandLine>
       <PhpTestInterpreterSettings>
         <option name="interpreterName" value="orba interpreter" />

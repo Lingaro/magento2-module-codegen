@@ -20,8 +20,7 @@ up:
 	$(MV) -t . ./$(PROJECT_TEMP_DIR)/*
 	$(RM) -d $(PROJECT_TEMP_DIR)
 	$(MAKE) new project=orba version=$(VERSION) edition=$(EDITION) ca=0
-	$(CP) -r ./$(TEMP_DIR)/make/.idea ./.idea
-	$(CP) -r ./$(TEMP_DIR)/make/source/magento ./source
+	$(CP) -rf ./$(TEMP_DIR)/make/source/magento ./source
 	$(MKDIR) -p source/magento/lib/internal/codegen
 	$(MV) ./module_tmp/* ./source/magento/lib/internal/codegen
 	$(RM) -d module_tmp
