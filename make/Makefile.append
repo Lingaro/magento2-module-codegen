@@ -10,3 +10,4 @@ install-package:
 	$(RM) -d module_tmp
 	$(DOCKER_COMPOSE_$(MODE_UPPERCASE)) exec --user www-data $(service) composer config repositories.codegen '{"type": "path", "url": "lib/internal/codegen"}'
 	$(DOCKER_COMPOSE_$(MODE_UPPERCASE)) exec --user www-data $(service) composer require --dev orba/magento2-codegen:*
+	$(DOCKER_COMPOSE_$(MODE_UPPERCASE)) exec --user www-data $(service) cd ./source/magento/lib/internal/codegen && composer install

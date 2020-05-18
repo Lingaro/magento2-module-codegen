@@ -6,6 +6,7 @@ TEMP_DIR=module_tmp
 MKDIR=mkdir
 MV=mv
 RM=rm
+CP=cp
 CAT=cat
 GIT=git
 PROJECT_FRAMEWORK_REPO=git@bitbucket.org:orbainternalprojects/skeleton.git
@@ -20,6 +21,6 @@ up:
 	$(RM) -d $(PROJECT_TEMP_DIR)
 	$(MAKE) new project=orba version=$(VERSION) edition=$(EDITION) ca=0
 	$(CAT) ./$(TEMP_DIR)/make/Makefile.append >> Makefile
+	$(CP) -r ./$(TEMP_DIR)/make/.idea ./.idea
 	$(SUDO) $(MAKE) hosts
 	$(MAKE) up
-
