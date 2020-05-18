@@ -184,7 +184,7 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <phpunit_by_interpreter interpreter_id="orba-interpreter" configuration_file_path="/var/www/magento/dev/tests/unit/phpunit.xml.dist" custom_loader_path="/var/www/magento/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
-      <phpunit_by_interpreter interpreter_id="codegen-interpreter" configuration_file_path="/var/www/magento/lib/internal/codegen/src/Orba/Magento2Codegen/Test/phpunit.xml.dist" custom_loader_path="/var/www/magento/lib/internal/codegen/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
+      <phpunit_by_interpreter interpreter_id="codegen-interpreter" configuration_file_path="/var/www/magento/lib/internal/codegen/src/Orba/Magento2Codegen/Test/phpunit_unit.xml" custom_loader_path="/var/www/magento/lib/internal/codegen/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
     </phpunit_settings>
   </component>
 </project>
