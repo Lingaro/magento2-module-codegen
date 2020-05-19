@@ -1,4 +1,5 @@
 .PHONY: up
+
 SHELL=/bin/bash -O extglob -O dotglob -c
 SUDO=sudo
 PROJECT_TEMP_DIR=project_tmp
@@ -12,6 +13,9 @@ COMPOSER=composer
 PROJECT_FRAMEWORK_REPO=git@bitbucket.org:orbainternalprojects/skeleton.git
 EDITION=community
 VERSION=2.3.4-p2
+
+mount ?=
+
 up:
 	$(MKDIR) $(TEMP_DIR)
 	$(MV) -t $(TEMP_DIR)/ !($(TEMP_DIR))
@@ -26,4 +30,8 @@ up:
 	$(RM) -d module_tmp
 	$(COMPOSER) install -d ./source/magento/lib/internal/codegen
 	$(SUDO) $(MAKE) hosts
+ifeq (,$(mount))
 	$(MAKE) up
+else
+	$(MAKE) up mount=$(mount)
+endif
