@@ -1,0 +1,10 @@
+properties:
+  scope:
+    type: string
+    description: Scope of the observer (global, frontend, adminhtml)
+  eventName:
+    type: string
+    description: Event code that is beeing listened
+  observerName:
+    type: string
+    description: A short name describing observer
