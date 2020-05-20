@@ -1,3 +1,6 @@
+description: "This template is used to create a frontend controller that renders custom page.\n
+              It also adds route, layout, view model and phtml template."
+afterGenerate: "URL to generated controller: https://YOUR_STORE_URL/{{ frontName|snake }}/{{ controllerName|lower_only }}/{{ actionName|lower_only }}"
 dependencies:
   - viewModel
 properties:

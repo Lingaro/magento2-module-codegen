@@ -1,1 +1,0 @@
-This template is used to create a custom console command.

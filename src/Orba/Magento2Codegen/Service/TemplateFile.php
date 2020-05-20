@@ -11,9 +11,7 @@ use Symfony\Component\Yaml\Parser;
 class TemplateFile
 {
     const TEMPLATE_CONFIG_FOLDER = '.no-copied-config';
-    const DESCRIPTION_FILENAME = 'description.txt';
     const CONFIG_FILENAME = 'config.yml';
-    const AFTER_GENERATE_FILENAME = 'after-generate-info.txt';
 
     /**
      * @var TemplateDir
@@ -56,8 +54,7 @@ class TemplateFile
     public function getDescription(string $templateName): string
     {
         $this->validateTemplateExistence($templateName);
-        $file = $this->getFileFromTemplateConfig(self::DESCRIPTION_FILENAME, $templateName);
-        return $file ? $file->getContents() : '';
+        return $this->getDescriptionConfig($templateName);
     }
 
     /**
@@ -94,11 +91,11 @@ class TemplateFile
     public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): array
     {
         $this->validateTemplateExistence($templateName);
-        $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);
-        if ($file) {
+        $afterGenerate = $this->getAfterGenerateConfig($templateName);
+        if ($afterGenerate) {
             $messages = explode(
                 "\n",
-                $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag)
+                $this->templateProcessor->replacePropertiesInText($afterGenerate, $propertyBag)
             );
         } else {
             $messages = [];
@@ -106,6 +103,10 @@ class TemplateFile
         return $messages;
     }
 
+    /**
+     * @param string $templateName
+     * @return array
+     */
     public function getPropertiesConfig(string $templateName): array
     {
         $parsedConfig = $this->getParsedConfig($templateName);
@@ -114,6 +115,35 @@ class TemplateFile
             $properties = $parsedConfig['properties'];
         }
         return $properties;
+    }
+
+    /**
+     * @param string $templateName
+     * @return array
+     */
+    public function getDescriptionConfig(string $templateName): string
+    {
+        return $this->getRootConfig($templateName, 'description');
+    }
+
+    /**
+     * @param string $templateName
+     * @return array
+     */
+    public function getAfterGenerateConfig(string $templateName): string
+    {
+        return $this->getRootConfig($templateName, 'afterGenerate');
+    }
+
+    /**
+     * @param string $templateName
+     * @param string $configName
+     * @return string
+     */
+    private function getRootConfig(string $templateName, string $configName): string
+    {
+        $parsedConfig = $this->getParsedConfig($templateName);
+        return isset($parsedConfig[$configName]) ? $parsedConfig[$configName] : '';
     }
 
     /**
