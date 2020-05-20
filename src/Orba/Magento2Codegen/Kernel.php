@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-final class Kernel extends \Symfony\Component\HttpKernel\Kernel
+final class Kernel extends \Instinct\Component\Kernel\Kernel
 {
     public function registerBundles(): array
     {

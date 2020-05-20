@@ -91,11 +91,19 @@ class TemplateFile
         return $dependencies;
     }
 
-    public function getManualSteps(string $templateName, PropertyBag $propertyBag): string
+    public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): array
     {
         $this->validateTemplateExistence($templateName);
         $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);
-        return $file ? $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag) : '';
+        if ($file) {
+            $messages = explode(
+                "\n",
+                $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag)
+            );
+        } else {
+            $messages = [];
+        }
+        return $messages;
     }
 
     public function getPropertiesConfig(string $templateName): array

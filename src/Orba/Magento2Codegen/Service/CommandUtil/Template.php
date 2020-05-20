@@ -162,10 +162,10 @@ class Template
      */
     public function showInfoAfterGenerate(string $templateName, PropertyBag $propertyBag): void
     {
-        $manualSteps = $this->templateFile->getManualSteps($templateName, $propertyBag);
-        if ($manualSteps) {
-            $this->io->getInstance()->note('This template needs you to take care of the following manual steps:');
-            $this->io->getInstance()->text($manualSteps);
+        $afterGenerate = $this->templateFile->getAfterGenerate($templateName, $propertyBag);
+        if ($afterGenerate) {
+            $this->io->getInstance()->note('Post-generation information:');
+            $this->io->getInstance()->text($afterGenerate);
         }
     }
 

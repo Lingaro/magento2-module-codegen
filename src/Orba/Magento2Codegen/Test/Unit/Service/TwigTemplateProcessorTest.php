@@ -3,6 +3,7 @@
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
+use Orba\Magento2Codegen\Service\Twig\FunctionsExtension;
 use Orba\Magento2Codegen\Service\TwigTemplateProcessor;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
@@ -18,7 +19,8 @@ class TwigTemplateProcessorTest extends TestCase
     public function setUp(): void
     {
         $this->twigTemplateProcessor = new TwigTemplateProcessor(
-            new FiltersExtension()
+            new FiltersExtension(),
+            new FunctionsExtension()
         );
     }
 
