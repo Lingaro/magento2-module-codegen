@@ -1,5 +1,25 @@
 # Technical documentation
 
+## Dev environment
+
+### Automated (Orba developers only)
+
+You can use our experimental Makefile for setting up automatically Orbento Skeleton (clean Magento 2 with sample data and the whole environment needed for Codegen development). Simply run the following command and wait for magic to happen ;-).
+
+```
+make up
+```
+
+Watchout: You need to install Docker and Docker Compose on your machine. Also, special permissions to our internal tools are needed to make everything work. Please contact DevOps team to get them.
+
+Watchout: You will be asked by script for sudo password. This is needed for automated generation of hosts.
+
+When the environment is ready (`[info] Running regular mode...` should be visible in your command line), you can open project dir in PHPStorm and start working with all the toys like PHP Unit and XDebug already configured. Your dev Magento will be available through https://orba.local URL. Codegen files will be placed in `source/magento/lib/internal/codegen`.
+
+### Manual
+
+If you are not lucky enough to work in Orba, you can use whatever local environment you prefer. Just remember to use `composer install` so you get all required dependencies and your PHP version (and required modules) is checked. 
+
 ## Working with templates
 
 ### Template files
@@ -8,25 +28,33 @@ Each template consists of set of files localized in a subdirectory of `templates
 
 During template generation all its files are processed using Twig and the results are copied to the destination dir.
 
-In template files contents (and their names too!) you can:
+In the template files contents (and their names too!) you can:
 
 1. Use properties, so a user can personalize generated code; properties must be defined in template's config file (explained further),
 2. Use filters:
    * [escape](https://twig.symfony.com/doc/3.x/filters/escape.html),
    * [upper](https://twig.symfony.com/doc/3.x/filters/upper.html),
    * [lower](https://twig.symfony.com/doc/3.x/filters/lower.html),
+   * [raw](https://twig.symfony.com/doc/3.x/filters/raw.html),
    * camel (converts a string to camelCase),
    * pascal (converts a string to PascalCase),
    * snake (converts a string to snake_case),
    * kebab (converts a string to kebab-case),
-3. Use [ifs](https://twig.symfony.com/doc/3.x/tags/if.html),
-4. Use [for loops](https://twig.symfony.com/doc/3.x/tags/for.html).
+   * lower_only (removes all characters except letters and digits and converts string to lowercase)
+   * ucfirst (makes first letter of a string capital)
+3. Use functions (see: `src/Orba/Magento2Codegen/Service/StringFunction/*` to check what they do)
+   * columnDefinition
+   * databaseTypeToPHP
+   * fullTextIndex
+   * folderScope
+4. Use [ifs](https://twig.symfony.com/doc/3.x/tags/if.html),
+5. Use [for loops](https://twig.symfony.com/doc/3.x/tags/for.html).
    
-Each template dir has a special subdirectory `.no-copied-config`, which is not processed and copied as others. Inside there is a place for template config files.
+Each template dir has a special subdirectory `.no-copied-config`, which is not processed and copied as others. Inside there is a place for template config file.
 
 ### Template config
 
-Main template config file can be found in `.no-copied-config/config.yml`. You can configure there the following aspects of a template:
+Template config file can be found in `.no-copied-config/config.yml`. You can configure there the following aspects of a template:
 
 #### Template properties
 
@@ -124,7 +152,7 @@ Hi, I'm Pi and my value is 3.1415.
 
 #### Template dependencies
 
-If a template is dependant on some other templates (ie. they should be genearted while the main template is), their names should be placed in `dependencies` root node of `config.yml` file. 
+If a template is dependent on some other templates (ie. they should be generated while the main template is), their names should be placed in `dependencies` root node of `config.yml` file. 
 
 Example:
 
@@ -134,16 +162,20 @@ dependencies:
   - bar
 ```
 
-You can check how it works by playing with `frontPageController` template. It's dependant on `viewModel`.
+You can check how it works by playing with `frontPageController` template. It's dependent on `viewModel`.
 
-### Template description
+#### Template description
 
-Longer description of a template can be placed inside `.no-copied-config/description.txt` file. It will be shown during template generation and when using `template:info` command.
+Longer description of a template can be placed in `description` root node of `config.yml` file. It will be shown during template generation and when using `template:info` command.
 
-### Additional info after template generation
+Example:
 
-If a user needs to take some additional steps after code is generated, their description may be added to `.no-copied-config/after-generate-info.txt` file. The content of this file is processed by Twig, so you can use properties inside.
+```yaml
+description: "This template is used to create a custom block and phtml template file for it."
+```
+
+#### Additional info after template generation
+
+If a user needs to take some additional steps after code is generated, their description may be added in `afterGenearte` root node of `config.yml` file. The content of this param is processed by Twig, so you can use properties inside.
 
 Check `viewModel` template for real life example.
-
-## 

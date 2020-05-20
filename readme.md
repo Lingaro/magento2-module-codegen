@@ -4,7 +4,7 @@ Inspired by https://github.com/staempfli/magento2-code-generator
 
 ## Purpose
 
-In day-to-day Magento 2 development there are some common tasks which require developent of repeatable code that is hard to simply copy-paste. The purpose of this app is to automatize creation of such code, so the developers may focus on business logic, beeing thanks to that much more efficient and happy. 
+In day-to-day Magento 2 development there are some common tasks which require development of repeatable code that is hard to simply copy-paste. The purpose of this app is to automatize creation of such code, so the developers may focus on business logic and thanks to that being much more efficient and happy. 
 
 ## Installation
 
@@ -31,13 +31,13 @@ https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
 composer require --dev orba/magento2-codegen:dev-master
 ```
 
-4. Create your custom config file:
+4. Create your custom config file (not needed for Orba developers):
 
 ```
 cp vendor/orba/magento2-codegen/config/codegen.yml.dist vendor/orba/magento2-codegen/config/codegen.yml
 ```
 
-Edit default values if needed.
+and edit default values.
 
 ## Usage
 
@@ -78,4 +78,4 @@ If specified root directory doesn't exist, it will be created automatically.
 
 Feel free to contribute with new templates, bugfixes and features. Submit your code to review using pull request.
 
-In [dev/docs.md](dev/docs.md) you can find additional documentation for developers.
+In [dev/docs.md](dev/docs.md) you can find the additional documentation for developers.
