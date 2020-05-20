@@ -6,3 +6,10 @@ templateInfo:
   description: "This template is used to create a view model and phtml template file for it.\n
                 It should be used if you simply need to inject your business logic into template file.\n
                 If you need to add some customizations to block processing, use \"block\" template instead."
+  afterGenerate: "1. Add block in your layout xml file:\n
+                  \n
+                    \t<block name=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ viewModelName|snake }}\" template=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ viewModelName|snake }}.phtml\">
+                      \t\t<arguments>
+                        \t\t\t<argument name=\"view_model\" xsi:type=\"object\">{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }}</argument>
+                      \t\t</arguments>
+                    \t</block>"
