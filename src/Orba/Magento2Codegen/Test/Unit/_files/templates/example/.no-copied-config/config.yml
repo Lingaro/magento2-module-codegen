@@ -1,2 +1,4 @@
 dependencies:
   - example2
+templateInfo:
+  afterGenerate: Some info with {{ property }}

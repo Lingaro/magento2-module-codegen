@@ -2,3 +2,11 @@ properties:
   viewModelName:
     type: string
     description: A short name describing view model
+templateInfo:
+  afterGenerate: "1. Add block in your layout xml file:\n
+                  \n
+                    \t<block name=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ viewModelName|snake }}\" template=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ viewModelName|snake }}.phtml\">
+                      \t\t<arguments>
+                        \t\t\t<argument name=\"view_model\" xsi:type=\"object\">{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }}</argument>
+                      \t\t</arguments>
+                    \t</block>"

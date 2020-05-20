@@ -11,3 +11,5 @@ properties:
     type: string
     default: actionName
     description: Third part of action's URL
+templateInfo:
+  afterGenerate: "URL to generated controller: https://YOUR_STORE_URL/{{ frontName|snake }}/{{ controllerName|lower_only }}/{{ actionName|lower_only }}"

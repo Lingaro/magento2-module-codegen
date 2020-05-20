@@ -1,1 +1,0 @@
-URL to generated controller: https://YOUR_STORE_URL/{{ frontName|snake }}/{{ controllerName|lower_only }}/{{ actionName|lower_only }}

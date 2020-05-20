@@ -13,7 +13,6 @@ class TemplateFile
     const TEMPLATE_CONFIG_FOLDER = '.no-copied-config';
     const DESCRIPTION_FILENAME = 'description.txt';
     const CONFIG_FILENAME = 'config.yml';
-    const AFTER_GENERATE_FILENAME = 'after-generate-info.txt';
 
     /**
      * @var TemplateDir
@@ -94,11 +93,11 @@ class TemplateFile
     public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): array
     {
         $this->validateTemplateExistence($templateName);
-        $file = $this->getFileFromTemplateConfig(self::AFTER_GENERATE_FILENAME, $templateName);
-        if ($file) {
+        $templateInfo = $this->getTemplateInfoConfig($templateName);
+        if (isset($templateInfo['afterGenerate'])) {
             $messages = explode(
                 "\n",
-                $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag)
+                $this->templateProcessor->replacePropertiesInText($templateInfo['afterGenerate'], $propertyBag)
             );
         } else {
             $messages = [];
@@ -114,6 +113,20 @@ class TemplateFile
             $properties = $parsedConfig['properties'];
         }
         return $properties;
+    }
+
+    /**
+     * @param string $templateName
+     * @return array
+     */
+    public function getTemplateInfoConfig(string $templateName): array
+    {
+        $parsedConfig = $this->getParsedConfig($templateName);
+        $templateInfo = [];
+        if (isset($parsedConfig['templateInfo'])) {
+            $templateInfo = $parsedConfig['templateInfo'];
+        }
+        return $templateInfo;
     }
 
     /**

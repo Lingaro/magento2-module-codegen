@@ -2,3 +2,9 @@ properties:
   blockName:
     type: string
     description: A short name describing block
+templateInfo:
+  afterGenerate: "1. Add block in your layout xml file:\n
+                  \n
+                  <block class=\"{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Block\\{{ blockName|pascal }}\"\n
+                    \tname=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ blockName|snake }}\"\n
+                    \ttemplate=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ blockName|snake }}.phtml\"/>"
