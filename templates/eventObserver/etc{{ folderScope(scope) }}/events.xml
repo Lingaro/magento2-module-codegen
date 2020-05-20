@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * di
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="{{ eventName|snake }}">
+        <observer name="{{ observerName|snake }}" instance="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Observer\{{ observerName|pascal }}" />
+    </event>
+</config>
