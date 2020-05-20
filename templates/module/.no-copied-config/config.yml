@@ -1,3 +1,4 @@
+description: This template is used to create basic configuration needed to start a custom module.
 properties:
   vendorName:
     type: string
@@ -6,5 +7,3 @@ properties:
   moduleName:
     type: string
     description: A short name describing module
-templateInfo:
-  description: This template is used to create basic configuration needed to start a custom module.

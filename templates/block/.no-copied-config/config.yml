@@ -1,13 +1,12 @@
+description: "This template is used to create a custom block and phtml template file for it.\n
+              It should be used only if you need to add some customizations to block processing.\n
+              If you simply need to inject your business logic into template file, use \"viewModel\" template instead."
+afterGenerate: "1. Add block in your layout xml file:\n
+                \n
+                <block class=\"{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Block\\{{ blockName|pascal }}\"\n
+                  \tname=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ blockName|snake }}\"\n
+                  \ttemplate=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ blockName|snake }}.phtml\"/>"
 properties:
   blockName:
     type: string
     description: A short name describing block
-templateInfo:
-  description: "This template is used to create a custom block and phtml template file for it.\n
-                It should be used only if you need to add some customizations to block processing.\n
-                If you simply need to inject your business logic into template file, use \"viewModel\" template instead."
-  afterGenerate: "1. Add block in your layout xml file:\n
-                  \n
-                  <block class=\"{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Block\\{{ blockName|pascal }}\"\n
-                    \tname=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ blockName|snake }}\"\n
-                    \ttemplate=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ blockName|snake }}.phtml\"/>"

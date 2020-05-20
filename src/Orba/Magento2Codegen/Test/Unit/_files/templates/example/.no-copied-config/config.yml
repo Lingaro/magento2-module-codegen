@@ -1,5 +1,4 @@
+description: Exemplary description
+afterGenerate: Some info with {{ property }}
 dependencies:
   - example2
-templateInfo:
-  description: Exemplary description
-  afterGenerate: Some info with {{ property }}

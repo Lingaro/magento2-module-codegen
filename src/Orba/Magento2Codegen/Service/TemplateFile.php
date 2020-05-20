@@ -54,8 +54,7 @@ class TemplateFile
     public function getDescription(string $templateName): string
     {
         $this->validateTemplateExistence($templateName);
-        $properties = $this->getTemplateInfoConfig($templateName);
-        return isset($properties['description']) ? $properties['description'] : '';
+        return $this->getDescriptionConfig($templateName);
     }
 
     /**
@@ -92,11 +91,11 @@ class TemplateFile
     public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): array
     {
         $this->validateTemplateExistence($templateName);
-        $templateInfo = $this->getTemplateInfoConfig($templateName);
-        if (isset($templateInfo['afterGenerate'])) {
+        $afterGenerate = $this->getAfterGenerateConfig($templateName);
+        if ($afterGenerate) {
             $messages = explode(
                 "\n",
-                $this->templateProcessor->replacePropertiesInText($templateInfo['afterGenerate'], $propertyBag)
+                $this->templateProcessor->replacePropertiesInText($afterGenerate, $propertyBag)
             );
         } else {
             $messages = [];
@@ -122,14 +121,29 @@ class TemplateFile
      * @param string $templateName
      * @return array
      */
-    public function getTemplateInfoConfig(string $templateName): array
+    public function getDescriptionConfig(string $templateName): string
+    {
+        return $this->getRootConfig($templateName, 'description');
+    }
+
+    /**
+     * @param string $templateName
+     * @return array
+     */
+    public function getAfterGenerateConfig(string $templateName): string
+    {
+        return $this->getRootConfig($templateName, 'afterGenerate');
+    }
+
+    /**
+     * @param string $templateName
+     * @param string $configName
+     * @return string
+     */
+    private function getRootConfig(string $templateName, string $configName): string
     {
         $parsedConfig = $this->getParsedConfig($templateName);
-        $templateInfo = [];
-        if (isset($parsedConfig['templateInfo'])) {
-            $templateInfo = $parsedConfig['templateInfo'];
-        }
-        return $templateInfo;
+        return isset($parsedConfig[$configName]) ? $parsedConfig[$configName] : '';
     }
 
     /**
