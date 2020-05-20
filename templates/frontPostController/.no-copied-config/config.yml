@@ -11,3 +11,5 @@ properties:
     type: string
     default: actionName
     description: Third part of action's URL
+templateInfo:
+  description: This template is used to create a very basic front post controller.

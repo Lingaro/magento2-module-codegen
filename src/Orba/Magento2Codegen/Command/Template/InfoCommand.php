@@ -73,7 +73,7 @@ class InfoCommand extends AbstractCommand
         if ($description) {
             $this->io->getInstance()->text($description);
         } else {
-            $this->io->getInstance()->text('Sorry, there is not info defined for this template.');
+            $this->io->getInstance()->text('Sorry, there is no info defined for this template.');
         }
 
     }

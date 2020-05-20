@@ -1,2 +1,4 @@
 dependencies:
   0: model
+templateInfo:
+  description: This Template creates a crud module using uiComponents for Grid and Form.

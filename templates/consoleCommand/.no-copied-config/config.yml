@@ -5,3 +5,5 @@ properties:
   commandDescription:
     type: string
     description: A short description explaining feature behind generated command.
+templateInfo:
+  description: This Template creates a crud module using uiComponents for Grid and Form.

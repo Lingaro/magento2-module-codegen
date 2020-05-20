@@ -11,7 +11,6 @@ use Symfony\Component\Yaml\Parser;
 class TemplateFile
 {
     const TEMPLATE_CONFIG_FOLDER = '.no-copied-config';
-    const DESCRIPTION_FILENAME = 'description.txt';
     const CONFIG_FILENAME = 'config.yml';
     const AFTER_GENERATE_FILENAME = 'after-generate-info.txt';
 
@@ -56,8 +55,8 @@ class TemplateFile
     public function getDescription(string $templateName): string
     {
         $this->validateTemplateExistence($templateName);
-        $file = $this->getFileFromTemplateConfig(self::DESCRIPTION_FILENAME, $templateName);
-        return $file ? $file->getContents() : '';
+        $properties = $this->getTemplateInfoConfig($templateName);
+        return isset($properties['description']) ? $properties['description'] : '';
     }
 
     /**
@@ -106,6 +105,10 @@ class TemplateFile
         return $messages;
     }
 
+    /**
+     * @param string $templateName
+     * @return array
+     */
     public function getPropertiesConfig(string $templateName): array
     {
         $parsedConfig = $this->getParsedConfig($templateName);
@@ -114,6 +117,20 @@ class TemplateFile
             $properties = $parsedConfig['properties'];
         }
         return $properties;
+    }
+
+    /**
+     * @param string $templateName
+     * @return array
+     */
+    public function getTemplateInfoConfig(string $templateName): array
+    {
+        $parsedConfig = $this->getParsedConfig($templateName);
+        $templateInfo = [];
+        if (isset($parsedConfig['templateInfo'])) {
+            $templateInfo = $parsedConfig['templateInfo'];
+        }
+        return $templateInfo;
     }
 
     /**

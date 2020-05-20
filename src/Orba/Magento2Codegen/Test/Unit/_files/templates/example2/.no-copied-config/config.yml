@@ -1,2 +1,4 @@
 dependencies:
   - emptyconfig
+templateInfo:
+  description: Exemplary description 2

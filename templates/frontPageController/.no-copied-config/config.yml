@@ -13,3 +13,6 @@ properties:
   pageLayout:
     type: string
     description: Layout type, eg. "1column", "2columns".
+templateInfo:
+  description: "This template is used to create a frontend controller that renders custom page.\n
+                It also adds route, layout, view model and phtml template."

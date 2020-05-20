@@ -27,3 +27,5 @@ properties:
       scale:
         type: string
         description: The number of digits after the decimal in a real data type. If empty, will use default.
+templateInfo:
+  description: This template creates a model with the corresponding repository, searchResult, resourceModel, collection, db_schema.xml and API
