@@ -26,6 +26,7 @@ class TemplateList
                 $templates[] = $dir->getFilename();
             }
         }
+        sort($templates);
         return $templates;
     }
 }
