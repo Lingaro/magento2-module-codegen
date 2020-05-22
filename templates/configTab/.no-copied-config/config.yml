@@ -1,0 +1,14 @@
+properties:
+  id:
+    type: string
+    description: Tab ID
+  label:
+    type: string
+    description: Tab label
+  translate:
+    type: string
+    description: Translate argument value
+    default: label
+  sortOrder:
+    type: string
+    description: sortOrder argument value

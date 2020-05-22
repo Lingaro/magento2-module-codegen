@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * system
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="{{ sectionId }}">
+            <group id="{{ id }}" translate="{{ translate }}" type="{{ type }}" sortOrder="{{ sortOrder }}" showInDefault="{{ showInDefault }}" showInWebsite="{{ showInWebsite }}" showInStore="{{ showInStore }}">
+                <label>{{ label }}</label>
+            </group>
+        </section>
+    </system>
+</config>

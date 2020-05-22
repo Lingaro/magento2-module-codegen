@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * system
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="{{ sectionId }}">
+            <tab>{{ tabId }}</tab>
+            <group id="{{ groupId }}">
+                <field id="{{ fieldId }}" translate="{{ fieldTranslate }}" type="{{ fieldType }}" sortOrder="{{ fieldSortOrder }}" showInDefault="{{ fieldShowInDefault }}" showInWebsite="{{ fieldShowInWebsite }}" showInStore="{{ fieldShowInStore }}">
+                    <label>{{ fieldLabel }}</label>
+                {% if fieldComment %}
+                    <comment>{{ fieldComment }}</comment>
+                {% endif %}
+                {% if fieldSourceModel %}
+                    <source_model>{{ fieldSourceModel }}</source_model>
+                {% endif %}
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,48 @@
+properties:
+  sectionId:
+    type: string
+    description: ID of config section
+  tabId:
+    type: string
+    description: ID of config tab
+  groupId:
+    type: string
+    description: ID of config group
+
+  configScope:
+    type: string
+    description: Config scope
+    default: website
+
+  fieldId:
+    type: string
+    description: Field ID
+  fieldLabel:
+    type: string
+    description: Field label
+  fieldComment:
+    type: string
+    description: Field comment
+  fieldSourceModel:
+    type: string
+    description: Source Model of field
+    default:
+  fieldTranslate:
+    type: string
+    description: Translate argument value
+    default: label
+  fieldType:
+    type: string
+    description: Type argument value
+  fieldSortOrder:
+    type: string
+    description: sortOrder argument value
+  fieldShowInDefault:
+    type: string
+    description: showInDefault argument value
+  fieldShowInWebsite:
+    type: string
+    description: showInWebsite argument value
+  fieldShowInStore:
+    type: string
+    description: showInStore argument value

@@ -1,0 +1,33 @@
+properties:
+  id:
+    type: string
+    description: Section ID
+  separator:
+    type: string
+    description: Add top separator? (yes/no)
+    default: no
+  label:
+    type: string
+    description: Section label
+  tab:
+    type: string
+    description: Tab code
+  resource:
+    type: string
+    description: Section ACL resource (ex. Orba_HelloWorld::helloworld_config)
+  translate:
+    type: string
+    description: Translate argument value
+    default: label
+  sortOrder:
+    type: string
+    description: sortOrder argument value
+  showInDefault:
+    type: string
+    description: showInDefault argument value
+  showInWebsite:
+    type: string
+    description: showInWebsite argument value
+  showInStore:
+    type: string
+    description: showInStore argument value

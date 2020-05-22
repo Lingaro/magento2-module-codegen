@@ -79,6 +79,15 @@ services:
       -
         - addMerger
         -
+          - '/^system\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - idAttributes:
+              '/config/system/section': 'id'
+              '/config/system/section/group': 'id'
+              '/config/system/section/group/field': 'id'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
 
