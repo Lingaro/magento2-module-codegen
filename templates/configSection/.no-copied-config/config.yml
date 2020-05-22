@@ -12,9 +12,6 @@ properties:
   tab:
     type: string
     description: Tab code
-  resource:
-    type: string
-    description: Section ACL resource (ex. Orba_HelloWorld::helloworld_config)
   translate:
     type: string
     description: Translate argument value

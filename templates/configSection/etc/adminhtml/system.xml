@@ -13,7 +13,7 @@
             {% if separator is same as ('yes') %}<class>separator-top</class>{% endif %}
             <label>{{ label }}</label>
             <tab>{{ tab }}</tab>
-            {% if resource %}<resource>{{ resource }}</resource>{% endif %}
+            <resource>{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ id|snake }}</resource>
         </section>
     </system>
 </config>
