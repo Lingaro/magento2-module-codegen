@@ -4,13 +4,7 @@ namespace Orba\Magento2Codegen\Model;
 
 class BooleanProperty extends AbstractProperty
 {
-
     private $defaultValue;
-
-    public function __construct(string $name)
-    {
-        $this->setName($name);
-    }
 
     /**
      * @param mixed $value
@@ -18,33 +12,15 @@ class BooleanProperty extends AbstractProperty
      */
     public function setDefaultValue($value): PropertyInterface
     {
-        $this->defaultValue = self::convertToBool($value);
+        if (!is_bool($value)) {
+            throw new \InvalidArgumentException('Default value must be boolean.');
+        }
+        $this->defaultValue = $value;
         return $this;
     }
 
-    public function getDefaultValue(): ?string
+    public function getDefaultValue(): bool
     {
-        if (isset($this->defaultValue)) {
-            return $this->defaultValue ? 'yes' : 'no';
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @param mixed $value
-     * @return bool
-     */
-    public static function convertToBool($value): bool
-    {
-        if (is_string($value)) {
-            $value = strtolower($value);
-            switch ($value) {
-                case 'no':
-                case 'false':
-                    return false;
-            }
-        }
-        return boolval($value);
+        return $this->defaultValue;
     }
 }

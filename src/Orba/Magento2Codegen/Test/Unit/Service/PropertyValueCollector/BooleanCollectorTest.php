@@ -45,30 +45,23 @@ class BooleanCollectorTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider additionProvider
-     */
-    public function testCollectValueReturnsValueFromInputIfPropertyIsBooleanProperty($inputValue)
+    public function testCollectValueReturnsValueFromInputIfPropertyIsBooleanProperty()
     {
-        $this->ioInstnaceMock->expects($this->once())->method('ask')->willReturn($inputValue);
+        $this->ioInstnaceMock->expects($this->once())->method('confirm')->willReturn(true);
         $result = $this->booleanCollector->collectValue(
-            new BooleanProperty('foo_name')
+            $this->getMockBuilder(BooleanProperty::class)->disableOriginalConstructor()->getMock()
         );
-        static::assertSame(BooleanProperty::convertToBool($inputValue), $result);
+        $this->assertSame(true, $result);
     }
 
     public function additionProvider()
     {
         return [
-            ['foo'],
-            [true],
-            [false],
-            ['yes'],
-            ['no'],
-            [1],
-            [0],
-            ['1'],
-            ['0']
+            ['foo', true],
+            ['yes', true],
+            ['no', false],
+            ['1', true],
+            ['0', false]
         ];
     }
 }
