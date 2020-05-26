@@ -41,17 +41,17 @@ class ColumnDefinition
         return $this->format('length', $length);
     }
 
-    public function getUnsigned(string $databaseType, ?string $unsigned): string
+    public function getUnsigned(string $databaseType, ?bool $unsigned): string
     {
         if (!in_array($databaseType, array_merge(DatabaseType::INT_TYPES, DatabaseType::DECIMAL_TYPES))) {
             return '';
         }
-        return $this->format('unsigned', $this->getStringBoolean($unsigned));
+        return $this->format('unsigned', $this->getStringBoolean((bool) $unsigned));
     }
 
-    public function getNullable(?string $nullable): string
+    public function getNullable(?bool $nullable): string
     {
-        return $this->format('nullable', $this->getStringBoolean($nullable));
+        return $this->format('nullable', $this->getStringBoolean((bool) $nullable));
     }
 
     public function getPrecision(string $databaseType, ?string $precision): string
@@ -70,16 +70,9 @@ class ColumnDefinition
         return $this->format('scale', $scale);
     }
 
-    private function getStringBoolean(?string $in): string
+    private function getStringBoolean(bool $in): string
     {
-        if ((strtolower($in)) == 'false') {
-            return 'false';
-        }
-        if ($in) {
-            return 'true';
-        } else {
-            return 'false';
-        }
+        return $in ? 'true' : 'false';
     }
 
     /**

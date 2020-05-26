@@ -20,11 +20,13 @@ properties:
         type: string
         description: In text and binary types (including varchar and varbinary), is length of column, for int types is padding. If empty, will use default.
       nullable:
-        type: string
-        description: Indicates whether column can be nullable. Default is false
+        type: boolean
+        default: false
+        description: Indicates whether column can be nullable.
       unsigned:
-        type: string
-        description: For numeric data types, specifies whether the column can contain positive and negative values or only positive values. Default is false
+        type: boolean
+        default: false
+        description: For numeric data types, specifies whether the column can contain positive and negative values or only positive values.
       precision:
         type: string
         description: The number of allowed digits in a real data type. If empty, will use default.
