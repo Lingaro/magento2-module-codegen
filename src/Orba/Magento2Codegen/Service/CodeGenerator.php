@@ -72,9 +72,13 @@ class CodeGenerator
                     if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
                         $merger = $this->fileMergerFactory->create($this->filepathUtil->getFileName($filePath));
                         $merged = false;
-                        if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath)) {
-                            $fileContent = $merger->merge($this->filepathUtil->getContent($filePath), $fileContent);
-                            $merged = true;
+                        if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath, $merger->isExperimental())) {
+                            try {
+                                $fileContent = $merger->merge($this->filepathUtil->getContent($filePath), $fileContent);
+                                $merged = true;
+                            } catch (Exception $e) {
+                                $this->io->getInstance()->error($e->getMessage());
+                            }
                         }
                         if (!$merged && !$this->codeGeneratorUtil->shouldOverride($filePath)) {
                             $this->io->getInstance()->note(sprintf('File omitted: %s', $filePath));

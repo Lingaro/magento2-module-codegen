@@ -18,6 +18,9 @@ class FiltersExtension extends AbstractExtension
         $this->filters = $filters;
     }
 
+    /**
+     * @return TwigFilter[]
+     */
     public function getFilters(): array
     {
         $filters = [];

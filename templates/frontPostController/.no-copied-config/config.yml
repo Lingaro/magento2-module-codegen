@@ -1,0 +1,15 @@
+description: This template is used to create a very basic front post controller.
+afterGenerate: "URL to generated controller: https://YOUR_STORE_URL/{{ frontName|snake }}/{{ controllerName|lower_only }}/{{ actionName|lower_only }}"
+properties:
+  frontName:
+    type: string
+    default: frontName
+    description: First part of action's URL
+  controllerName:
+    type: string
+    default: controllerName
+    description: Second part of action's URL
+  actionName:
+    type: string
+    default: actionName
+    description: Third part of action's URL

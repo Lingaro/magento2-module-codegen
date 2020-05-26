@@ -1,0 +1,33 @@
+description: This template creates a model with the corresponding repository, searchResult, resourceModel, collection, db_schema.xml and API
+afterGenerate: "1. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:\n
+                \n
+                  \tbin/magento setup:db-declaration:generate-whitelist --module-name {{ vendorName|pascal }}_{{ moduleName|pascal }}"
+properties:
+  entityName:
+    type: string
+    description: Entity name
+  fields:
+    type: array
+    description: Define all database fields by filling property for each field
+    children:
+      name:
+        type: string
+        description: Name of the field. Required
+      databaseType:
+        type: string
+        description: Database type of field. Required. Possible values bigint, blob, boolean, date, datetime, decimal, double, float, int, smallint, text, timestamp, tinyint, varbinary, varchar
+      length:
+        type: string
+        description: In text and binary types (including varchar and varbinary), is length of column, for int types is padding. If empty, will use default.
+      nullable:
+        type: string
+        description: Indicates whether column can be nullable. Default is false
+      unsigned:
+        type: string
+        description: For numeric data types, specifies whether the column can contain positive and negative values or only positive values. Default is false
+      precision:
+        type: string
+        description: The number of allowed digits in a real data type. If empty, will use default.
+      scale:
+        type: string
+        description: The number of digits after the decimal in a real data type. If empty, will use default.

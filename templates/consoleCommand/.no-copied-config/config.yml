@@ -1,3 +1,4 @@
+description: This Template creates a crud module using uiComponents for Grid and Form.
 properties:
   commandName:
     type: string

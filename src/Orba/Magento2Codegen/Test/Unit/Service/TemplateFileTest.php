@@ -122,30 +122,30 @@ class TemplateFileTest extends TestCase
         $this->assertSame(['example2', 'emptyconfig'], $result);
     }
 
-    public function testGetManualStepsThrowsExceptionIfTemplateDoesNotExist(): void
+    public function testGetAfterGenerateThrowsExceptionIfTemplateDoesNotExist(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->templateFile->getManualSteps('nonexistent', new PropertyBag());
+        $this->templateFile->getAfterGenerate('nonexistent', new PropertyBag());
     }
 
-    public function testGetManualStepsReturnsEmptyStringIfConfigDirDoesNotExist(): void
+    public function testGetAfterGenerateReturnsEmptyStringIfConfigDirDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('noconfig', new PropertyBag());
-        $this->assertSame('', $result);
+        $result = $this->templateFile->getAfterGenerate('noconfig', new PropertyBag());
+        $this->assertSame([], $result);
     }
 
-    public function testGetManualStepsReturnsEmptyStringIfAfterGenerateFileDoesNotExist(): void
+    public function testGetAfterGenerateReturnsEmptyStringIfAfterGenerateFileDoesNotExist(): void
     {
-        $result = $this->templateFile->getManualSteps('emptyconfig', new PropertyBag());
-        $this->assertSame('', $result);
+        $result = $this->templateFile->getAfterGenerate('emptyconfig', new PropertyBag());
+        $this->assertSame([], $result);
     }
 
-    public function testGetManualStepsReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExists(): void
+    public function testGetAfterGenerateReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExists(): void
     {
         $this->templateProcessorMock->expects($this->once())->method('replacePropertiesInText')
-            ->willReturn('Some info with value');
-        $result = $this->templateFile->getManualSteps('example', new PropertyBag());
-        $this->assertSame('Some info with value', $result);
+            ->willReturn("Some info with value\nand a second line");
+        $result = $this->templateFile->getAfterGenerate('example', new PropertyBag());
+        $this->assertSame(['Some info with value', 'and a second line'], $result);
     }
 
     public function testGetTemplateFilesReturnsEmptyArrayIfTemplatesArrayIsEmpty()

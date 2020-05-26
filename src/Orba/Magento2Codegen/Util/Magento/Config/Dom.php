@@ -313,6 +313,7 @@ class Dom
         $matchedNodes = $xPath->query($nodePath);
         $node = null;
         if ($matchedNodes->length > 1) {
+            var_dump($nodePath);
             throw new \RuntimeException(sprintf(
                 "More than one node matching the query: %s, Xml is: %s",
                 [$nodePath, $this->dom->saveXML()]

@@ -1,10 +1,10 @@
 <?php
-$composerAutoload = __DIR__ . '/../../../autoload.php';
+$composerAutoload = __DIR__ . '/../../../../vendor/autoload.php';
 
 if (file_exists($composerAutoload)) {
     require_once $composerAutoload;
 } else {
-    require_once __DIR__ . ' /../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 }
 
 define('BP', dirname(__DIR__));
