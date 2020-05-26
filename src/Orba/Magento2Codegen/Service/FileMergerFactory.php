@@ -20,6 +20,8 @@ class FileMergerFactory
     public function create(string $fileName):? MergerInterface
     {
         foreach ($this->mergers as $fileNameRegex => $merger) {
+            echo $fileName . PHP_EOL;
+            echo $fileNameRegex . PHP_EOL;
             if (preg_match($fileNameRegex, $fileName)) {
                 return $merger;
             }

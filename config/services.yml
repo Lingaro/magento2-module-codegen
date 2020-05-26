@@ -26,7 +26,7 @@ services:
       -
         - addMerger
         -
-          - '/^di\.xml$/'
+          - '/^[\s\S]*\\di\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -39,7 +39,7 @@ services:
       -
         - addMerger
         -
-          - '/^db_schema\.xml$/'
+          - '/^[\s\S]*\\db_schema\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -52,7 +52,7 @@ services:
       -
         - addMerger
         -
-          - '/^routes\.xml$/'
+          - '/^[\s\S]*\\routes\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -62,7 +62,7 @@ services:
       -
         - addMerger
         -
-          - '/^menu\.xml$/'
+          - '/^[\s\S]*\\menu\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -70,12 +70,17 @@ services:
       -
         - addMerger
         -
-          - '/^acl\.xml$/'
+          - '/^[\s\S]*\/acl\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/acl/resources/resource': 'id'
               '/config/acl/resources/resource/resource': 'id'
+      -
+        - addMerger
+        -
+          - '/^[\s\S]*\/(base|frontend|adminhtml)\/layout\/.*\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\LayoutMerger'
       -
         - addMerger
         -
