@@ -13,7 +13,7 @@ class BooleanFactory implements FactoryInterface
         if (empty($name)) {
             throw new InvalidArgumentException('Name cannot be empty.');
         }
-        $property = new BooleanProperty($name);
+        $property = (new BooleanProperty())->setName($name);
         if (isset($config['description'])) {
             $property->setDescription($config['description']);
         }
