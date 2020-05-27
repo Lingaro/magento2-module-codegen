@@ -1,11 +1,11 @@
 description: This template is used to create new group for already existent section of store configuration.
 properties:
-  sectionId:
-    type: string
-    description: Section ID
   id:
     type: string
     description: Group ID
+  sectionId:
+    type: string
+    description: Section ID
   label:
     type: string
     description: Group label

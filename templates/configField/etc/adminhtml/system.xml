@@ -11,20 +11,20 @@
     <system>
         <section id="{{ sectionId }}">
             <group id="{{ groupId }}">
-                <field id="{{ fieldId }}" translate="label{% if fieldComment %} comment{% endif %}" type="{{ fieldType }}" sortOrder="{{ fieldSortOrder }}" showInDefault="{{ fieldShowInDefault ? 1 : 0 }}" showInWebsite="{{ fieldShowInWebsite ? 1 : 0 }}" showInStore="{{ fieldShowInStore ? 1 : 0 }}">
-                    <label>{{ fieldLabel }}</label>
-{% if fieldComment %}
-                    <comment>{{ fieldComment }}</comment>
+                <field id="{{ id }}" translate="label{% if comment %},comment{% endif %}" type="{{ type }}" sortOrder="{{ sortOrder }}" showInDefault="{{ showInDefault ? 1 : 0 }}" showInWebsite="{{ showInWebsite ? 1 : 0 }}" showInStore="{{ showInStore ? 1 : 0 }}">
+                    <label>{{ label }}</label>
+{% if comment %}
+                    <comment>{{ comment }}</comment>
 {% endif %}
-{% if fieldSourceModel %}
-                    <source_model>{{ fieldSourceModel }}</source_model>
+{% if sourceModel %}
+                    <source_model>{{ sourceModel }}</source_model>
 {% endif %}
-{% if fieldValidate %}
-                    <validate>{{ fieldValidate }}</validate>
+{% if validate %}
+                    <validate>{{ validate }}</validate>
 {% endif %}
-{% if fieldDependencyPath %}
+{% if dependencyPath %}
                     <depends>
-                        <field id="{{ fieldDependencyPath }}">{{ fieldDependencyValue }}</field>
+                        <field id="{{ dependencyPath }}">{{ dependencyValue }}</field>
                     </depends>
 {% endif %}
                 </field>

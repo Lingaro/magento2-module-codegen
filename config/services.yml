@@ -75,13 +75,14 @@ services:
           -
             idAttributes:
               '/config/acl/resources/resource': 'id'
-              '/config/acl/resources/resource/resource': 'id'
+              '/config/acl/resources(/resource)+': 'id'
       -
         - addMerger
         -
           - '/^system\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           - idAttributes:
+              '/config/system/tab': 'id'
               '/config/system/section': 'id'
               '/config/system/section/group': 'id'
               '/config/system/section/group/field': 'id'
