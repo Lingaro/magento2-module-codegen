@@ -156,7 +156,7 @@ class CsvI18n
     private function validate($item): bool
     {
         if (count($item) !== 2) {
-            throw new Exception('Bad form I18n CSV file');
+            throw new Exception('Wrong format I18n CSV file');
         }
 
         return true;
