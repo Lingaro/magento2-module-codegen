@@ -10,16 +10,23 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="{{ sectionId }}">
-            <tab>{{ tabId }}</tab>
             <group id="{{ groupId }}">
-                <field id="{{ fieldId }}" translate="{{ fieldTranslate }}" type="{{ fieldType }}" sortOrder="{{ fieldSortOrder }}" showInDefault="{{ fieldShowInDefault }}" showInWebsite="{{ fieldShowInWebsite }}" showInStore="{{ fieldShowInStore }}">
+                <field id="{{ fieldId }}" translate="label{% if fieldComment %} comment{% endif %}" type="{{ fieldType }}" sortOrder="{{ fieldSortOrder }}" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>{{ fieldLabel }}</label>
-                {% if fieldComment %}
+{% if fieldComment %}
                     <comment>{{ fieldComment }}</comment>
-                {% endif %}
-                {% if fieldSourceModel %}
+{% endif %}
+{% if fieldSourceModel %}
                     <source_model>{{ fieldSourceModel }}</source_model>
-                {% endif %}
+{% endif %}
+{% if fieldValidate %}
+                    <validate>{{ fieldValidate }}</validate>
+{% endif %}
+{% if fieldDependencyPath %}
+                    <depends>
+                        <field id="{{ fieldDependencyPath }}">{{ fieldDependencyValue }}</field>
+                    </depends>
+{% endif %}
                 </field>
             </group>
         </section>

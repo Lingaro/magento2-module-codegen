@@ -1,3 +1,4 @@
+description: This template is used to create new group for already existent section of store configuration.
 properties:
   sectionId:
     type: string
@@ -8,23 +9,6 @@ properties:
   label:
     type: string
     description: Group label
-  translate:
-    type: string
-    description: Translate argument value
-    default: label
-  type:
-    type: string
-    description: Group type
-    default: text
   sortOrder:
     type: string
     description: sortOrder argument value
-  showInDefault:
-    type: string
-    description: showInDefault argument value
-  showInWebsite:
-    type: string
-    description: showInWebsite argument value
-  showInStore:
-    type: string
-    description: showInStore argument value

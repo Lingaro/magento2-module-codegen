@@ -9,7 +9,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="{{ id }}" translate="{{ translate }}" sortOrder="{{ sortOrder }}" showInDefault="{{ showInDefault }}" showInWebsite="{{ showInWebsite }}" showInStore="{{ showInStore }}">
+        <section id="{{ id }}" translate="label" sortOrder="{{ sortOrder }}" showInDefault="1" showInWebsite="1" showInStore="1">
             {% if separator is same as ('yes') %}<class>separator-top</class>{% endif %}
             <label>{{ label }}</label>
             <tab>{{ tab }}</tab>

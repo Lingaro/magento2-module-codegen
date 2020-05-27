@@ -11,7 +11,13 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ id|snake }}" title="{{ id|pascal }}"/>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="{{ vendorName|pascal }}_{{ moduleName|pascal }}::config_{{ id|snake }}" title="{{ id|pascal }}"/>
+                        </resource>
+                    </resource>
+                </resource>
             </resource>
         </resources>
     </acl>

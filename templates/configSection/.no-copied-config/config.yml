@@ -1,3 +1,4 @@
+description: This template is used to create new section in existent tab of store configuration.
 properties:
   id:
     type: string
@@ -12,19 +13,6 @@ properties:
   tab:
     type: string
     description: Tab code
-  translate:
-    type: string
-    description: Translate argument value
-    default: label
   sortOrder:
     type: string
     description: sortOrder argument value
-  showInDefault:
-    type: string
-    description: showInDefault argument value
-  showInWebsite:
-    type: string
-    description: showInWebsite argument value
-  showInStore:
-    type: string
-    description: showInStore argument value
