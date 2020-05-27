@@ -16,8 +16,6 @@ class CsvI18n
 {
     /** @var string */
     private $csv;
-    /** @var */
-    private $found = false;
 
     /**
      * Csv constructor.
@@ -33,13 +31,14 @@ class CsvI18n
      *
      * @param string $csv
      * @return array
+     * @throws Exception
      */
     public function merge(string $csv): array
     {
         $firstFile = $this->buildArray($this->csv);
         $secondFile = $this->buildArray($csv);
 
-        $this->validateCsvFiles([$firstFile,$secondFile]);
+        $this->validateCsvFiles([$firstFile, $secondFile]);
 
         foreach ($secondFile as $secFile) {
             $found = false;
@@ -112,21 +111,43 @@ class CsvI18n
         return $data;
     }
 
-    private function validateCsvFiles(array $files){
-        foreach ($files as $file){
-            $this->validate($file);
-        }
-    }
-
-    private function validate(array $file)
+    /**
+     * @param array $files
+     * @return bool
+     * @throws Exception
+     */
+    private function validateCsvFiles(array $files): bool
     {
-        array_walk($file,[$this,'validateCsv']);
+        foreach ($files as $file) {
+            $this->validateCsv($file);
+        }
+
+        return true;
     }
 
-    private function validateCsv($item,$key){
-        if (count($item) !== 2){
+    /**
+     * @param array $file
+     * @return bool
+     */
+    private function validateCsv(array $file): bool
+    {
+        array_walk($file, [$this, 'validate']);
+
+        return true;
+    }
+
+    /**
+     * @param $item
+     * @return bool
+     * @throws Exception
+     */
+    private function validate($item): bool
+    {
+        if (count($item) !== 2) {
             throw new Exception('Bad form I18n CSV file');
         }
+
+        return true;
     }
 
 }

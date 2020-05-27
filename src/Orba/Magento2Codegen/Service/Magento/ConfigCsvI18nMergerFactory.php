@@ -5,7 +5,7 @@ namespace Orba\Magento2Codegen\Service\Magento;
 
 use Orba\Magento2Codegen\Util\Magento\Config\CsvI18n;
 
-class ConfigCsvMergerFactory
+class ConfigCsvI18nMergerFactory
 {
 
     public function create(string $initialContent): CsvI18n

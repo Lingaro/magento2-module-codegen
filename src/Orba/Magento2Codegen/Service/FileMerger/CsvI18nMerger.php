@@ -4,21 +4,21 @@ declare(strict_types=1);
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\Magento\ConfigCsvMergerFactory;
+use Orba\Magento2Codegen\Service\Magento\ConfigCsvI18nMergerFactory;
 use Throwable;
 
 class CsvI18nMerger extends AbstractMerger implements MergerInterface
 {
     /**
-     * @var ConfigCsvMergerFactory
+     * @var ConfigCsvI18nMergerFactory
      */
     private $mergerFactory;
 
     /**
      * CsvI18nMerger constructor.
-     * @param ConfigCsvMergerFactory $mergerFactory
+     * @param ConfigCsvI18nMergerFactory $mergerFactory
      */
-    public function __construct(ConfigCsvMergerFactory $mergerFactory)
+    public function __construct(ConfigCsvI18nMergerFactory $mergerFactory)
     {
         $this->mergerFactory = $mergerFactory;
     }
