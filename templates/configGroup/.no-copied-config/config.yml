@@ -12,3 +12,15 @@ properties:
   sortOrder:
     type: string
     description: sortOrder argument value
+  showInDefault:
+    type: boolean
+    description: showInDefault argument value
+    default: true
+  showInWebsite:
+    type: boolean
+    description: showInWebsite argument value
+    default: true
+  showInStore:
+    type: boolean
+    description: showInStore argument value
+    default: true

@@ -11,7 +11,7 @@
     <system>
         <section id="{{ sectionId }}">
             <group id="{{ groupId }}">
-                <field id="{{ fieldId }}" translate="label{% if fieldComment %} comment{% endif %}" type="{{ fieldType }}" sortOrder="{{ fieldSortOrder }}" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="{{ fieldId }}" translate="label{% if fieldComment %} comment{% endif %}" type="{{ fieldType }}" sortOrder="{{ fieldSortOrder }}" showInDefault="{{ fieldShowInDefault ? 1 : 0 }}" showInWebsite="{{ fieldShowInWebsite ? 1 : 0 }}" showInStore="{{ fieldShowInStore ? 1 : 0 }}">
                     <label>{{ fieldLabel }}</label>
 {% if fieldComment %}
                     <comment>{{ fieldComment }}</comment>

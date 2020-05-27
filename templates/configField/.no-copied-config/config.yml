@@ -38,3 +38,15 @@ properties:
   fieldSortOrder:
     type: string
     description: sortOrder argument value
+  fieldShowInDefault:
+    type: boolean
+    description: showInDefault argument value
+    default: true
+  fieldShowInWebsite:
+    type: boolean
+    description: showInWebsite argument value
+    default: true
+  fieldShowInStore:
+    type: boolean
+    description: showInStore argument value
+    default: true

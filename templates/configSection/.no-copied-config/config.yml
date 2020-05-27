@@ -4,9 +4,9 @@ properties:
     type: string
     description: Section ID
   separator:
-    type: string
-    description: Add top separator? (yes/no)
-    default: no
+    type: boolean
+    description: Add top separator?
+    default: false
   label:
     type: string
     description: Section label
@@ -16,3 +16,15 @@ properties:
   sortOrder:
     type: string
     description: sortOrder argument value
+  showInDefault:
+    type: boolean
+    description: showInDefault argument value
+    default: true
+  showInWebsite:
+    type: boolean
+    description: showInWebsite argument value
+    default: true
+  showInStore:
+    type: boolean
+    description: showInStore argument value
+    default: true
