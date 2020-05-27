@@ -6,6 +6,7 @@ namespace Orba\Magento2Codegen\Util\Magento\Config;
 use Braintree\Exception;
 use \JsonException;
 
+
 /**
  * Class Csv
  *
@@ -41,24 +42,35 @@ class CsvI18n
         $this->validateCsvFiles([$firstFile, $secondFile]);
 
         foreach ($secondFile as $secFile) {
-            $found = false;
             if ($secFile === false) {
                 continue;
             }
 
-            foreach ($firstFile as $key => $file) {
-                if ($file[0] === $secFile[0]) {
-                    $firstFile[$key][1] = $secFile[1];
-                    $found = true;
-                    break;
-                }
-            }
-            if (!$found && $secFile) {
+            if (!$this->compareRows($firstFile,$secFile)) {
                 $firstFile[] = $secFile;
             }
         }
 
         return $firstFile;
+    }
+
+    /**
+     * @param array $array
+     * @param array $row
+     * @return bool
+     */
+    private function compareRows(array &$array, array $row): bool
+    {
+        $found = false;
+        foreach ($array as $key => $file) {
+            if ($file[0] === $row[0]) {
+                $array[$key][1] = $row[1];
+                $found = true;
+                break;
+            }
+        }
+
+        return $found;
     }
 
     /**
