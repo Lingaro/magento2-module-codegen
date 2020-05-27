@@ -82,6 +82,12 @@ services:
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
 
+      -
+          - addMerger
+          -
+              - '/^[\s\S]*\/(i18n)\/.*\.csv$/'
+              - '@Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger'
+
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
     shared: false
