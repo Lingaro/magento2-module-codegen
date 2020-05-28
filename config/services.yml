@@ -83,6 +83,7 @@ services:
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
+              '/page/update': 'handle'
               '/page/head/css': 'src'
               '/page/head/link': 'src'
               '/page/head/script': 'src'
@@ -94,10 +95,15 @@ services:
               '/page/body/referenceBlock': 'name'
               '/page/body/referenceBlock/move': 'element'
               '/page/body/referenceBlock/arguments/argument': 'name'
+              '/page/body/referenceBlock/arguments/argument/item': 'name'
               '/page/body/referenceBlock/block/arguments/argument': 'name'
+              '/page/body/referenceBlock/block/arguments/argument/item': 'name'
               '/page/body/referenceContainer': 'name'
               '/page/body/referenceContainer/block': 'name'
               '/page/body/referenceContainer/block/arguments/argument': 'name'
+              '/page/body/referenceContainer/block/arguments/argument/item': 'name'
+              '/page/body/container': 'name'
+              '/page/body/uiComponent': 'name'
       -
         - addMerger
         -
