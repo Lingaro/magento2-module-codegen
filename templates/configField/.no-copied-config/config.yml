@@ -50,3 +50,6 @@ properties:
     type: string
     description: Scope of config field used by value getter (store, website, default)
     default: website
+  defaultValue:
+    type: string
+    description: Default config value
