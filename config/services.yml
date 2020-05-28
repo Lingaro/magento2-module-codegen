@@ -80,7 +80,24 @@ services:
         - addMerger
         -
           - '/^[\s\S]*\/(base|frontend|adminhtml)\/layout\/.*\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\LayoutMerger'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/page/head/css': 'src'
+              '/page/head/link': 'src'
+              '/page/head/script': 'src'
+              '/page/head/remove': 'src'
+              '/page/head/attribute': 'name'
+              '/page/head/meta': 'property'
+              '/page/body/block': 'name'
+              '/page/body/block/block': 'name'
+              '/page/body/referenceBlock': 'name'
+              '/page/body/referenceBlock/move': 'element'
+              '/page/body/referenceBlock/arguments/argument': 'name'
+              '/page/body/referenceBlock/block/arguments/argument': 'name'
+              '/page/body/referenceContainer': 'name'
+              '/page/body/referenceContainer/block': 'name'
+              '/page/body/referenceContainer/block/arguments/argument': 'name'
       -
         - addMerger
         -
