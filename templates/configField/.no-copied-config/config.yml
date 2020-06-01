@@ -17,22 +17,26 @@ properties:
     description: Field comment (optional)
   type:
     type: string
-    description: Type argument value
+    description: Attribute type
     default: text
   sortOrder:
     type: string
-    description: sortOrder argument value
+    description: Sort order value
   showInDefault:
     type: boolean
-    description: showInDefault argument value
+    description: Should field be visible in default config scope?
     default: true
   showInWebsite:
     type: boolean
-    description: showInWebsite argument value
+    description: Should field be visible in website scope?
     default: true
   showInStore:
     type: boolean
-    description: showInStore argument value
+    description: Should field be visible in store scope?
+    default: true
+  canRestore:
+    type: boolean
+    description: Could default value be restored?
     default: true
   sourceModel:
     type: string

@@ -3,11 +3,11 @@ description: "This template is used to create a view model and phtml template fi
               If you need to add some customizations to block processing, use \"block\" template instead."
 afterGenerate: "1. Add block in your layout xml file:\n
                 \n
-                  \t<block name=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ viewModelName|snake }}\" template=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ viewModelName|snake }}.phtml\">
-                    \t\t<arguments>
-                      \t\t\t<argument name=\"view_model\" xsi:type=\"object\">{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }}</argument>
-                    \t\t</arguments>
-                  \t</block>"
+                <block name=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ viewModelName|snake }}\" template=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ viewModelName|snake }}.phtml\">\n
+                \t<arguments>\n
+                \t\t<argument name=\"view_model\" xsi:type=\"object\">{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\ViewModel\\{{ viewModelName|pascal }}</argument>\n
+                \t</arguments>\n
+                </block>"
 properties:
   viewModelName:
     type: string
