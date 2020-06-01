@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * config
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <{{ sectionId|snake }}>
+            <{{ groupId|snake }}>
+                <{{ id|snake }}>{{ defaultValue }}</{{ id|snake }}>
+            </{{ groupId|snake }}>
+        </{{ sectionId|snake }}>
+    </default>
+</config>
