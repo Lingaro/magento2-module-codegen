@@ -11,7 +11,7 @@ use Magento\Store\Model\ScopeInterface;
 
 class Config
 {
-    const XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ fieldId|snake|upper }} = '{{ sectionId|snake }}/{{ groupId|snake }}/{{ fieldId|snake }}';
+    const XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ id|snake|upper }} = '{{ sectionId|snake }}/{{ groupId|snake }}/{{ id|snake }}';
 
     /**
      * @var ScopeConfigInterface
@@ -26,10 +26,10 @@ class Config
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function get{{ fieldId|camel|ucfirst }}(${{ configScope }}Id = null)
+    public function get{{ id|pascal }}({% if configScope != 'default' %}${{ configScope }}Id = null{% endif %})
     {
         return $this->scopeConfig->getValue(
-            static::XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ fieldId|snake|upper }},
+            static::XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ id|snake|upper }},
 {% if configScope == 'default' %}
             ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
 {% else %}

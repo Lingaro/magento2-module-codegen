@@ -3,10 +3,6 @@ properties:
   id:
     type: string
     description: Section ID
-  separator:
-    type: boolean
-    description: Add top separator?
-    default: false
   label:
     type: string
     description: Section label
@@ -16,6 +12,10 @@ properties:
   sortOrder:
     type: string
     description: sortOrder argument value
+  separator:
+      type: boolean
+      description: Add top separator?
+      default: false
   showInDefault:
     type: boolean
     description: showInDefault argument value
