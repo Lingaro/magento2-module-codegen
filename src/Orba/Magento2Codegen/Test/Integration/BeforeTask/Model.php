@@ -22,7 +22,7 @@ class Model implements TaskInterface
         CommandTesterRunner::run(
             'model',
             'Model',
-            ['llama', 'name', 'varchar', '32', '0', '', '', '', 'yes', 'points', 'decimal', '', '1', '1', '6', '3', 'no']
+            ['llama', 'name', 'varchar', '32', 'no', '', '', '', 'yes', 'points', 'decimal', '', '1', '1', '6', '3', 'no']
         );
 
         $patchDir = $_ENV['MAGENTO_ROOT_DIR'] . 'app/code/' . TestExtension::TEST_VENDOR_NAME

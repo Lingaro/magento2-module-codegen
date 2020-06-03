@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * system
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="{{ sectionId|snake }}">
+            <group id="{{ groupId|snake }}">
+                <field id="{{ id|snake }}" translate="label{% if comment %} comment{% endif %}" type="{{ type }}" sortOrder="{{ sortOrder ? sortOrder : 0 }}" showInDefault="{{ showInDefault ? 1 : 0 }}" showInWebsite="{{ showInWebsite ? 1 : 0 }}" showInStore="{{ showInStore ? 1 : 0 }}" canRestore="{{ canRestore ? 1 : 0 }}">
+                    <label>{{ label }}</label>
+{% if comment %}
+                    <comment>{{ comment }}</comment>
+{% endif %}
+{% if sourceModel %}
+                    <source_model>{{ sourceModel }}</source_model>
+{% endif %}
+{% if validate %}
+                    <validate>{{ validate }}</validate>
+{% endif %}
+{% if dependencyPath %}
+                    <depends>
+                        <field id="{{ dependencyPath }}">{{ dependencyValue }}</field>
+                    </depends>
+{% endif %}
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

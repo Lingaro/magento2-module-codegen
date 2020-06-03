@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * system
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="{{ id|snake }}" translate="label" sortOrder="{{ sortOrder ? sortOrder : 0 }}" showInDefault="{{ showInDefault ? 1 : 0 }}" showInWebsite="{{ showInWebsite ? 1 : 0 }}" showInStore="{{ showInStore ? 1 : 0 }}">
+            {% if separator %}<class>separator-top</class>{% endif %}
+            <label>{{ label }}</label>
+            <tab>{{ tab }}</tab>
+            <resource>{{ vendorName|pascal }}_{{ moduleName|pascal }}::config_{{ id|snake }}</resource>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,11 @@
+description: This template is used to create new tab for store configuration.
+properties:
+  id:
+    type: string
+    description: Tab ID
+  label:
+    type: string
+    description: Tab label
+  sortOrder:
+    type: string
+    description: sortOrder argument value
