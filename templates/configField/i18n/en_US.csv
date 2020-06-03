@@ -1,1 +1,1 @@
-"{{ fieldLabel }}","{{ fieldLabel }}"
+label{% if comment %} comment{% endif %},label{% if comment %} comment{% endif %}
