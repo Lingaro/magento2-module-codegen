@@ -1,1 +1,2 @@
-label{% if comment %} comment{% endif %},label{% if comment %} comment{% endif %}
+{{ label }},{{ label }}
+{% if comment %}{{ comment }},{{ comment }}{% endif %}
