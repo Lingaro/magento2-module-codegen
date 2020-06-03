@@ -26,7 +26,7 @@ services:
       -
         - addMerger
         -
-          - '/^[\s\S]*\\di\.xml$/'
+          - '/\/di\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -39,7 +39,7 @@ services:
       -
         - addMerger
         -
-          - '/^[\s\S]*\\db_schema\.xml$/'
+          - '/\/db_schema\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -52,7 +52,7 @@ services:
       -
         - addMerger
         -
-          - '/^[\s\S]*\\routes\.xml$/'
+          - '/\/routes\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -62,7 +62,7 @@ services:
       -
         - addMerger
         -
-          - '/^[\s\S]*\\menu\.xml$/'
+          - '/\/menu\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -70,7 +70,7 @@ services:
       -
         - addMerger
         -
-          - '/^[\s\S]*\/acl\.xml$/'
+          - '/\/acl\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -79,7 +79,7 @@ services:
       -
         - addMerger
         -
-          - '/^system\.xml$/'
+          - '/\/system\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           - idAttributes:
               '/config/system/tab': 'id'
@@ -87,38 +87,32 @@ services:
               '/config/system/section/group': 'id'
               '/config/system/section/group/field': 'id'
       -
-          - addMerger
-          -
-              - '/^config\.xml$/'
-              - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+        - addMerger
+        -
+          - '/\/events\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - idAttributes:
+              '/config/event': 'name'
+              '/config/event/observer': 'name'
       -
         - addMerger
         -
-          - '/^[\s\S]*\/(base|frontend|adminhtml)\/layout\/.*\.xml$/'
+          - '/\/config\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+      -
+        - addMerger
+        -
+          - '/\/layout\/.*\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/page/update': 'handle'
-              '/page/head/css': 'src'
-              '/page/head/link': 'src'
-              '/page/head/script': 'src'
-              '/page/head/remove': 'src'
-              '/page/head/attribute': 'name'
-              '/page/head/meta': 'property'
-              '/page/body/block': 'name'
-              '/page/body/block/block': 'name'
-              '/page/body/referenceBlock': 'name'
-              '/page/body/referenceBlock/move': 'element'
-              '/page/body/referenceBlock/arguments/argument': 'name'
-              '/page/body/referenceBlock/arguments/argument(/item)+': 'name'
-              '/page/body/referenceBlock/block/arguments/argument': 'name'
-              '/page/body/referenceBlock/block/arguments/argument(/item)+': 'name'
-              '/page/body/referenceContainer': 'name'
-              '/page/body/referenceContainer/block': 'name'
-              '/page/body/referenceContainer/block/arguments/argument': 'name'
-              '/page/body/referenceContainer/block/arguments/argument(/item)+': 'name'
-              '/page/body/container': 'name'
-              '/page/body/uiComponent': 'name'
+              '/page/html/attribute': 'name'
+              '/page/head/(css|link|font|script|remove)': 'src'
+              '/page/head/(attribute|meta)': 'name'
+              '/page/body.*/(block|container|uiComponent)': 'name'
+              '/page/body.*/block/arguments/argument(/item)*': 'name'
+              '/page/body.*/move': 'element'
       -
         - addMerger
         -
