@@ -15,36 +15,22 @@ use RuntimeException;
  */
 class CsvI18n
 {
-    /** @var string */
-    private $initialContent;
-
-
-    /**
-     * @param string $initialContent
-     */
-    public function setInitialContent(string $initialContent)
-    {
-        $this->initialContent = $initialContent;
-    }
-
     /**
      * Merge Csv files
      *
+     * @param string $initialContent
      * @param string $newContent
      * @return array
      * @throws Exception
      */
-    public function merge(string $newContent): array
+    public function merge(string $initialContent, string $newContent): array
     {
-        $destArr = $this->buildArray($this->initialContent);
+        $destArr = $this->buildArray($initialContent);
         $sourceArr = $this->buildArray($newContent);
 
         foreach ($sourceArr as $row) {
-            if ($row === false) {
-                continue;
-            }
-
-            if ($key = $this->findKey($destArr, $row)) {
+            $key = $this->findKey($destArr, $row);
+            if ($key) {
                 $destArr[$key][1] = $row[1];
                 continue;
             }
@@ -103,7 +89,7 @@ class CsvI18n
      */
     private function buildArray(string $content): array
     {
-        $data = explode(PHP_EOL,$content);
+        $data = explode(PHP_EOL, $content);
 
         foreach ($data as &$item) {
             $item = str_getcsv($item);
@@ -120,8 +106,8 @@ class CsvI18n
      */
     private function validate(array $data): bool
     {
-        foreach ($data as $row){
-            if (count($row) !== 2){
+        foreach ($data as $row) {
+            if (count($row) !== 2) {
                 throw new RuntimeException('I18n CSV file must contain exactly 2 columns.');
             }
         }

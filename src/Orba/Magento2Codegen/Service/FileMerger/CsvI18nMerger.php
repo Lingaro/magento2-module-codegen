@@ -31,17 +31,10 @@ class CsvI18nMerger extends AbstractMerger implements MergerInterface
      */
     public function merge(string $oldContent, string $newContent): string
     {
-        $this->merger->setInitialContent(
-            $oldContent
-        );
+        $mergedCsv = $this->merger->merge($oldContent, $newContent);
 
-        try {
-            $mergedCsv = $this->merger->merge($newContent);
+        return $this->merger->generateContent($mergedCsv);
 
-            return $this->merger->generateContent($mergedCsv);
-        } catch (InvalidArgumentException $t) {
-            throw new InvalidArgumentException('Invalid CSV File.');
-        }
     }
 
 }
