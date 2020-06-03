@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Orba\Magento2Codegen\Util\Magento\Config;
 
-use Braintree\Exception;
-use \JsonException;
+use \Exception;
+use RuntimeException;
 
 
 /**
@@ -16,82 +16,70 @@ use \JsonException;
 class CsvI18n
 {
     /** @var string */
-    private $csv;
+    private $initialContent;
+
 
     /**
-     * Csv constructor.
-     * @param $csv
+     * @param string $initialContent
      */
-    public function __construct(string $csv)
+    public function setInitialContent(string $initialContent)
     {
-        $this->csv = $csv;
+        $this->initialContent = $initialContent;
     }
 
     /**
      * Merge Csv files
      *
-     * @param string $csv
+     * @param string $newContent
      * @return array
      * @throws Exception
      */
-    public function merge(string $csv): array
+    public function merge(string $newContent): array
     {
-        $firstFile = $this->buildArray($this->csv);
-        $secondFile = $this->buildArray($csv);
+        $destArr = $this->buildArray($this->initialContent);
+        $sourceArr = $this->buildArray($newContent);
 
-        $this->validateCsvFiles([$firstFile, $secondFile]);
-
-        foreach ($secondFile as $secFile) {
-            if ($secFile === false) {
+        foreach ($sourceArr as $row) {
+            if ($row === false) {
                 continue;
             }
 
-            if (!$this->compareRows($firstFile,$secFile)) {
-                $firstFile[] = $secFile;
+            if ($key = $this->findKey($destArr, $row)) {
+                $destArr[$key][1] = $row[1];
+                continue;
             }
+
+            $destArr[] = $row;
+
         }
 
-        return $firstFile;
+        return $destArr;
     }
 
     /**
      * @param array $array
      * @param array $row
-     * @return bool
+     * @return int|null
      */
-    private function compareRows(array &$array, array $row): bool
+    private function findKey(array $array, array $row): ?int
     {
-        $found = false;
-        foreach ($array as $key => $file) {
-            if ($file[0] === $row[0]) {
-                $array[$key][1] = $row[1];
-                $found = true;
-                break;
+        foreach ($array as $key => $arr) {
+            if ($arr[0] === $row[0]) {
+                return $key;
             }
         }
 
-        return $found;
+        return null;
     }
 
     /**
-     * Save Csv File
-     * @param array $data
-     * @return string
-     * @throws JsonException
-     */
-    public function saveCsv(array $data): string
-    {
-        return $this->generateCsv($data);
-    }
-
-    /**
-     * Build Csv File from array
+     * Generate Content from array
      * @param array $data
      * @param string $delimiter
      * @param string $enclosure
      * @return string
      */
-    private function generateCsv(array $data, $delimiter = ',', $enclosure = '"'): string
+    public function generateContent(array $data, $delimiter = ',', $enclosure = '"'): string
     {
         $handle = fopen('php://temp', 'r+');
         $contents = '';
@@ -111,52 +99,31 @@ class CsvI18n
      * Build array from Csv File
      * @param string $content
      * @return array
+     * @throws Exception
      */
     private function buildArray(string $content): array
     {
-        $data = str_getcsv($content, "\n");
+        $data = explode(PHP_EOL,$content);
 
         foreach ($data as &$item) {
             $item = str_getcsv($item);
         }
 
+        $this->validate($data);
+
         return $data;
     }
 
     /**
-     * @param array $files
-     * @return bool
-     * @throws Exception
-     */
-    private function validateCsvFiles(array $files): bool
-    {
-        foreach ($files as $file) {
-            $this->validateCsv($file);
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array $file
+     * @param array $data
      * @return bool
      */
-    private function validateCsv(array $file): bool
+    private function validate(array $data): bool
     {
-        array_walk($file, [$this, 'validate']);
-
-        return true;
-    }
-
-    /**
-     * @param $item
-     * @return bool
-     * @throws Exception
-     */
-    private function validate($item): bool
-    {
-        if (count($item) !== 2) {
-            throw new Exception('Wrong format I18n CSV file');
+        foreach ($data as $row){
+            if (count($row) !== 2){
+                throw new RuntimeException('I18n CSV file must contain exactly 2 columns.');
+            }
         }
 
         return true;
