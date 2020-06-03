@@ -9,8 +9,8 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="{{ sectionId }}">
-            <group id="{{ id }}" translate="label" type="text" sortOrder="{{ sortOrder }}" showInDefault="{{ showInDefault ? 1 : 0 }}" showInWebsite="{{ showInWebsite ? 1 : 0 }}" showInStore="{{ showInStore ? 1 : 0 }}">
+        <section id="{{ sectionId|snake }}">
+            <group id="{{ id|snake }}" translate="label" type="text" sortOrder="{{ sortOrder ? sortOrder : 0 }}" showInDefault="{{ showInDefault ? 1 : 0 }}" showInWebsite="{{ showInWebsite ? 1 : 0 }}" showInStore="{{ showInStore ? 1 : 0 }}">
                 <label>{{ label }}</label>
             </group>
         </section>
