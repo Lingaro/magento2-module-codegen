@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * system
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="{{ id|snake }}" translate="label" sortOrder="{{ sortOrder ? sortOrder : 0 }}">
+            <label>{{ label }}</label>
+        </tab>
+    </system>
+</config>

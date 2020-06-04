@@ -1,0 +1,59 @@
+description: This template is used to create new config field for already existent group of store configuration. It also creates config value getter in Config model.
+properties:
+  sectionId:
+    type: string
+    description: ID of config section
+  groupId:
+    type: string
+    description: ID of config group
+  id:
+    type: string
+    description: Field ID
+  label:
+    type: string
+    description: Field label
+  comment:
+    type: string
+    description: Field comment (optional)
+  type:
+    type: string
+    description: Attribute type
+    default: text
+  sortOrder:
+    type: string
+    description: Sort order value
+  showInDefault:
+    type: boolean
+    description: Should field be visible in default config scope?
+    default: true
+  showInWebsite:
+    type: boolean
+    description: Should field be visible in website scope?
+    default: true
+  showInStore:
+    type: boolean
+    description: Should field be visible in store scope?
+    default: true
+  canRestore:
+    type: boolean
+    description: Could default value be restored?
+    default: true
+  sourceModel:
+    type: string
+    description: Source Model of field (optional)
+  validate:
+    type: string
+    description: Validation classes separated with space (optional)
+  dependencyPath:
+    type: string
+    description: Path to the config field on which this field depends (optional)
+  dependencyValue:
+    type: string
+    description: Value of the config field on which this field depends (fill in only if the fieldDependencyPath property was filled in)
+  configScope:
+    type: string
+    description: Scope of config field used by value getter (store, website, default)
+    default: website
+  defaultValue:
+    type: string
+    description: Default config value

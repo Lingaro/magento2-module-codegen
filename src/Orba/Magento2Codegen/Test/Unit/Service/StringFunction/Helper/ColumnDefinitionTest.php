@@ -95,8 +95,8 @@ class ColumnDefinitionTest extends TestCase
      */
     public function testGetUnsignedReturnsFormattedStringWithSpecifiedUnsignedForNumericType(string $type): void
     {
-        $resultTrue = $this->columnDefinition->getUnsigned($type, '1');
-        $resultFalse = $this->columnDefinition->getUnsigned($type, '0');
+        $resultTrue = $this->columnDefinition->getUnsigned($type, true);
+        $resultFalse = $this->columnDefinition->getUnsigned($type, false);
         $this->assertSame('unsigned="true"', $resultTrue);
         $this->assertSame('unsigned="false"', $resultFalse);
     }
@@ -109,8 +109,8 @@ class ColumnDefinitionTest extends TestCase
 
     public function testGetNullableReturnsFormattedStringWithSpecifiedValue(): void
     {
-        $resultTrue = $this->columnDefinition->getNullable('1');
-        $resultFalse = $this->columnDefinition->getNullable('0');
+        $resultTrue = $this->columnDefinition->getNullable(true);
+        $resultFalse = $this->columnDefinition->getNullable(false);
         $this->assertRegExp('/nullable="true"/', $resultTrue);
         $this->assertRegExp('/nullable="false"/', $resultFalse);
     }

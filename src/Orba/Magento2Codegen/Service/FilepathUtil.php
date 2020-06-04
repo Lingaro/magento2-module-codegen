@@ -61,6 +61,20 @@ class FilepathUtil
         return $fileName;
     }
 
+    /**
+     * @param string $filePath
+     * @return string
+     */
+    public function getFilePath(string $filePath): string
+    {
+        if (!file_exists($filePath)) {
+            throw new InvalidArgumentException(
+                sprintf('Specified file path does not have any file name: %s', $filePath)
+            );
+        }
+        return $filePath;
+    }
+
     public function getContent(string $filePath): string
     {
         return @file_get_contents($filePath) ?: '';

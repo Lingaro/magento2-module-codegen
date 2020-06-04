@@ -28,7 +28,7 @@ class ColumnDefinitionFunction implements FunctionInterface
         return $this->columnDefinition(...$args);
     }
 
-    private function columnDefinition(string $databaseType, ?string $length, ?string $unsigned, ?string $nullable, ?string $precision, ?string $scale): string
+    private function columnDefinition(string $databaseType, ?string $length, ?string $unsigned, ?bool $nullable, ?string $precision, ?string $scale): string
     {
         $databaseType = $this->databaseTypeHelper->normalize($databaseType);
         $def = preg_replace('/\s+/', ' ', trim(

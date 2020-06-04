@@ -26,7 +26,7 @@ services:
       -
         - addMerger
         -
-          - '/^di\.xml$/'
+          - '/\/di\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -39,7 +39,7 @@ services:
       -
         - addMerger
         -
-          - '/^db_schema\.xml$/'
+          - '/\/db_schema\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -52,7 +52,7 @@ services:
       -
         - addMerger
         -
-          - '/^routes\.xml$/'
+          - '/\/routes\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -62,7 +62,7 @@ services:
       -
         - addMerger
         -
-          - '/^menu\.xml$/'
+          - '/\/menu\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
@@ -70,12 +70,49 @@ services:
       -
         - addMerger
         -
-          - '/^acl\.xml$/'
+          - '/\/acl\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/acl/resources/resource': 'id'
-              '/config/acl/resources/resource/resource': 'id'
+              '/config/acl/resources(/resource)+': 'id'
+      -
+        - addMerger
+        -
+          - '/\/system\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - idAttributes:
+              '/config/system/tab': 'id'
+              '/config/system/section': 'id'
+              '/config/system/section/group': 'id'
+              '/config/system/section/group/field': 'id'
+      -
+        - addMerger
+        -
+          - '/\/events\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - idAttributes:
+              '/config/event': 'name'
+              '/config/event/observer': 'name'
+      -
+        - addMerger
+        -
+          - '/\/config\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+      -
+        - addMerger
+        -
+          - '/\/layout\/.*\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/page/update': 'handle'
+              '/page/html/attribute': 'name'
+              '/page/head/(css|link|font|script|remove)': 'src'
+              '/page/head/(attribute|meta)': 'name'
+              '/page/body.*/(block|container|uiComponent)': 'name'
+              '/page/body.*/block/arguments/argument(/item)*': 'name'
+              '/page/body.*/move': 'element'
       -
         - addMerger
         -
@@ -127,6 +164,7 @@ services:
         'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
         'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector'
         'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector'
+        'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\BooleanCollector'
 
   Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector:
     calls:
@@ -140,6 +178,8 @@ services:
         const: '@Orba\Magento2Codegen\Service\PropertyFactory\ConstFactory'
         string: '@Orba\Magento2Codegen\Service\PropertyFactory\StringFactory'
         array: '@Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory'
+        boolean: '@Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
+        bool: '@Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
 
   Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory:
     calls:
