@@ -70,7 +70,7 @@ class CodeGenerator
             if (!$dryRun) {
                 try {
                     if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
-                        $merger = $this->fileMergerFactory->create($this->filepathUtil->getFileName($filePath));
+                        $merger = $this->fileMergerFactory->create($this->filepathUtil->getFilePath($filePath));
                         $merged = false;
                         if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath, $merger->isExperimental())) {
                             try {
