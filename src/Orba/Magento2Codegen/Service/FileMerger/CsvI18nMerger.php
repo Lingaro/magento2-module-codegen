@@ -4,23 +4,18 @@ declare(strict_types=1);
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
 use Exception;
-use InvalidArgumentException;
-use Orba\Magento2Codegen\Util\Magento\Config\CsvI18n;
+use Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger\Processor;
 
 class CsvI18nMerger extends AbstractMerger implements MergerInterface
 {
     /**
-     * @var CsvI18n
+     * @var Processor
      */
-    private $merger;
+    private $processor;
 
-    /**
-     * CsvI18nMerger constructor.
-     * @param CsvI18n $merger
-     */
-    public function __construct(CsvI18n $merger)
+    public function __construct(Processor $processor)
     {
-        $this->merger = $merger;
+        $this->processor = $processor;
     }
 
     /**
@@ -31,10 +26,7 @@ class CsvI18nMerger extends AbstractMerger implements MergerInterface
      */
     public function merge(string $oldContent, string $newContent): string
     {
-        $mergedCsv = $this->merger->merge($oldContent, $newContent);
-
-        return $this->merger->generateContent($mergedCsv);
-
+        $mergedCsv = $this->processor->merge($oldContent, $newContent);
+        return $this->processor->generateContent($mergedCsv);
     }
-
 }
