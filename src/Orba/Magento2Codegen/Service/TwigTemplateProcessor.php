@@ -2,15 +2,15 @@
 
 namespace Orba\Magento2Codegen\Service;
 
+use Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection;
 use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
 use Orba\Magento2Codegen\Service\Twig\FunctionsExtension;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use Twig\Environment;
+use Twig\Extension\EscaperExtension;
 use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
-use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 class TwigTemplateProcessor implements TemplateProcessorInterface
 {
@@ -24,12 +24,25 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
      */
     private $filtersExtension;
 
+    /**
+     * @var FunctionsExtension
+     */
     private $functionsExtension;
 
-    public function __construct(FiltersExtension $filtersExtension, FunctionsExtension $functionsExtension)
+    /**
+     * @var EscaperCollection
+     */
+    private $escaperCollection;
+
+    public function __construct(
+        FiltersExtension $filtersExtension,
+        FunctionsExtension $functionsExtension,
+        EscaperCollection $escaperCollection
+    )
     {
         $this->filtersExtension = $filtersExtension;
         $this->functionsExtension = $functionsExtension;
+        $this->escaperCollection = $escaperCollection;
     }
 
     public function replacePropertiesInText(string $text, PropertyBag $properties): string
@@ -43,6 +56,11 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
         $twig = new Environment($loader);
         $twig->addExtension($this->filtersExtension);
         $twig->addExtension($this->functionsExtension);
+        /** @var EscaperExtension $escaperExtension */
+        $escaperExtension = $twig->getExtension(EscaperExtension::class);
+        foreach ($this->escaperCollection->getItems() as $strategy => $object) {
+            $escaperExtension->setEscaper($strategy, [$object, 'escape']);
+        }
         $customFilters = [];
         foreach ($this->filtersExtension->getFilters() as $filter) {
             $customFilters[] = $filter->getName();

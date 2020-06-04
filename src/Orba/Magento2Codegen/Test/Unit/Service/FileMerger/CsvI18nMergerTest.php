@@ -3,6 +3,7 @@
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Service\CsvConverter;
 use Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
@@ -15,7 +16,7 @@ class CsvI18nMergerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->csvMerger = new CsvI18nMerger(new CsvI18nMerger\Processor());
+        $this->csvMerger = new CsvI18nMerger(new CsvI18nMerger\Processor(new CsvConverter()));
     }
 
     public function testMergeThrowsExceptionIfOldContentIsNotValidCsv(): void

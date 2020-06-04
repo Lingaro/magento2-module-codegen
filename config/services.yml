@@ -138,6 +138,11 @@ services:
   Orba\Magento2Codegen\Service\TemplateProcessorInterface:
     class: '\Orba\Magento2Codegen\Service\TwigTemplateProcessor'
 
+  Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection:
+    arguments:
+      $escapers:
+        csv: '@Orba\Magento2Codegen\Service\Twig\EscaperExtension\CsvEscaper'
+
   Orba\Magento2Codegen\Service\Twig\FiltersExtension:
     arguments:
       $filters:

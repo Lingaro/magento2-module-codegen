@@ -1,1 +1,1 @@
-"{{ label }}","{{ label }}"
+"{{ label|escape('csv')|raw }}","{{ label|escape('csv')|raw }}"

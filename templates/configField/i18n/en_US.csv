@@ -1,2 +1,2 @@
-{{ label }},{{ label }}
-{% if comment %}{{ comment }},{{ comment }}{% endif %}
+"{{ label|escape('csv')|raw }}","{{ label|escape('csv')|raw }}"
+{% if comment %}"{{ comment|escape('csv')|raw }}","{{ comment|escape('csv')|raw }}"{% endif %}

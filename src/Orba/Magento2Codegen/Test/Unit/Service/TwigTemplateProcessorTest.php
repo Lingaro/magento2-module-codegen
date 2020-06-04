@@ -2,6 +2,7 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
+use Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection;
 use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
 use Orba\Magento2Codegen\Service\Twig\FunctionsExtension;
 use Orba\Magento2Codegen\Service\TwigTemplateProcessor;
@@ -20,7 +21,8 @@ class TwigTemplateProcessorTest extends TestCase
     {
         $this->twigTemplateProcessor = new TwigTemplateProcessor(
             new FiltersExtension(),
-            new FunctionsExtension()
+            new FunctionsExtension(),
+            new EscaperCollection()
         );
     }
 

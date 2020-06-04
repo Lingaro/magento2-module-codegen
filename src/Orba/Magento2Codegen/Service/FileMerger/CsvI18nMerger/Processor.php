@@ -5,9 +5,20 @@ namespace Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger;
 
 use Exception;
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Service\CsvConverter;
 
 class Processor
 {
+    /**
+     * @var CsvConverter
+     */
+    private $csvConverter;
+
+    public function __construct(CsvConverter $csvConverter)
+    {
+        $this->csvConverter = $csvConverter;
+    }
+
     /**
      * Merge Csv files
      *
@@ -34,26 +45,12 @@ class Processor
     }
 
     /**
-     * Generate Content from array
      * @param array $data
-     * @param string $delimiter
-     * @param string $enclosure
      * @return string
      */
-    public function generateContent(array $data, $delimiter = ',', $enclosure = '"'): string
+    public function generateContent(array $data): string
     {
-        $handle = fopen('php://temp', 'r+');
-        $contents = '';
-        foreach ($data as $line) {
-            fputcsv($handle, $line, $delimiter, $enclosure);
-        }
-        rewind($handle);
-        while (!feof($handle)) {
-            $contents .= fread($handle, 8192);
-        }
-        fclose($handle);
-
-        return $contents;
+        return $this->csvConverter->arrayToCsv($data);
     }
 
     /**
@@ -80,15 +77,9 @@ class Processor
      */
     private function buildArray(string $content): array
     {
-        $data = explode(PHP_EOL, $content);
-
-        foreach ($data as &$item) {
-            $item = str_getcsv($item);
-        }
-
-        $this->validate($data);
-
-        return $data;
+        $result = $this->csvConverter->csvToArray($content);
+        $this->validate($result);
+        return $result;
     }
 
     /**
