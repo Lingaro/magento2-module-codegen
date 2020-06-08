@@ -1,0 +1,43 @@
+description: "This template is used to create a custom API endpoint."
+afterGenerate: |
+    Make sure that method {{ serviceClass }}::{{ serviceMethod }} exists and accepts parameters from request.
+    {% if forcedParameters is not empty %}
+    Make sure all forcedParameters are injected in di.xml to paramOverriders in Magento\Webapi\Controller\Rest\ParamsOverrider
+    {% endif %}
+properties:
+  endpointPath:
+    type: string
+    description: Endpoint path, may include parameters, e.g. /checkout/:cartId/place-order. Parameters will be passed to ServiceClass:serviceMethod() as arguments
+  endpointMethod:
+    type: string
+    description: "HTTP method: GET, POST, PUT, DELETE"
+    default: GET
+  endpointVersion:
+    type: string
+    description: API version. In most cases, just use default value.
+    default: 1
+  serviceClass:
+    type: string
+    description: In most cases, this should be RepositoryInterface or ManagementInterface, e.g. Magento\Catalog\Api\ProductRepositoryInterface
+  serviceMethod:
+    type: string
+    description: service class method, e.g. get
+    default: get
+  resources:
+    type: array
+    description: "access control resources for given endpoint"
+    children:
+      name:
+        type: string
+        description: "Required. Possible values: anonymous (publicly available), self (only given customer's data) or actual resources, e.g. Magento_Catalog::products"
+        default: anonymous
+  forcedParameters:
+      type: array
+      description: 'Arguments that need to be passed to Service method, but cannot be safely taken from request due to ACL. Usually used only with "self" resource.'
+      children:
+        methodArgument:
+          type: string
+          description: Argument name in ServiceClass::serviceMethod(), e.g. customerId
+        parameterName:
+          type: string
+          description: Parameter name in di.xml, e.g. %customer_id%. Each parameter of this type requires a class injected in di.xml to paramOverriders in Magento\Webapi\Controller\Rest\ParamsOverrider. Magento defines %cart_id% and %customer_id% by default.

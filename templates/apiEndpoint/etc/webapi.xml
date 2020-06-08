@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * config
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V{{ endpointVersion }}{{ endpointPath }}" method="{{ endpointMethod }}">
+        <service class="{{ serviceClass }}" method="{{ serviceMethod }}"/>
+        <resources>
+{% for item in resources %}
+            <resource ref="{{ item.name }}" />
+{% endfor %}
+        </resources>
+{% if forcedParameters is not empty %}
+        <data>
+{% for item in forcedParameters %}
+            <parameter name="{{ item.methodArgument }}" force="true">{{ item.parameterName }}</parameter>
+{% endfor %}
+        </data>
+{% endif %}
+    </route>
+</routes>
