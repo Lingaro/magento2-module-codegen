@@ -13,7 +13,7 @@ properties:
             code:
                 type: string
                 description: Attribute code. Required
-                required: true
+                required: 1
             label:
                 type: string
                 description: EAV Attribute frontend_label
@@ -31,20 +31,20 @@ properties:
                 type: string
                 description: EAV Attribute backend_model
             comparable:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_comparable
-                default: false
+                default: 0
             default:
                 type: string
                 description: EAV Attribute default_value
             filterable_in_search:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_filterable_in_search
-                default: false
+                default: 0
             filterable:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_filterable
-                default: false
+                default: 0
             frontend_class:
                 type: string
                 description: EAV Attribute frontend_model
@@ -52,9 +52,9 @@ properties:
                 type: string
                 description: Frontend Model
             global:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_global field
-                default: true
+                default: 1
             group:
                 type: string
                 description: Attribute group name or ID
@@ -66,21 +66,21 @@ properties:
                 description: EAV Attribute frontend_input e.g text,select,int
                 default: text
             is_filterable_in_grid:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_filterable_in_grid
-                default: false
+                default: 0
             is_html_allowed_on_front:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_html_allowed_on_front
-                default: false
+                default: 0
             is_used_in_grid:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_used_in_grid field
-                default: false
+                default: 0
             is_visible_in_grid:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_visible_in_grid field
-                default: false
+                default: 0
             note:
                 type: string
                 description: EAV Attribute note
@@ -92,13 +92,13 @@ properties:
                 description: Catalog EAV Attribute position
                 default: 0
             required:
-                type: boolean
+                type: string
                 description: EAV Attribute is_required
-                default: true
+                default: 1
             searchable:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_searchable
-                default: false
+                default: 0
             sort_order:
                 type: string
                 description: EAV Entity Attribute sort_order
@@ -106,9 +106,9 @@ properties:
                 type: string
                 description: EAV Attribute source_model
             system:
-                type: boolean
+                type: string
                 description: Declares the attribute as a system attribute.
-                default: true
+                default: 1
             table:
                 type: string
                 description: EAV Attribute backend_table
@@ -117,41 +117,41 @@ properties:
                 description: EAV Attribute backend_type
                 default: varchar
             unique:
-                type: boolean
+                type: string
                 description: EAV Attribute is_unique
-                default: false
+                default: 0
             used_for_promo_rules:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_used_for_promo_rules
-                default: false
+                default: 0
             used_for_sort_by:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute used_for_sort_by
-                default: false
+                default: 0
             used_in_product_listing:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute used_in_product_listing
-                default: false
+                default: 0
             user_defined:
-                type: boolean
+                type: string
                 description: EAV Attribute is_user_defined
-                default: false
+                default: 0
             visible_in_advanced_search:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_visible_in_advanced_search
-                default: false
+                default: 0
             visible_on_front:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_visible_on_front
-                default: false
+                default: 0
             visible:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_visible
-                default: true
+                default: 1
             wysiwyg_enabled:
-                type: boolean
+                type: string
                 description: Catalog EAV Attribute is_wysiwyg_enabled
-                default: false
+                default: 0
     dependencies:
         type: array
         description: Dependencies Class Names
