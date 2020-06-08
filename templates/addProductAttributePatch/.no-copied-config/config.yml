@@ -1,0 +1,161 @@
+description: This template create patch witch add custom attributes to product.
+afterGenerate: "1. After creating patch, please run setup upgrade file:\n
+                \n
+                  \tbin/magento setup:upgrade"
+properties:
+    patchName:
+        type: string
+        description: Patch name
+    attributes:
+        type: array
+        description: Define all new custom attributes for product
+        children:
+            code:
+                type: string
+                description: Attribute code. Required
+                required: true
+            label:
+                type: string
+                description: EAV Attribute frontend_label
+            apply_to:
+                type: string
+                desctiption: Catalog EAV Attribute apply_to e.q. simple, configurable, virtual,
+                default: simple
+            attribute_model:
+                type: string
+                description: EAV Attribute attribute_model
+            attribute_set:
+                type: string
+                desription: Name of the attribute set the new attribute will be assigned to. Works in combination with group or empty user_defined
+            backend:
+                type: string
+                description: EAV Attribute backend_model
+            comparable:
+                type: boolean
+                description: Catalog EAV Attribute is_comparable
+                default: false
+            default:
+                type: string
+                description: EAV Attribute default_value
+            filterable_in_search:
+                type: boolean
+                description: Catalog EAV Attribute is_filterable_in_search
+                default: false
+            filterable:
+                type: boolean
+                description: Catalog EAV Attribute is_filterable
+                default: false
+            frontend_class:
+                type: string
+                description: EAV Attribute frontend_model
+            frontend:
+                type: string
+                description: Frontend Model
+            global:
+                type: boolean
+                description: Catalog EAV Attribute is_global field
+                default: true
+            group:
+                type: string
+                description: Attribute group name or ID
+            input_rendered:
+                type: string
+                description: Catalog EAV Attribute frontend_input_renderer
+            input:
+                type: string
+                description: EAV Attribute frontend_input e.g text,select,int
+                default: text
+            is_filterable_in_grid:
+                type: boolean
+                description: Catalog EAV Attribute is_filterable_in_grid
+                default: false
+            is_html_allowed_on_front:
+                type: boolean
+                description: Catalog EAV Attribute is_html_allowed_on_front
+                default: false
+            is_used_in_grid:
+                type: boolean
+                description: Catalog EAV Attribute is_used_in_grid field
+                default: false
+            is_visible_in_grid:
+                type: boolean
+                description: Catalog EAV Attribute is_visible_in_grid field
+                default: false
+            note:
+                type: string
+                description: EAV Attribute note
+            option:
+                type: string
+                description: EAV Attribute Option values
+            position:
+                type: string
+                description: Catalog EAV Attribute position
+                default: 0
+            required:
+                type: boolean
+                description: EAV Attribute is_required
+                default: true
+            searchable:
+                type: boolean
+                description: Catalog EAV Attribute is_searchable
+                default: false
+            sort_order:
+                type: string
+                description: EAV Entity Attribute sort_order
+            source:
+                type: string
+                description: EAV Attribute source_model
+            system:
+                type: boolean
+                description: Declares the attribute as a system attribute.
+                default: true
+            table:
+                type: string
+                description: EAV Attribute backend_table
+            type:
+                type: string
+                description: EAV Attribute backend_type
+                default: varchar
+            unique:
+                type: boolean
+                description: EAV Attribute is_unique
+                default: false
+            used_for_promo_rules:
+                type: boolean
+                description: Catalog EAV Attribute is_used_for_promo_rules
+                default: false
+            used_for_sort_by:
+                type: boolean
+                description: Catalog EAV Attribute used_for_sort_by
+                default: false
+            used_in_product_listing:
+                type: boolean
+                description: Catalog EAV Attribute used_in_product_listing
+                default: false
+            user_defined:
+                type: boolean
+                description: EAV Attribute is_user_defined
+                default: false
+            visible_in_advanced_search:
+                type: boolean
+                description: Catalog EAV Attribute is_visible_in_advanced_search
+                default: false
+            visible_on_front:
+                type: boolean
+                description: Catalog EAV Attribute is_visible_on_front
+                default: false
+            visible:
+                type: boolean
+                description: Catalog EAV Attribute is_visible
+                default: true
+            wysiwyg_enabled:
+                type: boolean
+                description: Catalog EAV Attribute is_wysiwyg_enabled
+                default: false
+    dependencies:
+        type: array
+        description: Dependencies Class Names
+        children:
+            name:
+                type: string
+                description: Class name
