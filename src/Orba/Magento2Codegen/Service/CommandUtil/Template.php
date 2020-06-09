@@ -74,8 +74,7 @@ class Template
         IO $io,
         TemplateProperty $templatePropertyUtil,
         CollectorFactory $propertyValueCollectorFactory
-    )
-    {
+    ) {
         $this->templateFile = $templateFile;
         $this->propertyBagFactory = $propertyBagFactory;
         $this->module = $module;
@@ -110,6 +109,10 @@ class Template
         }
         if (!$this->templateFile->exists($templateName)) {
             throw new InvalidArgumentException(sprintf('Template "%s" does not exists.', $templateName));
+        }
+
+        if ($this->templateFile->getIsAbstract($templateName)) {
+            throw new InvalidArgumentException('This is abstract template.');
         }
         return true;
     }

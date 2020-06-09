@@ -33,6 +33,9 @@ class TemplateFile
      */
     private $templateProcessor;
 
+    /** @var bool */
+    private $isAbstract;
+
     public function __construct(
         TemplateDir $templateDir,
         FinderFactory $finderFactory,
@@ -155,6 +158,7 @@ class TemplateFile
         $files = [];
         foreach ($templateNames as $templateName) {
             $this->validateTemplateExistence($templateName);
+            $this->validateTemplateAbstract($templateName);
             foreach ($this->finderFactory->create()
                          ->files()
                          ->in($this->templateDir->getPath($templateName)) as $file) {
@@ -171,6 +175,16 @@ class TemplateFile
     {
         if (!$this->exists($templateName)) {
             throw new InvalidArgumentException(sprintf('Template does not exist: %s', $templateName));
+        }
+    }
+
+    /**
+     * @param string $templateName
+     */
+    private function validateTemplateAbstract(string $templateName): void
+    {
+        if ($this->getIsAbstract($templateName)) {
+            throw new InvalidArgumentException(sprintf('Template is abstract: %s', $templateName));
         }
     }
 
@@ -202,5 +216,10 @@ class TemplateFile
             throw new InvalidArgumentException(sprintf('Invalid config file: %s', $file->getPath()));
         }
         return $parsedConfig;
+    }
+
+    public function getIsAbstract(string $templateName): bool
+    {
+        return (bool) $this->getRootConfig($templateName, 'isAbstract');
     }
 }

@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Command\Template;
 
 use Orba\Magento2Codegen\Command\AbstractCommand;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateList;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,9 +16,13 @@ class ListCommand extends AbstractCommand
      */
     private $templateList;
 
-    public function __construct(IO $io, TemplateList $templateList, array $inputValidators = [])
+    /** @var TemplateFile  */
+    private $templateFile;
+
+    public function __construct(IO $io, TemplateList $templateList, TemplateFile $templateFile, array $inputValidators = [])
     {
         $this->templateList = $templateList;
+        $this->templateFile = $templateFile;
         parent::__construct($io, $inputValidators);
     }
 
@@ -36,6 +41,9 @@ class ListCommand extends AbstractCommand
         if ($templates) {
             $this->io->getInstance()->newLine();
             foreach ($templates as $templateName) {
+                if ($this->templateFile->getIsAbstract($templateName)) {
+                    continue;
+                }
                 $this->io->getInstance()->writeln('<info>  ' . $templateName . '</info>');
             }
         }

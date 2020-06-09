@@ -174,6 +174,14 @@ Example:
 description: "This template is used to create a custom block and phtml template file for it."
 ```
 
+#### Abstract template
+
+If in template you will add option isAbstract: true, this template won't be shown in template list and we don't used it as generate Magento code. This template will be abstract for another templates
+
+```yaml
+isAbstract: true
+```
+
 #### Additional info after template generation
 
 If a user needs to take some additional steps after code is generated, their description may be added in `afterGenearte` root node of `config.yml` file. The content of this param is processed by Twig, so you can use properties inside.
