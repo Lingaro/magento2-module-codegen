@@ -135,19 +135,19 @@ class TemplateTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testValidateTemplateThrowExceptionIfTemplateIsAbstract(): void
+    public function testCheckTemplateThrowExceptionIfTemplateIsAbstract(): void
     {
         $this->templateFileMock->expects($this->once())->method('exists')->willReturn(true);
         $this->templateFileMock->expects($this->once())->method('getIsAbstract')->willReturn(true);
         $this->expectException(InvalidArgumentException::class);
-        $this->template->validateTemplate('template');
+        $this->template->checkTemplate('template');
     }
 
-    public function testValidateTemplateReturnTrueIfTemplateIsNoAbstract(): void
+    public function testCheckTemplateReturnTrueIfTemplateIsNoAbstract(): void
     {
         $this->templateFileMock->expects($this->once())->method('exists')->willReturn(true);
         $this->templateFileMock->expects($this->once())->method('getIsAbstract')->willReturn(false);
-        $result = $this->template->validateTemplate('template');
+        $result = $this->template->checkTemplate('template');
         $this->assertTrue($result);
     }
 
