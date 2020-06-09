@@ -123,7 +123,7 @@ class Template
     public function checkTemplate(string $templateName): bool
     {
         if ($this->templateFile->getIsAbstract($templateName)) {
-            throw new InvalidArgumentException('This is abstract template.');
+            throw new InvalidArgumentException('Template "%s" is abstract.',$templateName);
         }
 
         return true;

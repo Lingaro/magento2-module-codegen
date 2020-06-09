@@ -158,7 +158,6 @@ class TemplateFile
         $files = [];
         foreach ($templateNames as $templateName) {
             $this->validateTemplateExistence($templateName);
-            $this->validateTemplateAbstract($templateName);
             foreach ($this->finderFactory->create()
                          ->files()
                          ->in($this->templateDir->getPath($templateName)) as $file) {
@@ -175,16 +174,6 @@ class TemplateFile
     {
         if (!$this->exists($templateName)) {
             throw new InvalidArgumentException(sprintf('Template does not exist: %s', $templateName));
-        }
-    }
-
-    /**
-     * @param string $templateName
-     */
-    private function validateTemplateAbstract(string $templateName): void
-    {
-        if ($this->getIsAbstract($templateName)) {
-            throw new InvalidArgumentException(sprintf('Template is abstract: %s', $templateName));
         }
     }
 
