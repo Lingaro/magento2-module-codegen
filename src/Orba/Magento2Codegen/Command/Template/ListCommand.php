@@ -16,10 +16,17 @@ class ListCommand extends AbstractCommand
      */
     private $templateList;
 
-    /** @var TemplateFile  */
+    /**
+     * @var TemplateFile
+     */
     private $templateFile;
 
-    public function __construct(IO $io, TemplateList $templateList, TemplateFile $templateFile, array $inputValidators = [])
+    public function __construct(
+        IO $io,
+        TemplateList $templateList,
+        TemplateFile $templateFile,
+        array $inputValidators = []
+    )
     {
         $this->templateList = $templateList;
         $this->templateFile = $templateFile;

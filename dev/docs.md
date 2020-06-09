@@ -176,7 +176,9 @@ description: "This template is used to create a custom block and phtml template 
 
 #### Abstract template
 
-If in template you will add option isAbstract: true, this template won't be shown in template list and we don't used it as generate Magento code. This template will be abstract for another templates
+If you want to create an abstract template that will be later used as a dependency of other template but cannot be generated itself, set `isAbstract` root node of `config.yml` file to `true`. Such template won't be shown in template list.
+
+Example:
 
 ```yaml
 isAbstract: true
