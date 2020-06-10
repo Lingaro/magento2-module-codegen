@@ -46,75 +46,75 @@ class {{ patchName|pascal }} implements DataPatchInterface
         {% for item in attributes %}
     '{{ item.code|snake }}' => [
 {% if item.apply_to is not null %}
-                'apply_to' => '{{ item.apply_to|pascal }}',
+                'apply_to' => '{{ item.apply_to }}',
 {% endif %}
 {% if item.label is not null %}
-                'label' => '{{ item.label|pascal }}',
+                'label' => '{{ item.label }}',
 {% endif %}
 {% if item.attribute_model is not null %}
-                'attribute_model' => '{{ item.attribute_model|pascal }}',
+                'attribute_model' => '{{ item.attribute_model }}',
 {% endif %}
 {% if item.attribute_set is not null %}
-                'attribute_set' => '{{ item.attribute_set|pascal }}',
+                'attribute_set' => '{{ item.attribute_set }}',
 {% endif %}
 {% if item.backend is not null %}
-                'backend' => '{{ item.backend|pascal }}',
+                'backend' => '{{ item.backend }}',
 {% endif %}
 {% if item.default is not null %}
-                'default' => '{{ item.default|pascal }}',
+                'default' => '{{ item.default }}',
 {% endif %}
 {% if item.frontend_class is not null %}
-                'frontend_class' => '{{ item.frontend_class|pascal }}',
+                'frontend_class' => '{{ item.frontend_class }}',
 {% endif %}
 {% if item.frontend is not null %}
-                'frontend' => '{{ item.frontend|pascal }}',
+                'frontend' => '{{ item.frontend }}',
 {% endif %}
-                'global' => '{{ item.global|pascal }}',
+                'global' => '{{ item.global }}',
 {% if item.group is not null %}
-                'group' => '{{ item.group|pascal }}',
+                'group' => '{{ item.group }}',
 {% endif %}
 {% if item.input_rendered is not null %}
-                'input_rendered' => '{{ item.input_rendered|pascal }}',
+                'input_rendered' => '{{ item.input_rendered }}',
 {% endif %}
 {% if item.note is not null %}
-                'note' => '{{ item.note|pascal }}',
+                'note' => '{{ item.note }}',
 {% endif %}
 {% if item.option is not null %}
-                'option' => '{{ item.option|pascal }}',
+                'option' => '{{ item.option }}',
 {% endif %}
 {% if item.sort_order is not null %}
-                'sort_order' => '{{ item.sort_order|pascal }}',
+                'sort_order' => '{{ item.sort_order }}',
 {% endif %}
 {% if item.source is not null %}
-                'source' => '{{ item.source|pascal }}',
+                'source' => '{{ item.source }}',
 {% endif %}
 {% if item.system is not null %}
-                'system' => '{{ item.system|pascal }}',
+                'system' => '{{ item.system }}',
 {% endif %}
 {% if item.table is not null %}
-                'table' => '{{ item.table|pascal }}',
+                'table' => '{{ item.table }}',
 {% endif %}
-                'comparable' => '{{ item.comparable|pascal }}',
-                'input' => '{{ item.input|pascal }}',
-                'is_filterable_in_grid' => '{{ item.is_filterable_in_grid|pascal }}',
-                'is_html_allowed_on_front' => '{{ item.is_html_allowed_on_front|pascal }}',
-                'is_used_in_grid' => '{{ item.is_used_in_grid|pascal }}',
-                'is_visible_in_grid' => '{{ item.is_visible_in_grid|pascal }}',
-                'type' => '{{ item.type|pascal }}',
-                'position' => '{{ item.position|pascal }}',
-                'filterable_in_search' => '{{ item.filterable_in_search|pascal }}',
-                'filterable' => '{{ item.filterable|pascal }}',
-                'required' => '{{ item.required|pascal }}',
-                'searchable' => '{{ item.searchable|pascal }}',
-                'unique' => '{{ item.unique|pascal }}',
-                'used_for_promo_rules' => '{{ item.used_for_promo_rules|pascal }}',
-                'used_for_sort_by' => '{{ item.used_for_sort_by|pascal }}',
-                'used_in_product_listing' => '{{ item.used_in_product_listing|pascal }}',
-                'user_defined' => '{{ item.user_defined|pascal }}',
-                'visible_in_advanced_search' => '{{ item.visible_in_advanced_search|pascal }}',
-                'visible_on_front' => '{{ item.visible_on_front|pascal }}',
-                'visible' => '{{ item.visible|pascal }}',
-                'wysiwyg_enabled' => '{{ item.wysiwyg_enabled|pascal }}',
+                'comparable' => '{{ item.comparable }}',
+                'input' => '{{ item.input }}',
+                'is_filterable_in_grid' => '{{ item.is_filterable_in_grid }}',
+                'is_html_allowed_on_front' => '{{ item.is_html_allowed_on_front }}',
+                'is_used_in_grid' => '{{ item.is_used_in_grid }}',
+                'is_visible_in_grid' => '{{ item.is_visible_in_grid }}',
+                'type' => '{{ item.type }}',
+                'position' => '{{ item.position }}',
+                'filterable_in_search' => '{{ item.filterable_in_search }}',
+                'filterable' => '{{ item.filterable }}',
+                'required' => '{{ item.required }}',
+                'searchable' => '{{ item.searchable }}',
+                'unique' => '{{ item.unique }}',
+                'used_for_promo_rules' => '{{ item.used_for_promo_rules }}',
+                'used_for_sort_by' => '{{ item.used_for_sort_by }}',
+                'used_in_product_listing' => '{{ item.used_in_product_listing }}',
+                'user_defined' => '{{ item.user_defined }}',
+                'visible_in_advanced_search' => '{{ item.visible_in_advanced_search }}',
+                'visible_on_front' => '{{ item.visible_on_front }}',
+                'visible' => '{{ item.visible }}',
+                'wysiwyg_enabled' => '{{ item.wysiwyg_enabled }}',
             ],
 {% endfor %}
         ];

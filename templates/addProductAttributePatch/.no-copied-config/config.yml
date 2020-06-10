@@ -17,10 +17,19 @@ properties:
             label:
                 type: string
                 description: EAV Attribute frontend_label
-            apply_to:
+            frontend_class:
                 type: string
-                desctiption: Catalog EAV Attribute apply_to e.q. simple, configurable, virtual,
-                default: simple
+                description: EAV Attribute frontend_model
+            frontend:
+                type: string
+                description: Frontend Model
+            input_rendered:
+                type: string
+                description: Catalog EAV Attribute frontend_input_renderer
+            input:
+                type: string
+                description: EAV Attribute frontend_input e.g text,select,int
+                default: text
             attribute_model:
                 type: string
                 description: EAV Attribute attribute_model
@@ -30,13 +39,43 @@ properties:
             backend:
                 type: string
                 description: EAV Attribute backend_model
+            table:
+                type: string
+                description: EAV Attribute backend_table
+            type:
+                type: string
+                description: EAV Attribute backend_type
+                default: varchar
+            source:
+                type: string
+                description: EAV Attribute source_model
+            apply_to:
+                type: string
+                desctiption: Catalog EAV Attribute apply_to e.q. simple, configurable, virtual,
+                default: simple
+            default:
+                type: string
+                description: EAV Attribute default_value
+            group:
+                type: string
+                description: Attribute group name or ID
+            note:
+                type: string
+                description: EAV Attribute note
+            option:
+                type: string
+                description: EAV Attribute Option values
+            sort_order:
+                type: string
+                description: EAV Entity Attribute sort_order
+            position:
+                type: string
+                description: Catalog EAV Attribute position
+                default: 0
             comparable:
                 type: string
                 description: Catalog EAV Attribute is_comparable
                 default: 0
-            default:
-                type: string
-                description: EAV Attribute default_value
             filterable_in_search:
                 type: string
                 description: Catalog EAV Attribute is_filterable_in_search
@@ -45,26 +84,10 @@ properties:
                 type: string
                 description: Catalog EAV Attribute is_filterable
                 default: 0
-            frontend_class:
-                type: string
-                description: EAV Attribute frontend_model
-            frontend:
-                type: string
-                description: Frontend Model
             global:
                 type: string
                 description: Catalog EAV Attribute is_global field
                 default: 1
-            group:
-                type: string
-                description: Attribute group name or ID
-            input_rendered:
-                type: string
-                description: Catalog EAV Attribute frontend_input_renderer
-            input:
-                type: string
-                description: EAV Attribute frontend_input e.g text,select,int
-                default: text
             is_filterable_in_grid:
                 type: string
                 description: Catalog EAV Attribute is_filterable_in_grid
@@ -81,16 +104,6 @@ properties:
                 type: string
                 description: Catalog EAV Attribute is_visible_in_grid field
                 default: 0
-            note:
-                type: string
-                description: EAV Attribute note
-            option:
-                type: string
-                description: EAV Attribute Option values
-            position:
-                type: string
-                description: Catalog EAV Attribute position
-                default: 0
             required:
                 type: string
                 description: EAV Attribute is_required
@@ -99,23 +112,10 @@ properties:
                 type: string
                 description: Catalog EAV Attribute is_searchable
                 default: 0
-            sort_order:
-                type: string
-                description: EAV Entity Attribute sort_order
-            source:
-                type: string
-                description: EAV Attribute source_model
             system:
                 type: string
                 description: Declares the attribute as a system attribute.
                 default: 1
-            table:
-                type: string
-                description: EAV Attribute backend_table
-            type:
-                type: string
-                description: EAV Attribute backend_type
-                default: varchar
             unique:
                 type: string
                 description: EAV Attribute is_unique
