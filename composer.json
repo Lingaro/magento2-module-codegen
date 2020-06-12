@@ -1,6 +1,7 @@
 {
     "name": "orba/magento2-codegen",
-    "version": "0.1.0",
+    "description": "Magento 2 Code Generator",
+    "version": "1.0.0",
     "require": {
         "php": "~7.2",
         "ext-dom": "*",
