@@ -168,6 +168,7 @@ services:
         'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector'
         'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector'
         'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\BooleanCollector'
+        'Orba\Magento2Codegen\Model\ChoiceProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ChoiceCollector'
 
   Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector:
     calls:
@@ -183,6 +184,7 @@ services:
         array: '@Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory'
         boolean: '@Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
         bool: '@Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
+        choice: '@Orba\Magento2Codegen\Service\PropertyFactory\ChoiceFactory'
 
   Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory:
     calls:

@@ -13,9 +13,9 @@ properties:
     type: string
     description: sortOrder argument value
   separator:
-      type: boolean
-      description: Add top separator?
-      default: false
+    type: boolean
+    description: Add top separator?
+    default: false
   showInDefault:
     type: boolean
     description: showInDefault argument value
