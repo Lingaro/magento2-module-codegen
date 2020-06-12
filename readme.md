@@ -65,11 +65,11 @@ Examples:
 
 ```
 cd /path/to/magento/app/code/Orba/TestModule
-../../../../vendor/orba/magento2-codegen/bin/codegen template:generate block
+../../../../vendor/bin/codegen template:generate block
 ```
 
 ```
-cd /path/to/magento/vendor/orba/magento2-codegen
+cd /path/to/magento/vendor
 bin/codegen --root-dir="/path/to/magento/app/code/Orba/TestModule" template:generate block
 ```
 

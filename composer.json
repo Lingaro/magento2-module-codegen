@@ -30,6 +30,7 @@
             "@setPermissionsBin"
         ]
     },
+    "bin": ["bin/codegen"],
     "repositories": [
         {
             "type": "composer",
