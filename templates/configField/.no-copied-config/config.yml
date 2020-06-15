@@ -16,7 +16,36 @@ properties:
     type: string
     description: Field comment (optional)
   type:
-    type: string
+    type: choice
+    options:
+      - button
+      - checkbox
+      - checkboxes
+      - column
+      - date
+      - editablemultiselect
+      - editor
+      - fieldset
+      - file
+      - gallery
+      - hidden
+      - image
+      - imagefile
+      - label
+      - link
+      - multiline
+      - multiselect
+      - note
+      - obscure
+      - password
+      - radio
+      - radios
+      - reset
+      - select
+      - submit
+      - text
+      - textarea
+      - time
     description: Attribute type
     default: text
   sortOrder:
@@ -51,8 +80,12 @@ properties:
     type: string
     description: Value of the config field on which this field depends (fill in only if the fieldDependencyPath property was filled in)
   configScope:
-    type: string
-    description: Scope of config field used by value getter (store, website, default)
+    type: choice
+    options:
+      - store
+      - website
+      - default
+    description: Scope of config field used by value getter
     default: website
   defaultValue:
     type: string

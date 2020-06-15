@@ -14,5 +14,11 @@ properties:
     type: string
     description: Third part of action's URL
   pageLayout:
-    type: string
-    description: Layout type, eg. "1column", "2columns".
+    type: choice
+    options:
+      - empty
+      - 1column
+      - 2columns-left
+      - 2columns-right
+      - 3columns
+    description: Layout type
