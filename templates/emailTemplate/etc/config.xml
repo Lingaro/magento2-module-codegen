@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <{{ notificationSectionId|snake }}>
+            <{{ notificationGroupId|snake }}>
+                <{{ notificationName|snake }}>{{ notificationSectionId|snake }}_{{ notificationGroupId|snake }}_{{ notificationName|snake }}</{{ notificationName|snake }}>
+            </{{ notificationGroupId|snake }}>
+        </{{ notificationSectionId|snake }}>
+    </default>
+</config>

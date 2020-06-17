@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template
+        id="{{ notificationSectionId|snake }}_{{ notificationGroupId|snake }}_{{ notificationName|snake }}"
+        label="{{ notificationLabel|raw }}"
+        file="{{ notificationName|snake }}.html"
+        type="html"
+        module="{{ vendorName|pascal }}_{{ moduleName|pascal }}"
+        area="frontend"
+    />
+</config>

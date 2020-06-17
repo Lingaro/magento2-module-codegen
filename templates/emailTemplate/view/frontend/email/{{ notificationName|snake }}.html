@@ -1,0 +1,16 @@
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<!--@subject {{ '{{' }}trans '{{ notificationSubject|raw }}'}} @-->
+{{ '{{' }}template config_path="design/email/header_template"}}
+
+<div class="{{ notificationName|kebab }}-email-container">
+    <!--
+        Content goes here
+    -->
+</div>
+
+{{ '{{' }}template config_path="design/email/footer_template"}}

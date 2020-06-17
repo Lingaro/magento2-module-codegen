@@ -1,0 +1,4 @@
+"{{ notificationSubject|escape('csv')|raw }}","{{ notificationSubject|escape('csv')|raw }}"
+"{{ notificationLabel|escape('csv')|raw }}","{{ notificationLabel|escape('csv')|raw }}"
+{% if notificationComment %}"{{ notificationComment|escape('csv')|raw }}","{{ notificationComment|escape('csv')|raw }}"{% endif %}
+

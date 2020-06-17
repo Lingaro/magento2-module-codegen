@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="{{ notificationSectionId|snake }}">
+            <group id="{{ notificationGroupId|snake }}">
+                <field
+                    id="{{ notificationName|snake }}"
+                    translate="label{% if notificationComment %} comment{% endif %}"
+                    type="select"
+                    sortOrder="{{ notificationSortOrder ? notificationSortOrder : 0 }}"
+                    showInDefault="{{ notificationShowInDefault ? 1 : 0 }}"
+                    showInWebsite="{{ notificationShowInWebsite ? 1 : 0 }}"
+                    showInStore="{{ notificationShowInStore ? 1 : 0 }}"
+                    canRestore="{{ notificationCanRestore ? 1 : 0 }}"
+                >
+                    <label>{{ notificationLabel }}</label>
+{% if notificationComment %}
+                    <comment>{{ notificationComment }}</comment>
+{% endif %}
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
