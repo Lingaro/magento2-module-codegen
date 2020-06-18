@@ -1,0 +1,82 @@
+description: "This template is used to create a cronjob"
+afterGenerate: "Now you can add your logic to {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Cron\\{{ jobName|pascal }}::{{ methodName|pascal }}"
+properties:
+  newCronGroup:
+    type: boolean
+    default: false
+    description: Create new cron group
+  groupName:
+    type: string
+    default: default
+    description: Name of the cron group
+    depend:
+      newCronGroup: true
+  jobName:
+    type: string
+    description: Unique ID for this cron job
+  methodName:
+    type: string
+    default: execute
+    description: Method in classpath to call
+  scheduleMinute:
+    type: string
+    default: "*"
+    description: Schedule minute
+  scheduleHour:
+    type: string
+    default: "*"
+    description: Schedule hour
+  scheduleDayOfMonth:
+    type: string
+    default: "*"
+    description: Schedule day of month
+  scheduleMonth:
+    type: string
+    default: "*"
+    description: Schedule month
+  scheduleYear:
+    type: string
+    default: "*"
+    description: Schedule year
+  scheduleGenerateEvery:
+    type: string
+    default: 1
+    description: Schedule year
+    depend:
+        newCronGroup: true
+  scheduleAheadFor:
+    type: string
+    default: 4
+    description: Schedule year
+    depend:
+        newCronGroup: true
+  scheduleLifetime:
+    type: string
+    default: 2
+    description: Schedule year
+    depend:
+        newCronGroup: true
+  historyCleanupEvery:
+    type: string
+    default: 10
+    description: Schedule year
+    depend:
+        newCronGroup: true
+  historySuccessLifetime:
+    type: string
+    default: 60
+    description: Schedule year
+    depend:
+        newCronGroup: true
+  historyFailureLifetime:
+    type: string
+    default: 600
+    description: Schedule year
+    depend:
+        newCronGroup: true
+  useSeparateProcess:
+    type: string
+    default: 1
+    description: Schedule year
+    depend:
+        newCronGroup: true

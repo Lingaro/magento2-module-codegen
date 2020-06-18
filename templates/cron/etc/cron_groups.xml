@@ -1,0 +1,22 @@
+{% if newCronGroup == true %}
+<?xml version="1.0"?>
+<!--
+/**
+ * cron_groups
+ *
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/cron_groups.xsd">
+    <group id="{{ groupName }}">
+        <schedule_generate_every>{{ scheduleGenerateEvery }}</schedule_generate_every>
+        <schedule_ahead_for>{{ scheduleAheadFor }}</schedule_ahead_for>
+        <schedule_lifetime>{{ scheduleLifetime }}</schedule_lifetime>
+        <history_cleanup_every>{{ historyCleanupEvery }}</history_cleanup_every>
+        <history_success_lifetime>{{ historySuccessLifetime }}</history_success_lifetime>
+        <history_failure_lifetime>{{ historyFailureLifetime }}</history_failure_lifetime>
+        <use_separate_process>{{ useSeparateProcess }}</use_separate_process>
+    </group>
+</config>
+{% endif %}

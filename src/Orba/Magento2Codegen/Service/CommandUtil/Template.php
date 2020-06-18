@@ -178,6 +178,15 @@ class Template
         );
         foreach ($properties as $property) {
             /** @var PropertyInterface $property */
+
+            if($property->getDepend()) {
+                foreach ($property->getDepend() as $propertyKey => $propertyValue) {
+                    if(!isset($propertyBag[$propertyKey]) || $propertyBag[$propertyKey] != $propertyValue) {
+                        // we can set default value if we want to
+                        continue 2;
+                    }
+                }
+            }
             $valueCollector = $this->propertyValueCollectorFactory->create($property);
             $propertyBag[$property->getName()] = $valueCollector->collectValue($property);
         }

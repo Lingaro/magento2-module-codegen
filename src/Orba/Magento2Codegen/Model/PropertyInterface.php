@@ -11,4 +11,8 @@ interface PropertyInterface
     public function setDescription(string $value): PropertyInterface;
 
     public function getDescription():? string;
+
+    public function getDepend():? array;
+
+    public function setDepend(?array $value): PropertyInterface;
 }
