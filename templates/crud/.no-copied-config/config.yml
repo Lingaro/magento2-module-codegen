@@ -1,3 +1,4 @@
+type: module
 description: This Template creates a crud module using uiComponents for Grid and Form.
 afterGenerate: "1. Management of generated entity is available in admin panel in \"Content\" submenu. You should move it to the proper place and customize label by editing the following file:\n
                 \n

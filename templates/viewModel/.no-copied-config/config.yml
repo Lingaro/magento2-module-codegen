@@ -1,3 +1,4 @@
+type: module
 description: "This template is used to create a view model and phtml template file for it.\n
               It should be used if you simply need to inject your business logic into template file.\n
               If you need to add some customizations to block processing, use \"block\" template instead."

@@ -3,9 +3,10 @@
 namespace Orba\Magento2Codegen\Command\Template;
 
 use Orba\Magento2Codegen\Command\AbstractCommand;
+use Orba\Magento2Codegen\Model\Template;
 use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\CommandUtil\Template;
-use Orba\Magento2Codegen\Service\TemplateFile;
+use Orba\Magento2Codegen\Service\CommandUtil\Template as TemplateCommandUtil;
+use Orba\Magento2Codegen\Service\TemplateFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,19 +19,24 @@ class InfoCommand extends AbstractCommand
     private $templateName;
 
     /**
-     * @var Template
+     * @var TemplateCommandUtil
      */
     private $util;
 
     /**
-     * @var TemplateFile
+     * @var TemplateFactory
      */
-    private $templateFile;
+    private $templateFactory;
 
-    public function __construct(Template $util, IO $io, TemplateFile $templateFile, array $inputValidators = [])
+    public function __construct(
+        TemplateCommandUtil $util,
+        IO $io,
+        TemplateFactory $templateFactory,
+        array $inputValidators = []
+    )
     {
         $this->util = $util;
-        $this->templateFile = $templateFile;
+        $this->templateFactory = $templateFactory;
         parent::__construct($io, $inputValidators);
     }
 
@@ -41,7 +47,7 @@ class InfoCommand extends AbstractCommand
             ->setDescription('Show extended info of specific template.')
             ->setHelp("This command displays a description of what the template does.")
             ->addArgument(
-                Template::ARG_TEMPLATE,
+                TemplateCommandUtil::ARG_TEMPLATE,
                 InputArgument::REQUIRED,
                 'The template to show description for.'
             );
@@ -55,37 +61,36 @@ class InfoCommand extends AbstractCommand
 
     protected function _execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->util->validateTemplate($this->templateName);
-        $this->displayHeader();
-        $this->displayDescription();
-        $this->displayDependencies();
+        $template = $this->templateFactory->create($this->templateName);
+        $this->displayHeader($template);
+        $this->displayDescription($template);
+        $this->displayDependencies($template);
     }
 
-    private function displayHeader(): void
+    private function displayHeader(Template $template): void
     {
         $this->io->getInstance()->writeln('<comment>Template Info</comment>');
-        $this->io->getInstance()->title($this->templateName);
+        $this->io->getInstance()->title($template->getName());
     }
 
-    private function displayDescription(): void
+    private function displayDescription(Template $template): void
     {
-        $description = $this->templateFile->getDescription($this->templateName);
+        $description = $template->getDescription();
         if ($description) {
             $this->io->getInstance()->text($description);
         } else {
             $this->io->getInstance()->text('Sorry, there is no info defined for this template.');
         }
-
     }
 
-    private function displayDependencies(): void
+    private function displayDependencies(Template $template): void
     {
-        $dependencies = $this->templateFile->getDependencies($this->templateName);
-        if ($dependencies) {
+        $dependencies = $template->getDependencies();
+        if (!empty($dependencies)) {
             $this->io->getInstance()->note('DEPENDENCIES - This module will also load the following templates:');
-            $this->io->getInstance()->text($dependencies);
+            foreach ($dependencies as $dependency) {
+                $this->io->getInstance()->text($dependency->getName());
+            }
         }
     }
-
-
 }

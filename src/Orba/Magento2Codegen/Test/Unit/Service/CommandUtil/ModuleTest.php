@@ -2,13 +2,18 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
+use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\CommandUtil\Module;
+use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\FilepathUtil;
+use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\Magento\Detector;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\Filesystem\Filesystem;
+use RuntimeException;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ModuleTest extends TestCase
 {
@@ -23,49 +28,57 @@ class ModuleTest extends TestCase
     private $filepathUtilMock;
 
     /**
-     * @var MockObject|Filesystem
-     */
-    private $filesystemMock;
-
-    /**
      * @var MockObject|PropertyBagFactory
      */
     private $propertyBagFactoryMock;
+
+    /**
+     * @var MockObject|IO
+     */
+    private $ioMock;
+
+    /**
+     * @var MockObject|CodeGenerator
+     */
+    private $codeGeneratorMock;
+
+    /**
+     * @var MockObject|Template
+     */
+    private $templateCommandUtilMock;
+
+    /**
+     * @var MockObject|Detector
+     */
+    private $detectorMock;
 
     public function setUp(): void
     {
         $this->filepathUtilMock = $this->getMockBuilder(FilepathUtil::class)
             ->disableOriginalConstructor()->getMock();
-        $this->filesystemMock = $this->getMockBuilder(Filesystem::class)
-            ->disableOriginalConstructor()->getMock();
         $this->propertyBagFactoryMock = $this->getMockBuilder(PropertyBagFactory::class)
             ->disableOriginalConstructor()->getMock();
+        $this->ioMock = $this->getMockBuilder(IO::class)->disableOriginalConstructor()->getMock();
+        $this->codeGeneratorMock = $this->getMockBuilder(CodeGenerator::class)
+            ->disableOriginalConstructor()->getMock();
+        $this->templateCommandUtilMock = $this->getMockBuilder(Template::class)
+            ->disableOriginalConstructor()->getMock();
+        $this->detectorMock = $this->getMockBuilder(Detector::class)->disableOriginalConstructor()->getMock();
         $this->module = new Module(
             $this->filepathUtilMock,
-            $this->filesystemMock,
-            $this->propertyBagFactoryMock
+            $this->propertyBagFactoryMock,
+            $this->ioMock,
+            $this->codeGeneratorMock,
+            $this->templateCommandUtilMock,
+            $this->detectorMock
         );
-    }
-
-    public function testExistsReturnsFalseIfRegistrationFileDoesntExist(): void
-    {
-        $this->filesystemMock->expects($this->once())->method('exists')->willReturn(false);
-        $result = $this->module->exists('rootDir');
-        $this->assertFalse($result);
-    }
-
-    public function testExistsReturnsTrueIfRegistrationFileExist(): void
-    {
-        $this->filesystemMock->expects($this->once())->method('exists')->willReturn(true);
-        $result = $this->module->exists('rootDir');
-        $this->assertTrue($result);
     }
 
     public function testGetPropertyBagReturnsEmptyBagIfModuleDataNotFoundInRegistrationFile(): void
     {
         $this->filepathUtilMock->expects($this->once())->method('getContent')
             ->willReturn('broken file with not module data');
-        $result = $this->module->getPropertyBag('rootDir');
+        $result = $this->module->getPropertyBag();
         $this->assertFalse(isset($result['vendorName']));
         $this->assertFalse(isset($result['moduleName']));
     }
@@ -84,8 +97,43 @@ PHP;
             ->willReturn($registrationFileContent);
         $this->propertyBagFactoryMock->expects($this->once())->method('create')
             ->willReturn(new PropertyBag());
-        $result = $this->module->getPropertyBag('rootDir');
+        $result = $this->module->getPropertyBag();
         $this->assertSame('Orba', $result['vendorName']);
         $this->assertSame('Test', $result['moduleName']);
+    }
+
+    public function testShouldCreateModuleReturnsFalseIfModuleExists(): void
+    {
+        $this->detectorMock->expects($this->once())->method('moduleExistsInDir')->willReturn(true);
+        $result = $this->module->shouldCreateModule();
+        $this->assertFalse($result);
+    }
+
+    public function testShouldCreateModuleReturnsFalseIfModuleDoesNotExistAndUserDoesNotWantToCreateOne(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->detectorMock->expects($this->once())->method('moduleExistsInDir')->willReturn(false);
+        $ioInstanceMock = $this->getIoInstanceMock();
+        $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(false);
+        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $this->module->shouldCreateModule();
+    }
+
+    public function testShouldCreateModuleReturnsTrueIfModuleDoesNotExistAndUserWantToCreateOne(): void
+    {
+        $this->detectorMock->expects($this->once())->method('moduleExistsInDir')->willReturn(false);
+        $ioInstanceMock = $this->getIoInstanceMock();
+        $ioInstanceMock->expects($this->once())->method('confirm')->willReturn(true);
+        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($ioInstanceMock);
+        $result = $this->module->shouldCreateModule();
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return MockObject|SymfonyStyle
+     */
+    private function getIoInstanceMock()
+    {
+        return $this->getMockBuilder(SymfonyStyle::class)->disableOriginalConstructor()->getMock();
     }
 }

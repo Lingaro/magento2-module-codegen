@@ -1,3 +1,4 @@
+type: module
 description: 'This template creates event observer for given event code with needed files: events.xml and Observer class.'
 properties:
   scope:
