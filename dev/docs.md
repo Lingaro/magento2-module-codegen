@@ -56,6 +56,22 @@ Each template dir has a special subdirectory `.no-copied-config`, which is not p
 
 Template config file can be found in `.no-copied-config/config.yml`. You can configure there the following aspects of a template:
 
+#### Template type
+
+Template type must be set for each template in `type` root node of `config.yml` file.
+
+##### "basic" template type
+
+"Basic" templates have no special validators or enhancements.
+
+##### "module" template type
+
+"Module" templates are required to be generated inside a Magento 2 module. If a module is not found, application will prompt user to add one before code generation starts. There is no need to define "vendorName" and "moduleName" properties in such templates - they are added (and filled in with proper values) automatically.
+
+##### "root" template type
+
+"Root" templates are required to be generated inside Magento 2 root directory. If a user starts generation for some other dir, error will be shown and generation will be stopped.
+
 #### Template properties
 
 Properties definition should be placed in `properties` root node of `config.yml` file. Each property has a name, type and set of other config values. There are three types of properties:

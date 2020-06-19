@@ -197,6 +197,7 @@ services:
       $templateTypes:
         basic: '@Orba\Magento2Codegen\Service\TemplateType\Basic'
         module: '@Orba\Magento2Codegen\Service\TemplateType\Module'
+        root: '@Orba\Magento2Codegen\Service\TemplateType\Root'
 
   Orba\Magento2Codegen\Service\TemplateType\Module:
     calls:

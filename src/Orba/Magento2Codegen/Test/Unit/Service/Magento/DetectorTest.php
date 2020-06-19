@@ -40,14 +40,52 @@ class DetectorTest extends TestCase
     public function testModuleExistsInDirReturnsFalseIfModuleConfigFileDoesntExist(): void
     {
         $this->filesystemMock->expects($this->once())->method('exists')->willReturn(false);
-        $result = $this->detector->moduleExistsInDir('rootDir');
+        $result = $this->detector->moduleExistsInDir('dir');
         $this->assertFalse($result);
     }
 
     public function testModuleExistsInDirReturnsTrueIfModuleConfigFileExist(): void
     {
         $this->filesystemMock->expects($this->once())->method('exists')->willReturn(true);
-        $result = $this->detector->moduleExistsInDir('rootDir');
+        $result = $this->detector->moduleExistsInDir('dir');
+        $this->assertTrue($result);
+    }
+
+    public function testCoreIndexPhpExistsInDirReturnsFalseIfFileDoesntExist(): void
+    {
+        $this->filesystemMock->expects($this->once())->method('exists')->willReturn(false);
+        $result = $this->detector->coreIndexPhpExistsInDir('dir');
+        $this->assertFalse($result);
+    }
+
+    public function testCoreIndexPhpExistsInDirReturnsFalseIfFileExistsButWithInvalidContent(): void
+    {
+        $this->filesystemMock->expects($this->once())->method('exists')->willReturn(true);
+        $this->filepathUtilMock->expects($this->once())->method('getContent')
+            ->willReturn('not a root index.php content');
+        $result = $this->detector->coreIndexPhpExistsInDir('dir');
+        $this->assertFalse($result);
+    }
+
+    public function testCoreIndexPhpExistsInDirReturnsTrueIfFileExistsWithProperContent(): void
+    {
+        $content = <<<PHP
+<?php
+try {
+    require __DIR__ . '/app/bootstrap.php';
+} catch (\Exception \$e) {
+    //...
+}
+
+\$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, \$_SERVER);
+/** @var \Magento\Framework\App\Http \$app */
+\$app = \$bootstrap->createApplication(\Magento\Framework\App\Http::class);
+\$bootstrap->run(\$app);
+PHP;
+
+        $this->filesystemMock->expects($this->once())->method('exists')->willReturn(true);
+        $this->filepathUtilMock->expects($this->once())->method('getContent')->willReturn($content);
+        $result = $this->detector->coreIndexPhpExistsInDir('dir');
         $this->assertTrue($result);
     }
 }
