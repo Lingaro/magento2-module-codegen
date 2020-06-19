@@ -20,6 +20,9 @@ class StringFactory implements FactoryInterface
         if (isset($config['default'])) {
             $property->setDefaultValue($config['default']);
         }
+        if (isset($config['required'])) {
+            $property->setRequired($config['required']);
+        }
         return $property;
     }
 }

@@ -176,8 +176,8 @@ class Template
             $this->templatePropertyUtil->collectConstProperties(),
             $this->templatePropertyUtil->collectInputProperties($templateName)
         );
+        /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
-            /** @var PropertyInterface $property */
             $valueCollector = $this->propertyValueCollectorFactory->create($property);
             $propertyBag[$property->getName()] = $valueCollector->collectValue($property);
         }
