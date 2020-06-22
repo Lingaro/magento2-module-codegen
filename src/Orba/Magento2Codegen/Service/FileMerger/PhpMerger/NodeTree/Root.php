@@ -262,13 +262,13 @@ class Root
                 $name[] = (string)$extends;
             }
         }
-
-        if ($reflection->hasProperty('implements')) {
-            $implements = $node->implements;
-            foreach ($implements as $implement) {
-                $name[] = $implement;
-            }
-        }
+//
+//        if ($reflection->hasProperty('implements')) {
+//            $implements = $node->implements;
+//            foreach ($implements as $implement) {
+//                $name[] = $implement;
+//            }
+//        }
 
         if (empty($name)) {
             $name[] = self::MARKER_GROUP . $class;
