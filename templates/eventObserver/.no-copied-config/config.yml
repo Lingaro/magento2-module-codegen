@@ -1,8 +1,12 @@
 description: 'This template creates event observer for given event code with needed files: events.xml and Observer class.'
 properties:
   scope:
-    type: string
-    description: Scope of the observer (global, frontend, adminhtml)
+    type: choice
+    options:
+      - global
+      - frontend
+      - adminhtml
+    description: Scope of the observer
   eventName:
     type: string
     description: Event code that is beeing listened

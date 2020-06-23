@@ -1,13 +1,14 @@
 "{{ entityName|pascal }} Form","{{ entityName|pascal }} Form"
 "Main Information","Main Information"
-"{{ item.name|pascal }}","{{ item.name|pascal }}"
 "Add New {{ entityName|pascal }}","Add New {{ entityName|pascal }}"
 "Delete","Delete"
 "Delete items","Delete items"
 "Are you sure you want to delete selected items?","Are you sure you want to delete selected items?"
 "Edit","Edit"
 "ID","ID"
+{% for item in fields %}
 "{{ item.name|pascal }}","{{ item.name|pascal }}"
+{% endfor %}
 "Back","Back"
 "Are you sure you want to do delete this entity?","Are you sure you want to do delete this entity?"
 "Save and Continue Edit","Save and Continue Edit"
