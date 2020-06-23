@@ -1,0 +1,32 @@
+description: "This template is used to create a custom js module.\n"
+afterGenerate: "Now you can add the custom logic to you'r new js module!\n"
+properties:
+    moduleType:
+        type: choice
+        options:
+            - clean
+            - widget
+        default: clean
+        description: "Choose you js module type\n
+        1. clean js module (view/<area>/web/js/myModule.js, view/<area>/requirejs-config.js) \n
+        2. jquery widget module (clean js module with jquery/ui widget creation inside) \n"
+    withBlock:
+        type: boolean
+        default: false
+        description: "Do you want to create Block class and template file with module initialization? \n
+        (will create Block/MyBlock.php and view/<area>/templates/myTemplate.phtml additionally)"
+    jsModuleName:
+        type: string
+        description: Name of the js module
+    area:
+        type: choice
+        options:
+            - frontend
+            - adminhtml
+        default: frontend
+        descrition: "Choose you'r module area"
+    widgetName:
+        type: string
+        description: Name of the jquery widget
+        depend:
+            moduleType: widget
