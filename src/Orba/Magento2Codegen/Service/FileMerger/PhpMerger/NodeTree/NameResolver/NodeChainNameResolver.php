@@ -21,6 +21,11 @@ class NodeChainNameResolver implements NameResolverInterface
         $serializedNode = $node->jsonSerialize();
         foreach ($serializedNode as $row) {
             if (is_array($row)) {
+                foreach($row as $element) {
+                    if($element instanceof Node) {
+                        $name .= $this->resolve($element);
+                    }
+                }
                 continue;
             }
             if (is_string($row)) {

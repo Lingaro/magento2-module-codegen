@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 use Exception;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
+use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTreeFactory;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver\NodeChainNameResolver;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
@@ -37,8 +38,8 @@ class PhpMergerTest extends TestCase
         $classMethodCleaner = new ClassMethodNodeCleaner(new NodeChainNameResolver());
         $nodeCleaner = new NodeCleaner($classMethodCleaner);
         $rootFactory = new RootFactory(new RelationFactory(), new Order(), $nodeCleaner);
-        $nodeTree = new NodeTree($rootFactory);
-        $this->phpMerger = new PhpMerger($nodeTree);
+        $nodeTreeFactory = new NodeTreeFactory($rootFactory);
+        $this->phpMerger = new PhpMerger($nodeTreeFactory);
     }
 
     public function testMergeThrowExceptionIfAnyLacksNamespace(): void
