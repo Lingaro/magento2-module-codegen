@@ -3,6 +3,7 @@
 namespace Namespace1;
 
 use Namespace1\Extends1;
+use Namespace1\Interface2;
 use Namespace3\Interface1;
 class Class1 extends Extends1 implements Interface2, Interface1
 {
