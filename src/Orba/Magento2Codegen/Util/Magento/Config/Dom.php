@@ -291,7 +291,7 @@ class Dom
                 $constraints[] = "@{$attribute}='{$value}'";
             }
             $path .= '[' . implode(' and ', $constraints) . ']';
-        } elseif ($idAttribute && ($value = $node->getAttribute($idAttribute))) {
+        } elseif ($idAttribute && (strlen($value = $node->getAttribute($idAttribute)) > 0)) {
             $path .= "[@{$idAttribute}='{$value}']";
         }
         return $path;
@@ -315,7 +315,8 @@ class Dom
         if ($matchedNodes->length > 1) {
             throw new \RuntimeException(sprintf(
                 "More than one node matching the query: %s, Xml is: %s",
-                [$nodePath, $this->dom->saveXML()]
+                $nodePath,
+                $this->dom->saveXML()
             ));
         } elseif ($matchedNodes->length == 1) {
             $node = $matchedNodes->item(0);

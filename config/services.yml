@@ -116,6 +116,44 @@ services:
       -
         - addMerger
         -
+          - '/\/view\/.*\/ui_component\/.*_form\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/form/argument(/item)*': 'name'
+              '/form/dataSource': 'name'
+              '/form/dataSource/argument(/item)*': 'name'
+              '/form/dataSource/argument/argument(/item)*': 'name'
+              '/form/fieldset': 'name'
+              '/form/fieldset/argument(/item)*': 'name'
+              '/form/fieldset/field': 'name'
+              '/form/fieldset/field/argument(/item)*': 'name'
+            typeAttributeName: 'xsi:type'
+      -
+        - addMerger
+        -
+            - '/\/view\/.*\/ui_component\/.*_listing\.xml$/'
+            - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+            -
+              idAttributes:
+                '/listing/argument(/item)*': 'name'
+                '/listing/dataSource': 'name'
+                '/listing/dataSource/argument(/item)*': 'name'
+                '/listing/dataSource/argument/argument(/item)*': 'name'
+                '/listing/container': 'name'
+                '/listing/container/argument(/item)*': 'name'
+                '/listing/container/(bookmark|component|filterSearch|filters|massaction|paging)': 'name'
+                '/listing/container/(bookmark|component|filterSearch|filters|massaction|paging)/argument(/item)*': 'name'
+                '/listing/container/massaction/action': 'name'
+                '/listing/container/massaction/action/argument(/item)*': 'name'
+                '/listing/columns': 'name'
+                '/listing/columns/argument(/item)*': 'name'
+                '/listing/columns/(selectionsColumn|column|actionsColumn)': 'name'
+                '/listing/columns/(selectionsColumn|column|actionsColumn)/argument(/item)*': 'name'
+              typeAttributeName: 'xsi:type'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
       -
