@@ -40,6 +40,19 @@ cp vendor/orba/magento2-codegen/config/codegen.yml.dist vendor/orba/magento2-cod
 
 and edit default values.
 
+You may add your own template directory by including the following in your `codegen.yml`: 
+
+```
+templateDirectories:
+  - { path: "vendor/orba/codegen/../../../template_folder" }
+```
+
+Template folder `path` must be relative to package directory.
+You may include multiple template directories.
+
+To overwrite a core template just copy a core template
+to your template directory and make changes as necessary.
+
 ## Usage
 
 1. List all templates:
