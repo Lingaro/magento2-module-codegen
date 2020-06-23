@@ -12,7 +12,6 @@ use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Util\PropertyBag;
-use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * Class Template
@@ -111,7 +110,6 @@ class Template
         if (!$this->templateFile->exists($templateName)) {
             throw new InvalidArgumentException(sprintf('Template "%s" does not exists.', $templateName));
         }
-
         return true;
     }
 
@@ -120,15 +118,15 @@ class Template
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function checkTemplate(string $templateName): bool
+    public function validateAbstractTemplateGeneration(string $templateName): bool
     {
         if ($this->templateFile->getIsAbstract($templateName)) {
-            throw new InvalidArgumentException('Template "%s" is abstract.',$templateName);
+            throw new InvalidArgumentException(
+                sprintf('Template "%s" is abstract and can be generated only as a dependency.', $templateName)
+            );
         }
-
         return true;
     }
-
 
     /**
      * @param string $templateName
