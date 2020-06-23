@@ -24,6 +24,6 @@ class Root
 
     public function isCurrentDirMagentoRoot(): bool
     {
-        return $this->detector->coreIndexPhpExistsInDir($this->templateCommandUtil->getRootDir());
+        return $this->detector->rootEtcFileExistsInDir($this->templateCommandUtil->getRootDir());
     }
 }

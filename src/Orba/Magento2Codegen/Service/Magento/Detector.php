@@ -8,8 +8,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class Detector
 {
     const MODULE_CONFIG_FILEPATH = 'etc/module.xml';
-    const ROOT_MAGENTO_TEST_FILE_NAME = 'index.php';
-    const ROOT_MAGENTO_TEST_FILE_STRING = '$app = $bootstrap->createApplication(\Magento\Framework\App\Http::class);';
+    const ROOT_MAGENTO_TEST_FILEPATH = 'app/etc/NonComposerComponentRegistration.php';
 
     /**
      * @var Filesystem
@@ -34,15 +33,10 @@ class Detector
         );
     }
 
-    public function coreIndexPhpExistsInDir(string $dir): bool
+    public function rootEtcFileExistsInDir(string $dir): bool
     {
-        $indexPhpAbsolutePath = $this->filepathUtil->getAbsolutePath(self::ROOT_MAGENTO_TEST_FILE_NAME, $dir);
-        if (!$this->filesystem->exists($indexPhpAbsolutePath)) {
-            return false;
-        }
-        return strpos(
-            $this->filepathUtil->getContent($indexPhpAbsolutePath),
-            self::ROOT_MAGENTO_TEST_FILE_STRING
-            ) !== false;
+        return $this->filesystem->exists(
+            $this->filepathUtil->getAbsolutePath(self::ROOT_MAGENTO_TEST_FILEPATH, $dir)
+        );
     }
 }
