@@ -13,10 +13,16 @@ class Config implements ArrayAccess
 {
     private $config;
 
-    public function __construct(Processor $configProcessor, Parser $yamlParser)
-    {
+    public function __construct(
+        Processor $configProcessor,
+        Parser $yamlParser
+    ) {
         try {
-            $this->setConfig($configProcessor, $yamlParser, '/config/codegen.yml');
+            $configPath = '/config/codegen.yml';
+            if ($magentoPath = $this->getMagentoPath()) {
+                $configPath = $magentoPath;
+            }
+            $this->setConfig($configProcessor, $yamlParser, $configPath);
         } catch (ParseException $e) {
             $this->setConfig($configProcessor, $yamlParser, '/config/codegen.yml.dist');
         }
@@ -48,5 +54,18 @@ class Config implements ArrayAccess
             new Configuration(),
             [$yamlParser->parseFile(BP . $filePath)]
         );
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getMagentoPath(): ?string
+    {
+        $path = '/../../../codegen.yml';
+        $absolutePath = BP . $path;
+        if (file_exists($absolutePath)) {
+            return $path;
+        }
+        return null;
     }
 }
