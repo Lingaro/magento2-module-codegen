@@ -6,7 +6,6 @@ use ArrayAccess;
 use Orba\Magento2Codegen\Configuration;
 use RuntimeException;
 use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 
 class Config implements ArrayAccess
@@ -17,15 +16,7 @@ class Config implements ArrayAccess
         Processor $configProcessor,
         Parser $yamlParser
     ) {
-        try {
-            $configPath = '/config/codegen.yml';
-            if ($magentoPath = $this->getMagentoPath()) {
-                $configPath = $magentoPath;
-            }
-            $this->setConfig($configProcessor, $yamlParser, $configPath);
-        } catch (ParseException $e) {
-            $this->setConfig($configProcessor, $yamlParser, '/config/codegen.yml.dist');
-        }
+        $this->setConfig($configProcessor, $yamlParser, $this->getConfigPath());
     }
 
     public function offsetExists($offset): bool
@@ -56,15 +47,21 @@ class Config implements ArrayAccess
         );
     }
 
-    /**
-     * @return string|null
-     */
-    private function getMagentoPath(): ?string
+    private function getConfigPath(): string
     {
-        $path = '/../../../codegen.yml';
-        $absolutePath = BP . $path;
-        if (file_exists($absolutePath)) {
-            return $path;
+        $result = '/config/codegen.yml.dist';
+        if ($path = $this->getPath('/../../../codegen.yml')) {
+            $result = $path;
+        } elseif ($path = $this->getPath('/config/codegen.yml')) {
+            $result = $path;
+        }
+        return $result;
+    }
+
+    private function getPath(string $relativePath): ?string
+    {
+        if (file_exists(BP . $relativePath)) {
+            return $relativePath;
         }
         return null;
     }
