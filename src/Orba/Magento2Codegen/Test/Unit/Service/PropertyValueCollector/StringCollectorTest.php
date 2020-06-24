@@ -59,7 +59,7 @@ class StringCollectorTest extends TestCase
     public function testCollectValueReturnsValueIfPropertyIsRequired()
     {
         $stringPropertyMock = $this->getMockBuilder(StringProperty::class)->disableOriginalConstructor()->getMock();
-        $stringPropertyMock->expects($this->once())->method('getRequired')->willReturn(true);
+        $stringPropertyMock->expects($this->any())->method('getRequired')->willReturn(true);
         /** @var $subject Question */
         $this->ioInstanceMock->expects($this->once())->method('askQuestion')
             ->with($this->callback(function ($subject) {
