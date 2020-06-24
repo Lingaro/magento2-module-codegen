@@ -291,7 +291,8 @@ class Dom
                 $constraints[] = "@{$attribute}='{$value}'";
             }
             $path .= '[' . implode(' and ', $constraints) . ']';
-        } elseif ($idAttribute && (strlen($value = $node->getAttribute($idAttribute)) > 0)) {
+        } elseif ($idAttribute && (strlen($node->getAttribute($idAttribute)) > 0)) {
+            $value = $node->getAttribute($idAttribute);
             $path .= "[@{$idAttribute}='{$value}']";
         }
         return $path;
