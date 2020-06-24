@@ -40,7 +40,8 @@ class ClassMethodNodeCleaner implements NodeCleanerInterface
     {
         $result = [];
         foreach ($nodes as $key => $node) {
-            $result[$this->nameResolver->resolve($node)] = $node;
+            $name = $this->nameResolver->resolve($node);
+            $result[$name] = $node;
         }
         return $result;
     }
