@@ -8,8 +8,8 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/crontab.xsd">
-    <group id="{{ groupName ?? 'default' }}">
-        <job name="{{ jobName|lower }}" instance="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Cron\{{ jobName|pascal }}" method="{{ methodName|lower }}">
+    <group id="{{ newGroupName ? newGroupName|snake : groupName }}">
+        <job name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ jobName|snake }}" instance="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Cron\{{ jobName|pascal }}" method="execute">
             <schedule>{{ scheduleMinute }} {{ scheduleHour }} {{ scheduleDayOfMonth }} {{ scheduleMonth }} {{ scheduleYear }}</schedule>
         </job>
     </group>
