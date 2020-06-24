@@ -190,9 +190,8 @@ class Template
             $this->templatePropertyUtil->collectConstProperties(),
             $this->templatePropertyUtil->collectInputProperties($templateName)
         );
+        /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
-            /** @var PropertyInterface $property */
-
             if($property->getDepend()) {
                 foreach ($property->getDepend() as $propertyKey => $propertyValue) {
                     if(!isset($propertyBag[$propertyKey]) || $propertyBag[$propertyKey] != $propertyValue) {

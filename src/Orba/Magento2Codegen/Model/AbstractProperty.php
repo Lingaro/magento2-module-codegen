@@ -20,6 +20,11 @@ abstract class AbstractProperty implements PropertyInterface
     protected $depend;
 
     /**
+     * @var bool
+     */
+    protected $required = false;
+
+    /**
      * @param string $value
      * @return $this
      */
@@ -62,5 +67,23 @@ abstract class AbstractProperty implements PropertyInterface
     public function getDepend(): ?array
     {
         return $this->depend;
+    }
+
+    /**
+     * @param string $value
+     * @return $this|PropertyInterface
+     */
+    public function setRequired(string $value): PropertyInterface
+    {
+        $this->required = (bool)$value;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRequired(): bool
+    {
+        return $this->required;
     }
 }

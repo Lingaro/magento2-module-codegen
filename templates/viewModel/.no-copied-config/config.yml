@@ -11,4 +11,5 @@ afterGenerate: "1. Add block in your layout xml file:\n
 properties:
   viewModelName:
     type: string
+    required: true
     description: A short name describing view model
