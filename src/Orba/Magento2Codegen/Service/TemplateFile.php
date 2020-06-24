@@ -33,6 +33,9 @@ class TemplateFile
      */
     private $templateProcessor;
 
+    /** @var bool */
+    private $isAbstract;
+
     public function __construct(
         TemplateDir $templateDir,
         FinderFactory $finderFactory,
@@ -202,5 +205,10 @@ class TemplateFile
             throw new InvalidArgumentException(sprintf('Invalid config file: %s', $file->getPath()));
         }
         return $parsedConfig;
+    }
+
+    public function getIsAbstract(string $templateName): bool
+    {
+        return (bool) $this->getRootConfig($templateName, 'isAbstract');
     }
 }

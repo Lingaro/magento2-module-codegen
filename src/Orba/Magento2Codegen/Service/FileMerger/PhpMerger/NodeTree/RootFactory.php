@@ -14,15 +14,24 @@ class RootFactory
     /** @var Order */
     private $_order;
 
+    /** @var NodeCleaner */
+    private $_nodeCleaner;
+
     /**
      * RootFactory constructor.
      * @param RelationFactory $relationFactory
      * @param Order $order
+     * @param NodeCleaner $nodeCleaner
      */
-    public function __construct(RelationFactory $relationFactory, Order $order)
+    public function __construct(
+        RelationFactory $relationFactory,
+        Order $order,
+        NodeCleaner $nodeCleaner
+    )
     {
         $this->_relationFactory = $relationFactory;
         $this->_order = $order;
+        $this->_nodeCleaner = $nodeCleaner;
     }
 
     /**
@@ -35,6 +44,7 @@ class RootFactory
             $this,
             $this->_relationFactory,
             $this->_order,
+            $this->_nodeCleaner,
             $name
         );
     }

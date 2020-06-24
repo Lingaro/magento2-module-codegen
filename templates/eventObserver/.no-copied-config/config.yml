@@ -9,7 +9,9 @@ properties:
     description: Scope of the observer
   eventName:
     type: string
+    required: true
     description: Event code that is beeing listened
   observerName:
     type: string
+    required: true
     description: A short name describing observer

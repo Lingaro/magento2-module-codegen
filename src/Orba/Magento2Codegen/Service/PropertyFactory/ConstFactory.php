@@ -16,6 +16,10 @@ class ConstFactory implements FactoryInterface
         if (!isset($config['value'])) {
             throw new InvalidArgumentException('Value must be set for const property.');
         }
-        return (new ConstProperty())->setName($name)->setValue($config['value']);
+        $property = (new ConstProperty())->setName($name)->setValue($config['value']);
+        if (isset($config['depend'])) {
+            $property->setDepend($config['depend']);
+        }
+        return $property;
     }
 }
