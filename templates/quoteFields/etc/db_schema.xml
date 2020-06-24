@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote">
+{% for field in fields %}
+        <column {{ columnDefinition(field.databaseType, field.length, field.unsigned, field.nullable, field.precision, field.scale)|raw }} name="{{ field.name|snake }}" comment="{{ field.name|pascal }}"/>
+{% endfor %}
+    </table>
+    <table name="sales_order">
+{% for field in fields %}
+        <column {{ columnDefinition(field.databaseType, field.length, field.unsigned, field.nullable, field.precision, field.scale)|raw }} name="{{ field.name|snake }}" comment="{{ field.name|pascal }}"/>
+{% endfor %}
+    </table>
+</schema>

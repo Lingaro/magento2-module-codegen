@@ -1,0 +1,12 @@
+image: php:7.3-cli
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - composer
+        script:
+          - apt-get update && apt-get install -y unzip git
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - composer install
+          - vendor/bin/phpunit --testsuite Codegen_Unit_Tests --configuration src/Orba/Magento2Codegen/Test/phpunit_unit.xml --do-not-cache-result
