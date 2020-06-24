@@ -26,6 +26,13 @@ class Class1 extends Extends1 implements Interface2
         $this->someParam2 = new SomeParam($map);
     }
 
+    public function existingDataPoolFunction(): self
+    {
+        $dataPool = $this->getDataPool();
+        $dataPool->setData('param2', $this->someParam2);
+        return $this;
+    }
+
     public function getImportClass2(): ImportClass2
     {
         return $this->importClass2;

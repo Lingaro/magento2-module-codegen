@@ -102,6 +102,15 @@ class PhpMergerTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testMergeMethodWithSimilarObjectFunctionCalls(): void
+    {
+        $oldContent = $this->filepathUtil->getContent(BP . '/php/mergeMethodWithSimilarObjectFunctionCalls/oldContent.php');
+        $newContent = $this->filepathUtil->getContent(BP . '/php/mergeMethodWithSimilarObjectFunctionCalls/newContent.php');
+        $expected = $this->filepathUtil->getContent(BP . '/php/mergeMethodWithSimilarObjectFunctionCalls/result.php');
+        $result = $this->phpMerger->merge($oldContent, $newContent);
+        $this->assertSame($expected, $result);
+    }
+
     public function testMergeComplexCase(): void
     {
         $oldContent = $this->filepathUtil->getContent(BP . '/php/mergeComplexCase/oldContent.php');
