@@ -2,7 +2,9 @@ description: This Template creates a crud module using uiComponents for Grid and
 properties:
   commandName:
     type: string
+    required: true
     description: A short name describing command. It will be used insdie "bin/magento".
   commandDescription:
     type: string
+    required: true
     description: A short description explaining feature behind generated command.

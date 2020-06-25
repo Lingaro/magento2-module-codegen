@@ -57,7 +57,7 @@ class TemplateTest extends TestCase
     private $templatePropertyUtilMock;
 
     /**
-     * @var MockObject
+     * @var MockObject|CollectorFactory
      */
     private $propertyValueCollectorFactoryMock;
 
@@ -132,6 +132,20 @@ class TemplateTest extends TestCase
     {
         $this->templateFileMock->expects($this->once())->method('exists')->willReturn(true);
         $result = $this->template->validateTemplate('template');
+        $this->assertTrue($result);
+    }
+
+    public function testValidateAbstractTemplateGenerationThrowExceptionIfTemplateIsAbstract(): void
+    {
+        $this->templateFileMock->expects($this->once())->method('getIsAbstract')->willReturn(true);
+        $this->expectException(InvalidArgumentException::class);
+        $this->template->validateAbstractTemplateGeneration('template');
+    }
+
+    public function testValidateAbstractTemplateGenerationReturnTrueIfTemplateIsNoAbstract(): void
+    {
+        $this->templateFileMock->expects($this->once())->method('getIsAbstract')->willReturn(false);
+        $result = $this->template->validateAbstractTemplateGeneration('template');
         $this->assertTrue($result);
     }
 

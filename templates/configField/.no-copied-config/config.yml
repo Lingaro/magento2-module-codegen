@@ -2,19 +2,23 @@ description: This template is used to create new config field for already existe
 properties:
   sectionId:
     type: string
+    required: true
     description: ID of config section
   groupId:
     type: string
+    required: true
     description: ID of config group
   id:
     type: string
+    required: true
     description: Field ID
   label:
     type: string
+    required: true
     description: Field label
   comment:
     type: string
-    description: Field comment (optional)
+    description: Field comment
   type:
     type: choice
     options:
@@ -69,13 +73,13 @@ properties:
     default: true
   sourceModel:
     type: string
-    description: Source Model of field (optional)
+    description: Source Model of field
   validate:
     type: string
-    description: Validation classes separated with space (optional)
+    description: Validation classes separated with space
   dependencyPath:
     type: string
-    description: Path to the config field on which this field depends (optional)
+    description: Path to the config field on which this field depends
   dependencyValue:
     type: string
     description: Value of the config field on which this field depends (fill in only if the fieldDependencyPath property was filled in)

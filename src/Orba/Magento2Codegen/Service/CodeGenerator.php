@@ -68,6 +68,10 @@ class CodeGenerator
             );
             $fileContent = $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag);
             if (!$dryRun) {
+                if(empty(trim($fileContent))) {
+                    $this->io->getInstance()->note(sprintf('File omitted because of no content: %s', $filePath));
+                    continue;
+                }
                 try {
                     if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
                         $merger = $this->fileMergerFactory->create($this->filepathUtil->getFilePath($filePath));

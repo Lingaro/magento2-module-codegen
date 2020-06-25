@@ -2,12 +2,15 @@ description: This template is used to create new group for already existent sect
 properties:
   id:
     type: string
+    required: true
     description: Group ID
   sectionId:
     type: string
+    required: true
     description: Section ID
   label:
     type: string
+    required: true
     description: Group label
   sortOrder:
     type: string

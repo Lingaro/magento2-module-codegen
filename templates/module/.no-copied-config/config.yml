@@ -2,8 +2,10 @@ description: 'This template is used to create basic configuration needed to star
 properties:
   vendorName:
     type: string
+    required: true
     default: Orba
     description: Typically a company name
   moduleName:
     type: string
+    required: true
     description: A short name describing module
