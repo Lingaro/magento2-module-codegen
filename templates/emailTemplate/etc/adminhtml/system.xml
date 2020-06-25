@@ -7,23 +7,34 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="{{ notificationSectionId|snake }}">
-            <group id="{{ notificationGroupId|snake }}">
+        <section id="{{ configSection|snake }}">
+            <group id="{{ configGroup|snake }}">
                 <field
-                    id="{{ notificationName|snake }}"
-                    translate="label{% if notificationComment %} comment{% endif %}"
+                    id="{{ name|snake }}_template"
+                    translate="label comment"
                     type="select"
-                    sortOrder="{{ notificationSortOrder ? notificationSortOrder : 0 }}"
-                    showInDefault="{{ notificationShowInDefault ? 1 : 0 }}"
-                    showInWebsite="{{ notificationShowInWebsite ? 1 : 0 }}"
-                    showInStore="{{ notificationShowInStore ? 1 : 0 }}"
-                    canRestore="{{ notificationCanRestore ? 1 : 0 }}"
+                    sortOrder="10"
+                    showInDefault="1"
+                    showInWebsite="{{ scope == 'frontend' ? '1' : '0' }}"
+                    showInStore="{{ scope == 'frontend' ? '1' : '0' }}"
+                    canRestore="1"
                 >
-                    <label>{{ notificationLabel }}</label>
-{% if notificationComment %}
-                    <comment>{{ notificationComment }}</comment>
-{% endif %}
+                    <label>{{ name }} Template</label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field
+                    id="{{ name|snake }}_identity"
+                    translate="label"
+                    type="select"
+                    sortOrder="11"
+                    showInDefault="1"
+                    showInWebsite="{{ scope == 'frontend' ? '1' : '0' }}"
+                    showInStore="{{ scope == 'frontend' ? '1' : '0' }}"
+                    canRestore="1"
+                >
+                    <label>{{ name }} Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
                 </field>
             </group>
         </section>

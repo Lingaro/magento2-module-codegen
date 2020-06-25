@@ -4,13 +4,17 @@
  * @author    {{ commentsUserEmail }}
  */
 -->
-<!--@subject {{ '{{' }}trans '{{ notificationSubject|raw }}'}} @-->
+<!--@subject {{ '{{' }}trans '{{ subject|raw }}'}} @-->
+{% if scope == 'frontend' %}
 {{ '{{' }}template config_path="design/email/header_template"}}
+{% endif %}
 
-<div class="{{ notificationName|kebab }}-email-container">
+<div class="{{ name|kebab }}-email-container">
     <!--
         Content goes here
     -->
 </div>
 
+{% if scope == 'frontend' %}
 {{ '{{' }}template config_path="design/email/footer_template"}}
+{% endif %}

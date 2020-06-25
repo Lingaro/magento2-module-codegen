@@ -14,8 +14,9 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Model\Store;
 
-class {{ notificationName|pascal }}
+class {{ name|pascal }}
 {
     /** @var TransportBuilder */
     private $transportBuilder;
@@ -30,7 +31,7 @@ class {{ notificationName|pascal }}
     private $senderResolver;
 
     /**
-     * {{ notificationName|pascal }} constructor.
+     * {{ name|pascal }} constructor.
      * @param TransportBuilder $transportBuilder
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
@@ -51,28 +52,40 @@ class {{ notificationName|pascal }}
     /**
      * @param string|array $recipientEmail
      * @param array $templateParams
-     * @param null $storeId
+{% if scope == 'frontend' %}
+     * @param int|null $storeId
+{% endif %}
      * @throws LocalizedException
      * @throws MailException
      * @throws NoSuchEntityException
      */
     public function send(
         $recipientEmail,
-        array $templateParams = [],
-        int $storeId = null
-    ): void {
-        $template = '{{ notificationSectionId|snake }}/{{ notificationGroupId|snake }}/{{ notificationName|snake }}';
-        $templateParams ['store'] = $this->storeManager->getStore($storeId);
+        array $templateParams = []{% if scope == 'frontend' %},
+        int $storeId = null{% endif %}
 
-        $templateId = $this->scopeConfig->getValue($template, 'store', $storeId);
+    ): void
+    {
+        $templateXmlPath = '{{ configSection|snake }}/{{ configGroup|snake }}/{{ name|snake }}_template';
+        $identityXmlPath = '{{ configSection|snake }}/{{ configGroup|snake }}/{{ name|snake }}_identity';
+
+{% if scope == 'frontend' %}
+        $store = $this->storeManager->getStore($storeId);
+        $storeId = $store->getId();
+        $templateParams['store'] = $store;
+{% else %}
+        $storeId = Store::DEFAULT_STORE_ID;
+{% endif %}
+
+        $templateId = $this->scopeConfig->getValue($templateXmlPath, 'store', $storeId);
 
         $from = $this->senderResolver->resolve(
-            $this->scopeConfig->getValue('sales_email/order/identity', 'store', $storeId),
+            $this->scopeConfig->getValue($identityXmlPath, 'store', $storeId),
             $storeId
         );
 
         $this->transportBuilder->setTemplateIdentifier($templateId);
-        $this->transportBuilder->setTemplateOptions(['area' => 'frontend', 'store' => $storeId]);
+        $this->transportBuilder->setTemplateOptions(['area' => '{{ scope }}', 'store' => $storeId]);
         $this->transportBuilder->setTemplateVars($templateParams);
         $this->transportBuilder->setFromByScope($from);
         $this->transportBuilder->addTo($recipientEmail);
