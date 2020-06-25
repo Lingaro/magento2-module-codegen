@@ -29,9 +29,16 @@ abstract class AbstractInputCollector extends AbstractCollector
 
     protected function _collectValue(PropertyInterface $property)
     {
+        $blockContent = '';
+        if ($property->getRequired()) {
+            $blockContent .= '[<comment>REQUIRED</comment>] ';
+        }
         $description = $property->getDescription();
         if ($description) {
-            $this->io->getInstance()->block($description, $property->getName());
+            $blockContent .= $description;
+        }
+        if ($blockContent) {
+            $this->io->getInstance()->writeln("\n" . ' [' . $property->getName() . '] ' . $blockContent);
         }
         return $this->collectValueFromInput($property);
     }

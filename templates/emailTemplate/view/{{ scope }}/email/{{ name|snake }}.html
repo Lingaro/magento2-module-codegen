@@ -1,0 +1,20 @@
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<!--@subject {{ '{{' }}trans '{{ subject|raw }}'}} @-->
+{% if scope == 'frontend' %}
+{{ '{{' }}template config_path="design/email/header_template"}}
+{% endif %}
+
+<div class="{{ name|kebab }}-email-container">
+    <!--
+        Content goes here
+    -->
+</div>
+
+{% if scope == 'frontend' %}
+{{ '{{' }}template config_path="design/email/footer_template"}}
+{% endif %}

@@ -74,8 +74,7 @@ class Template
         IO $io,
         TemplateProperty $templatePropertyUtil,
         CollectorFactory $propertyValueCollectorFactory
-    )
-    {
+    ) {
         $this->templateFile = $templateFile;
         $this->propertyBagFactory = $propertyBagFactory;
         $this->module = $module;
@@ -110,6 +109,21 @@ class Template
         }
         if (!$this->templateFile->exists($templateName)) {
             throw new InvalidArgumentException(sprintf('Template "%s" does not exists.', $templateName));
+        }
+        return true;
+    }
+
+    /**
+     * @param string $templateName
+     * @return bool
+     * @throws InvalidArgumentException
+     */
+    public function validateAbstractTemplateGeneration(string $templateName): bool
+    {
+        if ($this->templateFile->getIsAbstract($templateName)) {
+            throw new InvalidArgumentException(
+                sprintf('Template "%s" is abstract and can be generated only as a dependency.', $templateName)
+            );
         }
         return true;
     }
@@ -176,8 +190,16 @@ class Template
             $this->templatePropertyUtil->collectConstProperties(),
             $this->templatePropertyUtil->collectInputProperties($templateName)
         );
+        /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
-            /** @var PropertyInterface $property */
+            if($property->getDepend()) {
+                foreach ($property->getDepend() as $propertyKey => $propertyValue) {
+                    if(!isset($propertyBag[$propertyKey]) || $propertyBag[$propertyKey] != $propertyValue) {
+                        // we can set default value if we want to
+                        continue 2;
+                    }
+                }
+            }
             $valueCollector = $this->propertyValueCollectorFactory->create($property);
             $propertyBag[$property->getName()] = $valueCollector->collectValue($property);
         }

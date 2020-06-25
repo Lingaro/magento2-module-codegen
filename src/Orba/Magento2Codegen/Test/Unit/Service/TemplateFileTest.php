@@ -3,6 +3,8 @@
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Service\Config;
+use Orba\Magento2Codegen\Service\DirectoryIteratorFactory;
 use Orba\Magento2Codegen\Service\FinderFactory;
 use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Service\TemplateFile;
@@ -10,6 +12,7 @@ use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -31,7 +34,11 @@ class TemplateFileTest extends TestCase
         $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
             ->getMockForAbstractClass();
         $this->templateFile = new TemplateFile(
-            new TemplateDir(new Filesystem()),
+            new TemplateDir(
+                new Config(new Processor(), new Parser()),
+                new DirectoryIteratorFactory(),
+                new Filesystem()
+            ),
             new FinderFactory(),
             new Parser(),
             $this->templateProcessorMock

@@ -2,9 +2,11 @@ description: This template is used to create new tab for store configuration.
 properties:
   id:
     type: string
+    required: true
     description: Tab ID
   label:
     type: string
+    required: true
     description: Tab label
   sortOrder:
     type: string

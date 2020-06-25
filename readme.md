@@ -32,13 +32,28 @@ If you don't want to attach this app to your Magento, you can also simply clone 
 
 ## Configuration
 
-Create your custom config file (not needed for Orba developers):
+Create your custom config file (not needed for Orba developers) either in package `config` directory or in your Magento root directory:
 
 ```
 cp vendor/orba/magento2-codegen/config/codegen.yml.dist vendor/orba/magento2-codegen/config/codegen.yml
+or
+cp vendor/orba/magento2-codegen/config/codegen.yml.dist codegen.yml
 ```
 
 and edit default values.
+
+You may add your own template directory by including the following in your `codegen.yml`: 
+
+```
+templateDirectories:
+  - { path: "path/to/templates" }
+```
+
+Template folder `path` must be relative to package directory, ex. if you want to add private templates to your Magento `dev` folder, you should use `../../../dev/codegen_templates` path.
+
+You may include multiple template directories.
+
+To overwrite a core template just copy a core template to your template directory and make changes as necessary.
 
 ## Usage
 
