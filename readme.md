@@ -32,7 +32,7 @@ If you don't want to attach this app to your Magento, you can also simply clone 
 
 ## Configuration
 
-Create your custom config file (not needed for Orba developers) either in package `config` or project files next to `vendor` directory:
+Create your custom config file (not needed for Orba developers) either in package `config` directory or in your Magento root directory:
 
 ```
 cp vendor/orba/magento2-codegen/config/codegen.yml.dist vendor/orba/magento2-codegen/config/codegen.yml
