@@ -2,8 +2,10 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
+use Exception;
 use Orba\Magento2Codegen\Service\FileMerger\JsonMerger;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use UnexpectedValueException;
 
 class JsonMergerTest extends TestCase
 {
@@ -23,7 +25,7 @@ class JsonMergerTest extends TestCase
         $newContent = json_encode([
             'valid' => 'json'
         ]);
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->jsonMerger->merge($oldContent, $newContent);
     }
 
@@ -34,22 +36,98 @@ class JsonMergerTest extends TestCase
             'a1' => 'aa0',
             'a2' => ['aa0', 'aa1'],
             'a3' => 'aa0',
-            'a4' => 'aa0',
-            'a5' => 'aa0',
-            'a6' => ['k1' => ['aa0', 'aa1'], 'k2' => ['aa0', 'aa1']]
         ];
         $newArray = [
             'b0' => 'bb0',
             'b1' => 'bb1',
             'a2' => ['aa0', 'bb0', 'bb1'],
             'a3' => 'aa0',
-            'a4' => 'aa1',
-            'a5' => ['aa1'],
-            'a6' => ['k3' => ['aa0', 'aa1'], 'k1' => ['ax0'], 'k4' => 'bx0']
         ];
+        $this->getMergeResultAndAssertIntegrity($oldArray, $newArray);
+    }
+
+    public function testMergeTwoArraysIntoOne(): void
+    {
+        $oldArray = [
+            'a0' => ['aa0', 'aa1'],
+        ];
+        $newArray = [
+            'a0' => ['aa0', 'bb0', 'bb1']
+        ];
+        $resultArray = $this->getMergeResultAndAssertIntegrity($oldArray, $newArray);
+        $this->assertArrayHasKey('a0', $resultArray);
+        $this->assertCount(4, $resultArray['a0']);
+        $this->assertEquals(['aa0', 'aa1', 'bb0', 'bb1'], $resultArray['a0']);
+    }
+
+    public function testMergeTwoIdenticalElementsWithNoChanges(): void
+    {
+        $oldArray = [
+            'a0' => 'aa0'
+        ];
+        $newArray = [
+            'a0' => 'aa0'
+        ];
+        $resultArray = $this->getMergeResultAndAssertIntegrity($oldArray, $newArray);
+        $this->assertArrayHasKey('a0', $resultArray);
+        $this->assertIsNotArray($resultArray['a0']);
+        $this->assertEquals('aa0', $resultArray['a0']);
+    }
+
+    public function testMergeTwoElementsWithValueReplaced(): void
+    {
+        $oldArray = [
+            'a0' => 'aa0',
+        ];
+        $newArray = [
+            'a0' => 'aa1',
+        ];
+        $resultArray = $this->getMergeResultAndAssertIntegrity($oldArray, $newArray);
+        $this->assertArrayHasKey('a0', $resultArray);
+        $this->assertIsNotArray($resultArray['a0']);
+        $this->assertEquals('aa1', $resultArray['a0']);
+    }
+
+    public function testMergeStringMovedToArrayThrowException(): void
+    {
+        $oldArray = [
+            'a0' => 'aa0',
+        ];
+        $newArray = [
+            'a0' => ['aa1'],
+        ];
+        $this->expectException(UnexpectedValueException::class);
+        $this->jsonMerger->merge(json_encode($oldArray), json_encode($newArray));
+    }
+
+    public function testMergeTwoArraysOfCustomKeysAndArrays(): void
+    {
+        $oldArray = [
+            'a0' => ['k1' => ['aa0', 'aa1'], 'k2' => ['aa0', 'aa1']]
+        ];
+        $newArray = [
+            'a0' => ['k3' => ['aa0', 'aa1'], 'k1' => ['ax0'], 'k4' => 'bx0']
+        ];
+        $resultArray = $this->getMergeResultAndAssertIntegrity($oldArray, $newArray);
+        $this->assertArrayHasKey('a0', $resultArray);
+        $this->assertIsArray($resultArray['a0']);
+        $this->assertEquals(['k1', 'k2', 'k3', 'k4'], array_keys($resultArray['a0']));
+        $this->assertCount(3, $resultArray['a0']['k1']);
+        $this->assertTrue(in_array('ax0', $resultArray['a0']['k1']), true);
+        $this->assertIsNotArray($resultArray['a0']['k4']);
+        $this->assertEquals('bx0', $resultArray['a0']['k4']);
+    }
+
+    /**
+     * @param array $oldArray
+     * @param array $newArray
+     * @return array
+     * @throws Exception
+     */
+    private function getMergeResultAndAssertIntegrity(array $oldArray, array $newArray): array
+    {
         $resultJson = $this->jsonMerger->merge(json_encode($oldArray), json_encode($newArray));
         $resultArray = json_decode($resultJson, true);
-        // assert general array integrity
         $this->assertTrue(json_last_error() === JSON_ERROR_NONE);
         $this->assertIsArray($resultArray);
         $entryKeys = array_keys(array_merge($oldArray, $newArray));
@@ -58,29 +136,6 @@ class JsonMergerTest extends TestCase
             $entryKeys,
             $resultKeys
         );
-        // assert arrays merged into one
-        $this->assertArrayHasKey('a2', $resultArray);
-        $this->assertCount(4, $resultArray['a2']);
-        $this->assertEquals(['aa0', 'aa1', 'bb0', 'bb1'], $resultArray['a2']);
-        // assert identical not merged
-        $this->assertArrayHasKey('a3', $resultArray);
-        $this->assertIsNotArray($resultArray['a3']);
-        $this->assertEquals('aa0', $resultArray['a3']);
-        // assert value replaced
-        $this->assertArrayHasKey('a4', $resultArray);
-        $this->assertIsNotArray($resultArray['a4']);
-        $this->assertEquals('aa1', $resultArray['a4']);
-        // assert string moved to array
-        $this->assertArrayHasKey('a5', $resultArray);
-        $this->assertIsArray($resultArray['a5']);
-        $this->assertEquals(['aa0', 'aa1'], $resultArray['a5']);
-        // assert custom key array of arrays merge
-        $this->assertArrayHasKey('a6', $resultArray);
-        $this->assertIsArray($resultArray['a6']);
-        $this->assertEquals(['k1', 'k2', 'k3', 'k4'], array_keys($resultArray['a6']));
-        $this->assertCount(3, $resultArray['a6']['k1']);
-        $this->assertTrue(in_array('ax0', $resultArray['a6']['k1']), true);
-        $this->assertIsNotArray($resultArray['a6']['k4']);
-        $this->assertEquals('bx0', $resultArray['a6']['k4']);
+        return $resultArray;
     }
 }

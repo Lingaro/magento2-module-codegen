@@ -21,7 +21,7 @@ class JsonMerger extends AbstractMerger implements MergerInterface
         $oldContent = $this->parse($oldContent);
         $newContent = $this->parse($newContent);
 
-        $content = $this->array_merge_recursive_distinct($oldContent, $newContent);
+        $content = $this->arrayMergeRecursiveDistinct($oldContent, $newContent);
         $content = json_encode($content, JSON_PRETTY_PRINT);
 
         return $content;
@@ -44,16 +44,19 @@ class JsonMerger extends AbstractMerger implements MergerInterface
     /**
      * @return array
      */
-    function array_merge_recursive_distinct(): array
+    private function arrayMergeRecursiveDistinct(): array
     {
         $arrays = func_get_args();
         $base = array_shift($arrays);
+        $canMergeBase = $canMergeAppend = true;
         if (!is_array($base)) {
             $base = empty($base) ? array() : array($base);
+            $canMergeBase = false;
         }
         foreach ($arrays as $append) {
             if (!is_array($append)) {
                 $append = array($append);
+                $canMergeAppend = false;
             }
             foreach ($append as $key => $value) {
                 if (!array_key_exists($key, $base) and !is_numeric($key)) {
@@ -61,9 +64,12 @@ class JsonMerger extends AbstractMerger implements MergerInterface
                     continue;
                 }
                 if (is_array($value) || is_array($base[$key])) {
-                    $base[$key] = $this->array_merge_recursive_distinct($base[$key], $append[$key]);
+                    $base[$key] = $this->arrayMergeRecursiveDistinct($base[$key], $append[$key]);
                 } else {
-                    if (is_numeric($key)) {
+                    if (!$canMergeBase || !$canMergeAppend) {
+                        throw new \UnexpectedValueException('Can\'t merge non array into array');
+                    }
+                    elseif (is_numeric($key)) {
                         if (!in_array($value, $base)) {
                             $base[] = $value;
                         }
