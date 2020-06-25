@@ -3,9 +3,10 @@
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
 use Exception;
+use UnexpectedValueException;
 
 /**
- * Class PhpMerger
+ * Class JsonMerger
  * @package Orba\Magento2Codegen\Service\FileMerger
  */
 class JsonMerger extends AbstractMerger implements MergerInterface
@@ -36,7 +37,7 @@ class JsonMerger extends AbstractMerger implements MergerInterface
     {
         $jsonArray = @json_decode($jsonString, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception("An error occured while parsing string " . json_last_error_msg());
+            throw new Exception("An error occurred while parsing string: " . json_last_error_msg());
         }
         return $jsonArray;
     }
@@ -67,7 +68,7 @@ class JsonMerger extends AbstractMerger implements MergerInterface
                     $base[$key] = $this->arrayMergeRecursiveDistinct($base[$key], $append[$key]);
                 } else {
                     if (!$canMergeBase || !$canMergeAppend) {
-                        throw new \UnexpectedValueException('Can\'t merge non array into array');
+                        throw new UnexpectedValueException('Can\'t merge non array into array');
                     }
                     elseif (is_numeric($key)) {
                         if (!in_array($value, $base)) {
