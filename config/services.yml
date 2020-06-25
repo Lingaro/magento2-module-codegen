@@ -193,6 +193,14 @@ services:
       -
         - addMerger
         -
+          - '/\/email_templates\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/template': 'id'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
       -

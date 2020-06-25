@@ -1,0 +1,32 @@
+description: "This template creates a system e-mail template with class for sending it and config for allowing admin to customize it."
+afterGenerate: "1. Put content for e-mail template in view/{{ scope }}/email/{{ name|snake }}.html
+    \n2. If needed, define custom styling of e-mail template in:\n
+    \napp/design/{{ scope }}/<Vendor>/<theme>/web/css/source/_email-extend.less\n
+    \n.{{ name|kebab }}-email-container {
+    \n    // your e-mail styles
+    \n}\n
+    \n3. If non-existent config section or group was used, you can use \"configSection\" and \"configGroup\" Codegen templates to create them.
+    \n4. Remember to translate your e-mail template content."
+properties:
+  scope:
+    type: choice
+    description: "Notification area"
+    options:
+      - frontend
+      - adminhtml
+  name:
+    type: string
+    required: true
+    description: "Notification name, ex. \"Orders report\""
+  subject:
+    type: string
+    required: true
+    description: "E-mail subject"
+  configSection:
+    type: string
+    required: true
+    description: "Config section ID, either existing or new one, ex. \"sales_email\""
+  configGroup:
+    type: string
+    required: true
+    description: "Config group ID, either existing or new one, ex. \"order\""
