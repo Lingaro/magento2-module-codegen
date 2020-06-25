@@ -72,7 +72,7 @@ class TemplateDir
         }
         foreach ($directories as $directory) {
             $path = str_replace(BP, '', $directory['path']);
-            $absolutePath = BP . '/' . trim($path, '/');
+            $absolutePath = BP . '/' . ltrim($path, '/');
             $directoryIterator = $this->directoryIteratorFactory->create($absolutePath);
             foreach ($directoryIterator as $dir) {
                 if ($dir->isDir()) {
