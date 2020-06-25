@@ -5,13 +5,13 @@ namespace Orba\Magento2Codegen\Service;
 class TemplateList
 {
     /**
-     * @var DirectoryIteratorFactory
+     * @var TemplateDir
      */
-    private $directoryIteratorFactory;
+    private $templateDir;
 
-    public function __construct(DirectoryIteratorFactory $directoryIteratorFactory)
+    public function __construct(TemplateDir $templateDir)
     {
-        $this->directoryIteratorFactory = $directoryIteratorFactory;
+        $this->templateDir = $templateDir;
     }
 
     /**
@@ -19,13 +19,7 @@ class TemplateList
      */
     public function getAll()
     {
-        $templates = [];
-        $directoryIterator = $this->directoryIteratorFactory->create(TemplateDir::DIR);
-        foreach ($directoryIterator as $dir) {
-            if ($dir->isDir()) {
-                $templates[] = $dir->getFilename();
-            }
-        }
+        $templates = $this->templateDir->getTemplateNames();
         sort($templates);
         return $templates;
     }

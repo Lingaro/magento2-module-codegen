@@ -20,6 +20,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('templateDirectories')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('path')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
         return $treeBuilder;
     }
