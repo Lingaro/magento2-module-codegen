@@ -44,14 +44,14 @@ You may add your own template directory by including the following in your `code
 
 ```
 templateDirectories:
-  - { path: "vendor/orba/codegen/../../../template_folder" }
+  - { path: "path/to/templates" }
 ```
 
-Template folder `path` must be relative to package directory.
+Template folder `path` must be relative to package directory, ex. if you want to add private templates to your Magento `dev` folder, you should use `../../../dev/codegen_templates` path.
+
 You may include multiple template directories.
 
-To overwrite a core template just copy a core template
-to your template directory and make changes as necessary.
+To overwrite a core template just copy a core template to your template directory and make changes as necessary.
 
 ## Usage
 
