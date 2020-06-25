@@ -8,7 +8,11 @@ class DirectoryIteratorFactory
 {
     public function create(string $dir): RecursiveDirectoryIterator
     {
-        $directoryIterator = new RecursiveDirectoryIterator($dir);
+        try {
+            $directoryIterator = new RecursiveDirectoryIterator($dir);
+        } catch (\UnexpectedValueException $e) {
+            throw new \UnexpectedValueException("Directory not found: " . $dir, 0, $e);
+        }
         $directoryIterator->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
         return $directoryIterator;
     }

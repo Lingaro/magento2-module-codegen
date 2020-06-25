@@ -6,38 +6,54 @@ Inspired by https://github.com/staempfli/magento2-code-generator
 
 In day-to-day Magento 2 development there are some common tasks which require development of repeatable code that is hard to simply copy-paste. The purpose of this app is to automatize creation of such code, so the developers may focus on business logic and thanks to that being much more efficient and happy. 
 
+## Supported Magento versions
+
+* 2.3.x
+
 ## Installation
 
-Recommended way to install this app is to use Composer. Right now there is no repository provided, so you need to perform the following steps:
+Recommended way to install this app is to add it as Magento's Composer dev dependency.
 
-1. Update composer.json manually with GIT repository:
-
-```
-"repositories":[
-    {
-        "type": "vcs",
-        "url": "git@bitbucket.org:orbainternalprojects/magento2-codegen.git"
-    }
-]
-```
-
-2. Add your SSH key (if you didn't already) to your BitBucket account:
-
-https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
-
-3. Run Composer:
+The package is stored in Orba's private repository. You have to configure it first:
 
 ```
-composer require --dev orba/magento2-codegen:dev-master
+composer config repositories.orba composer https://composer.orbalab.com/
 ```
 
-4. Create your custom config file (not needed for Orba developers):
+You can obtain credentials to the repository from Orba's DevOps team.
+
+When it's done, you simply need to add dev dependency:
+
+```
+composer require --dev orba/magento2-codegen
+```
+
+If you don't want to attach this app to your Magento, you can also simply clone the repository and use it as a standalone library.
+
+## Configuration
+
+Create your custom config file (not needed for Orba developers) either in package `config` directory or in your Magento root directory:
 
 ```
 cp vendor/orba/magento2-codegen/config/codegen.yml.dist vendor/orba/magento2-codegen/config/codegen.yml
+or
+cp vendor/orba/magento2-codegen/config/codegen.yml.dist codegen.yml
 ```
 
 and edit default values.
+
+You may add your own template directory by including the following in your `codegen.yml`: 
+
+```
+templateDirectories:
+  - { path: "path/to/templates" }
+```
+
+Template folder `path` must be relative to package directory, ex. if you want to add private templates to your Magento `dev` folder, you should use `../../../dev/codegen_templates` path.
+
+You may include multiple template directories.
+
+To overwrite a core template just copy a core template to your template directory and make changes as necessary.
 
 ## Usage
 
@@ -64,11 +80,11 @@ Examples:
 
 ```
 cd /path/to/magento/app/code/Orba/TestModule
-../../../../vendor/orba/magento2-codegen/bin/codegen template:generate block
+../../../../vendor/bin/codegen template:generate block
 ```
 
 ```
-cd /path/to/magento/vendor/orba/magento2-codegen
+cd /path/to/magento/vendor
 bin/codegen --root-dir="/path/to/magento/app/code/Orba/TestModule" template:generate block
 ```
 

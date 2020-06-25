@@ -1,6 +1,7 @@
 {
     "name": "orba/magento2-codegen",
-    "version": "0.1.0",
+    "description": "Magento 2 Code Generator",
+    "version": "1.0.0",
     "require": {
         "php": "~7.2",
         "ext-dom": "*",
@@ -29,6 +30,7 @@
             "@setPermissionsBin"
         ]
     },
+    "bin": ["bin/codegen"],
     "repositories": [
         {
             "type": "composer",
@@ -41,9 +43,6 @@
     ],
     "require-dev": {
         "ext-simplexml": "*",
-        "ext-pdo": "*",
-        "ext-pdo_mysql": "*",
-        "phpunit/phpunit": "^8",
-        "symfony/http-client": "^5.0"
+        "phpunit/phpunit": "^8"
     }
 }

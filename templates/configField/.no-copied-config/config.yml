@@ -2,21 +2,54 @@ description: This template is used to create new config field for already existe
 properties:
   sectionId:
     type: string
+    required: true
     description: ID of config section
   groupId:
     type: string
+    required: true
     description: ID of config group
   id:
     type: string
+    required: true
     description: Field ID
   label:
     type: string
+    required: true
     description: Field label
   comment:
     type: string
-    description: Field comment (optional)
+    description: Field comment
   type:
-    type: string
+    type: choice
+    options:
+      - button
+      - checkbox
+      - checkboxes
+      - column
+      - date
+      - editablemultiselect
+      - editor
+      - fieldset
+      - file
+      - gallery
+      - hidden
+      - image
+      - imagefile
+      - label
+      - link
+      - multiline
+      - multiselect
+      - note
+      - obscure
+      - password
+      - radio
+      - radios
+      - reset
+      - select
+      - submit
+      - text
+      - textarea
+      - time
     description: Attribute type
     default: text
   sortOrder:
@@ -40,19 +73,23 @@ properties:
     default: true
   sourceModel:
     type: string
-    description: Source Model of field (optional)
+    description: Source Model of field
   validate:
     type: string
-    description: Validation classes separated with space (optional)
+    description: Validation classes separated with space
   dependencyPath:
     type: string
-    description: Path to the config field on which this field depends (optional)
+    description: Path to the config field on which this field depends
   dependencyValue:
     type: string
     description: Value of the config field on which this field depends (fill in only if the fieldDependencyPath property was filled in)
   configScope:
-    type: string
-    description: Scope of config field used by value getter (store, website, default)
+    type: choice
+    options:
+      - store
+      - website
+      - default
+    description: Scope of config field used by value getter
     default: website
   defaultValue:
     type: string

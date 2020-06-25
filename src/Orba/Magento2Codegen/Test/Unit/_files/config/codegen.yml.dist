@@ -1,0 +1,7 @@
+defaultProperties:
+  - { name: "commentsCompanyName", value: "Orba" }
+  - { name: "commentsUserEmail", value: "info@orba.co" }
+  - { name: "commentsYear", value: "2020" }
+templateDirectories:
+  - { path: 'extra/templates/source1' }
+  - { path: 'extra/templates/source2' }

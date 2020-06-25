@@ -6,20 +6,17 @@ use ArrayAccess;
 use Orba\Magento2Codegen\Configuration;
 use RuntimeException;
 use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 
 class Config implements ArrayAccess
 {
     private $config;
 
-    public function __construct(Processor $configProcessor, Parser $yamlParser)
-    {
-        try {
-            $this->setConfig($configProcessor, $yamlParser, '/config/codegen.yml');
-        } catch (ParseException $e) {
-            $this->setConfig($configProcessor, $yamlParser, '/config/codegen.yml.dist');
-        }
+    public function __construct(
+        Processor $configProcessor,
+        Parser $yamlParser
+    ) {
+        $this->setConfig($configProcessor, $yamlParser, $this->getConfigPath());
     }
 
     public function offsetExists($offset): bool
@@ -48,5 +45,24 @@ class Config implements ArrayAccess
             new Configuration(),
             [$yamlParser->parseFile(BP . $filePath)]
         );
+    }
+
+    private function getConfigPath(): string
+    {
+        $result = '/config/codegen.yml.dist';
+        if ($path = $this->getPath('/../../../codegen.yml')) {
+            $result = $path;
+        } elseif ($path = $this->getPath('/config/codegen.yml')) {
+            $result = $path;
+        }
+        return $result;
+    }
+
+    private function getPath(string $relativePath): ?string
+    {
+        if (file_exists(BP . $relativePath)) {
+            return $relativePath;
+        }
+        return null;
     }
 }

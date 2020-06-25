@@ -2,20 +2,23 @@ description: This template is used to create new section in existent tab of stor
 properties:
   id:
     type: string
+    required: true
     description: Section ID
   label:
     type: string
+    required: true
     description: Section label
   tab:
     type: string
+    required: true
     description: Tab code
   sortOrder:
     type: string
     description: sortOrder argument value
   separator:
-      type: boolean
-      description: Add top separator?
-      default: false
+    type: boolean
+    description: Add top separator?
+    default: false
   showInDefault:
     type: boolean
     description: showInDefault argument value

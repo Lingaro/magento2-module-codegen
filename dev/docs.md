@@ -86,6 +86,62 @@ Let's say a user put "Acme" as an answer to "vendorName" question. It will produ
 Hi, I'm a vendor and my name is Acme.
 ```
 
+##### Boolean
+
+Boolean properties are used for all these situations in which you need to generate something like "0/1", "yes/no", "true/false" or you want to build an if condition, but you don't want a user to worry about the correct form of answer. For every boolean property you can define optional description and default value. During template generation a user will be simply asked for a "yes/no" answer for each boolean property.
+
+Exemplary config:
+
+```yaml
+properties:
+  required:
+    type: "boolean"
+    description: "Is field required"
+    default: false
+```
+
+Exemplary template file:
+
+```twig
+<input type="checkbox"{% if required %} required="required"{% endif %}/>
+```
+
+Let's say a user put "yes" as an answer to "required" question. It will produce the following result:
+
+```
+<input type="checkbox" required="required"/>
+```
+
+##### Choice
+
+Choice properties are used for all these situations in which you want a user to choose specific string value from an array of possible options. For every choice property you must define array of options and you can define optional description and default value. During template generation a user will see all possible options for each choice property and will not be allowed to use value not specified in config.
+
+Exemplary config:
+
+```yaml
+properties:
+  puppyType:
+    type: "choice"
+    options:
+      - "dog"
+      - "cat"
+      - "snake"
+    description: "Puppy type"
+    default: "cat"
+```
+
+Exemplary template file:
+
+```twig
+My puppy is a {{ puppyType }}.
+```
+
+Let's say a user put "2" or "snake" (they can use index of option or a value) as an answer to "puppyType" question. It will produce the following result:
+
+```
+My puppy is a snake.
+```
+
 ##### Array
 
 Array properties are used for complex structures with for-in loops. For each of them you need to define `children`, ie. its subproperties (of any type). Array property has an optional description, but no default value. During template generation a user will be asked for a value of each child property, forming a single item. Then they will be asked if they want to proceed with another item, and so on.
@@ -172,6 +228,16 @@ Example:
 
 ```yaml
 description: "This template is used to create a custom block and phtml template file for it."
+```
+
+#### Abstract template
+
+If you want to create an abstract template that will be later used as a dependency of other template but cannot be generated itself, set `isAbstract` root node of `config.yml` file to `true`. Such template won't be shown in template list.
+
+Example:
+
+```yaml
+isAbstract: true
 ```
 
 #### Additional info after template generation

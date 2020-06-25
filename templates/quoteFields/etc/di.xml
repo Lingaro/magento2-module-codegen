@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Api\CartRepositoryInterface">
+        <plugin
+            name="{{ vendorName|kebab }}-{{moduleName|kebab}}-set-cart-extension-attributes"
+            type="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Plugin\SetCartExtensionAttributes"
+        />
+    </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin
+            name="{{ vendorName|kebab }}-{{moduleName|kebab}}-set-order-extension-attributes"
+            type="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Plugin\SetOrderExtensionAttributes"
+        />
+    </type>
+</config>
