@@ -81,7 +81,8 @@ services:
         -
           - '/\/system\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
-          - idAttributes:
+          -
+            idAttributes:
               '/config/system/tab': 'id'
               '/config/system/section': 'id'
               '/config/system/section/group': 'id'
@@ -89,11 +90,28 @@ services:
       -
         - addMerger
         -
+          - '/\/cron_groups\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/group': 'id'
+      -
+        - addMerger
+        -
+          - '/\/crontab\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/group': 'id'
+              '/config/group/job': 'name'
+      -
+        - addMerger
+        -
           - '/\/events\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           - idAttributes:
-              '/config/event': 'name'
-              '/config/event/observer': 'name'
+            '/config/event': 'name'
+            '/config/event/observer': 'name'
       -
         - addMerger
         -
@@ -113,6 +131,65 @@ services:
               '/page/body.*/(block|container|uiComponent)': 'name'
               '/page/body.*/block/arguments/argument(/item)*': 'name'
               '/page/body.*/move': 'element'
+      -
+        - addMerger
+        -
+          - '/\/extension_attributes\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/extension_attributes': 'for'
+              '/config/extension_attributes/attribute': 'code'
+            typeAttributeName: 'xsi:type'
+      -
+        - addMerger
+        -
+          - '/\/fieldset\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+             idAttributes:
+               '/config/scope': 'id'
+               '/config/scope/fieldset': 'id'
+               '/config/scope/fieldset/field': 'name'
+               '/config/scope/fieldset/field/aspect': 'name'
+      -
+        - addMerger
+        -
+          - '/\/view\/.*\/ui_component\/.*_form\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/form/argument(/item)*': 'name'
+              '/form/dataSource': 'name'
+              '/form/dataSource/argument(/item)*': 'name'
+              '/form/dataSource/argument/argument(/item)*': 'name'
+              '/form/fieldset': 'name'
+              '/form/fieldset/argument(/item)*': 'name'
+              '/form/fieldset/field': 'name'
+              '/form/fieldset/field/argument(/item)*': 'name'
+            typeAttributeName: 'xsi:type'
+      -
+        - addMerger
+        -
+            - '/\/view\/.*\/ui_component\/.*_listing\.xml$/'
+            - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+            -
+              idAttributes:
+                '/listing/argument(/item)*': 'name'
+                '/listing/dataSource': 'name'
+                '/listing/dataSource/argument(/item)*': 'name'
+                '/listing/dataSource/argument/argument(/item)*': 'name'
+                '/listing/container': 'name'
+                '/listing/container/argument(/item)*': 'name'
+                '/listing/container/(bookmark|component|filterSearch|filters|massaction|paging)': 'name'
+                '/listing/container/(bookmark|component|filterSearch|filters|massaction|paging)/argument(/item)*': 'name'
+                '/listing/container/massaction/action': 'name'
+                '/listing/container/massaction/action/argument(/item)*': 'name'
+                '/listing/columns': 'name'
+                '/listing/columns/argument(/item)*': 'name'
+                '/listing/columns/(selectionsColumn|column|actionsColumn)': 'name'
+                '/listing/columns/(selectionsColumn|column|actionsColumn)/argument(/item)*': 'name'
+              typeAttributeName: 'xsi:type'
       -
         - addMerger
         -

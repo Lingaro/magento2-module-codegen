@@ -6,12 +6,15 @@ dependencies:
 properties:
   frontName:
     type: string
+    required: true
     description: First part of action's URL
   controllerName:
     type: string
+    required: true
     description: Second part of action's URL
   actionName:
     type: string
+    required: true
     description: Third part of action's URL
   pageLayout:
     type: choice
