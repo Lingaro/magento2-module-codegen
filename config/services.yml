@@ -208,11 +208,19 @@ services:
         -
           - '/\/i18n\/.*\.csv$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger'
+      -
+        - addMerger
+        -
+          - '/^.*\.json/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\JsonMerger'
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
     shared: false
 
   Orba\Magento2Codegen\Service\FileMerger\PhpMerger:
+    shared: false
+
+  Orba\Magento2Codegen\Service\FileMerger\JsonMerger:
     shared: false
 
   Orba\Magento2Codegen\Command\Template\GenerateCommand:
