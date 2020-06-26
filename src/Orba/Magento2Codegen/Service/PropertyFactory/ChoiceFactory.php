@@ -24,6 +24,9 @@ class ChoiceFactory implements FactoryInterface
         if (isset($config['default'])) {
             $property->setDefaultValue($config['default']);
         }
+        if (isset($config['depend'])) {
+            $property->setDepend($config['depend']);
+        }
         return $property;
     }
 }

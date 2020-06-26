@@ -36,6 +36,9 @@ class Root
     /** @var Order */
     private $_order;
 
+    /** @var NodeCleaner */
+    private $_nodeCleaner;
+
     /** @var array */
     private $_relations = [], $_nodes = [], $_objectHashes = [];
 
@@ -50,20 +53,23 @@ class Root
 
     /**
      * Root constructor.
-     * @param RelationFactory $relationFactory
      * @param RootFactory $rootFactory
+     * @param RelationFactory $relationFactory
      * @param Order $order
+     * @param NodeCleaner $nodeCleaner
      * @param string|null $rootName
      */
     public function __construct(
         RootFactory $rootFactory,
         RelationFactory $relationFactory,
         Order $order,
+        NodeCleaner $nodeCleaner,
         string $rootName = null
     ) {
         $this->_rootFactory = $rootFactory;
         $this->_relationFactory = $relationFactory;
         $this->_order = $order;
+        $this->_nodeCleaner = $nodeCleaner;
         if ($rootName) {
             $this->_name = $rootName;
         }
@@ -114,6 +120,7 @@ class Root
                     $result[self::ADD_ABLE_NODES]
                 );
                 foreach ($result[self::SET_ABLE_PARAMS] as $param => $nodes) {
+                    $nodes = $this->_nodeCleaner->clean($this->_lastNode, $nodes);
                     $this->_lastNode->$param = $this->_order->sort($nodes);
                 }
             }
@@ -253,13 +260,6 @@ class Root
             $extends = $node->extends;
             if (!is_null($extends)) {
                 $name[] = (string)$extends;
-            }
-        }
-
-        if ($reflection->hasProperty('implements')) {
-            $implements = $node->implements;
-            foreach ($implements as $implement) {
-                $name[] = $implement;
             }
         }
 

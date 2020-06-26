@@ -1,0 +1,6 @@
+{% for item in attributes %}
+"{{ item.label|escape('csv')|raw }}","{{ item.label|escape('csv')|raw }}"
+{% if item.note %}
+"{{ item.note|escape('csv')|raw }}","{{ item.note|escape('csv')|raw }}"
+{% endif %}
+{% endfor %}

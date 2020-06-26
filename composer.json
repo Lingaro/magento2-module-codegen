@@ -43,9 +43,6 @@
     ],
     "require-dev": {
         "ext-simplexml": "*",
-        "ext-pdo": "*",
-        "ext-pdo_mysql": "*",
-        "phpunit/phpunit": "^8",
-        "symfony/http-client": "^5.0"
+        "phpunit/phpunit": "^8"
     }
 }

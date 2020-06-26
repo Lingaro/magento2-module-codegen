@@ -44,8 +44,7 @@ class GenerateCommand extends AbstractCommand
         TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
         array $inputValidators = []
-    )
-    {
+    ) {
         $this->templateUtil = $templateUtil;
         $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;
@@ -88,6 +87,7 @@ class GenerateCommand extends AbstractCommand
     protected function _execute(InputInterface $input, OutputInterface $output): void
     {
         $this->templateUtil->validateTemplate($this->templateName);
+        $this->templateUtil->validateAbstractTemplateGeneration($this->templateName);
         $basePropertyBag = $this->getBasePropertyBag();
         $this->displayHeader();
         $this->displayTemplateDescription();

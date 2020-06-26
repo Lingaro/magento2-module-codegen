@@ -14,8 +14,8 @@ use Twig\Sandbox\SecurityPolicy;
 
 class TwigTemplateProcessor implements TemplateProcessorInterface
 {
-    const ALLOWED_TAGS = ['if', 'for'];
-    const ALLOWED_FILTERS = ['escape', 'upper', 'lower', 'raw'];
+    const ALLOWED_TAGS = ['if', 'for', 'set'];
+    const ALLOWED_FILTERS = ['escape', 'upper', 'lower', 'raw', 'split', 'join', 'map', 'trim'];
     const TEMPLATE_NAME = 'template';
     const ALLOWED_FUNCTIONS = [];
 
