@@ -44,8 +44,7 @@ class GenerateCommand extends AbstractCommand
         TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
         array $inputValidators = []
-    )
-    {
+    ) {
         $this->templateUtil = $templateUtil;
         $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;

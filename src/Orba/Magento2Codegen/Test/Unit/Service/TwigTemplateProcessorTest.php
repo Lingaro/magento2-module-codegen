@@ -107,6 +107,6 @@ class TwigTemplateProcessorTest extends TestCase
     {
         $this->expectException(SecurityError::class);
         $this->twigTemplateProcessor
-            ->replacePropertiesInText('hello {{ \'world\'|trim }}', new PropertyBag());
+            ->replacePropertiesInText('hello {{ \'world\'|reverse }}', new PropertyBag());
     }
 }

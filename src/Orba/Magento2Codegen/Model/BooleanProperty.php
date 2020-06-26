@@ -4,6 +4,9 @@ namespace Orba\Magento2Codegen\Model;
 
 class BooleanProperty extends AbstractProperty
 {
+    /**
+     * @var bool
+     */
     private $defaultValue;
 
     /**
@@ -21,6 +24,6 @@ class BooleanProperty extends AbstractProperty
 
     public function getDefaultValue(): bool
     {
-        return $this->defaultValue;
+        return (bool) $this->defaultValue;
     }
 }
