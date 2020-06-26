@@ -1,7 +1,7 @@
 <config>
     <extension_attributes for="Magento\Catalog\Api\Data\ProductInterface">
 {% for item in attributes %}
-        <attribute code="{{ item.code|pascal }}" type="string" />
+        <attribute code="{{ item.code|snake }}" type="string" />
 {% endfor %}
     </extension_attributes>
 </config>
