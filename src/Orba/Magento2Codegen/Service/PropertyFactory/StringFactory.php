@@ -23,6 +23,9 @@ class StringFactory implements FactoryInterface
         if (isset($config['depend'])) {
             $property->setDepend($config['depend']);
         }
+        if (isset($config['required'])) {
+            $property->setRequired($config['required']);
+        }
         return $property;
     }
 }

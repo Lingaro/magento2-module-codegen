@@ -230,6 +230,16 @@ Example:
 description: "This template is used to create a custom block and phtml template file for it."
 ```
 
+#### Abstract template
+
+If you want to create an abstract template that will be later used as a dependency of other template but cannot be generated itself, set `isAbstract` root node of `config.yml` file to `true`. Such template won't be shown in template list.
+
+Example:
+
+```yaml
+isAbstract: true
+```
+
 #### Additional info after template generation
 
 If a user needs to take some additional steps after code is generated, their description may be added in `afterGenearte` root node of `config.yml` file. The content of this param is processed by Twig, so you can use properties inside.

@@ -5,14 +5,17 @@ afterGenerate: "1. After creating or changing db_schema.xml, please generate db_
 properties:
   entityName:
     type: string
+    required: true
     description: Entity name
   fields:
     type: array
+    required: true
     description: Define all database fields by filling property for each field
     children:
       name:
         type: string
-        description: Name of the field. Required.
+        required: true
+        description: Name of the field
       databaseType:
         type: choice
         options:
@@ -31,7 +34,7 @@ properties:
           - tinyint
           - varbinary
           - varchar
-        description: Database type of field. Required.
+        description: Database type of field
       length:
         type: string
         description: In text and binary types (including varchar and varbinary), is length of column, for int types is padding. If empty, will use default.

@@ -1,0 +1,218 @@
+description: "This template creates data patch which adds custom attributes to product entity."
+afterGenerate: "1. To apply patch, please run setup upgrade command:
+                \n
+                \nbin/magento setup:upgrade"
+properties:
+  patchName:
+    type: string
+    required: true
+    description: Patch name, ex. "AddCustomProductAttributes"
+  patchDependencies:
+    type: array
+    required: true
+    description: List of patches after which the new patch should be loaded
+    children:
+      name:
+        type: string
+        required: true
+        description: Full class name with namespace
+  attributes:
+    type: array
+    required: true
+    description: Define all new custom attributes for product
+    children:
+      code:
+        type: string
+        required: true
+        description: Internal attribute code. Make sure you don't use more than 60 chars.
+      label:
+        type: string
+        required: true
+        description: Text displayed next to value on the frontend
+      type:
+        type: choice
+        options:
+          - datetime
+          - decimal
+          - int
+          - static
+          - text
+          - varchar
+        description: Database field type
+      input:
+        type: choice
+        options:
+          - boolean
+          - date
+          - gallery
+          - media_image
+          - multiselect
+          - price
+          - select
+          - swatch_text
+          - swatch_visual
+          - text
+          - textarea
+          - weee
+        description: Backend input type
+      note:
+        type: string
+        description: Comment displayed next to attribute input on backend
+      required:
+        type: boolean
+        description: Is attribute value required?
+        default: false
+      scope:
+        type: choice
+        options:
+          - store view
+          - website
+          - global
+        description: Attribute value saving scope
+      default:
+        type: string
+        description: Default attribute value
+      unique:
+        type: boolean
+        description: Should attribute value be unique among all products?
+        default: false
+      frontend_class:
+        type: string
+        description: "HTML classes for input in the backend. You may use this for styling or simple validation, ex. \"validate-email\"."
+      is_used_in_grid:
+        type: boolean
+        description: Should attribute be available on the backend products grid?
+        default: false
+      is_visible_in_grid:
+        type: boolean
+        description: Should attribute be visible by default on the backend products grid?
+        default: false
+#        depend:
+#          item.is_used_in_grid: true
+      is_filterable_in_grid:
+        type: boolean
+        description: Should attribute be filterable on the backend products grid?
+        default: false
+#        depend:
+#          item.is_used_in_grid: true
+      searchable:
+        type: boolean
+        description: Should attribute be searchable on the frontend?
+        default: false
+      search_weight:
+        type: string
+        description: Float number between 0 and 10. The bigger the number is, the more important the attribute will be during search.
+        default: 1
+#        depend:
+#          item.searchable: true
+      visible_in_advanced_search:
+        type: boolean
+        description: Should attribute be visible in advanced search on frontend?
+        default: false
+#        depend:
+#          item.searchable: true
+      comparable:
+        type: boolean
+        description: Should attribute be comparable on the frontend?
+        default: false
+      filterable:
+        type: choice
+        options:
+          - no
+          - filterable (with results)
+          - filterable (no results)
+        description: "Should attribute be filterable on the frontend catalog (layered navigation)? Can be used only with following input types: boolean, select, multiselect and price. Price is not compatible with 'filterable (no results)' option - it will make no affect on price filter."
+        default: no
+      filterable_in_search:
+        type: boolean
+        description: "Should attribute be filterable in search results on the frontend (layered navigation)? Can be used only with following input types: boolean, select, multiselect and price."
+        default: false
+      position:
+        type: string
+        description: Integer describing position of attribute in layered navigation block
+        default: 0
+      used_for_promo_rules:
+        type: boolean
+        description: Should attribute be used for defining promo rules?
+        default: false
+      visible_on_front:
+        type: boolean
+        description: Should attribute be visible on product details page on frontend?
+        default: false
+      is_html_allowed_on_front:
+        type: boolean
+        description: Should HTML be escaped when showing attribute value on frontend?
+        default: false
+      used_in_product_listing:
+        type: boolean
+        description: Should attribute be accessible on frontend product listing? Depends on design theme.
+        default: false
+      used_for_sort_by:
+        type: boolean
+        description: Should attribute be used for sorting frontend product listing? Depends on design theme.
+        default: false
+      visible:
+        type: boolean
+        description: Should attribute be visible on product details page on backend?
+        default: true
+      wysiwyg_enabled:
+        type: boolean
+        description: Should WYSIWYG editor be enabled for attribute on backend?
+        default: false
+#        depend:
+#          item.visible: true
+#          item.input: textarea
+      user_defined:
+        type: boolean
+        default: true
+        description: Should attribute be editable and deletable on backend?
+      frontend_model:
+        type: string
+        description: Custom frontend model - full class name with namespace. Can be used for preparing a value before rendering on the frontend.
+      input_renderer:
+        type: string
+        description: Custom input renderer - full class name with namespace. Can be used if custom input rendering is needed on backend.
+      backend_model:
+        type: string
+        description: Custom backend model - full class name with namespace. It's a class where the provided value can be modified. It's useful for validation if some custom validation is required.
+      source_model:
+        type: string
+        description: Custom source model - full class name with namespace. It provides labels and values for an option list. Used for select and multi-select fields.
+      attribute_model:
+        type: string
+        description: Custom attribute model - full class name with namespace (usually left blank)
+      table:
+        type: string
+        description: Custom database table for storing attribute values (usually left blank)
+      attribute_set:
+        type: string
+        desription: Name of the attribute set the new attribute will be assigned to
+        default: Default
+      group:
+        type: string
+        description: Name of the attribute group the new attribute will be placed in, ex. "Product Details", "Content"
+        default: Product Details
+      apply_to_simple:
+        type: boolean
+        description: Should attribute be applied to simple products?
+      apply_to_configurable:
+        type: boolean
+        description: Should attribute be applied to configurable products?
+      apply_to_grouped:
+        type: boolean
+        description: Should attribute be applied to grouped products?
+      apply_to_virtual:
+        type: boolean
+        description: Should attribute be applied to virtual products?
+      apply_to_downloadable:
+        type: boolean
+        description: Should attribute be applied to downloadable products?
+      apply_to_bundle:
+        type: boolean
+        description: Should attribute be applied to bundle products?
+      apply_to_giftcard:
+        type: boolean
+        description: Should attribute be applied to giftcard products?
+      options:
+        type: string
+        description: "Comma-separated custom options. Fill in only for select or multiselect attribute. Do not fill in if source model is used. Example: \"Male,Female\"."

@@ -9,6 +9,7 @@ use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class StringCollectorTest extends TestCase
@@ -26,14 +27,14 @@ class StringCollectorTest extends TestCase
     /**
      * @var MockObject|SymfonyStyle
      */
-    private $ioInstnaceMock;
+    private $ioInstanceMock;
 
     public function setUp(): void
     {
-        $this->ioInstnaceMock = $this->getMockBuilder(SymfonyStyle::class)
+        $this->ioInstanceMock = $this->getMockBuilder(SymfonyStyle::class)
             ->disableOriginalConstructor()->getMock();
         $this->ioMock = $this->getMockBuilder(IO::class)->disableOriginalConstructor()->getMock();
-        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($this->ioInstnaceMock);
+        $this->ioMock->expects($this->any())->method('getInstance')->willReturn($this->ioInstanceMock);
         $this->stringCollector = new StringCollector($this->ioMock);
     }
 
@@ -47,10 +48,26 @@ class StringCollectorTest extends TestCase
 
     public function testCollectValueReturnsValueFromInputIfPropertyIsStringProperty()
     {
-        $this->ioInstnaceMock->expects($this->once())->method('ask')->willReturn('foo');
+        $this->ioInstanceMock->expects($this->once())->method('askQuestion')
+            ->willReturn('foo');
         $result = $this->stringCollector->collectValue(
             $this->getMockBuilder(StringProperty::class)->disableOriginalConstructor()->getMock()
         );
+        $this->assertSame('foo', $result);
+    }
+
+    public function testCollectValueReturnsValueIfPropertyIsRequired()
+    {
+        $stringPropertyMock = $this->getMockBuilder(StringProperty::class)->disableOriginalConstructor()->getMock();
+        $stringPropertyMock->expects($this->any())->method('getRequired')->willReturn(true);
+        /** @var $subject Question */
+        $this->ioInstanceMock->expects($this->once())->method('askQuestion')
+            ->with($this->callback(function ($subject) {
+                $this->assertIsCallable($subject->getValidator());
+                return $subject instanceof Question;
+            }))
+            ->willReturn('foo');
+        $result = $this->stringCollector->collectValue($stringPropertyMock);
         $this->assertSame('foo', $result);
     }
 }

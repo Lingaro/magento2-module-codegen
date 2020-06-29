@@ -34,7 +34,11 @@ class ArrayCollector extends AbstractInputCollector
         /** @var ArrayProperty $property */
         $items = [];
         $i = 0;
-        do {
+
+        $promptPattern = 'Do you want to add an item to "%s" array?';
+        while ($this->isQuestionForced($property, $i) || $this->io->getInstance()->confirm(
+            sprintf($promptPattern, $property->getName()), true
+        )) {
             $item = [];
             foreach ($property->getChildren() as $child) {
                 $collector = $this->collectorFactory->create($child);
@@ -45,9 +49,17 @@ class ArrayCollector extends AbstractInputCollector
             }
             $items[] = $item;
             $i++;
-        } while ($this->io->getInstance()->confirm(
-            sprintf('Do you want to add another item to "%s" array?', $property->getName()), true
-        ));
+            $promptPattern = 'Do you want to add another item to "%s" array?';
+        };
+
         return $items;
+    }
+
+    private function isQuestionForced(PropertyInterface $property, int $i): bool
+    {
+        if ($i > 0) {
+            return false;
+        }
+        return $property->getRequired();
     }
 }

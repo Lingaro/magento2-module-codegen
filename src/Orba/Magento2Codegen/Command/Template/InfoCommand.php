@@ -75,7 +75,6 @@ class InfoCommand extends AbstractCommand
         } else {
             $this->io->getInstance()->text('Sorry, there is no info defined for this template.');
         }
-
     }
 
     private function displayDependencies(): void
@@ -86,6 +85,4 @@ class InfoCommand extends AbstractCommand
             $this->io->getInstance()->text($dependencies);
         }
     }
-
-
 }

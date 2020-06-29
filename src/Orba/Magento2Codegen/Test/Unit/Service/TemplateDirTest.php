@@ -2,9 +2,13 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
+use Orba\Magento2Codegen\Service\Config;
+use Orba\Magento2Codegen\Service\DirectoryIteratorFactory;
 use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Parser;
 
 class TemplateDirTest extends TestCase
 {
@@ -15,7 +19,10 @@ class TemplateDirTest extends TestCase
 
     public function setUp(): void
     {
-        $this->templateDir = new TemplateDir(new Filesystem());
+        $this->templateDir = new TemplateDir(
+            new Config(new Processor(), new Parser()),
+            new DirectoryIteratorFactory(),
+            new Filesystem());
     }
 
     public function testGetPathReturnsNullIfTemplateDoesNotExist(): void
@@ -28,5 +35,37 @@ class TemplateDirTest extends TestCase
     {
         $result = $this->templateDir->getPath('example');
         $this->assertSame(TemplateDir::DIR . '/example', $result);
+    }
+
+    public function testGetPathForNewTemplate(): void
+    {
+        $result = $this->templateDir->getPath('templateNew');
+        $this->assertDirectoryExists($result);
+        $this->assertStringContainsString(BP, $result);
+        $this->assertStringContainsString('templateNew', $result);
+    }
+
+    public function testGetPathForOverwrittenCoreTemplate(): void
+    {
+        // check new directory
+        $result = $this->templateDir->getPath('templateOverwrite1');
+        $this->assertDirectoryExists($result);
+        $this->assertStringContainsString(BP, $result);
+        $this->assertStringContainsString('extra/templates/source1', $result);
+        // check core directory
+        $result = str_replace('extra/templates/source1', 'templates', $result);
+        $this->assertDirectoryExists($result);
+    }
+
+    public function testGetPathForOverwrittenExtraTemplate(): void
+    {
+        // check new directory
+        $result = $this->templateDir->getPath('templateOverwrite2');
+        $this->assertDirectoryExists($result);
+        $this->assertStringContainsString(BP, $result);
+        $this->assertStringContainsString('extra/templates/source2', $result);
+        // check for original directory
+        $result = str_replace('source2', 'source1', $result);
+        $this->assertDirectoryExists($result);
     }
 }

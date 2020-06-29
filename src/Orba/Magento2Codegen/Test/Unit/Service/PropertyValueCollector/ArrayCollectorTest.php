@@ -40,7 +40,7 @@ class ArrayCollectorTest extends TestCase
         $this->arrayCollector = new ArrayCollector($this->ioMock);
     }
 
-    public function testCollectValueThrowsExceptionIfPropertyIsNotArrayProperty()
+    public function testCollectValueThrowsExceptionIfPropertyIsNotArrayProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->arrayCollector->collectValue(
@@ -48,7 +48,7 @@ class ArrayCollectorTest extends TestCase
         );
     }
 
-    public function testCollectValueThrowsExceptionIfCollectorFactoryIsUnset()
+    public function testCollectValueThrowsExceptionIfCollectorFactoryIsUnset(): void
     {
         $this->expectException(RuntimeException::class);
         $this->arrayCollector->collectValue(
@@ -56,11 +56,44 @@ class ArrayCollectorTest extends TestCase
         );
     }
 
-    public function testCollectValueReturnsArrayWithAtLeastOneItem()
+    public function testCollectValueReturnsEmptyArrayIfPropertyIsNotRequiredAndInteractionDidNotHappen(): void
     {
+        /** @var MockObject|ArrayProperty $propertyMock */
+        $propertyMock = $this->getMockBuilder(ArrayProperty::class)->disableOriginalConstructor()->getMock();
+        $propertyMock->expects($this->any())->method('getRequired')->willReturn(false);
+        $this->ioInstnaceMock->expects($this->any())->method('confirm')->willReturn(false);
+        $this->arrayCollector->setCollectorFactory(
+            $this->getMockBuilder(CollectorFactory::class)->disableOriginalConstructor()->getMock()
+        );
+        $result = $this->arrayCollector->collectValue($propertyMock);
+        $this->assertSame([], $result);
+    }
+
+    public function testCollectValueReturnsArrayWithAtLeastOneItemIfPropertyIsNotRequiredButInteractionHappened(): void
+    {
+        /** @var MockObject|PropertyInterface $childMock */
         $childMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
+        /** @var MockObject|ArrayProperty $propertyMock */
         $propertyMock = $this->getMockBuilder(ArrayProperty::class)->disableOriginalConstructor()->getMock();
         $propertyMock->expects($this->once())->method('getChildren')->willReturn([$childMock]);
+        $propertyMock->expects($this->any())->method('getRequired')->willReturn(false);
+        $this->ioInstnaceMock->expects($this->at(0))->method('confirm')->willReturn(true);
+        $this->arrayCollector->setCollectorFactory(
+            $this->getMockBuilder(CollectorFactory::class)->disableOriginalConstructor()->getMock()
+        );
+        $result = $this->arrayCollector->collectValue($propertyMock);
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+    }
+
+    public function testCollectValueReturnsArrayWithAtLeastOneItemIfPropertyIsRequired(): void
+    {
+        /** @var MockObject|PropertyInterface $childMock */
+        $childMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
+        /** @var MockObject|ArrayProperty $propertyMock */
+        $propertyMock = $this->getMockBuilder(ArrayProperty::class)->disableOriginalConstructor()->getMock();
+        $propertyMock->expects($this->once())->method('getChildren')->willReturn([$childMock]);
+        $propertyMock->expects($this->any())->method('getRequired')->willReturn(true);
         $this->ioInstnaceMock->expects($this->any())->method('confirm')->willReturn(false);
         $this->arrayCollector->setCollectorFactory(
             $this->getMockBuilder(CollectorFactory::class)->disableOriginalConstructor()->getMock()
