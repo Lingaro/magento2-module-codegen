@@ -5,15 +5,12 @@ afterGenerate: "1. To apply patch, please run setup upgrade command:
 properties:
   patchName:
     type: string
+    required: true
     description: Patch name, ex. "AddCustomProductAttributes"
-  hasPatchDependencies:
-    type: boolean
-    description: Should the new patch be loaded after some other patches?
   patchDependencies:
     type: array
+    required: true
     description: List of patches after which the new patch should be loaded
-    depend:
-      hasPatchDependencies: true
     children:
       name:
         type: string
@@ -21,6 +18,7 @@ properties:
         description: Full class name with namespace
   attributes:
     type: array
+    required: true
     description: Define all new custom attributes for product
     children:
       code:

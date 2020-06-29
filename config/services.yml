@@ -201,6 +201,16 @@ services:
       -
         - addMerger
         -
+          - '/\/webapi\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/routes/route': ['url', 'method']
+              '/routes/route/resources/resource': 'ref'
+              '/routes/route/data/parameter': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
       -

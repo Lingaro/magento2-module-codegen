@@ -33,6 +33,9 @@ class ArrayFactory implements FactoryInterface
         if (isset($config['depend'])) {
             $property->setDepend($config['depend']);
         }
+        if (isset($config['required'])) {
+            $property->setRequired($config['required']);
+        }
         $children = [];
         foreach ($config['children'] as $childName => $childConfig) {
             $children[] = $this->propertyFactory->create($childName, $childConfig);

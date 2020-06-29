@@ -9,6 +9,7 @@ properties:
     description: Entity name
   fields:
     type: array
+    required: true
     description: Define all database fields by filling property for each field
     children:
       name:

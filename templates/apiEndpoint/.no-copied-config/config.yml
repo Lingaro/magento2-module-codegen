@@ -3,41 +3,55 @@ afterGenerate: |
     Make sure that method {{ serviceClass }}::{{ serviceMethod }} exists and accepts parameters from request.
     {% if forcedParameters is not empty %}
     Make sure all forcedParameters are injected in di.xml to paramOverriders in Magento\Webapi\Controller\Rest\ParamsOverrider
+
     {% endif %}
+    For more information see: https://devdocs.magento.com/guides/v2.3/extension-dev-guide/service-contracts/service-to-web-service.html
 properties:
   endpointPath:
     type: string
-    description: Endpoint path, may include parameters, e.g. /checkout/:cartId/place-order. Parameters will be passed to ServiceClass:serviceMethod() as arguments
+    required: true
+    description: Endpoint path, may include parameters, e.g. "/checkout/:cartId/place-order". Parameters will be passed to ServiceClass:serviceMethod() as arguments
   endpointMethod:
-    type: string
-    description: "HTTP method: GET, POST, PUT, DELETE"
+    type: choice
+    options:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+    description: HTTP method
     default: GET
   endpointVersion:
     type: string
+    required: true
     description: API version. In most cases, just use default value.
     default: 1
   serviceClass:
     type: string
-    description: In most cases, this should be RepositoryInterface or ManagementInterface, e.g. Magento\Catalog\Api\ProductRepositoryInterface
+    required: true
+    description: In most cases, this should be RepositoryInterface or ManagementInterface, e.g. "Magento\Catalog\Api\ProductRepositoryInterface"
   serviceMethod:
     type: string
-    description: service class method, e.g. get
-    default: get
+    required: true
+    description: Service class method, e.g. "get"
   resources:
     type: array
-    description: "access control resources for given endpoint"
+    required: true
+    description: Access control resources for given endpoint
     children:
       name:
         type: string
-        description: "Required. Possible values: anonymous (publicly available), self (only given customer's data) or actual resources, e.g. Magento_Catalog::products"
+        required: true
+        description: "Possible values: anonymous (publicly available), self (only given customer's data) or actual resource, e.g. Magento_Catalog::products"
         default: anonymous
   forcedParameters:
-      type: array
-      description: 'Arguments that need to be passed to Service method, but cannot be safely taken from request due to ACL. Usually used only with "self" resource.'
-      children:
-        methodArgument:
-          type: string
-          description: Argument name in ServiceClass::serviceMethod(), e.g. customerId
-        parameterName:
-          type: string
-          description: Parameter name in di.xml, e.g. %customer_id%. Each parameter of this type requires a class injected in di.xml to paramOverriders in Magento\Webapi\Controller\Rest\ParamsOverrider. Magento defines %cart_id% and %customer_id% by default.
+    type: array
+    description: 'Arguments that need to be passed to Service method, but cannot be safely taken from request due to ACL. Usually used only with "self" resource.'
+    children:
+      methodArgument:
+        type: string
+        required: true
+        description: Argument name in ServiceClass::serviceMethod(), e.g. customerId
+      parameterName:
+        type: string
+        required: true
+        description: Parameter name in di.xml, e.g. "%customer_id%". Each parameter of this type requires a class injected in di.xml to paramOverriders in Magento\Webapi\Controller\Rest\ParamsOverrider. Magento defines "%cart_id%" and "%customer_id%" by default.
