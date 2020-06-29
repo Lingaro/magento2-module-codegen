@@ -1,32 +1,33 @@
-description: "This template is used to create a custom js module.\n"
-afterGenerate: "Now you can add the custom logic to you'r new js module!\n"
+description: "This template is used to create a custom JS module.\n"
+afterGenerate: "1. Add custom logic to your freshly generated JS module in:\n
+                \nview/{{ area }}/web/js/{{ name|snake }}.js\n
+                \n{% if withBlock %}2. Add block in your layout xml file:\n
+                \n<block name=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ name|snake }}\" template=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ name|snake }}.phtml\">
+                \n\t<arguments>
+                \n\t\t<argument name=\"view_model\" xsi:type=\"object\">{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\ViewModel\\{{ name|pascal }}</argument>
+                \n\t</arguments>
+                \n</block>
+                {% else %}2. Use your JS module in any phtml file:\n
+                \n<div data-mage-init='{{ '{' }}\"{{ name|camel }}\": {{ '{}}' }}'></div>{% endif %}"
 properties:
-    moduleType:
+    type:
         type: choice
         options:
-            - clean
-            - widget
-        default: clean
-        description: "Choose you js module type\n
-        1. clean js module (view/<area>/web/js/myModule.js, view/<area>/requirejs-config.js) \n
-        2. jquery widget module (clean js module with jquery/ui widget creation inside) \n"
-    withBlock:
-        type: boolean
-        default: false
-        description: "Do you want to create Block class and template file with module initialization? \n
-        (will create Block/MyBlock.php and view/<area>/templates/myTemplate.phtml additionally)"
-    jsModuleName:
+            - plain
+            - jQuery widget
+        description: JS module type
+    name:
         type: string
-        description: Name of the js module
+        required: true
+        description: Name of the JS module
     area:
         type: choice
         options:
             - frontend
             - adminhtml
         default: frontend
-        descrition: "Choose you'r module area"
-    widgetName:
-        type: string
-        description: Name of the jquery widget
-        depend:
-            moduleType: widget
+        description: Area in which module will be used
+    withBlock:
+        type: boolean
+        default: false
+        description: Do you want to create a skeleton block with config getter for the module initialization?

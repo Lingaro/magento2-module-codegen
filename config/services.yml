@@ -223,6 +223,11 @@ services:
         -
           - '/^.*\.json/'
           - '@Orba\Magento2Codegen\Service\FileMerger\JsonMerger'
+      -
+        - addMerger
+        -
+          - '/\/requirejs-config\.js$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\RequirejsConfigMerger'
 
   Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
     shared: false

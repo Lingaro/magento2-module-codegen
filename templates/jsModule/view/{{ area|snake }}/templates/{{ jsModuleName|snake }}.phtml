@@ -1,4 +1,0 @@
-{% if withBlock == true %}
-<?php /** @var {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\{% if area == 'adminhtml' %}Adminhtml\{% endif %}{{ jsModuleName|pascal }} $block  */ ?>
-<div data-mage-init='<?= $block->escapeHtmlAttr($block->get{{ jsModuleName|pascal }}ConfigJson()) ?>'></div>
-{% endif %}

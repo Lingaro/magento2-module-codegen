@@ -1,0 +1,45 @@
+<?php
+
+namespace Orba\Magento2Codegen\Service\FileMerger;
+
+use InvalidArgumentException;
+use Orba\Magento2Codegen\Service\JsConverter;
+
+class RequirejsConfigMerger extends AbstractMerger implements MergerInterface
+{
+    const VAR_CONFIG_STRING = 'var config = ';
+
+    /**
+     * @var JsonMerger
+     */
+    private $jsonMerger;
+
+    /**
+     * @var JsConverter
+     */
+    private $jsConverter;
+
+    public function __construct(JsonMerger $jsonMerger, JsConverter $jsConverter)
+    {
+        $this->jsonMerger = $jsonMerger;
+        $this->jsConverter = $jsConverter;
+    }
+
+    public function merge(string $oldContent, string $newContent): string
+    {
+        $oldJson = $this->getJsObjectString($oldContent);
+        $newJson = $this->getJsObjectString($newContent);
+        return self::VAR_CONFIG_STRING . $this->jsonMerger->merge($oldJson, $newJson);
+    }
+
+    private function getJsObjectString(string $content): string
+    {
+        $pos = strpos($content, self::VAR_CONFIG_STRING);
+        if ($pos === false) {
+            throw new InvalidArgumentException('Merged string is not a requirejs-config.js file content.');
+        }
+        return $this->jsConverter->convertToJson(
+            rtrim(substr($content, $pos + strlen(self::VAR_CONFIG_STRING)), " \t\n\r\0\x0B;")
+        );
+    }
+}
