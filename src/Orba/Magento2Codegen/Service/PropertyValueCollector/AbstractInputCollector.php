@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 abstract class AbstractInputCollector extends AbstractCollector
 {
@@ -17,6 +18,11 @@ abstract class AbstractInputCollector extends AbstractCollector
      */
     protected $questionPrefix = '';
 
+    /**
+     * @var null|PropertyBag
+     */
+    protected $propertyBag;
+
     public function __construct(IO $io)
     {
         $this->io = $io;
@@ -25,6 +31,11 @@ abstract class AbstractInputCollector extends AbstractCollector
     public function setQuestionPrefix(string $prefix): void
     {
         $this->questionPrefix = $prefix;
+    }
+
+    public function setPropertyBag(PropertyBag $propertyBag): void
+    {
+        $this->propertyBag = $propertyBag;
     }
 
     protected function _collectValue(PropertyInterface $property)

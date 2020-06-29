@@ -9,6 +9,8 @@ use RuntimeException;
 
 class ArrayCollector extends AbstractInputCollector
 {
+    private const MAIN_PROPERTY = 'main';
+
     private const ITEM_PROPERTY = 'item';
 
     /**
@@ -39,8 +41,8 @@ class ArrayCollector extends AbstractInputCollector
 
         $promptPattern = 'Do you want to add an item to "%s" array?';
         while ($this->isQuestionForced($property, $i) || $this->io->getInstance()->confirm(
-            sprintf($promptPattern, $property->getName()), true
-        )) {
+                sprintf($promptPattern, $property->getName()), true
+            )) {
             $item = [];
             $dependencies = [];
             foreach ($property->getChildren() as $child) {
@@ -48,16 +50,25 @@ class ArrayCollector extends AbstractInputCollector
                 $questionPrefix = $this->questionPrefix . $property->getName() . '.' . $i . '.';
                 if ($collector instanceof AbstractInputCollector) {
                     $collector->setQuestionPrefix($questionPrefix);
+                    $collector->setPropertyBag($this->propertyBag);
                 }
                 if ($child->getDepend()) {
                     foreach ($child->getDepend() as $propertyKey => $propertyValue) {
+                        $source = null;
                         switch ($this->getDependencyScope($propertyKey)) {
                             case self::ITEM_PROPERTY:
                                 $propertyKey = $questionPrefix . $this->getPropertyName($propertyKey);
+                                $source = &$dependencies;
+                                break;
+                            case self::MAIN_PROPERTY:
+                                $propertyKey = $this->getPropertyName($propertyKey);
+                                $source = $this->propertyBag;
                                 break;
                         }
-                        if (!isset($dependencies[$propertyKey]) || $dependencies[$propertyKey] != $propertyValue) {
-                            continue 2;
+                        if ($source) {
+                            if (!isset($source[$propertyKey]) || $source[$propertyKey] != $propertyValue) {
+                                continue 2;
+                            }
                         }
                     }
                 }
@@ -88,6 +99,8 @@ class ArrayCollector extends AbstractInputCollector
                 default:
                     throw new RuntimeException("Unknown dependency scope: " . $type);
             }
+        } elseif (count($exploded) == 1) {
+            return self::MAIN_PROPERTY;
         }
 
         throw new RuntimeException("Could not determine dependency scope from: " . $propertyKey);
@@ -99,10 +112,11 @@ class ArrayCollector extends AbstractInputCollector
      */
     private function getPropertyName(string $propertyKey): string
     {
-        $scope = $this->getDependencyScope($propertyKey);
-        switch ($scope) {
+        switch ($this->getDependencyScope($propertyKey)) {
             case self::ITEM_PROPERTY:
                 return str_replace(self::ITEM_PROPERTY . '.', '', $propertyKey);
+            case self::MAIN_PROPERTY:
+                return $propertyKey;
         }
     }
 

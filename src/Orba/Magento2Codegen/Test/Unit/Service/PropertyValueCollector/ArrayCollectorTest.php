@@ -10,6 +10,7 @@ use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -104,18 +105,13 @@ class ArrayCollectorTest extends TestCase
         $this->assertCount(1, $result);
     }
 
-    /**
-     * @dataProvider hasInvalidNameProvider
-     * @param string $parentChildName
-     */
-    public function testCollectValueDependentAttributeThrowExceptionIfDependentAttributeHasInvalidName(
-        string $parentChildName
-    ): void {
+    public function testCollectValueDependentAttributeThrowExceptionIfDependentAttributeHasInvalidName(): void
+    {
         $parentChildMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
         $parentChildMock->expects($this->atLeastOnce())->method('getName')->willReturn('parentChildMock');
         $parentChildMock->expects($this->atLeastOnce())->method('getDepend')->willReturn(null);
         $dependentChildMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
-        $dependentChildMock->expects($this->atLeastOnce())->method('getDepend')->willReturn([$parentChildName => true]);
+        $dependentChildMock->expects($this->atLeastOnce())->method('getDepend')->willReturn(['invalid.property' => true]);
         $propertyMock = $this->getMockBuilder(ArrayProperty::class)->disableOriginalConstructor()->getMock();
         $propertyMock->expects($this->atLeastOnce())->method('getName')->willReturn('parentArray');
         $propertyMock->expects($this->once())->method('getChildren')->willReturn([
@@ -130,17 +126,6 @@ class ArrayCollectorTest extends TestCase
         $this->arrayCollector->collectValue($propertyMock);
     }
 
-    /**
-     * @return array|string[][]
-     */
-    public function hasInvalidNameProvider(): array
-    {
-        return [
-            ['parentChildMock'],
-            ['parentArray.parentChildMock']
-        ];
-    }
-
     public function testCollectValueDependentAttributeIfParentHasExpectedValue(): void
     {
         $parentChildMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
@@ -148,7 +133,11 @@ class ArrayCollectorTest extends TestCase
         $parentChildMock->expects($this->atLeastOnce())->method('getDepend')->willReturn(null);
         $dependentChildMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
         $dependentChildMock->expects($this->atLeastOnce())->method('getName')->willReturn('dependentChildMock');
-        $dependentChildMock->expects($this->atLeastOnce())->method('getDepend')->willReturn(['item.parentChildMock' => true]);
+        $dependentChildMock->expects($this->atLeastOnce())->method('getDepend')->willReturn(
+            ['globalProperty' => true, 'item.parentChildMock' => true]
+        );
+        $propertyBag = new PropertyBag();
+        $propertyBag['globalProperty'] = true;
         $propertyMock = $this->getMockBuilder(ArrayProperty::class)->disableOriginalConstructor()->getMock();
         $propertyMock->expects($this->any())->method('getName')->willReturn('parentArray');
         $propertyMock->expects($this->once())->method('getChildren')->willReturn([
@@ -164,6 +153,7 @@ class ArrayCollectorTest extends TestCase
         $collectorFactoryMock->expects($this->any())->method('create')->willReturn($collectorMock);
         $this->ioInstanceMock->expects($this->exactly(2))->method('confirm')->willReturnOnConsecutiveCalls(true, false);
         $this->arrayCollector->setCollectorFactory($collectorFactoryMock);
+        $this->arrayCollector->setPropertyBag($propertyBag);
         $result = $this->arrayCollector->collectValue($propertyMock);
         $expected = [
             [

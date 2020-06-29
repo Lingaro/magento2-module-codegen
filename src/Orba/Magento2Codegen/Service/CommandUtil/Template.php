@@ -8,6 +8,7 @@ use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\AbstractInputCollector;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
@@ -201,6 +202,9 @@ class Template
                 }
             }
             $valueCollector = $this->propertyValueCollectorFactory->create($property);
+            if($valueCollector instanceof AbstractInputCollector) {
+                $valueCollector->setPropertyBag($propertyBag);
+            }
             $propertyBag[$property->getName()] = $valueCollector->collectValue($property);
         }
         return $propertyBag;
