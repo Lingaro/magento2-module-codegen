@@ -87,14 +87,14 @@ properties:
         type: boolean
         description: Should attribute be visible by default on the backend products grid?
         default: false
-#        depend:
-#          item.is_used_in_grid: true
+        depend:
+          item.is_used_in_grid: true
       is_filterable_in_grid:
         type: boolean
         description: Should attribute be filterable on the backend products grid?
         default: false
-#        depend:
-#          item.is_used_in_grid: true
+        depend:
+          item.is_used_in_grid: true
       searchable:
         type: boolean
         description: Should attribute be searchable on the frontend?
@@ -103,14 +103,14 @@ properties:
         type: string
         description: Float number between 0 and 10. The bigger the number is, the more important the attribute will be during search.
         default: 1
-#        depend:
-#          item.searchable: true
+        depend:
+          item.searchable: true
       visible_in_advanced_search:
         type: boolean
         description: Should attribute be visible in advanced search on frontend?
         default: false
-#        depend:
-#          item.searchable: true
+        depend:
+          item.searchable: true
       comparable:
         type: boolean
         description: Should attribute be comparable on the frontend?
@@ -159,9 +159,9 @@ properties:
         type: boolean
         description: Should WYSIWYG editor be enabled for attribute on backend?
         default: false
-#        depend:
-#          item.visible: true
-#          item.input: textarea
+        depend:
+          item.visible: true
+          item.input: textarea
       user_defined:
         type: boolean
         default: true

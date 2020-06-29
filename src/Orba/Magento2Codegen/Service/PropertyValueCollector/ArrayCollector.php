@@ -9,6 +9,8 @@ use RuntimeException;
 
 class ArrayCollector extends AbstractInputCollector
 {
+    private const ITEM_PROPERTY = 'item';
+
     /**
      * @var CollectorFactory
      */
@@ -40,12 +42,27 @@ class ArrayCollector extends AbstractInputCollector
             sprintf($promptPattern, $property->getName()), true
         )) {
             $item = [];
+            $dependencies = [];
             foreach ($property->getChildren() as $child) {
                 $collector = $this->collectorFactory->create($child);
+                $questionPrefix = $this->questionPrefix . $property->getName() . '.' . $i . '.';
                 if ($collector instanceof AbstractInputCollector) {
-                    $collector->setQuestionPrefix($this->questionPrefix . $property->getName() . '.' . $i . '.');
+                    $collector->setQuestionPrefix($questionPrefix);
+                }
+                if ($child->getDepend()) {
+                    foreach ($child->getDepend() as $propertyKey => $propertyValue) {
+                        switch ($this->getDependencyScope($propertyKey)) {
+                            case self::ITEM_PROPERTY:
+                                $propertyKey = $questionPrefix . $this->getPropertyName($propertyKey);
+                                break;
+                        }
+                        if (!isset($dependencies[$propertyKey]) || $dependencies[$propertyKey] != $propertyValue) {
+                            continue 2;
+                        }
+                    }
                 }
                 $item[$child->getName()] = $collector->collectValue($child);
+                $dependencies[$questionPrefix . $child->getName()] = $item[$child->getName()];
             }
             $items[] = $item;
             $i++;
@@ -53,6 +70,40 @@ class ArrayCollector extends AbstractInputCollector
         };
 
         return $items;
+    }
+
+    /**
+     * @param string $propertyKey
+     * @return string
+     */
+    private function getDependencyScope(string $propertyKey): string
+    {
+        $exploded = explode('.', $propertyKey);
+
+        if (count($exploded) > 1) {
+            $type = $exploded[0];
+            switch ($type) {
+                case self::ITEM_PROPERTY:
+                    return self::ITEM_PROPERTY;
+                default:
+                    throw new RuntimeException("Unknown dependency scope: " . $type);
+            }
+        }
+
+        throw new RuntimeException("Could not determine dependency scope from: " . $propertyKey);
+    }
+
+    /**
+     * @param string $propertyKey
+     * @return string
+     */
+    private function getPropertyName(string $propertyKey): string
+    {
+        $scope = $this->getDependencyScope($propertyKey);
+        switch ($scope) {
+            case self::ITEM_PROPERTY:
+                return str_replace(self::ITEM_PROPERTY . '.', '', $propertyKey);
+        }
     }
 
     private function isQuestionForced(PropertyInterface $property, int $i): bool
