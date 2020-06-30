@@ -35,7 +35,8 @@ class TemplateFactory
             ->addPropertiesConfig($template)
             ->addAfterGenerateConfig($template)
             ->addDependencies($template, $this)
-            ->addTypeService($template);
+            ->addTypeService($template)
+            ->addIsAbstract($template);
         return $template;
     }
 }
