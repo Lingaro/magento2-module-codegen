@@ -1,3 +1,4 @@
+type: module
 description: "This template is used to create a cron job and (optionally) a cron group"
 afterGenerate: "You should add your cron job logic to {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Cron\\{{ jobName|pascal }}::execute"
 properties:

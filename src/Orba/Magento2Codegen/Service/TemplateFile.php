@@ -113,7 +113,7 @@ class TemplateFile
 
     public function getIsAbstract(string $templateName): bool
     {
-        return (bool) $this->getRootConfig($templateName, 'isAbstract');
+        return (bool)$this->getRootConfig($templateName, 'isAbstract');
     }
 
     /**

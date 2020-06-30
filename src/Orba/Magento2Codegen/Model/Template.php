@@ -36,7 +36,12 @@ class Template
      */
     private $typeService;
 
-    public function getName():? string
+    /**
+     * @var bool
+     */
+    private $isAbstract = false;
+
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -47,7 +52,7 @@ class Template
         return $this;
     }
 
-    public function getDescription():? string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -69,7 +74,7 @@ class Template
         return $this;
     }
 
-    public function getAfterGenerateConfig():? string
+    public function getAfterGenerateConfig(): ?string
     {
         return $this->afterGenerateConfig;
     }
@@ -91,7 +96,7 @@ class Template
         return $this;
     }
 
-    public function getTypeService():? TypeInterface
+    public function getTypeService(): ?TypeInterface
     {
         return $this->typeService;
     }
@@ -99,6 +104,17 @@ class Template
     public function setTypeService(TypeInterface $typeService): Template
     {
         $this->typeService = $typeService;
+        return $this;
+    }
+
+    public function getIsAbstract(): bool
+    {
+        return $this->isAbstract;
+    }
+
+    public function setIsAbstract(bool $isAbstract): Template
+    {
+        $this->isAbstract = $isAbstract;
         return $this;
     }
 }

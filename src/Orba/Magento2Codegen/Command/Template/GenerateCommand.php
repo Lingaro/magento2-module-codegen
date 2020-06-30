@@ -88,6 +88,10 @@ class GenerateCommand extends AbstractCommand
     protected function _execute(InputInterface $input, OutputInterface $output): void
     {
         $template = $this->templateFactory->create($this->templateName);
+        if ($template->getIsAbstract()) {
+            $this->io->getInstance()->warning('Can\'t generate an abstract template!');
+            return;
+        }
         if ($template->getTypeService()->beforeGenerationCommand($template) === false) {
             $this->io->getInstance()->warning('Execution stopped!');
             return;

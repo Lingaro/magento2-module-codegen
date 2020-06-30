@@ -1,3 +1,4 @@
+type: module
 description: This template creates custom fields for quote and order
 properties:
   fields:

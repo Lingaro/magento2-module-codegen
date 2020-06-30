@@ -1,3 +1,4 @@
+type: module
 description: "This template creates a system e-mail template with class for sending it and config for allowing admin to customize it."
 afterGenerate: "1. Put content for e-mail template in view/{{ scope }}/email/{{ name|snake }}.html
     \n2. If needed, define custom styling of e-mail template in:\n

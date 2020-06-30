@@ -1,3 +1,4 @@
+type: module
 description: "This template creates data patch which adds custom attributes to product entity."
 afterGenerate: "1. To apply patch, please run setup upgrade command:
                 \n
