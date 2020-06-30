@@ -11,6 +11,7 @@ use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Util\PropertyBag;
+use Orba\Magento2Codegen\Model\Property\Interfaces\DependantInterface as PropertyDependantInterface;
 
 /**
  * Class Template
@@ -105,7 +106,7 @@ class Template
         );
         /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
-            if($property->getDepend()) {
+            if($property instanceof PropertyDependantInterface && $property->getDepend()) {
                 foreach ($property->getDepend() as $propertyKey => $propertyValue) {
                     if(!isset($propertyBag[$propertyKey]) || $propertyBag[$propertyKey] != $propertyValue) {
                         // we can set default value if we want to
