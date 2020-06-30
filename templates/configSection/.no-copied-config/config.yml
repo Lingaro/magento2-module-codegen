@@ -1,3 +1,4 @@
+type: module
 description: This template is used to create new section in existent tab of store configuration.
 properties:
   id:

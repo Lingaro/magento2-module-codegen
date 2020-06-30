@@ -10,7 +10,6 @@ use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Filesystem;
@@ -127,32 +126,6 @@ class TemplateFileTest extends TestCase
     {
         $result = $this->templateFile->getDependencies('example', true);
         $this->assertSame(['example2', 'emptyconfig'], $result);
-    }
-
-    public function testGetAfterGenerateThrowsExceptionIfTemplateDoesNotExist(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->templateFile->getAfterGenerate('nonexistent', new PropertyBag());
-    }
-
-    public function testGetAfterGenerateReturnsEmptyStringIfConfigDirDoesNotExist(): void
-    {
-        $result = $this->templateFile->getAfterGenerate('noconfig', new PropertyBag());
-        $this->assertSame([], $result);
-    }
-
-    public function testGetAfterGenerateReturnsEmptyStringIfAfterGenerateFileDoesNotExist(): void
-    {
-        $result = $this->templateFile->getAfterGenerate('emptyconfig', new PropertyBag());
-        $this->assertSame([], $result);
-    }
-
-    public function testGetAfterGenerateReturnsAfterGenerateFileContentWithParsedPropertiesIfFileExists(): void
-    {
-        $this->templateProcessorMock->expects($this->once())->method('replacePropertiesInText')
-            ->willReturn("Some info with value\nand a second line");
-        $result = $this->templateFile->getAfterGenerate('example', new PropertyBag());
-        $this->assertSame(['Some info with value', 'and a second line'], $result);
     }
 
     public function testGetTemplateFilesReturnsEmptyArrayIfTemplatesArrayIsEmpty()

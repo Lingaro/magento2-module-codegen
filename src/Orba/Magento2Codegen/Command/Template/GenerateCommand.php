@@ -3,10 +3,11 @@
 namespace Orba\Magento2Codegen\Command\Template;
 
 use Orba\Magento2Codegen\Command\AbstractCommand;
+use Orba\Magento2Codegen\Model\Template;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\CommandUtil\Template;
-use Orba\Magento2Codegen\Service\TemplateFile;
+use Orba\Magento2Codegen\Service\CommandUtil\Template as TemplateCommandUtil;
+use Orba\Magento2Codegen\Service\TemplateFactory;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,30 +25,30 @@ class GenerateCommand extends AbstractCommand
     private $templateName;
 
     /**
-     * @var Template
+     * @var TemplateCommandUtil
      */
     private $templateUtil;
-
-    /**
-     * @var TemplateFile
-     */
-    private $templateFile;
 
     /**
      * @var CodeGenerator
      */
     private $codeGenerator;
 
+    /**
+     * @var TemplateFactory
+     */
+    private $templateFactory;
+
     public function __construct(
-        Template $templateUtil,
+        TemplateCommandUtil $templateUtil,
         IO $io,
-        TemplateFile $templateFile,
         CodeGenerator $codeGenerator,
+        TemplateFactory $templateFactory,
         array $inputValidators = []
     ) {
         $this->templateUtil = $templateUtil;
-        $this->templateFile = $templateFile;
         $this->codeGenerator = $codeGenerator;
+        $this->templateFactory = $templateFactory;
         parent::__construct($io, $inputValidators);
     }
 
@@ -58,7 +59,7 @@ class GenerateCommand extends AbstractCommand
             ->setDescription('Generate code for desired template.')
             ->setHelp("This command generates code from a specific template.")
             ->addArgument(
-                Template::ARG_TEMPLATE,
+                TemplateCommandUtil::ARG_TEMPLATE,
                 InputArgument::REQUIRED,
                 'The template used to generate the code.'
             )->addOption(
@@ -86,51 +87,38 @@ class GenerateCommand extends AbstractCommand
 
     protected function _execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->templateUtil->validateTemplate($this->templateName);
-        $this->templateUtil->validateAbstractTemplateGeneration($this->templateName);
-        $basePropertyBag = $this->getBasePropertyBag();
-        $this->displayHeader();
-        $this->displayTemplateDescription();
-        $this->generate($basePropertyBag);
+        $template = $this->templateFactory->create($this->templateName);
+        if ($template->getTypeService()->beforeGenerationCommand($template) === false) {
+            $this->io->getInstance()->warning('Execution stopped!');
+            return;
+        }
+        $basePropertyBag = $template->getTypeService()->getBasePropertyBag();
+        $this->displayHeader($template);
+        $this->displayTemplateDescription($template);
+        $this->generate($template, $basePropertyBag);
         $this->io->getInstance()->success('Success!');
     }
 
-    private function displayHeader(): void
+    private function displayHeader(Template $template): void
     {
         $this->io->getInstance()->writeln('<comment>Template Generate</comment>');
-        $this->io->getInstance()->title($this->templateName);
+        $this->io->getInstance()->title($template->getName());
     }
 
-    private function displayTemplateDescription(): void
+    private function displayTemplateDescription(Template $template): void
     {
-        $description = $this->templateFile->getDescription($this->templateName);
+        $description = $template->getDescription();
         if ($description) {
             $this->io->getInstance()->text(explode("\n", $description));
         }
     }
 
-    private function getBasePropertyBag(): PropertyBag
-    {
-        if ($this->templateUtil->shouldCreateModule($this->templateName)) {
-            return $this->generateModule();
-        } else {
-            return $this->templateUtil->getBasePropertyBag($this->templateName);
-        }
-    }
-
-    private function generateModule(): PropertyBag
-    {
-        return $this->templateUtil->createModule(
-            $this->templateUtil->prepareProperties(Template::TEMPLATE_MODULE)
-        );
-    }
-
-    private function generate(PropertyBag $propertyBag): void
+    private function generate(Template $template, PropertyBag $propertyBag): void
     {
         $this->codeGenerator->execute(
-            $this->templateName,
-            $this->templateUtil->prepareProperties($this->templateName, $propertyBag)
+            $template,
+            $this->templateUtil->prepareProperties($template, $propertyBag)
         );
-        $this->templateUtil->showInfoAfterGenerate($this->templateName, $propertyBag);
+        $this->templateUtil->showInfoAfterGenerate($template, $propertyBag);
     }
 }

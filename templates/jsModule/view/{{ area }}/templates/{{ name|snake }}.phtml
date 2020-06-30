@@ -1,0 +1,16 @@
+{% if withBlock == true %}
+<?php
+/*
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+?>
+<?php
+use Magento\Framework\View\Element\Template;
+use {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ name|pascal }};
+/** @var $viewModel {{ name|pascal }} */
+/** @var $block Template */
+$viewModel = $block->getViewModel();
+?>
+<div data-mage-init='<?= $block->escapeHtmlAttr($viewModel->getJsonConfig()) ?>'></div>
+{% endif %}

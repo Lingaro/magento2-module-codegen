@@ -2,10 +2,15 @@
 
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
+use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\FilepathUtil;
+use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\Magento\Detector;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
+use Orba\Magento2Codegen\Service\TemplateFactory;
+use Orba\Magento2Codegen\Service\TemplateType\Module as ModuleTemplateType;
 use Orba\Magento2Codegen\Util\PropertyBag;
-use Symfony\Component\Filesystem\Filesystem;
+use RuntimeException;
 
 class Module
 {
@@ -17,37 +22,79 @@ class Module
     private $filepathUtil;
 
     /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
      * @var PropertyBagFactory
      */
     private $propertyBagFactory;
 
+    /**
+     * @var IO
+     */
+    private $io;
+
+    /**
+     * @var CodeGenerator
+     */
+    private $codeGenerator;
+
+    /**
+     * @var Template
+     */
+    private $templateCommandUtil;
+
+    /**
+     * @var Detector
+     */
+    private $detector;
+
     public function __construct(
         FilepathUtil $filepathUtil,
-        Filesystem $filesystem,
-        PropertyBagFactory $propertyBagFactory
+        PropertyBagFactory $propertyBagFactory,
+        IO $io,
+        CodeGenerator $codeGenerator,
+        Template $templateCommandUtil,
+        Detector $detector
     )
     {
         $this->filepathUtil = $filepathUtil;
-        $this->filesystem = $filesystem;
         $this->propertyBagFactory = $propertyBagFactory;
+        $this->io = $io;
+        $this->codeGenerator = $codeGenerator;
+        $this->templateCommandUtil = $templateCommandUtil;
+        $this->detector = $detector;
     }
 
-    public function exists(string $rootDir): bool
+    /**
+     * @param string $templateName
+     * @return bool
+     * @throws RuntimeException
+     */
+    public function shouldCreateModule(): bool
     {
-        return $this->filesystem->exists(
-            $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir)
+        if (!$this->detector->moduleExistsInDir($this->templateCommandUtil->getRootDir())) {
+            $this->io->getInstance()->text('There is no module at the working directory.');
+            if (!$this->io->getInstance()
+                ->confirm('Would you like to create a new module now?', true)) {
+                throw new RuntimeException('Code generator needs to be executed in a valid module.');
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function createModule(TemplateFactory $templateFactory): void
+    {
+        $template = $templateFactory->create(ModuleTemplateType::MODULE_TEMPLATE_NAME);
+        $this->codeGenerator->execute(
+            $template,
+            $this->templateCommandUtil->prepareProperties($template)
         );
     }
 
-    public function getPropertyBag(string $rootDir): PropertyBag
+    public function getPropertyBag(): PropertyBag
     {
-        $registrationAbsolutePath =
-            $this->filepathUtil->getAbsolutePath(self::MODULE_REGISTRATION_FILENAME, $rootDir);
+        $registrationAbsolutePath = $this->filepathUtil->getAbsolutePath(
+            self::MODULE_REGISTRATION_FILENAME, $this->templateCommandUtil->getRootDir()
+        );
         $content = $this->filepathUtil->getContent($registrationAbsolutePath);
         preg_match('/\'(.*)_(.*)\'/', $content, $matches);
         $propertyBag = $this->propertyBagFactory->create();
