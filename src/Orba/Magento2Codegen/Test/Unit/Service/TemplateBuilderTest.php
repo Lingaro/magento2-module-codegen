@@ -138,6 +138,13 @@ class TemplateBuilderTest extends TestCase
         $this->assertSame($this->templateBuilder, $result);
     }
 
+    public function testAddIsAbstractServiceReturnsSelf(): void
+    {
+        $this->templateFileMock->expects($this->once())->method('getIsAbstract')->willReturn(true);
+        $result = $this->templateBuilder->addIsAbstract($this->templateModel->setName('foo'));
+        $this->assertSame($this->templateBuilder, $result);
+    }
+
     /**
      * @return MockObject|TemplateFactory
      */

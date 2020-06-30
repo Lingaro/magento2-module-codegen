@@ -82,6 +82,15 @@ class TemplateBuilder
         return $this;
     }
 
+    public function addIsAbstract(Template $template): TemplateBuilder
+    {
+        $this->validateNameExistence($template);
+        $template->setIsAbstract(
+            $this->templateFile->getIsAbstract($template->getName())
+        );
+        return $this;
+    }
+
     private function validateNameExistence(Template $template): void
     {
         if (!$template->getName()) {
