@@ -4,10 +4,10 @@ namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Model\ConstProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Model\Template as TemplateModel;
 use Orba\Magento2Codegen\Service\Config;
 use Orba\Magento2Codegen\Service\PropertyFactory;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
-use Orba\Magento2Codegen\Service\TemplateFile;
 
 class TemplateProperty
 {
@@ -15,11 +15,6 @@ class TemplateProperty
      * @var Config
      */
     private $config;
-
-    /**
-     * @var TemplateFile
-     */
-    private $templateFile;
 
     /**
      * @var CollectorFactory
@@ -33,12 +28,10 @@ class TemplateProperty
 
     public function __construct(
         Config $config,
-        TemplateFile $templateFile,
         CollectorFactory $propertyValueCollectorFactory,
         PropertyFactory $propertyFactory
     ) {
         $this->config = $config;
-        $this->templateFile = $templateFile;
         $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
         $this->propertyFactory = $propertyFactory;
     }
@@ -60,15 +53,15 @@ class TemplateProperty
     }
 
     /**
-     * @param string $template
+     * @param TemplateModel $template
      * @return PropertyInterface[]
      */
-    public function collectInputProperties(string $template): array
+    public function collectInputProperties(TemplateModel $template): array
     {
         $propertiesConfig = [];
-        $templateNames = array_merge([$template], $this->templateFile->getDependencies($template, true));
-        foreach ($templateNames as $templateName) {
-            $propertiesConfig = array_merge($propertiesConfig, $this->templateFile->getPropertiesConfig($templateName));
+        foreach (array_merge([$template], $template->getDependencies()) as $item) {
+            /** @var TemplateModel $item */
+            $propertiesConfig = array_merge($propertiesConfig, $item->getPropertiesConfig());
         }
         $properties = [];
         foreach ($propertiesConfig as $propertyName => $propertyConfig) {

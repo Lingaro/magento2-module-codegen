@@ -1,3 +1,4 @@
+type: module
 description: This template is used to create new config field for already existent group of store configuration. It also creates config value getter in Config model.
 properties:
   sectionId:

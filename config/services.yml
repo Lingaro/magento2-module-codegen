@@ -299,3 +299,16 @@ services:
       - method: setPropertyFactory
         arguments:
           - '@Orba\Magento2Codegen\Service\PropertyFactory'
+
+  Orba\Magento2Codegen\Service\TemplateBuilder:
+    arguments:
+      $templateTypes:
+        basic: '@Orba\Magento2Codegen\Service\TemplateType\Basic'
+        module: '@Orba\Magento2Codegen\Service\TemplateType\Module'
+        root: '@Orba\Magento2Codegen\Service\TemplateType\Root'
+
+  Orba\Magento2Codegen\Service\TemplateType\Module:
+    calls:
+      - method: setTemplateFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\TemplateFactory'

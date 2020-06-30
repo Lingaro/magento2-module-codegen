@@ -3,7 +3,6 @@
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -33,7 +32,9 @@ class TemplateFile
      */
     private $templateProcessor;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isAbstract;
 
     public function __construct(
@@ -56,8 +57,7 @@ class TemplateFile
 
     public function getDescription(string $templateName): string
     {
-        $this->validateTemplateExistence($templateName);
-        return $this->getDescriptionConfig($templateName);
+        return $this->getRootConfig($templateName, 'description');
     }
 
     /**
@@ -91,25 +91,6 @@ class TemplateFile
         return $dependencies;
     }
 
-    public function getAfterGenerate(string $templateName, PropertyBag $propertyBag): array
-    {
-        $this->validateTemplateExistence($templateName);
-        $afterGenerate = $this->getAfterGenerateConfig($templateName);
-        if ($afterGenerate) {
-            $messages = explode(
-                "\n",
-                $this->templateProcessor->replacePropertiesInText($afterGenerate, $propertyBag)
-            );
-        } else {
-            $messages = [];
-        }
-        return $messages;
-    }
-
-    /**
-     * @param string $templateName
-     * @return array
-     */
     public function getPropertiesConfig(string $templateName): array
     {
         $parsedConfig = $this->getParsedConfig($templateName);
@@ -120,33 +101,19 @@ class TemplateFile
         return $properties;
     }
 
-    /**
-     * @param string $templateName
-     * @return array
-     */
-    public function getDescriptionConfig(string $templateName): string
-    {
-        return $this->getRootConfig($templateName, 'description');
-    }
-
-    /**
-     * @param string $templateName
-     * @return array
-     */
     public function getAfterGenerateConfig(string $templateName): string
     {
         return $this->getRootConfig($templateName, 'afterGenerate');
     }
 
-    /**
-     * @param string $templateName
-     * @param string $configName
-     * @return string
-     */
-    private function getRootConfig(string $templateName, string $configName): string
+    public function getType(string $templateName): string
     {
-        $parsedConfig = $this->getParsedConfig($templateName);
-        return isset($parsedConfig[$configName]) ? $parsedConfig[$configName] : '';
+        return $this->getRootConfig($templateName, 'type');
+    }
+
+    public function getIsAbstract(string $templateName): bool
+    {
+        return (bool) $this->getRootConfig($templateName, 'isAbstract');
     }
 
     /**
@@ -165,6 +132,12 @@ class TemplateFile
             }
         }
         return $files;
+    }
+
+    private function getRootConfig(string $templateName, string $configName): string
+    {
+        $parsedConfig = $this->getParsedConfig($templateName);
+        return isset($parsedConfig[$configName]) ? $parsedConfig[$configName] : '';
     }
 
     /**
@@ -205,10 +178,5 @@ class TemplateFile
             throw new InvalidArgumentException(sprintf('Invalid config file: %s', $file->getPath()));
         }
         return $parsedConfig;
-    }
-
-    public function getIsAbstract(string $templateName): bool
-    {
-        return (bool) $this->getRootConfig($templateName, 'isAbstract');
     }
 }
