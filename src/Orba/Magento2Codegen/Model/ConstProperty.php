@@ -2,27 +2,18 @@
 
 namespace Orba\Magento2Codegen\Model;
 
-class ConstProperty extends AbstractProperty
+use Orba\Magento2Codegen\Model\Property\Interfaces\DependantInterface as PropertyDependantInterface;
+use Orba\Magento2Codegen\Model\Property\Interfaces\ValueInterface as PropertyValueInterface;
+use Orba\Magento2Codegen\Model\Property\Traits\DependantTrait as PropertyDependantTrait;
+use Orba\Magento2Codegen\Model\Property\Traits\ValueTrait as PropertyValueTrait;
+
+/**
+ * Class ConstProperty
+ * @package Orba\Magento2Codegen\Model
+ */
+class ConstProperty extends AbstractProperty implements PropertyDependantInterface, PropertyValueInterface
 {
+    use PropertyDependantTrait, PropertyValueTrait;
+
     const TYPE = 'const';
-
-    /**
-     * @var string|null
-     */
-    protected $value;
-
-    /**
-     * @param string $value
-     * @return $this
-     */
-    public function setValue(string $value): PropertyInterface
-    {
-        $this->value = $value;
-        return $this;
-    }
-
-    public function getValue():? string
-    {
-        return $this->value;
-    }
 }

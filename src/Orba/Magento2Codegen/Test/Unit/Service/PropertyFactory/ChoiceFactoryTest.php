@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
+use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory\ChoiceFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
@@ -16,7 +17,7 @@ class ChoiceFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->choiceFactory = new ChoiceFactory();
+        $this->choiceFactory = new ChoiceFactory(new PropertyBuilder());
     }
 
     public function testCreateThrowsExceptionIfNameIsEmpty(): void

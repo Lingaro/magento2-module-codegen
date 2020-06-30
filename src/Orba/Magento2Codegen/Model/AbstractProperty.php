@@ -15,16 +15,6 @@ abstract class AbstractProperty implements PropertyInterface
     protected $description;
 
     /**
-     * @var array|null
-     */
-    protected $depend;
-
-    /**
-     * @var bool
-     */
-    protected $required = false;
-
-    /**
      * @param string $value
      * @return $this
      */
@@ -34,6 +24,9 @@ abstract class AbstractProperty implements PropertyInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
@@ -49,41 +42,11 @@ abstract class AbstractProperty implements PropertyInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    /**
-     * @param array|null $value
-     * @return $this
-     */
-    public function setDepend(?array $value): PropertyInterface
-    {
-        $this->depend = $value;
-        return $this;
-    }
-
-    public function getDepend(): ?array
-    {
-        return $this->depend;
-    }
-
-    /**
-     * @param string $value
-     * @return $this|PropertyInterface
-     */
-    public function setRequired(string $value): PropertyInterface
-    {
-        $this->required = (bool)$value;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getRequired(): bool
-    {
-        return $this->required;
     }
 }

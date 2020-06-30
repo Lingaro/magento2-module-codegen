@@ -6,26 +6,17 @@ use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 
-class StringFactory implements FactoryInterface
+class StringFactory extends AbstractFactory implements FactoryInterface
 {
     public function create(string $name, array $config): PropertyInterface
     {
-        if (empty($name)) {
-            throw new InvalidArgumentException('Name cannot be empty.');
-        }
-        $property = (new StringProperty())->setName($name);
-        if (isset($config['description'])) {
-            $property->setDescription($config['description']);
-        }
-        if (isset($config['default'])) {
-            $property->setDefaultValue($config['default']);
-        }
-        if (isset($config['depend'])) {
-            $property->setDepend($config['depend']);
-        }
-        if (isset($config['required'])) {
-            $property->setRequired($config['required']);
-        }
+        $property = new StringProperty();
+        $this->propertyBuilder
+            ->addName($property, $name)
+            ->addDescription($property, $config)
+            ->addDependant($property, $config)
+            ->addRequired($property, $config)
+            ->addDefaultValue($property, $config);
         return $property;
     }
 }

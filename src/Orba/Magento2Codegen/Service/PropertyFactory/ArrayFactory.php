@@ -2,13 +2,12 @@
 
 namespace Orba\Magento2Codegen\Service\PropertyFactory;
 
-use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\PropertyFactory;
 use RuntimeException;
 
-class ArrayFactory implements FactoryInterface
+class ArrayFactory extends AbstractFactory implements FactoryInterface
 {
     /**
      * @var PropertyFactory
@@ -20,30 +19,19 @@ class ArrayFactory implements FactoryInterface
         if (is_null($this->propertyFactory)) {
             throw new RuntimeException('Property factory is unset.');
         }
-        if (empty($name)) {
-            throw new InvalidArgumentException('Name cannot be empty.');
-        }
-        if (!isset($config['children']) || empty($config['children'])) {
-            throw new InvalidArgumentException('Array property must contain children.');
-        }
-        $property = (new ArrayProperty())->setName($name);
-        if (isset($config['description'])) {
-            $property->setDescription($config['description']);
-        }
-        if (isset($config['depend'])) {
-            $property->setDepend($config['depend']);
-        }
-        if (isset($config['required'])) {
-            $property->setRequired($config['required']);
-        }
-        $children = [];
-        foreach ($config['children'] as $childName => $childConfig) {
-            $children[] = $this->propertyFactory->create($childName, $childConfig);
-        }
-        $property->setChildren($children);
+        $property = new ArrayProperty();
+        $this->propertyBuilder
+            ->addName($property, $name)
+            ->addDescription($property, $config)
+            ->addDependant($property, $config)
+            ->addRequired($property, $config)
+            ->addChildren($property, $this->propertyFactory, $config);
         return $property;
     }
 
+    /**
+     * @param PropertyFactory $propertyFactory
+     */
     public function setPropertyFactory(PropertyFactory $propertyFactory): void
     {
         $this->propertyFactory = $propertyFactory;

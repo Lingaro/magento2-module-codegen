@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
+use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory;
 use Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
@@ -26,7 +27,7 @@ class ArrayFactoryTest extends TestCase
     {
         $this->propertyFactoryMock = $this->getMockBuilder(PropertyFactory::class)
             ->disableOriginalConstructor()->getMock();
-        $this->arrayFactory = new ArrayFactory();
+        $this->arrayFactory = new ArrayFactory(new PropertyBuilder());
     }
 
     public function testCreateThrowsExceptionIfProprtyFactoryIsUnset(): void

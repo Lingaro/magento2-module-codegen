@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Model\Property\Interfaces\RequiredInterface as PropertyRequiredInterface;
 
 abstract class AbstractInputCollector extends AbstractCollector
 {
@@ -30,7 +31,7 @@ abstract class AbstractInputCollector extends AbstractCollector
     protected function _collectValue(PropertyInterface $property)
     {
         $blockContent = '';
-        if ($property->getRequired()) {
+        if ($property instanceof PropertyRequiredInterface && $property->getRequired()) {
             $blockContent .= '[<comment>REQUIRED</comment>] ';
         }
         $description = $property->getDescription();

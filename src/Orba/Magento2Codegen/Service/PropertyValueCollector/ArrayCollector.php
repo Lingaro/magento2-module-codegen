@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use RuntimeException;
+use Orba\Magento2Codegen\Model\Property\Interfaces\RequiredInterface as PropertyRequiredInterface;
 
 class ArrayCollector extends AbstractInputCollector
 {
@@ -60,6 +61,6 @@ class ArrayCollector extends AbstractInputCollector
         if ($i > 0) {
             return false;
         }
-        return $property->getRequired();
+        return $property instanceof PropertyRequiredInterface && $property->getRequired();
     }
 }

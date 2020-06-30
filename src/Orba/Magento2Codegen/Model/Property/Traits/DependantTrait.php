@@ -25,6 +25,9 @@ trait DependantTrait
         return $this;
     }
 
+    /**
+     * @return array|null
+     */
     public function getDepend(): ?array
     {
         return $this->depend;

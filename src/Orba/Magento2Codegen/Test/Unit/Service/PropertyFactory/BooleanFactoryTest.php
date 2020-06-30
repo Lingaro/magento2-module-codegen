@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\BooleanProperty;
+use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
@@ -16,7 +17,7 @@ class BooleanFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->booleanFactory = new BooleanFactory();
+        $this->booleanFactory = new BooleanFactory(new PropertyBuilder());
     }
 
     public function testCreateThrowsExceptionIfNameIsEmpty(): void

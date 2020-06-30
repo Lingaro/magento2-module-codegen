@@ -16,6 +16,14 @@ trait RequiredTrait
     protected $required = false;
 
     /**
+     * @return bool
+     */
+    public function getRequired(): bool
+    {
+        return $this->required;
+    }
+
+    /**
      * @param string $value
      * @return $this|RequiredInterface
      */
@@ -23,13 +31,5 @@ trait RequiredTrait
     {
         $this->required = (bool)$value;
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getRequired(): bool
-    {
-        return $this->required;
     }
 }

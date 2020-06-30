@@ -2,28 +2,17 @@
 
 namespace Orba\Magento2Codegen\Model;
 
-class BooleanProperty extends AbstractProperty
+use Orba\Magento2Codegen\Model\Property\Interfaces\DefaultValueBooleanInterface as PropertyDefaultValueBooleanInterface;
+use Orba\Magento2Codegen\Model\Property\Interfaces\DependantInterface as PropertyDependantInterface;
+use Orba\Magento2Codegen\Model\Property\Traits\DefaultValueBooleanTrait as PropertyDefaultValueBooleanTrait;
+use Orba\Magento2Codegen\Model\Property\Traits\DependantTrait as PropertyDependantTrait;
+
+
+/**
+ * Class BooleanProperty
+ * @package Orba\Magento2Codegen\Model
+ */
+class BooleanProperty extends AbstractProperty implements PropertyDefaultValueBooleanInterface, PropertyDependantInterface
 {
-    /**
-     * @var bool
-     */
-    private $defaultValue;
-
-    /**
-     * @param mixed $value
-     * @return $this
-     */
-    public function setDefaultValue($value): PropertyInterface
-    {
-        if (!is_bool($value)) {
-            throw new \InvalidArgumentException('Default value must be boolean.');
-        }
-        $this->defaultValue = $value;
-        return $this;
-    }
-
-    public function getDefaultValue(): bool
-    {
-        return (bool) $this->defaultValue;
-    }
+    use PropertyDefaultValueBooleanTrait, PropertyDependantTrait;
 }

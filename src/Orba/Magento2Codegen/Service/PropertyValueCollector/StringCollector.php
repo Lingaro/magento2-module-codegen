@@ -7,6 +7,7 @@ use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Symfony\Component\Console\Exception\InvalidArgumentException as ConsoleInvalidArgumentException;
 use Symfony\Component\Console\Question\Question;
+use Orba\Magento2Codegen\Model\Property\Interfaces\RequiredInterface as PropertyRequiredInterface;
 
 class StringCollector extends AbstractInputCollector
 {
@@ -25,7 +26,7 @@ class StringCollector extends AbstractInputCollector
     {
         $question = new Question($this->questionPrefix . $property->getName(), $property->getDefaultValue());
 
-        if ($property->getRequired()) {
+        if ($property instanceof PropertyRequiredInterface && $property->getRequired()) {
             $question->setValidator(function ($answer) {
                 if (empty($answer)) {
                     throw new ConsoleInvalidArgumentException('Value cannot be empty.');

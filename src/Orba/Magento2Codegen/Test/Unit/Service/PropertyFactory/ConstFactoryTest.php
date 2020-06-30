@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ConstProperty;
+use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory\ConstFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
@@ -16,7 +17,7 @@ class ConstFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->constFactory = new ConstFactory();
+        $this->constFactory = new ConstFactory(new PropertyBuilder());
     }
 
     public function testCreateThrowsExceptionIfNameIsEmpty(): void
