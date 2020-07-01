@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\BooleanProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 class BooleanCollector extends AbstractInputCollector
 {
@@ -18,7 +19,7 @@ class BooleanCollector extends AbstractInputCollector
     /**
      * @inheritDoc
      */
-    protected function collectValueFromInput(PropertyInterface $property)
+    protected function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag)
     {
         return $this->io->getInstance()
             ->confirm($this->questionPrefix . $property->getName(), $property->getDefaultValue());

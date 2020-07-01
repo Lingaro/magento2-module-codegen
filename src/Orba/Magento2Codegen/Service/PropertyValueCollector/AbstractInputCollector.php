@@ -3,8 +3,9 @@
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Model\Property\Interfaces\RequiredInterface as PropertyRequiredInterface;
+use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 abstract class AbstractInputCollector extends AbstractCollector
 {
@@ -28,7 +29,7 @@ abstract class AbstractInputCollector extends AbstractCollector
         $this->questionPrefix = $prefix;
     }
 
-    protected function _collectValue(PropertyInterface $property)
+    protected function _collectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
         $blockContent = '';
         if ($property instanceof PropertyRequiredInterface && $property->getRequired()) {
@@ -41,13 +42,14 @@ abstract class AbstractInputCollector extends AbstractCollector
         if ($blockContent) {
             $this->io->getInstance()->writeln("\n" . ' [' . $property->getName() . '] ' . $blockContent);
         }
-        return $this->collectValueFromInput($property);
+        return $this->collectValueFromInput($property, $propertyBag);
     }
 
     /**
      * @param PropertyInterface $property
+     * @param PropertyBag $propertyBag
      * @return mixed
      */
-    protected abstract function collectValueFromInput(PropertyInterface $property);
+    protected abstract function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag);
 
 }
