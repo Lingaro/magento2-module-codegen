@@ -18,11 +18,6 @@ abstract class AbstractInputCollector extends AbstractCollector
      */
     protected $questionPrefix = '';
 
-    /**
-     * @var null|PropertyBag
-     */
-    protected $propertyBag;
-
     public function __construct(IO $io)
     {
         $this->io = $io;
@@ -33,12 +28,7 @@ abstract class AbstractInputCollector extends AbstractCollector
         $this->questionPrefix = $prefix;
     }
 
-    public function setPropertyBag(PropertyBag $propertyBag): void
-    {
-        $this->propertyBag = $propertyBag;
-    }
-
-    protected function _collectValue(PropertyInterface $property)
+    protected function _collectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
         $blockContent = '';
         if ($property->getRequired()) {
@@ -51,13 +41,14 @@ abstract class AbstractInputCollector extends AbstractCollector
         if ($blockContent) {
             $this->io->getInstance()->writeln("\n" . ' [' . $property->getName() . '] ' . $blockContent);
         }
-        return $this->collectValueFromInput($property);
+        return $this->collectValueFromInput($property, $propertyBag);
     }
 
     /**
      * @param PropertyInterface $property
+     * @param PropertyBag $propertyBag
      * @return mixed
      */
-    protected abstract function collectValueFromInput(PropertyInterface $property);
+    protected abstract function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag);
 
 }

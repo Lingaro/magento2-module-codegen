@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class ChoiceCollector extends AbstractInputCollector
@@ -16,7 +17,7 @@ class ChoiceCollector extends AbstractInputCollector
         }
     }
 
-    protected function collectValueFromInput(PropertyInterface $property)
+    protected function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag)
     {
         /** @var ChoiceProperty $property */
         $question = new ChoiceQuestion(

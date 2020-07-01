@@ -8,6 +8,7 @@ use Orba\Magento2Codegen\Model\BooleanProperty;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\BooleanCollector;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -28,29 +29,36 @@ class BooleanCollectorTest extends TestCase
      */
     private $ioInstnaceMock;
 
+    /**
+     * @var MockObject|PropertyBag
+     */
+    private $propertyBagMock;
+
     public function setUp(): void
     {
         $this->ioInstnaceMock = $this->getMockBuilder(SymfonyStyle::class)
             ->disableOriginalConstructor()->getMock();
         $this->ioMock = $this->getMockBuilder(IO::class)->disableOriginalConstructor()->getMock();
         $this->ioMock->expects($this->any())->method('getInstance')->willReturn($this->ioInstnaceMock);
+        $this->propertyBagMock = $this->getMockBuilder(PropertyBag::class)->disableOriginalConstructor()
+            ->getMock();
         $this->booleanCollector = new BooleanCollector($this->ioMock);
     }
 
     public function testCollectValueThrowsExceptionIfPropertyIsNotBooleanProperty()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->booleanCollector->collectValue(
-            $this->getMockBuilder(ConstProperty::class)->disableOriginalConstructor()->getMock()
-        );
+        /** @var ConstProperty|MockObject $propertyMock */
+        $propertyMock = $this->getMockBuilder(ConstProperty::class)->disableOriginalConstructor()->getMock();
+        $this->booleanCollector->collectValue($propertyMock, $this->propertyBagMock);
     }
 
     public function testCollectValueReturnsValueFromInputIfPropertyIsBooleanProperty()
     {
         $this->ioInstnaceMock->expects($this->once())->method('confirm')->willReturn(true);
-        $result = $this->booleanCollector->collectValue(
-            $this->getMockBuilder(BooleanProperty::class)->disableOriginalConstructor()->getMock()
-        );
+        /** @var BooleanProperty|MockObject $propertyMock */
+        $propertyMock = $this->getMockBuilder(BooleanProperty::class)->disableOriginalConstructor()->getMock();
+        $result = $this->booleanCollector->collectValue($propertyMock, $this->propertyBagMock);
         $this->assertSame(true, $result);
     }
 

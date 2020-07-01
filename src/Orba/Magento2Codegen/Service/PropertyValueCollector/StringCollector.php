@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Exception\InvalidArgumentException as ConsoleInvalidArgumentException;
 use Symfony\Component\Console\Question\Question;
 
@@ -21,7 +22,7 @@ class StringCollector extends AbstractInputCollector
      * @param PropertyInterface|StringProperty $property
      * @return mixed
      */
-    protected function collectValueFromInput(PropertyInterface $property)
+    protected function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag)
     {
         $question = new Question($this->questionPrefix . $property->getName(), $property->getDefaultValue());
 
