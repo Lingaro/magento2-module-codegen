@@ -10,7 +10,6 @@ properties:
     description: Patch name, ex. "AddCustomProductAttributes"
   patchDependencies:
     type: array
-    required: true
     description: List of patches after which the new patch should be loaded
     children:
       name:
