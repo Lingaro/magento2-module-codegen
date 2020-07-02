@@ -2,7 +2,6 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
-use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
 use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory;
@@ -30,34 +29,13 @@ class ArrayFactoryTest extends TestCase
         $this->arrayFactory = new ArrayFactory(new PropertyBuilder());
     }
 
-    public function testCreateThrowsExceptionIfProprtyFactoryIsUnset(): void
+    public function testCreateThrowsExceptionIfPropertyFactoryIsUnset(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->arrayFactory->create('name', ['children' => ['foo' => []]]);
-    }
-
-    public function testCreateThrowsExceptionIfNameIsEmpty(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->arrayFactory->setPropertyFactory($this->propertyFactoryMock);
-        $this->arrayFactory->create('', ['children' => ['foo' => []]]);
-    }
-
-    public function testCreateThrowsExceptionIfChildrenAreUndefined(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->arrayFactory->setPropertyFactory($this->propertyFactoryMock);
         $this->arrayFactory->create('name', []);
     }
 
-    public function testCreateThrowsExceptionIfChildrenAreEmpty(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->arrayFactory->setPropertyFactory($this->propertyFactoryMock);
-        $this->arrayFactory->create('name', ['children' => []]);
-    }
-
-    public function testCreateReturnsArrayPropertyIfConfigIsValid(): void
+    public function testCreateReturnsArrayProperty(): void
     {
         $this->arrayFactory->setPropertyFactory($this->propertyFactoryMock);
         $result = $this->arrayFactory->create('name', ['children' => ['foo' => []]]);

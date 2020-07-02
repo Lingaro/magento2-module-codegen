@@ -9,6 +9,7 @@ interface CollectorInterface
 {
     /**
      * @param PropertyInterface $property
+     * @param PropertyBag $propertyBag
      * @return mixed
      */
     public function collectValue(PropertyInterface $property, PropertyBag $propertyBag);

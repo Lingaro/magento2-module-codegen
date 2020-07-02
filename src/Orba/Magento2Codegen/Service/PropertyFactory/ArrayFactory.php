@@ -23,7 +23,7 @@ class ArrayFactory extends AbstractFactory implements FactoryInterface
         $this->propertyBuilder
             ->addName($property, $name)
             ->addDescription($property, $config)
-            ->addDependant($property, $config)
+            ->addDepend($property, $config)
             ->addRequired($property, $config)
             ->addChildren($property, $this->propertyFactory, $config);
         return $property;

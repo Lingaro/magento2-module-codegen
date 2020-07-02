@@ -25,7 +25,7 @@ properties:
     type: string
     required: true
     description: API version. In most cases, just use default value.
-    default: 1
+    default: "1"
   serviceClass:
     type: string
     required: true

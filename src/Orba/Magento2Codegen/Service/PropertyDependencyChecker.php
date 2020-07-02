@@ -2,13 +2,13 @@
 
 namespace Orba\Magento2Codegen\Service;
 
-use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 class PropertyDependencyChecker
 {
-    public function areRootConditionsMet(PropertyInterface $property, PropertyBag $propertyBag): bool
+    public function areRootConditionsMet(InputPropertyInterface $property, PropertyBag $propertyBag): bool
     {
         if ($property->getDepend()) {
             foreach ($property->getDepend() as $propertyKey => $propertyValue) {
@@ -27,7 +27,7 @@ class PropertyDependencyChecker
         return true;
     }
 
-    public function areScopeConditionsMet(string $scope, PropertyInterface $property, array $values): bool
+    public function areScopeConditionsMet(string $scope, InputPropertyInterface $property, array $values): bool
     {
         if ($property->getDepend()) {
             foreach ($property->getDepend() as $propertyKey => $propertyValue) {

@@ -2,7 +2,6 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
-use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory\StringFactory;
@@ -20,13 +19,7 @@ class StringFactoryTest extends TestCase
         $this->stringFactory = new StringFactory(new PropertyBuilder());
     }
 
-    public function testCreateThrowsExceptionIfNameIsEmpty(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->stringFactory->create('', []);
-    }
-
-    public function testCreateReturnsStringPropertyIfConfigIsValid(): void
+    public function testCreateReturnsStringProperty(): void
     {
         $result = $this->stringFactory->create('name', []);
         $this->assertInstanceOf(StringProperty::class, $result);

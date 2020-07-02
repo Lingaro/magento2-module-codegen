@@ -17,6 +17,7 @@ abstract class AbstractCollector implements CollectorInterface
 
     /**
      * @param PropertyInterface $property
+     * @param PropertyBag $propertyBag
      * @return mixed
      */
     protected abstract function _collectValue(PropertyInterface $property, PropertyBag $propertyBag);

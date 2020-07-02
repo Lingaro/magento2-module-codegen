@@ -103,7 +103,7 @@ properties:
       search_weight:
         type: string
         description: Float number between 0 and 10. The bigger the number is, the more important the attribute will be during search.
-        default: 1
+        default: "1"
         depend:
           item.searchable: true
       visible_in_advanced_search:
@@ -131,7 +131,7 @@ properties:
       position:
         type: string
         description: Integer describing position of attribute in layered navigation block
-        default: 0
+        default: "0"
       used_for_promo_rules:
         type: boolean
         description: Should attribute be used for defining promo rules?

@@ -2,16 +2,32 @@
 
 namespace Orba\Magento2Codegen\Model;
 
-use Orba\Magento2Codegen\Model\Property\Interfaces\DefaultValueOptionInterface as PropertyDefaultValueOptionInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\DependantInterface as PropertyDependantInterface;
-use Orba\Magento2Codegen\Model\Property\Traits\DefaultValueOptionTrait as PropertyDefaultValueOptionTrait;
-use Orba\Magento2Codegen\Model\Property\Traits\DependantTrait as PropertyDependantTrait;
-
 /**
  * Class ChoiceProperty
  * @package Orba\Magento2Codegen\Model
  */
-class ChoiceProperty extends AbstractProperty implements PropertyDefaultValueOptionInterface, PropertyDependantInterface
+class ChoiceProperty extends AbstractInputProperty
 {
-    use PropertyDefaultValueOptionTrait, PropertyDependantTrait;
+    /**
+     * @var string[]
+     */
+    protected $options = [];
+
+    /**
+     * @return string[]
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param string[] $options
+     * @return $this
+     */
+    public function setOptions(array $options): self
+    {
+        $this->options = $options;
+        return $this;
+    }
 }

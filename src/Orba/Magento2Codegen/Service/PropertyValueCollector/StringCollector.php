@@ -3,12 +3,12 @@
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Exception\InvalidArgumentException as ConsoleInvalidArgumentException;
 use Symfony\Component\Console\Question\Question;
-use Orba\Magento2Codegen\Model\Property\Interfaces\RequiredInterface as PropertyRequiredInterface;
 
 class StringCollector extends AbstractInputCollector
 {
@@ -19,15 +19,11 @@ class StringCollector extends AbstractInputCollector
         }
     }
 
-    /**
-     * @param PropertyInterface|StringProperty $property
-     * @return mixed
-     */
-    protected function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag)
+    protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag)
     {
         $question = new Question($this->questionPrefix . $property->getName(), $property->getDefaultValue());
 
-        if ($property instanceof PropertyRequiredInterface && $property->getRequired()) {
+        if ($property->getRequired()) {
             $question->setValidator(function ($answer) {
                 if (empty($answer)) {
                     throw new ConsoleInvalidArgumentException('Value cannot be empty.');

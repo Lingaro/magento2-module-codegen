@@ -2,7 +2,6 @@
 
 namespace Orba\Magento2Codegen\Service\PropertyFactory;
 
-use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 
@@ -14,7 +13,8 @@ class ChoiceFactory extends AbstractFactory implements FactoryInterface
         $this->propertyBuilder
             ->addName($property, $name)
             ->addDescription($property, $config)
-            ->addDependant($property, $config)
+            ->addDepend($property, $config)
+            ->addOptions($property, $config)
             ->addDefaultValue($property, $config);
         return $property;
     }

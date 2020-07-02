@@ -13,8 +13,7 @@ class ConstFactory extends AbstractFactory implements FactoryInterface
         $this->propertyBuilder
             ->addName($property, $name)
             ->addDescription($property, $config)
-            ->addValue($property, $config)
-            ->addDependant($property, $config);
+            ->addValue($property, $config);
         return $property;
     }
 }

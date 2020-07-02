@@ -3,14 +3,13 @@
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\Property\Interfaces\ChildrenInterface as PropertyChildrenInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\DefaultValueBooleanInterface as PropertyDefaultValueBooleanInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\DefaultValueOptionInterface as PropertyDefaultValueOptionInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\DefaultValueStringInterface as PropertyDefaultValueStringInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\DependantInterface as PropertyDependantInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\RequiredInterface as PropertyRequiredInterface;
-use Orba\Magento2Codegen\Model\Property\Interfaces\ValueInterface as PropertyValueInterface;
+use Orba\Magento2Codegen\Model\ArrayProperty;
+use Orba\Magento2Codegen\Model\BooleanProperty;
+use Orba\Magento2Codegen\Model\ChoiceProperty;
+use Orba\Magento2Codegen\Model\ConstProperty;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Model\StringProperty;
 
 /**
  * Class PropertyBuilder
@@ -18,115 +17,133 @@ use Orba\Magento2Codegen\Model\PropertyInterface;
  */
 class PropertyBuilder
 {
-    /**
-     * @param PropertyInterface $property
-     * @param $name
-     * @return $this
-     */
-    public function addName(PropertyInterface $property, $name): self
+    public function addName(PropertyInterface $property, string $name): self
     {
         if (empty($name)) {
             throw new InvalidArgumentException('Name cannot be empty.');
+        }
+        if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $name)) {
+            throw new InvalidArgumentException('Invalid name.');
         }
         $property->setName($name);
         return $this;
     }
 
-    /**
-     * @param PropertyInterface $property
-     * @param array $config
-     * @return $this
-     */
     public function addDescription(PropertyInterface $property, array $config): self
     {
         if (isset($config['description'])) {
+            if (!is_string($config['description'])) {
+                throw new InvalidArgumentException('Description must be a string.');
+            }
             $property->setDescription($config['description']);
         }
         return $this;
     }
 
-    /**
-     * @param PropertyDependantInterface $property
-     * @param array $config
-     * @return $this
-     */
-    public function addDependant(PropertyDependantInterface $property, array $config): self
+    public function addDepend(InputPropertyInterface $property, array $config): self
     {
         if (isset($config['depend'])) {
+            if (!is_array($config['depend'])) {
+                throw new InvalidArgumentException('Depend must be an array.');
+            }
+            foreach (array_keys($config['depend']) as $key) {
+                if (!is_string($key)) {
+                    throw new InvalidArgumentException('All keys in depend array must be strings.');
+                }
+                if (is_array($config['depend'][$key])) {
+                    throw new InvalidArgumentException('Depend array cannot be multidimensional.');
+                }
+            }
             $property->setDepend($config['depend']);
         }
         return $this;
     }
 
-    /**
-     * @param PropertyRequiredInterface $property
-     * @param array $config
-     * @return $this
-     */
-    public function addRequired(PropertyRequiredInterface $property, array $config): self
+    public function addRequired(InputPropertyInterface $property, array $config): self
     {
         if (isset($config['required'])) {
+            if (!is_bool($config['required'])) {
+                throw new InvalidArgumentException('Required must be boolean.');
+            }
             $property->setRequired($config['required']);
         }
         return $this;
     }
 
-    /**
-     * @param PropertyChildrenInterface $property
-     * @param PropertyFactory $propertyFactory
-     * @param array $config
-     * @return $this
-     */
-    public function addChildren(
-        PropertyChildrenInterface $property,
-        PropertyFactory $propertyFactory,
-        array $config
-    ): self {
-        if (!isset($config['children']) || empty($config['children'])) {
-            throw new InvalidArgumentException('Array property must contain children.');
+    public function addDefaultValue(InputPropertyInterface $property, array $config): self
+    {
+        if (isset($config['default'])) {
+            if ($property instanceof ChoiceProperty) {
+                if (empty($property->getOptions())) {
+                    throw new InvalidArgumentException('Array of options must be set before setting default value.');
+                }
+                if (!in_array($config['default'], $property->getOptions())) {
+                    throw new InvalidArgumentException('Default value must exist in options array.');
+                }
+            } else if ($property instanceof StringProperty) {
+                if (!is_string($config['default'])) {
+                    throw new InvalidArgumentException('Default value must be a string.');
+                }
+            } else if ($property instanceof BooleanProperty) {
+                if (!is_bool($config['default'])) {
+                    throw new InvalidArgumentException('Default value must be boolean.');
+                }
+            } else {
+                throw new InvalidArgumentException('Setting default value is not supported for this property.');
+            }
+            $property->setDefaultValue($config['default']);
         }
+        return $this;
+    }
 
+    public function addChildren(ArrayProperty $property, PropertyFactory $propertyFactory, array $config): self
+    {
+        if (!isset($config['children'])) {
+            throw new InvalidArgumentException('Children must be set for array property.');
+        }
+        if (!is_array($config['children'])) {
+            throw new InvalidArgumentException('Children must be an array.');
+        }
+        if (empty($config['children'])) {
+            throw new InvalidArgumentException('Children array cannot be empty.');
+        }
         $children = [];
         foreach ($config['children'] as $childName => $childConfig) {
+            if (!is_array($childConfig)) {
+                throw new InvalidArgumentException('Child config must be an array.');
+            }
             $children[] = $propertyFactory->create($childName, $childConfig);
         }
         $property->setChildren($children);
         return $this;
     }
 
-    /**
-     * @param PropertyValueInterface $property
-     * @param array $config
-     * @return $this
-     */
-    public function addValue(PropertyValueInterface $property, array $config): self
+    public function addValue(ConstProperty $property, array $config): self
     {
         if (!isset($config['value'])) {
-            throw new InvalidArgumentException('Value must be set for const property.');
+            throw new InvalidArgumentException('Value must be set.');
         }
         $property->setValue($config['value']);
         return $this;
     }
 
-    /**
-     * @param PropertyInterface $property
-     * @param array $config
-     * @return $this
-     */
-    public function addDefaultValue(PropertyInterface $property, array $config): self
+    public function addOptions(ChoiceProperty $property, array $config): self
     {
-        if ($property instanceof PropertyDefaultValueOptionInterface) {
-            if (empty($config['options'])) {
-                throw new InvalidArgumentException('Array of options is required.');
-            }
-            $property->setOptions($config['options']);
+        if (!isset($config['options'])) {
+            throw new InvalidArgumentException('Options must be set for choice property.');
         }
-        if ($property instanceof PropertyDefaultValueBooleanInterface
-            || $property instanceof PropertyDefaultValueStringInterface) {
-            if (isset($config['default'])) {
-                $property->setDefaultValue($config['default']);
+        if (!is_array($config['options'])) {
+            throw new InvalidArgumentException('Options must be an array.');
+        }
+        if (empty($config['options'])) {
+            throw new InvalidArgumentException('Options array cannot be empty.');
+        }
+        foreach ($config['options'] as $option) {
+            if (!is_string($option)) {
+                throw new InvalidArgumentException('All options must be strings.');
             }
         }
+        $property->setOptions($config['options']);
         return $this;
     }
 }
