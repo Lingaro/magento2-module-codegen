@@ -3,6 +3,7 @@
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\Template as TemplateModel;
 use Orba\Magento2Codegen\Service\CodeGenerator;
@@ -113,7 +114,10 @@ class Template
         );
         /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
-            if (!$this->propertyDependencyChecker->areRootConditionsMet($property, $propertyBag)) {
+            if (
+                $property instanceof InputPropertyInterface
+                && !$this->propertyDependencyChecker->areRootConditionsMet($property, $propertyBag)
+            ) {
                 continue;
             }
             $valueCollector = $this->propertyValueCollectorFactory->create($property);

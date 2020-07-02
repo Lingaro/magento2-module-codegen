@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
@@ -43,7 +44,7 @@ class ArrayCollector extends AbstractInputCollector
         }
     }
 
-    protected function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag)
+    protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag)
     {
         if (is_null($this->collectorFactory)) {
             throw new RuntimeException('Collector factory is unset.');
@@ -64,8 +65,8 @@ class ArrayCollector extends AbstractInputCollector
                     $collector->setQuestionPrefix($questionPrefix);
                 }
                 if (
-                    !$this->propertyDependencyChecker->areRootConditionsMet($child, $propertyBag)
-                    || !$this->propertyDependencyChecker->areScopeConditionsMet('item', $child, $item)
+                    $child instanceof InputPropertyInterface
+                    && $this->areDependencyConditionsMet($child, $propertyBag, $item)
                 ) {
                     continue;
                 }
@@ -79,11 +80,21 @@ class ArrayCollector extends AbstractInputCollector
         return $items;
     }
 
-    private function isQuestionForced(PropertyInterface $property, int $i): bool
+    private function isQuestionForced(InputPropertyInterface $property, int $i): bool
     {
         if ($i > 0) {
             return false;
         }
         return $property->getRequired();
+    }
+
+    private function areDependencyConditionsMet(
+        InputPropertyInterface $property,
+        PropertyBag $propertyBag,
+        array $item
+    ): bool
+    {
+        return !$this->propertyDependencyChecker->areRootConditionsMet($property, $propertyBag)
+            || !$this->propertyDependencyChecker->areScopeConditionsMet('item', $property, $item);
     }
 }

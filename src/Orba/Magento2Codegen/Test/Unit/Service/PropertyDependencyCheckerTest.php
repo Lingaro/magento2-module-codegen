@@ -2,7 +2,7 @@
 
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
-use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
@@ -17,7 +17,7 @@ class PropertyDependencyCheckerTest extends TestCase
     private $propertyDependencyChecker;
 
     /**
-     * @var MockObject|PropertyInterface
+     * @var MockObject|InputPropertyInterface
      */
     private $propertyMock;
 
@@ -29,8 +29,15 @@ class PropertyDependencyCheckerTest extends TestCase
     public function setUp(): void
     {
         $this->propertyDependencyChecker = new PropertyDependencyChecker();
-        $this->propertyMock = $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass();
+        $this->propertyMock = $this->getMockBuilder(InputPropertyInterface::class)->getMockForAbstractClass();
         $this->propertyBag = new PropertyBag();
+    }
+
+    public function testAreRootConditionsMetReturnsTrueIfPropertyIsNotDependant(): void
+    {
+        $this->propertyMock->expects($this->any())->method('getDepend')->willReturn([]);
+        $result = $this->propertyDependencyChecker->areRootConditionsMet($this->propertyMock, $this->propertyBag);
+        $this->assertTrue($result);
     }
 
     public function testAreRootConditionsMetReturnsTrueIfThereAreNoDependencies(): void

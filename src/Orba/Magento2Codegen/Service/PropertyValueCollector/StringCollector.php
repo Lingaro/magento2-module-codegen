@@ -3,6 +3,7 @@
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Orba\Magento2Codegen\Util\PropertyBag;
@@ -18,11 +19,7 @@ class StringCollector extends AbstractInputCollector
         }
     }
 
-    /**
-     * @param PropertyInterface|StringProperty $property
-     * @return mixed
-     */
-    protected function collectValueFromInput(PropertyInterface $property, PropertyBag $propertyBag)
+    protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag)
     {
         $question = new Question($this->questionPrefix . $property->getName(), $property->getDefaultValue());
 
