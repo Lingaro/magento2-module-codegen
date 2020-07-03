@@ -5,20 +5,20 @@ define([
 {% elseif (type == 'plain' and extendMethod) %}
     'mage/utils/wrapper'
 {% endif %}
-    ], function ({% if type == 'jQuery widget' %}${%elseif (type == 'plain' and extendMethod) %}wrapper, {{methodName}}{%endif%}) {
+    ], function ({% if type == 'jQuery widget' %}${%elseif (type == 'plain' and extendMethod) %}wrapper{%endif%}) {
     'use strict';
 {% if ("jQuery widget" == type) %}
 
 {{ extendMethod ? "return function (originalWidget) {" : "" }}
-    $.widget('{{ methodName }}', originalWidget, {});
+    $.widget('{{ widgetName }}', originalWidget, {});
 
-    return $.{{ methodName }}
+    return $.{{ widgetName }}
 {{ extendMethod ? "};" : "" }}
 {% elseif "component" == type %}
 
     return function (Component) {
         return Component.extend({
-        {{ methodName }}: function () {
+        {{ componentMethodName }}: function () {
             {{ extendMethod ? "this._super();" : "" }}
             }
         });

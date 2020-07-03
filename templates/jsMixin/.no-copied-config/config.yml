@@ -31,3 +31,17 @@ properties:
         type: string
         required: true
         description: Method name
+        depend:
+            type: "plain"
+    componentMethodName:
+        type: string
+        required: true
+        description: Method name
+        depend:
+            type: "component"
+    widgetName:
+        type: string
+        required: true
+        description: Widget name
+        depend:
+            type: "jQuery widget"
