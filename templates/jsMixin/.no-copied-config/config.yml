@@ -1,15 +1,7 @@
 type: module
 description: "This template is used to create a JS mixin.\n"
-#afterGenerate: "1. Add custom logic to your freshly generated JS module in:\n
-#                \nview/{{ area }}/web/js/{{ name|snake }}.js\n
-#                \n{% if withBlock %}2. Add block in your layout xml file:\n
-#                \n<block name=\"{{ vendorName|snake }}.{{ moduleName|snake }}.{{ name|snake }}\" template=\"{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ name|snake }}.phtml\">
-#                \n\t<arguments>
-#                \n\t\t<argument name=\"view_model\" xsi:type=\"object\">{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\ViewModel\\{{ name|pascal }}</argument>
-#                \n\t</arguments>
-#                \n</block>
-#                {% else %}2. Use your JS module in any phtml file:\n
-#                \n<div data-mage-init='{{ '{' }}\"{{ name|camel }}\": {{ '{}}' }}'></div>{% endif %}"
+afterGenerate: "1. Add custom logic to your freshly generated JS mixin in:\n
+                \nview/{{ area }}/web/js/{{ originalModule|kebab }}-mixin.js\n"
 properties:
     type:
         type: choice
@@ -18,10 +10,6 @@ properties:
             - jQuery widget
             - component
         description: JS Mixin type
-    name:
-        type: string
-        required: true
-        description: Name of the JS module
     area:
         type: choice
         options:
