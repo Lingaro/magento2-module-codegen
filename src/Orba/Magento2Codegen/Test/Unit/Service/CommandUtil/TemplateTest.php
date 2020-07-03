@@ -8,6 +8,7 @@ use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
@@ -54,6 +55,11 @@ class TemplateTest extends TestCase
      */
     private $templateProcessorMock;
 
+    /**
+     * @var MockObject|PropertyDependencyChecker
+     */
+    private $propertyDependencyChecker;
+
     public function setUp(): void
     {
         $this->propertyBagFactoryMock = $this->getMockBuilder(PropertyBagFactory::class)
@@ -68,13 +74,16 @@ class TemplateTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
             ->getMockForAbstractClass();
+        $this->propertyDependencyChecker = $this->getMockBuilder(PropertyDependencyChecker::class)
+            ->disableOriginalConstructor()->getMock();
         $this->template = new Template(
             $this->propertyBagFactoryMock,
             $this->codeGeneratorMock,
             $this->ioMock,
             $this->templatePropertyUtilMock,
             $this->propertyValueCollectorFactoryMock,
-            $this->templateProcessorMock
+            $this->templateProcessorMock,
+            $this->propertyDependencyChecker
         );
     }
 

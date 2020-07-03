@@ -2,8 +2,11 @@
 
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Util\PropertyBag;
+use RuntimeException;
 
 abstract class AbstractInputCollector extends AbstractCollector
 {
@@ -27,8 +30,11 @@ abstract class AbstractInputCollector extends AbstractCollector
         $this->questionPrefix = $prefix;
     }
 
-    protected function _collectValue(PropertyInterface $property)
+    protected function _collectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
+        if (!$property instanceof InputPropertyInterface) {
+            throw new RuntimeException('Invalid property type.');
+        }
         $blockContent = '';
         if ($property->getRequired()) {
             $blockContent .= '[<comment>REQUIRED</comment>] ';
@@ -40,13 +46,14 @@ abstract class AbstractInputCollector extends AbstractCollector
         if ($blockContent) {
             $this->io->getInstance()->writeln("\n" . ' [' . $property->getName() . '] ' . $blockContent);
         }
-        return $this->collectValueFromInput($property);
+        return $this->collectValueFromInput($property, $propertyBag);
     }
 
     /**
-     * @param PropertyInterface $property
+     * @param InputPropertyInterface $property
+     * @param PropertyBag $propertyBag
      * @return mixed
      */
-    protected abstract function collectValueFromInput(PropertyInterface $property);
+    protected abstract function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag);
 
 }

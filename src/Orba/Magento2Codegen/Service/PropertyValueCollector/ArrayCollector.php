@@ -4,7 +4,11 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
+use Orba\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 class ArrayCollector extends AbstractInputCollector
@@ -13,6 +17,20 @@ class ArrayCollector extends AbstractInputCollector
      * @var CollectorFactory
      */
     private $collectorFactory;
+
+    /**
+     * @var PropertyDependencyChecker
+     */
+    private $propertyDependencyChecker;
+
+    public function __construct(
+        IO $io,
+        PropertyDependencyChecker $propertyDependencyChecker
+    )
+    {
+        parent::__construct($io);
+        $this->propertyDependencyChecker = $propertyDependencyChecker;
+    }
 
     public function setCollectorFactory(CollectorFactory $collectorFactory): void
     {
@@ -26,7 +44,7 @@ class ArrayCollector extends AbstractInputCollector
         }
     }
 
-    protected function collectValueFromInput(PropertyInterface $property)
+    protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag)
     {
         if (is_null($this->collectorFactory)) {
             throw new RuntimeException('Collector factory is unset.');
@@ -37,15 +55,22 @@ class ArrayCollector extends AbstractInputCollector
 
         $promptPattern = 'Do you want to add an item to "%s" array?';
         while ($this->isQuestionForced($property, $i) || $this->io->getInstance()->confirm(
-            sprintf($promptPattern, $property->getName()), true
-        )) {
+                sprintf($promptPattern, $property->getName()), true
+            )) {
             $item = [];
             foreach ($property->getChildren() as $child) {
                 $collector = $this->collectorFactory->create($child);
+                $questionPrefix = $this->questionPrefix . $property->getName() . '.' . $i . '.';
                 if ($collector instanceof AbstractInputCollector) {
-                    $collector->setQuestionPrefix($this->questionPrefix . $property->getName() . '.' . $i . '.');
+                    $collector->setQuestionPrefix($questionPrefix);
                 }
-                $item[$child->getName()] = $collector->collectValue($child);
+                if (
+                    $child instanceof InputPropertyInterface
+                    && $this->areDependencyConditionsMet($child, $propertyBag, $item)
+                ) {
+                    continue;
+                }
+                $item[$child->getName()] = $collector->collectValue($child, $propertyBag);
             }
             $items[] = $item;
             $i++;
@@ -55,11 +80,21 @@ class ArrayCollector extends AbstractInputCollector
         return $items;
     }
 
-    private function isQuestionForced(PropertyInterface $property, int $i): bool
+    private function isQuestionForced(InputPropertyInterface $property, int $i): bool
     {
         if ($i > 0) {
             return false;
         }
         return $property->getRequired();
+    }
+
+    private function areDependencyConditionsMet(
+        InputPropertyInterface $property,
+        PropertyBag $propertyBag,
+        array $item
+    ): bool
+    {
+        return !$this->propertyDependencyChecker->areRootConditionsMet($property, $propertyBag)
+            || !$this->propertyDependencyChecker->areScopeConditionsMet('item', $property, $item);
     }
 }

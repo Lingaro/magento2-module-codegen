@@ -3,10 +3,12 @@
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
+use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\Template as TemplateModel;
 use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
@@ -50,13 +52,19 @@ class Template
      */
     private $templateProcessor;
 
+    /**
+     * @var PropertyDependencyChecker
+     */
+    private $propertyDependencyChecker;
+
     public function __construct(
         PropertyBagFactory $propertyBagFactory,
         CodeGenerator $codeGenerator,
         IO $io,
         TemplateProperty $templatePropertyUtil,
         CollectorFactory $propertyValueCollectorFactory,
-        TemplateProcessorInterface $templateProcessor
+        TemplateProcessorInterface $templateProcessor,
+        PropertyDependencyChecker $propertyDependencyChecker
     )
     {
         $this->propertyBagFactory = $propertyBagFactory;
@@ -65,6 +73,7 @@ class Template
         $this->templatePropertyUtil = $templatePropertyUtil;
         $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
         $this->templateProcessor = $templateProcessor;
+        $this->propertyDependencyChecker = $propertyDependencyChecker;
     }
 
     /**
@@ -105,16 +114,14 @@ class Template
         );
         /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
-            if($property->getDepend()) {
-                foreach ($property->getDepend() as $propertyKey => $propertyValue) {
-                    if(!isset($propertyBag[$propertyKey]) || $propertyBag[$propertyKey] != $propertyValue) {
-                        // we can set default value if we want to
-                        continue 2;
-                    }
-                }
+            if (
+                $property instanceof InputPropertyInterface
+                && !$this->propertyDependencyChecker->areRootConditionsMet($property, $propertyBag)
+            ) {
+                continue;
             }
             $valueCollector = $this->propertyValueCollectorFactory->create($property);
-            $propertyBag[$property->getName()] = $valueCollector->collectValue($property);
+            $propertyBag[$property->getName()] = $valueCollector->collectValue($property, $propertyBag);
         }
         return $propertyBag;
     }
