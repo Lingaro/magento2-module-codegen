@@ -30,6 +30,8 @@ define([
         return wrapper.wrap({{ methodName }}, function (original, config, element) {
             original(config, element);
         });
+{% else %}
+        return {{ methodName }};
 {% endif %}
     };
 {% endif %}
