@@ -7,6 +7,7 @@ use Orba\Magento2Codegen\Model\ArrayProperty;
 use Orba\Magento2Codegen\Model\BooleanProperty;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
 use Orba\Magento2Codegen\Model\ConstProperty;
+use Orba\Magento2Codegen\Model\IntegerProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Orba\Magento2Codegen\Service\PropertyBuilder;
@@ -201,6 +202,21 @@ class PropertyBuilderTest extends TestCase
         $property = new BooleanProperty();
         $result = $this->propertyBuilder->addDefaultValue($property, ['default' => true]);
         $this->assertTrue($property->getDefaultValue());
+        $this->assertSame($result, $this->propertyBuilder);
+    }
+
+    public function testAddDefaultValueThrowsExceptionForIntegerPropertyIfValueIsNotBoolean(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $property = new IntegerProperty();
+        $this->propertyBuilder->addDefaultValue($property, ['default' => 'string']);
+    }
+
+    public function testAddDefaultValueSetsDefaultValueForIntegerProperty(): void
+    {
+        $property = new IntegerProperty();
+        $result = $this->propertyBuilder->addDefaultValue($property, ['default' => 123]);
+        $this->assertIsInt($property->getDefaultValue());
         $this->assertSame($result, $this->propertyBuilder);
     }
 

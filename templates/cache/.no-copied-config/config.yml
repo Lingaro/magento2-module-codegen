@@ -1,0 +1,26 @@
+type: module
+description: "This template is used to create a cache type"
+afterGenerate: "A new cache type \"{{ cacheName|snake }}_cache\" has been created, but is disabled.\n\n
+                To enable the newly created cache type, proceed as follows:\n
+                1. Login to your Magento admin panel.\n
+                2. Navigate to System / Tools / Cache Management.\n
+                3. Select the checkbox next to the new cache type.\n
+                4. Choose `Enable` in the `Actions` dropdown and click 'Submit'."
+properties:
+  cacheName:
+    type: string
+    required: true
+    description: Name of new cache type
+  label:
+    type: string
+    required: true
+    description: Label of new cache type
+  description:
+    type: string
+    required: true
+    description: Description of new cache type
+  lifeTime:
+    type: integer
+    required: true
+    default: 1800
+    description: Cache lifetime in seconds
