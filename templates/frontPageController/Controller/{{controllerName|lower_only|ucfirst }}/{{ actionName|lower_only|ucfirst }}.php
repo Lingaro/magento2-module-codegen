@@ -4,16 +4,20 @@
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
- 
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|lower_only|ucfirst }};
 
-use Magento\Framework\App\Action\Action;
+{% set parent_class = 'Action' %}
+{% if actionName|lower_only|ucfirst == parent_class %}
+{% set parent_class = 'BaseAction' %}
+{% endif %}
+use Magento\Framework\App\Action\Action{% if parent_class != 'Action' %} as {{ parent_class }}{% endif %};
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-class {{ actionName|lower_only|ucfirst }} extends Action implements HttpGetActionInterface
+class {{ actionName|lower_only|ucfirst }} extends {{ parent_class }} implements HttpGetActionInterface
 {
     /**
      * @var PageFactory
