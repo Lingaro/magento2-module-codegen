@@ -195,24 +195,31 @@ properties:
       apply_to_simple:
         type: boolean
         description: Should attribute be applied to simple products?
+        default: false
       apply_to_configurable:
         type: boolean
         description: Should attribute be applied to configurable products?
+        default: false
       apply_to_grouped:
         type: boolean
         description: Should attribute be applied to grouped products?
+        default: false
       apply_to_virtual:
         type: boolean
         description: Should attribute be applied to virtual products?
+        default: false
       apply_to_downloadable:
         type: boolean
         description: Should attribute be applied to downloadable products?
+        default: false
       apply_to_bundle:
         type: boolean
         description: Should attribute be applied to bundle products?
+        default: false
       apply_to_giftcard:
         type: boolean
         description: Should attribute be applied to giftcard products?
+        default: false
       options:
         type: string
         description: "Comma-separated custom options. Fill in only for select or multiselect attribute. Do not fill in if source model is used. Example: \"Male,Female\"."
