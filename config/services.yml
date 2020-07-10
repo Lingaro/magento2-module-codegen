@@ -260,6 +260,7 @@ services:
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
         lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
         ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
+        pluralize: '@Orba\Magento2Codegen\Service\StringFilter\PluralizeFilter'
 
   Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
     arguments:
