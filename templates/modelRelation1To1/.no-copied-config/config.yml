@@ -1,0 +1,22 @@
+type: module
+description: Creates a 1 to 1 relation
+afterGenerate: "1. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:\n
+                \n
+                bin/magento setup:db-declaration:generate-whitelist --module-name {{ vendorName|pascal }}_{{ moduleName|pascal }}"
+properties:
+    entityName:
+        type: string
+        required: true
+        description: Entity name
+    entity2Name:
+        type: string
+        required: true
+        description: Related entity name
+    onDelete:
+        type: choice
+        options:
+            - CASCADE
+            - SET NULL
+            - NO ACTION
+        default: CASCADE
+        description: Foreign key trigger
