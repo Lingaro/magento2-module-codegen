@@ -8,4 +8,8 @@ namespace Orba\Magento2Codegen\Model;
  */
 class BooleanProperty extends AbstractInputProperty
 {
+    public function getDefaultValue()
+    {
+        return (bool) parent::getDefaultValue();
+    }
 }
