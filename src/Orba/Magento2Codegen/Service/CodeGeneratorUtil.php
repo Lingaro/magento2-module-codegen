@@ -21,17 +21,31 @@ class CodeGeneratorUtil
      */
     private $io;
 
-    public function __construct(Filesystem $filesystem, FilepathUtil $filepathUtil, IO $io)
+    /**
+     * @var TemplateDir
+     */
+    private $templateDir;
+
+    public function __construct(
+        Filesystem $filesystem,
+        FilepathUtil $filepathUtil,
+        IO $io,
+        TemplateDir $templateDir
+    )
     {
         $this->filesystem = $filesystem;
         $this->filepathUtil = $filepathUtil;
         $this->io = $io;
+        $this->templateDir = $templateDir;
     }
 
     public function getDestinationFilePath(string $filePath, string $rootDir): string
     {
         return $this->filepathUtil->getAbsolutePath(
-            $this->filepathUtil->removeTemplateDirFromPath($filePath),
+            $this->filepathUtil->removeTemplateDirFromPath(
+                $filePath,
+                $this->templateDir->getTemplateRepositoryDirectories()
+            ),
             $rootDir
         );
     }
