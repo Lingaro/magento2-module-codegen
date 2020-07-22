@@ -14,16 +14,21 @@ class JsonMerger extends AbstractMerger implements MergerInterface
     /**
      * @param string $oldContent
      * @param string $newContent
+     * @param int $options
      * @return string
      * @throws Exception
      */
-    public function merge(string $oldContent, string $newContent): string
+    public function merge(
+        string $oldContent,
+        string $newContent,
+        int $options = JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES
+    ): string
     {
         $oldContent = $this->parse($oldContent);
         $newContent = $this->parse($newContent);
 
         $content = $this->arrayMergeRecursiveDistinct($oldContent, $newContent);
-        $content = json_encode($content, JSON_PRETTY_PRINT + JSON_FORCE_OBJECT + JSON_UNESCAPED_SLASHES);
+        $content = json_encode($content, $options);
 
         return $content;
     }
