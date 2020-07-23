@@ -1,0 +1,47 @@
+type: root
+description: 'This template is used to create basic configurations needed to start a custom theme.'
+afterGenerate: "1. To apply changes please run setup upgrade command:
+                \n
+                \nbin/magento setup:upgrade"
+properties:
+  vendorName:
+    type: string
+    required: true
+    default: Orba
+    description: Typically a company name
+  themeName:
+    type: string
+    required: true
+    default: base
+    description: A short name describing theme
+  parent:
+    type: choice
+    options:
+      - Magento/blank
+      - Magento/luma
+      - other
+    description: The parent theme
+  parentName:
+    type: string
+    required: true
+    depend:
+        parent: other
+  assignTo:
+    type: choice
+    options:
+        - default
+        - website
+        - store
+        - none
+    default: default
+    description: Choose the scope to which should be assigned current theme
+  websiteCode:
+    type: string
+    required: true
+    depend:
+        assignTo: website
+  storeCode:
+    type: string
+    required: true
+    depend:
+        assignTo: store
