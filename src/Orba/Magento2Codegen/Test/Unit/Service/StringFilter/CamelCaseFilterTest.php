@@ -38,7 +38,16 @@ class CamelCaseFilterTest extends TestCase
             ['one1two2', 'one1two2'],
             ['_one_', 'one'],
             ['one__two', 'oneTwo'],
-            [' one  two ', 'oneTwo']
+            [' one  two ', 'oneTwo'],
+            ['ModelNToN', 'modelNToN'],
+            ['ModeLNToN', 'modeLnToN'],
+            ['Model NToN', 'modelNToN'],
+            ['ModelN ToN', 'modelNToN'],
+            ['modelNTON', 'modelNton'],
+            ['modelNTo10TH', 'modelNTo10Th'],
+            ['model1ToN', 'model1ToN'],
+            ['model1TON', 'model1Ton'],
+            ['EMAsMOTHER', 'emAsMother'],
         ];
     }
 }
