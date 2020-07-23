@@ -9,7 +9,7 @@ class DatabaseType
     const INT_TYPES = ['int', 'smallint', 'bigint', 'tinyint', 'timestamp'];
     const DECIMAL_TYPES = ['decimal', 'float', 'double'];
     const BOOLEAN_TYPES = ['boolean'];
-    const STRING_TYPES = ['blob', 'varbinary', 'varchar'];
+    const STRING_TYPES = ['varbinary', 'varchar'];
     const ALLOWED_TYPES = ['bigint', 'blob', 'boolean', 'date', 'datetime',
         'decimal', 'double', 'float', 'int', 'smallint', 'text', 'timestamp', 'tinyint',
         'varbinary', 'varchar'];
