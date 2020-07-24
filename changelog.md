@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2020-07-24
+### Added
+- Dev documentation about `depend` and `required` property params [ZZ01-83](https://orba.atlassian.net/browse/ZZ01-83)
+
+### Changed
+- Behavior of `camel`, `pascal`, `snake` and `kebab` filters for strings with multiple capital letters [ZZ01-100](https://orba.atlassian.net/browse/ZZ01-100)
+
+### Fixed
+- Error thrown when trying to generate code from external template [ZZ01-102](https://orba.atlassian.net/browse/ZZ01-102)
+- "The attribute 'length' is not allowed" error thrown when generating 'model' or 'quoteFields' template [ZZ01-96](https://orba.atlassian.net/browse/ZZ01-96)
+
 ## [1.1.2] - 2020-07-20
 ### Fixed
 - Issue of `frontPageController` and `frontPostController` templates generating invalid code for controller action named `action` [ZZ01-95](https://orba.atlassian.net/browse/ZZ01-95)
