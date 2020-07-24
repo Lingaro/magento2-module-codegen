@@ -211,6 +211,15 @@ services:
       -
         - addMerger
         -
+          - '/\/module\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/module': 'name'
+              '/config/module/sequence/module': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
       -
