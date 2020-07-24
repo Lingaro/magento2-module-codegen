@@ -77,7 +77,11 @@ class {{ entityName|pascal }}To{{ entity2Name|pascal }}Relation implements {{ en
     public function get{{ entityName|pascal }}({{ entity2Name|pascal }}Interface ${{ entity2Name|camel }}): ?{{ entityName|pascal }}Interface
     {
         try {
-            return $this->{{ entityName|camel }}Repository->getById(${{ entity2Name|camel }}->get{{ entityName|pascal }}Id());
+            $entityId = ${{ entity2Name|camel }}->get{{ entityName|pascal }}Id();
+            if(empty($entityId)) {
+                return null;
+            }
+            return $this->{{ entityName|camel }}Repository->getById($entityId);
         } catch (NoSuchEntityException $exception) {
             return null;
         }

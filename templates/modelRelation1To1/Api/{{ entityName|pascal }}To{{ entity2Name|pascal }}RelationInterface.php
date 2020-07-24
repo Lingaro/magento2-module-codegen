@@ -7,7 +7,6 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api;
 
-use Magento\Framework\Exception\NoSuchEntityException;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entity2Name|pascal }}Interface;
 
