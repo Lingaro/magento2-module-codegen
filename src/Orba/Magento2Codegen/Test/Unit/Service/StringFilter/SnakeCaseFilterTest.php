@@ -39,7 +39,9 @@ class SnakeCaseFilterTest extends TestCase
             ['one1Two2', 'one1_two2'],
             ['_one_', 'one'],
             ['one__two', 'one_two'],
-            [' one  two ', 'one_two']
+            [' one  two ', 'one_two'],
+            ['ModelNToN', 'model_n_to_n'],
+            ['superXMLMerger', 'super_xml_merger']
         ];
     }
 }
