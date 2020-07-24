@@ -62,7 +62,7 @@ Properties definition should be placed in `properties` root node of `config.yml`
 
 ##### String
 
-String properties are the most common ones. For each of them you can define optional description and default value. During template generation a user will be simply asked for a value of each string property.
+String properties are the most common ones. For each of them you can define optional description, requiredness and default value. During template generation a user will be simply asked for a value of each string property.
 
 Exemplary config:
 
@@ -72,6 +72,7 @@ properties:
     type: "string"
     description: "A short name describing module"
     default: "Orba"
+    required: true
 ```
 
 Exemplary template file:
@@ -88,7 +89,7 @@ Hi, I'm a vendor and my name is Acme.
 
 ##### Boolean
 
-Boolean properties are used for all these situations in which you need to generate something like "0/1", "yes/no", "true/false" or you want to build an if condition, but you don't want a user to worry about the correct form of answer. For every boolean property you can define optional description and default value. During template generation a user will be simply asked for a "yes/no" answer for each boolean property.
+Boolean properties are used for all these situations in which you need to generate something like "0/1", "yes/no", "true/false" or you want to build an if condition, but you don't want a user to worry about the correct form of answer. For every boolean property you can define optional description, requiredness and default value. During template generation a user will be simply asked for a "yes/no" answer for each boolean property.
 
 Exemplary config:
 
@@ -97,6 +98,7 @@ properties:
   required:
     type: "boolean"
     description: "Is field required"
+    required: true
     default: false
 ```
 
@@ -144,7 +146,7 @@ My puppy is a snake.
 
 ##### Array
 
-Array properties are used for complex structures with for-in loops. For each of them you need to define `children`, ie. its subproperties (of any type). Array property has an optional description, but no default value. During template generation a user will be asked for a value of each child property, forming a single item. Then they will be asked if they want to proceed with another item, and so on.
+Array properties are used for complex structures with for-in loops. For each of them you need to define `children`, ie. its subproperties (of any type). Array property has an optional description and requiredness, but no default value. During template generation a user will be asked for a value of each child property, forming a single item. Then they will be asked if they want to proceed with another item, and so on.
 
 Exemplary config:
 
@@ -152,7 +154,8 @@ Exemplary config:
 properties:
   columns:
     type: "array"
-    description: "Array of database columns defintions"
+    description: "Array of database columns definitions"
+    required: true
     children:
       name:
         type: "string"
@@ -205,6 +208,46 @@ It will produce the following result:
 ```
 Hi, I'm Pi and my value is 3.1415.
 ```
+
+#### Template properties dependencies
+
+Template property visibility can depend on value of previously defined property.
+
+Exemplary config:
+
+```yaml
+properties:
+  scope:
+    type: choice
+    options:
+      - store
+      - website
+  storeCode:
+    type: string
+    depend:
+      scope: store
+```
+
+In this example user will be asked for `storeCode` value only if they chosen `store` as `scope`.
+
+There might be multiple dependency conditions.
+
+Exemplary config:
+
+```yaml
+properties:
+  isNice:
+    type: bool
+  isCool:
+    type: bool
+  something:
+    type: string
+    depend:
+      isNice: true
+      isCool: true
+```
+
+In this example user will be asked for `something` value only if they answered `yes` to `isNice` and `isCool`.
 
 #### Template dependencies
 
