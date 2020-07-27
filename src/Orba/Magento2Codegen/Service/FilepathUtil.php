@@ -33,17 +33,26 @@ class FilepathUtil
         return rtrim($rootDir, '/') . '/' . ltrim($filePath, '/');
     }
 
-    public function removeTemplateDirFromPath(string $filePath): string
+    public function removeTemplateDirFromPath(string $filePath, array $templateRepositoryDirs): string
     {
         if (empty($filePath)) {
             throw new InvalidArgumentException('File path must not be empty.');
         }
-        if (strpos($filePath, TemplateDir::DIR) !== 0) {
-            throw new InvalidArgumentException(
-                sprintf('File path must start with "%s".', TemplateDir::DIR)
-            );
+        if (empty($templateRepositoryDirs)) {
+            throw new InvalidArgumentException('Template repository dirs array must not be empty.');
         }
-        $filePath = str_replace(TemplateDir::DIR, '', $filePath);
+        $templateRepositoryDir = null;
+        foreach ($templateRepositoryDirs as $dir) {
+            if (strpos($filePath, $dir) === 0) {
+                $templateRepositoryDir = $dir;
+                break;
+            }
+        }
+        if (is_null($templateRepositoryDir)) {
+            throw new InvalidArgumentException('File path must start with template repository dir.');
+        }
+
+        $filePath = str_replace($templateRepositoryDir, '', $filePath);
         if (!preg_match('/^\/[^\/]*\/(.*)/', $filePath, $matches)) {
             throw new InvalidArgumentException('File path must contain template subdirectory.');
         }

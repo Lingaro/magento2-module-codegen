@@ -38,7 +38,9 @@ class CamelCaseFilterTest extends TestCase
             ['one1two2', 'one1two2'],
             ['_one_', 'one'],
             ['one__two', 'oneTwo'],
-            [' one  two ', 'oneTwo']
+            [' one  two ', 'oneTwo'],
+            ['ModelNToN', 'modelNToN'],
+            ['superXMLMerger', 'superXmlMerger']
         ];
     }
 }

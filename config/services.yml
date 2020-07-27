@@ -219,6 +219,15 @@ services:
       -
         - addMerger
         -
+          - '/\/module\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/module': 'name'
+              '/config/module/sequence/module': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
       -
@@ -268,6 +277,7 @@ services:
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
         lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
         ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
+        pluralize: '@Orba\Magento2Codegen\Service\StringFilter\PluralizeFilter'
 
   Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
     arguments:

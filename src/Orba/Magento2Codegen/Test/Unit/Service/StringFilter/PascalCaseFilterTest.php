@@ -38,7 +38,9 @@ class PascalCaseFilterTest extends TestCase
             ['one1two2', 'One1two2'],
             ['_one_', 'One'],
             ['one__two', 'OneTwo'],
-            [' one  two ', 'OneTwo']
+            [' one  two ', 'OneTwo'],
+            ['ModelNToN', 'ModelNToN'],
+            ['superXMLMerger', 'SuperXmlMerger']
         ];
     }
 }
