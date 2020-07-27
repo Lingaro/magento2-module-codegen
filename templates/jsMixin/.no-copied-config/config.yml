@@ -1,47 +1,42 @@
 type: module
 description: "This template is used to create a JS mixin.\n"
 afterGenerate: "1. Add custom logic to your freshly generated JS mixin in:\n
-                \nview/{{ area }}/web/js/{{ originalModule|kebab }}-mixin.js\n"
+                \n
+                view/{{ area }}/web/js/{{ originalModule|kebab }}-mixin.js\n
+                \n
+                2. Refresh your requirejs-config by removing static files from current theme:\n
+                \n
+                rm -rf pub/static/{{ area }}/<vendor>/<theme>"
 properties:
     type:
         type: choice
         options:
-            - plain
+            - js function
+            - js object
             - jQuery widget
             - component
-        description: JS Mixin type
+        description: Type of the module to which mixin will be added
     area:
         type: choice
         options:
             - base
             - frontend
             - adminhtml
-        default: base
-        description: Area in which module will be used
+        default: frontend
+        description: Area of the module to which mixin will be added
     originalModule:
         type: string
         required: true
-        description: Full path or alias from requirejs-config
-    extendMethod:
-        type: bool
-        required: true
-        default: false
-        description: Should method extend an original method. If not, new one will be added
-    methodName:
-        type: string
-        required: true
-        description: Method name
-        depend:
-            type: "plain"
-    componentMethodName:
-        type: string
-        required: true
-        description: Method name
-        depend:
-            type: "component"
+        description: Full path to the module to which mixin will be added, eg. "Magento_Checkout/js/sidebar"
     widgetName:
         type: string
         required: true
-        description: Widget name
+        description: Name of the widget that mixin will override
         depend:
-            type: "jQuery widget"
+            type: jQuery widget
+    methodName:
+        type: string
+        required: true
+        description: Name of the method that mixin will override
+        depend:
+            type: js object
