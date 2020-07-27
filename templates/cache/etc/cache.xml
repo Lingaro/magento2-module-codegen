@@ -8,7 +8,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
-    <type name="{{ cacheName|snake }}_cache" translate="label,description" instance="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Cache\{{ cacheName|pascal }}">
+    <type name="{{ cacheName|snake }}" translate="label,description" instance="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Cache\{{ cacheName|pascal }}">
         <label>{{ label }}</label>
         <description>{{ description }}</description>
     </type>

@@ -15,7 +15,7 @@ class {{ cacheName|pascal }} extends TagScope
     /**
      * Cache type code unique among all cache types
      */
-    const TYPE_IDENTIFIER = '{{ cacheName|snake }}_cache';
+    const TYPE_IDENTIFIER = '{{ cacheName|snake }}';
 
     /**
      * Cache tag used to distinguish the cache type from all other cache
