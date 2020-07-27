@@ -20,7 +20,7 @@ properties:
     required: true
     description: Description of new cache type
   lifeTime:
-    type: integer
+    type: string
     required: true
-    default: 1800
+    default: "1800"
     description: Cache lifetime in seconds

@@ -86,7 +86,12 @@ class {{ cacheName|pascal }} extends TagScope
      */
     public function load($identifier)
     {
-        return $this->_unserialize(parent::load($identifier));
+        $data = parent::load($identifier);
+
+        if (!empty($data)) {
+            return $this->_unserialize($data);
+        }
+        return $data;
     }
 
     /**

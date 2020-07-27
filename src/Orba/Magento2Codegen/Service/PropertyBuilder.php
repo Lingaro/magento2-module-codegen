@@ -8,7 +8,6 @@ use Orba\Magento2Codegen\Model\BooleanProperty;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
 use Orba\Magento2Codegen\Model\ConstProperty;
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Model\IntegerProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 
@@ -88,10 +87,6 @@ class PropertyBuilder
             } else if ($property instanceof BooleanProperty) {
                 if (!is_bool($config['default'])) {
                     throw new InvalidArgumentException('Default value must be boolean.');
-                }
-            } else if ($property instanceof IntegerProperty) {
-                if (!is_int($config['default'])) {
-                    throw new InvalidArgumentException('Default value must be integer.');
                 }
             } else {
                 throw new InvalidArgumentException('Setting default value is not supported for this property.');
