@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 use Exception;
 use Orba\Magento2Codegen\Service\FileMerger\JsonMerger;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Orba\Magento2Codegen\Service\ArrayMerger;
 use UnexpectedValueException;
 
 class JsonMergerTest extends TestCase
@@ -16,7 +17,7 @@ class JsonMergerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->jsonMerger = new JsonMerger();
+        $this->jsonMerger = new JsonMerger(new ArrayMerger());
     }
 
     public function testMergeThrowExceptionIfOneStringInvalidJson(): void

@@ -7,6 +7,7 @@ use Orba\Magento2Codegen\Service\FileMerger\JsonMerger;
 use Orba\Magento2Codegen\Service\FileMerger\RequirejsConfigMerger;
 use Orba\Magento2Codegen\Service\JsConverter;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Orba\Magento2Codegen\Service\ArrayMerger;
 
 class RequirejsConfigMergerTest extends TestCase
 {
@@ -17,7 +18,10 @@ class RequirejsConfigMergerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->merger = new RequirejsConfigMerger(new JsonMerger(), new JsConverter());
+        $this->merger = new RequirejsConfigMerger(
+            new JsonMerger(new ArrayMerger),
+            new JsConverter()
+        );
     }
 
     /**

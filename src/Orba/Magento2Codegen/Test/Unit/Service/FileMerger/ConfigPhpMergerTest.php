@@ -7,6 +7,7 @@ use Orba\Magento2Codegen\Service\FileMerger\ConfigPhpMerger;
 use Orba\Magento2Codegen\Service\FileMerger\Formatter\ConfigPhpFormatter;
 use Orba\Magento2Codegen\Service\FilepathUtil;
 use Orba\Magento2Codegen\Service\FinderFactory;
+use Orba\Magento2Codegen\Service\ArrayMerger;
 use InvalidArgumentException;
 
 class ConfigPhpMergerTest extends TestCase
@@ -24,7 +25,7 @@ class ConfigPhpMergerTest extends TestCase
     public function setUp(): void
     {
         $this->filepathUtil = new FilepathUtil(new FinderFactory());
-        $this->merger = new ConfigPhpMerger(new ConfigPhpFormatter());
+        $this->merger = new ConfigPhpMerger(new ConfigPhpFormatter(), new ArrayMerger());
     }
 
     /**
