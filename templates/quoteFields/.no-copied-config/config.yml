@@ -31,7 +31,7 @@ properties:
         description: Database type of field
       length:
         type: string
-        description: In text and binary types (including varchar and varbinary), is length of column, for int types is padding. If empty, will use default.
+        description: For varchar and varbinary types, it is length of column, for int types, it is padding. If empty, will use default.
       nullable:
         type: boolean
         default: false
