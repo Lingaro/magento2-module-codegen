@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Copyright © 2020 Orba. All rights reserved.
- * @author    info@orba.co
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
 
 use \Magento\Framework\Component\ComponentRegistrar;

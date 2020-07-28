@@ -1,8 +1,8 @@
 type: root
 description: 'This template is used to create basic configurations needed to start a custom theme.'
-afterGenerate: "1. To apply changes please run setup upgrade command:
+afterGenerate: "1. To apply changes please run setup upgrade command:\n
                 \n
-                \nbin/magento setup:upgrade"
+                bin/magento setup:upgrade"
 properties:
   vendorName:
     type: string
@@ -20,10 +20,11 @@ properties:
       - Magento/blank
       - Magento/luma
       - other
-    description: The parent theme
+    description: Parent theme
   parentName:
     type: string
     required: true
+    description: Parent theme name
     depend:
         parent: other
   assignTo:
@@ -34,14 +35,16 @@ properties:
         - store
         - none
     default: default
-    description: Choose the scope to which should be assigned current theme
+    description: The scope to which new theme will be assigned. Use "none" if you don't want to assign it anywhere.
   websiteCode:
     type: string
     required: true
+    description: Code of the website to which new theme will be assigned
     depend:
         assignTo: website
   storeCode:
     type: string
     required: true
+    description: Code of the store to which new theme will be assigned
     depend:
         assignTo: store

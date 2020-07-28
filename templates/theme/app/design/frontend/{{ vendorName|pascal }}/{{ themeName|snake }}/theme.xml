@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @copyright Copyright © 2020 Orba. All rights reserved.
- * @author    info@orba.co
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
 -->
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/theme.xsd">
