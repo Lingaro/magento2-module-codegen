@@ -3,7 +3,7 @@
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
 use Exception;
-use UnexpectedValueException;
+use Orba\Magento2Codegen\Service\ArrayMerger;
 
 /**
  * Class JsonMerger
@@ -11,6 +11,19 @@ use UnexpectedValueException;
  */
 class JsonMerger extends AbstractMerger implements MergerInterface
 {
+    /**
+     * @var ArrayMerger
+     */
+    private $arrayMergeService;
+
+    /**
+     * @param ArrayMerger $arrayMergeService
+     */
+    public function __construct(ArrayMerger $arrayMergeService)
+    {
+        $this->arrayMergeService = $arrayMergeService;
+    }
+
     /**
      * @param string $oldContent
      * @param string $newContent
@@ -27,7 +40,7 @@ class JsonMerger extends AbstractMerger implements MergerInterface
         $oldContent = $this->parse($oldContent);
         $newContent = $this->parse($newContent);
 
-        $content = $this->arrayMergeRecursiveDistinct($oldContent, $newContent);
+        $content = $this->arrayMergeService->arrayMergeRecursiveDistinct($oldContent, $newContent);
         $content = json_encode($content, $options);
 
         return $content;
@@ -45,46 +58,5 @@ class JsonMerger extends AbstractMerger implements MergerInterface
             throw new Exception("An error occurred while parsing string: " . json_last_error_msg());
         }
         return $jsonArray;
-    }
-
-    /**
-     * @return array
-     */
-    private function arrayMergeRecursiveDistinct(): array
-    {
-        $arrays = func_get_args();
-        $base = array_shift($arrays);
-        $canMergeBase = $canMergeAppend = true;
-        if (!is_array($base)) {
-            $base = empty($base) ? array() : array($base);
-            $canMergeBase = false;
-        }
-        foreach ($arrays as $append) {
-            if (!is_array($append)) {
-                $append = array($append);
-                $canMergeAppend = false;
-            }
-            foreach ($append as $key => $value) {
-                if (!array_key_exists($key, $base) and !is_numeric($key)) {
-                    $base[$key] = $append[$key];
-                    continue;
-                }
-                if (is_array($value) || is_array($base[$key])) {
-                    $base[$key] = $this->arrayMergeRecursiveDistinct($base[$key], $append[$key]);
-                } else {
-                    if (!$canMergeBase || !$canMergeAppend) {
-                        throw new UnexpectedValueException('Can\'t merge non array into array');
-                    }
-                    elseif (is_numeric($key)) {
-                        if (!in_array($value, $base)) {
-                            $base[] = $value;
-                        }
-                    } else {
-                        $base[$key] = $value;
-                    }
-                }
-            }
-        }
-        return $base;
     }
 }
