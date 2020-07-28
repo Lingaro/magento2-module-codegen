@@ -5,7 +5,6 @@ namespace Orba\Magento2Codegen\Test\Unit\Service;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\FilepathUtil;
 use Orba\Magento2Codegen\Service\FinderFactory;
-use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
 class FilepathUtilTest extends TestCase
@@ -53,24 +52,30 @@ class FilepathUtilTest extends TestCase
     public function testRemoveTemplateDirFromPathThrowsExceptionIfFilepathIsEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->filepathUtil->removeTemplateDirFromPath('');
+        $this->filepathUtil->removeTemplateDirFromPath('', ['/foo', '/bar']);
+    }
+
+    public function testRemoveTemplateDirFromPathThrowsExceptionIfTemplateRepositoryDirsArrayIsEmpty(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->filepathUtil->removeTemplateDirFromPath('/somedir/module/file.php', []);
     }
 
     public function testRemoveTemplateDirFromPathThrowsExceptionIfFilepathDoesNotStartWithTemplateDir(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->filepathUtil->removeTemplateDirFromPath('/somedir/module/file.php');
+        $this->filepathUtil->removeTemplateDirFromPath('/somedir/module/file.php', ['/foo', '/bar']);
     }
 
     public function testRemoveTemplateDirFromPathThrowsExceptionIfFilepathDoesNotContainTemplateSubDir(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->filepathUtil->removeTemplateDirFromPath(TemplateDir::DIR . '/file.php');
+        $this->filepathUtil->removeTemplateDirFromPath('/bar/file.php', ['/foo', '/bar']);
     }
 
     public function testRemoveTemplateDirFromPathReturnsPathWithRemovedTemplateDirIfFilepathIsCorrect(): void
     {
-        $result = $this->filepathUtil->removeTemplateDirFromPath(TemplateDir::DIR . '/module/some/file.php');
+        $result = $this->filepathUtil->removeTemplateDirFromPath('/bar/module/some/file.php', ['/foo', '/bar']);
         $this->assertSame('some/file.php', $result);
     }
 

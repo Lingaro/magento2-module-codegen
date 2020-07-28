@@ -1,0 +1,42 @@
+type: module
+description: "This template is used to create a JS mixin.\n"
+afterGenerate: "1. Add custom logic to your freshly generated JS mixin in:\n
+                \n
+                view/{{ area }}/web/js/{{ originalModule|kebab }}-mixin.js\n
+                \n
+                2. Refresh your requirejs-config by removing static files from current theme:\n
+                \n
+                rm -rf pub/static/{{ area }}/<vendor>/<theme>"
+properties:
+    type:
+        type: choice
+        options:
+            - js function
+            - js object
+            - jQuery widget
+            - component
+        description: Type of the module to which mixin will be added
+    area:
+        type: choice
+        options:
+            - base
+            - frontend
+            - adminhtml
+        default: frontend
+        description: Area of the module to which mixin will be added
+    originalModule:
+        type: string
+        required: true
+        description: Full path to the module to which mixin will be added, eg. "Magento_Checkout/js/sidebar"
+    widgetName:
+        type: string
+        required: true
+        description: Name of the widget that mixin will override
+        depend:
+            type: jQuery widget
+    methodName:
+        type: string
+        required: true
+        description: Name of the method that mixin will override
+        depend:
+            type: js object

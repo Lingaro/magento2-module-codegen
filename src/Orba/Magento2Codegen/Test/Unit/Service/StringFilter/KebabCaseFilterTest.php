@@ -39,7 +39,9 @@ class KebabCaseFilterTest extends TestCase
             ['one1Two2', 'one1-two2'],
             ['-one-', 'one'],
             ['one--two', 'one-two'],
-            [' one  two ', 'one-two']
+            [' one  two ', 'one-two'],
+            ['ModelNToN', 'model-n-to-n'],
+            ['superXMLMerger', 'super-xml-merger']
         ];
     }
 }

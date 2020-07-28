@@ -29,7 +29,8 @@ class RequirejsConfigMerger extends AbstractMerger implements MergerInterface
     {
         $oldJson = $this->getJsObjectString($oldContent);
         $newJson = $this->getJsObjectString($newContent);
-        return self::VAR_CONFIG_STRING . $this->jsonMerger->merge($oldJson, $newJson);
+        return self::VAR_CONFIG_STRING . $this->jsonMerger
+                ->merge($oldJson, $newJson, JSON_PRETTY_PRINT + JSON_FORCE_OBJECT + JSON_UNESCAPED_SLASHES);
     }
 
     private function getJsObjectString(string $content): string
