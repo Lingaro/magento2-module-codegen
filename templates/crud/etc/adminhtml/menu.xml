@@ -8,6 +8,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}" title="{{ entityName|pascal }}" module="{{ vendorName|pascal }}_{{ moduleName|pascal }}" sortOrder="10" parent="Magento_Backend::content" action="{{ vendorName|snake }}_{{ moduleName|snake }}/{{ entityName|lower_only }}" resource="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}"/>
+        <add id="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}" title="{{ entityName|pascal|pluralize }}" module="{{ vendorName|pascal }}_{{ moduleName|pascal }}" sortOrder="10" parent="Magento_Backend::content" action="{{ vendorName|snake }}_{{ moduleName|snake }}/{{ entityName|lower_only }}" resource="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}"/>
     </menu>
 </config>

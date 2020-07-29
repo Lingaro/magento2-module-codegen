@@ -1,0 +1,26 @@
+type: module
+description: "This template is used to create a cache type"
+afterGenerate: "A new cache type \"{{ cacheName|snake }}\" has been created, but is disabled.
+                To enable it, proceed as follows:\n\n
+                1. Flush Magento config cache\n\n
+                bin/magento cache:flush config\n\n
+                2. Enable new cache type: \n\n
+                bin/magento cache:enable {{ cacheName|snake }}"
+properties:
+  cacheName:
+    type: string
+    required: true
+    description: Name of new cache type
+  label:
+    type: string
+    required: true
+    description: Label of new cache type
+  description:
+    type: string
+    required: true
+    description: Description of new cache type
+  lifeTime:
+    type: string
+    required: true
+    default: "1800"
+    description: Cache lifetime in seconds
