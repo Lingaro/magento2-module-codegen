@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entity2Name|snake }}" resource="default" engine="innodb" comment="{{ entity2Name|pascal }} Table">
+        <column xsi:type="int" name="{{ entityName|snake }}_id" padding="10" unsigned="true" nullable="{% if onDelete == 'SET NULL' %}true{% else %}false{% endif %}" identity="false" comment="{{ entityName|pascal }} ID"/>
+        <constraint xsi:type="foreign" referenceId="{{ vendorName|snake|upper }}_{{ moduleName|snake|upper }}_{{ entity2Name|snake|upper }}_{{ entityName|snake|upper }}_ID_{{ vendorName|snake|upper }}_{{ moduleName|snake|upper }}_{{ entityName|snake|upper }}_ENTITY_ID" table="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entity2Name|snake }}"
+                    column="{{ entityName|snake }}_id" referenceTable="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}" referenceColumn="entity_id" onDelete="{{ onDelete|upper }}"/>
+    </table>
+</schema>
