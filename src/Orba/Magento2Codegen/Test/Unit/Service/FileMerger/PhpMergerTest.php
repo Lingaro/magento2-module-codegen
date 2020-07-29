@@ -9,6 +9,7 @@ use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTreeFactory;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver\NodeChainNameResolver;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
+use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\DeclareCleaner;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Order;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RelationFactory;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
@@ -36,7 +37,8 @@ class PhpMergerTest extends TestCase
     {
         $this->filepathUtil = new FilepathUtil(new FinderFactory());
         $classMethodCleaner = new ClassMethodNodeCleaner(new NodeChainNameResolver());
-        $nodeCleaner = new NodeCleaner($classMethodCleaner);
+        $declareCleaner = new DeclareCleaner(new NodeChainNameResolver());
+        $nodeCleaner = new NodeCleaner($classMethodCleaner, $declareCleaner);
         $rootFactory = new RootFactory(new RelationFactory(), new Order(), $nodeCleaner);
         $nodeTreeFactory = new NodeTreeFactory($rootFactory);
         $this->phpMerger = new PhpMerger($nodeTreeFactory);
