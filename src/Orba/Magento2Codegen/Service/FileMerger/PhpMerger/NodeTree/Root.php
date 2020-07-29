@@ -113,6 +113,8 @@ class Root
                         }
                         $alreadyAccepted[] = $node;
                     }
+                } elseif (!empty($result[self::SET_ABLE_PARAMS])) {
+                    $this->_nodes = $this->_nodeCleaner->clean($this->_lastNode, $this->_nodes);
                 }
             } else {
                 $result[self::SET_ABLE_PARAMS] = array_merge_recursive(
