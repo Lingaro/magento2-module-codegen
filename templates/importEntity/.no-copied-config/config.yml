@@ -1,0 +1,47 @@
+type: module
+description: "This template creates an import model to import data into your custom entity table.
+              \nIt also adds sample import CSV file."
+afterGenerate: "1. Add your validation logic and error message templates to:\n
+                \n
+                {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Model\\Import{{ entityName|pascal }}::validateRow\n
+                {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Model\\Import{{ entityName|pascal }}::_messageTemplates property\n
+                \n
+                2. Flush config cache to apply new import entity:\n
+                \n
+                bin/magento cache:flush config\n
+                \n
+                3. Test your import process in admin panel:\n
+                \n
+                Navigate to System > Import\n
+                Choose \"{{ importEntityLabel }}\" from \"Entity Type\" dropdown"
+properties:
+    entityName:
+        type: string
+        required: true
+        description: Entity name
+    importEntityLabel:
+        type: string
+        required: true
+        description: Import entity label
+    entityDbTable:
+        type: string
+        required: false
+        description: Entity database table. If left empty, "<vendor_name>_<module_name>_<entity_name>" will be used.
+    entityIdColumn:
+        type: string
+        required: true
+        description: Entity Id (primary key) column
+        default: entity_id
+    fields:
+        type: array
+        required: true
+        description: Define all entity database fields to be included in the import
+        children:
+            name:
+                type: string
+                required: true
+                description: Name of the field
+            sampleValue:
+                type: string
+                required: true
+                description: Sample value for import file sample
