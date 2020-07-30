@@ -1,0 +1,3 @@
+{{ entityIdColumn }}{% for item in fields %},{{ item.name|snake }}{% endfor %}
+
+{% for item in fields %},"{{ item.sampleValue|escape('csv')|raw }}"{% endfor %}
