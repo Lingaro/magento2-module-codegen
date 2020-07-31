@@ -20,25 +20,42 @@ class DeclareCleanerTest extends TestCase
      */
     private $nodeChainNameResolver;
 
+    /**
+     * @var Declare_
+     */
+    private $declare;
+
     public function setUp(): void
     {
         $this->nodeChainNameResolver = $this->createPartialMock(
             NodeChainNameResolver::class,
             ['resolve']
         );
+        $this->declare = new Declare_([]);
         $this->declareCleaner = new DeclareCleaner($this->nodeChainNameResolver);
     }
 
-    public function testCleanTwoSimilarDeclaresResultInOne(): void
+    public function testCleanTwoSimilarDeclaresResultInOneItem(): void
     {
-        $parserNode = new Declare_([]);
-
-        $nodes = [$parserNode, $parserNode];
-        $expectedResult = ['resolved_name' => $parserNode];
+        $nodes = [$this->declare, $this->declare];
+        $expectedResult = ['foo' => $this->declare];
 
         $this->nodeChainNameResolver->expects($this->any())
             ->method('resolve')
-            ->willReturn('resolved_name');
+            ->will($this->onConsecutiveCalls('foo', 'foo'));
+
+        $actualResult = $this->declareCleaner->clean($nodes);
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    public function testCleanTwoDifferentDeclaresResultInTwoItems(): void
+    {
+        $nodes = [$this->declare, $this->declare];
+        $expectedResult = ['foo' => $this->declare, 'bar' => $this->declare];
+
+        $this->nodeChainNameResolver->expects($this->any())
+            ->method('resolve')
+            ->will($this->onConsecutiveCalls('foo', 'bar'));
 
         $actualResult = $this->declareCleaner->clean($nodes);
         $this->assertSame($expectedResult, $actualResult);
