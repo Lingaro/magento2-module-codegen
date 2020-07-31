@@ -1,0 +1,89 @@
+type: module
+description: Creates a management class and search criteria usage
+afterGenerate: "1. After creating search criteria with mixed conditions, please mix condition in file:\n
+                \n
+                {{ entityName|pascal }}Management.php"
+properties:
+    entityName:
+        type: string
+        required: true
+        description: Entity name
+    customEntityType:
+        type: string
+        required: false
+        description: Custom entity type e.g. \Orba\PhysicalStore\Api\Data\StoreInterface. If empty, will use default.
+    customEntityRepository:
+        type: string
+        required: false
+        description: Custom entity repository e.g. \Orba\PhysicalStore\Api\StoreRepositoryInterface. If empty, will use default.
+    filters:
+        type: array
+        required: false
+        description: Define all filters by filling property for each field
+        children:
+            field:
+                type: string
+                required: true
+                description: Name of the field in database
+            conditionType:
+                type: choice
+                default: eq
+                options:
+                    - eq
+                    - finset
+                    - from
+                    - gt
+                    - gteq
+                    - in
+                    - like
+                    - lt
+                    - lteq
+                    - moreq
+                    - neq
+                    - nfinset
+                    - nin
+                    - notnull
+                    - 'null'
+                    - from
+                description: Search condition types
+            value:
+                type: string
+                description: Value for condition. Leave empty if you want to add it to the generated function as an argument.
+            type:
+                type: choice
+                description: PHP type of function argument
+                options:
+                    - string
+                    - int
+                    - bool
+                    - float
+                depend:
+                    item.value: ''
+    conditionType:
+        type: choice
+        default: AND
+        options:
+            - AND
+            - OR
+            - mixed
+        description: How filters will be combined
+    sorts:
+        type: array
+        required: false
+        description: Define all sort fields by filling property for each field
+        children:
+            field:
+                type: string
+                required: true
+                description: Name of the field to sort
+            direction:
+                type: choice
+                default: ASC
+                options:
+                    - ASC
+                    - DESC
+                description: Sort direction
+    functionName:
+        type: string
+        required: true
+        description: Name of the function eg. getByCountryAndCity

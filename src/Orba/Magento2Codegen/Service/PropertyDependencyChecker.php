@@ -13,7 +13,7 @@ class PropertyDependencyChecker
         if ($property->getDepend()) {
             foreach ($property->getDepend() as $propertyKey => $propertyValue) {
                 if (strpos($propertyKey, '.') === false) {
-                    if (!isset($propertyBag[$propertyKey])) {
+                    if (!array_key_exists($propertyKey, $propertyBag->toArray())) {
                         throw new RuntimeException(
                             sprintf('Dependency on non-existent property "%s"', $propertyKey)
                         );
@@ -33,7 +33,7 @@ class PropertyDependencyChecker
             foreach ($property->getDepend() as $propertyKey => $propertyValue) {
                 $propertyKeyArray = explode('.', $propertyKey, 2);
                 if (count($propertyKeyArray) === 2 && $propertyKeyArray[0] === $scope) {
-                    if (!isset($values[$propertyKeyArray[1]])) {
+                    if (!array_key_exists($propertyKeyArray[1], $values)) {
                         throw new RuntimeException(
                             sprintf('Dependency on non-existent property "%s"', $propertyKey)
                         );
