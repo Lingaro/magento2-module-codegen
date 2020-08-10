@@ -4,6 +4,7 @@
 namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
+use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\DeclareCleaner;
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\NodeCleanerInterface;
 use PhpParser\Node;
 
@@ -21,12 +22,15 @@ class NodeCleaner
     /**
      * NodeCleaner constructor.
      * @param ClassMethodNodeCleaner $classMethodCleaner
+     * @param DeclareCleaner $declareCleaner
      */
     public function __construct(
-        ClassMethodNodeCleaner $classMethodCleaner
+        ClassMethodNodeCleaner $classMethodCleaner,
+        DeclareCleaner $declareCleaner
     ) {
         $this->cleaners = [
-            $classMethodCleaner->getCode() => $classMethodCleaner
+            $classMethodCleaner->getCode() => $classMethodCleaner,
+            $declareCleaner->getCode()     => $declareCleaner
         ];
     }
 
