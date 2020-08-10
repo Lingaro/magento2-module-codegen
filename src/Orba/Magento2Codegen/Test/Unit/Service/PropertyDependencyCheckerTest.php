@@ -61,10 +61,13 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->propertyDependencyChecker->areRootConditionsMet($this->propertyMock, $this->propertyBag);
     }
 
-    public function testAreRootConditionsMetReturnsTrueIfRootDependencyFoundInBagAndConditionIsMet(): void
+    /**
+     * @dataProvider getPropertyValues
+     */
+    public function testAreRootConditionsMetReturnsTrueIfRootDependencyFoundInBagAndConditionIsMet($value): void
     {
-        $this->propertyBag->add(['property' => 'value']);
-        $this->propertyMock->expects($this->any())->method('getDepend')->willReturn(['property' => 'value']);
+        $this->propertyBag->add(['property' => $value]);
+        $this->propertyMock->expects($this->any())->method('getDepend')->willReturn(['property' => $value]);
         $result = $this->propertyDependencyChecker->areRootConditionsMet($this->propertyMock, $this->propertyBag);
         $this->assertTrue($result);
     }
@@ -133,6 +136,18 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @dataProvider getPropertyValues
+     */
+    public function testAreScopeConditionsMetReturnsTrueIfScopeDependencyFoundInValuesAndConditionIsMet($value): void
+    {
+        $this->propertyMock->expects($this->any())->method('getDepend')
+            ->willReturn(['scope.property' => $value]);
+        $result = $this->propertyDependencyChecker
+            ->areScopeConditionsMet('scope', $this->propertyMock, ['property' => $value]);
+        $this->assertTrue($result);
+    }
+
     public function testAreScopeConditionsMetReturnsTrueIfMultipleScopeDependenciesFoundInValuesAndAllMetConditions(): void
     {
         $this->propertyMock->expects($this->any())->method('getDepend')
@@ -149,5 +164,16 @@ class PropertyDependencyCheckerTest extends TestCase
         $result = $this->propertyDependencyChecker
             ->areScopeConditionsMet('scope', $this->propertyMock, ['property' => 'value', 'foo' => 'bar']);
         $this->assertFalse($result);
+    }
+
+    public function getPropertyValues(): array
+    {
+        return [
+            ['value'],
+            [true],
+            [''],
+            [null],
+            [false]
+        ];
     }
 }

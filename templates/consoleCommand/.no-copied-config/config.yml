@@ -1,11 +1,15 @@
 type: module
-description: This Template creates a crud module using uiComponents for Grid and Form.
+description: This template creates an empty console command.
 properties:
-  commandName:
-    type: string
-    required: true
-    description: A short name describing command. It will be used insdie "bin/magento".
-  commandDescription:
-    type: string
-    required: true
-    description: A short description explaining feature behind generated command.
+    commandName:
+        type: string
+        required: true
+        description: A short name describing command. It will be used inside "bin/magento", e.g. "some-group:do-something".
+    commandDescription:
+        type: string
+        required: true
+        description: A short description explaining feature behind generated command.
+    commandFilePath:
+        type: string
+        required: true
+        description: Command file path (e.g. "DoSomething" or "SomeGroup/DoSomething").
