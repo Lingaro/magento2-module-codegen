@@ -31,7 +31,7 @@ class Index extends Action
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
     }
-    
+
     /**
      * Index action
      *
@@ -42,7 +42,7 @@ class Index extends Action
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}');
-        $resultPage->getConfig()->getTitle()->prepend(__('{{ entityName|pascal }}'));
+        $resultPage->getConfig()->getTitle()->prepend(__('{{ entityName|pascal|pluralize }}'));
 
         return $resultPage;
     }

@@ -5,6 +5,7 @@ namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ConstProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 class ConstCollector extends AbstractCollector
 {
@@ -15,7 +16,7 @@ class ConstCollector extends AbstractCollector
         }
     }
 
-    protected function _collectValue(PropertyInterface $property)
+    protected function _collectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
         /** @var ConstProperty $property */
         return $property->getValue();

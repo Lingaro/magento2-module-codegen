@@ -10,22 +10,32 @@ class BooleanPropertyTest extends TestCase
     /**
      * @var BooleanProperty
      */
-    private $booleanProperty;
+    private $property;
 
     public function setUp(): void
     {
-        $this->booleanProperty = new BooleanProperty();
+        $this->property = new BooleanProperty();
     }
 
-    public function testSetDefaultValueThrowsExceptionForNonBooleanValue(): void
+    /**
+     * @dataProvider defaultValues
+     */
+    public function testGetDefaultValueReturnsBool($defaultValue, bool $expectedValue)
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->booleanProperty->setDefaultValue('not bool');
+        $this->property->setDefaultValue($defaultValue);
+        $result = $this->property->getDefaultValue();
+        $this->assertSame($expectedValue, $result);
     }
 
-    public function testSetDefaultValueSetsValueForBooleanValue(): void
+    public function defaultValues(): array
     {
-        $this->booleanProperty->setDefaultValue(true);
-        $this->assertSame(true, $this->booleanProperty->getDefaultValue());
+        return [
+            [null, false],
+            [true, true],
+            [false, false],
+            ['string', true],
+            [1, true],
+            [0, false]
+        ];
     }
 }

@@ -2,28 +2,14 @@
 
 namespace Orba\Magento2Codegen\Model;
 
-class BooleanProperty extends AbstractProperty
+/**
+ * Class BooleanProperty
+ * @package Orba\Magento2Codegen\Model
+ */
+class BooleanProperty extends AbstractInputProperty
 {
-    /**
-     * @var bool
-     */
-    private $defaultValue;
-
-    /**
-     * @param mixed $value
-     * @return $this
-     */
-    public function setDefaultValue($value): PropertyInterface
+    public function getDefaultValue()
     {
-        if (!is_bool($value)) {
-            throw new \InvalidArgumentException('Default value must be boolean.');
-        }
-        $this->defaultValue = $value;
-        return $this;
-    }
-
-    public function getDefaultValue(): bool
-    {
-        return (bool) $this->defaultValue;
+        return (bool) parent::getDefaultValue();
     }
 }

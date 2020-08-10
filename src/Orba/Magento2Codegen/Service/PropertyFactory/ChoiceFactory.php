@@ -2,31 +2,20 @@
 
 namespace Orba\Magento2Codegen\Service\PropertyFactory;
 
-use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 
-class ChoiceFactory implements FactoryInterface
+class ChoiceFactory extends AbstractFactory implements FactoryInterface
 {
     public function create(string $name, array $config): PropertyInterface
     {
-        if (empty($name)) {
-            throw new InvalidArgumentException('Name cannot be empty.');
-        }
-        if (empty($config['options'])) {
-            throw new InvalidArgumentException('Array of options is required.');
-        }
-        $property = (new ChoiceProperty())->setName($name);
-        if (isset($config['description'])) {
-            $property->setDescription($config['description']);
-        }
-        $property->setOptions($config['options']);
-        if (isset($config['default'])) {
-            $property->setDefaultValue($config['default']);
-        }
-        if (isset($config['depend'])) {
-            $property->setDepend($config['depend']);
-        }
+        $property = new ChoiceProperty();
+        $this->propertyBuilder
+            ->addName($property, $name)
+            ->addDescription($property, $config)
+            ->addDepend($property, $config)
+            ->addOptions($property, $config)
+            ->addDefaultValue($property, $config);
         return $property;
     }
 }

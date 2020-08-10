@@ -3,12 +3,14 @@
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Util\PropertyBag;
 
 interface CollectorInterface
 {
     /**
      * @param PropertyInterface $property
+     * @param PropertyBag $propertyBag
      * @return mixed
      */
-    public function collectValue(PropertyInterface $property);
+    public function collectValue(PropertyInterface $property, PropertyBag $propertyBag);
 }

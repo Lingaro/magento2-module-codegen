@@ -4,6 +4,7 @@ namespace Orba\Magento2Codegen\Service;
 
 use Exception;
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
+use Orba\Magento2Codegen\Model\Template;
 use Orba\Magento2Codegen\Util\PropertyBag;
 
 class CodeGenerator
@@ -55,13 +56,16 @@ class CodeGenerator
         $this->io = $io;
     }
 
-    public function execute(string $templateName, PropertyBag $propertyBag): void
+    public function execute(Template $template, PropertyBag $propertyBag): void
     {
         $dryRun = $this->io->getInput()->getOption(GenerateCommand::OPTION_DRY_RUN);
         $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
-        foreach ($this->templateFile->getTemplateFiles(
-            array_merge([$templateName], $this->templateFile->getDependencies($templateName, true))
-        ) as $file) {
+        $templateNames = [];
+        foreach (array_merge([$template], $template->getDependencies()) as $item) {
+            /** @var $item Template */
+            $templateNames[] = $item->getName();
+        }
+        foreach ($this->templateFile->getTemplateFiles($templateNames) as $file) {
             $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
                 $this->templateProcessor->replacePropertiesInText($file->getPathname(), $propertyBag),
                 $rootDir

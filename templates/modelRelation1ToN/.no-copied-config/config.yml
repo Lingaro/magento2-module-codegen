@@ -1,0 +1,26 @@
+type: module
+description: Creates a 1 to N relation. Works only with entities from the module for now. Entities must be created before.
+afterGenerate: "1. To apply database changes, please run setup upgrade command:\n
+                \n
+                bin/magento setup:upgrade\n
+                \n
+                2. After creating or changing db_schema.xml you should generate db_schema_whitelist.json file:\n
+                \n
+                bin/magento setup:db-declaration:generate-whitelist --module-name {{ vendorName|pascal }}_{{ moduleName|pascal }}"
+properties:
+  entityName:
+    type: string
+    required: true
+    description: Entity name
+  entity2Name:
+      type: string
+      required: true
+      description: Related entity name. ID of first entity will be added to this one as a new DB column.
+  onDelete:
+      type: choice
+      options:
+        - CASCADE
+        - SET NULL
+        - NO ACTION
+      default: CASCADE
+      description: What will happen when record of first entity is deleted

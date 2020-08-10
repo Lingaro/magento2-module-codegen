@@ -3,11 +3,11 @@
 namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Model\PropertyInterface;
+use Orba\Magento2Codegen\Model\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\Config;
 use Orba\Magento2Codegen\Service\PropertyFactory;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
-use Orba\Magento2Codegen\Service\TemplateFile;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -24,11 +24,6 @@ class TemplatePropertyTest extends TestCase
     private $configMock;
 
     /**
-     * @var MockObject|TemplateFile
-     */
-    private $templateFileMock;
-
-    /**
      * @var MockObject|CollectorFactory
      */
     private $propertyValueCollectorFactoryMock;
@@ -41,15 +36,12 @@ class TemplatePropertyTest extends TestCase
     public function setUp(): void
     {
         $this->configMock = $this->getMockBuilder(Config::class)->disableOriginalConstructor()->getMock();
-        $this->templateFileMock = $this->getMockBuilder(TemplateFile::class)->disableOriginalConstructor()
-            ->getMock();
         $this->propertyValueCollectorFactoryMock = $this->getMockBuilder(CollectorFactory::class)
             ->disableOriginalConstructor()->getMock();
         $this->propertyFactoryMock = $this->getMockBuilder(PropertyFactory::class)
             ->disableOriginalConstructor()->getMock();
         $this->templateProperty = new TemplateProperty(
             $this->configMock,
-            $this->templateFileMock,
             $this->propertyValueCollectorFactoryMock,
             $this->propertyFactoryMock
         );
@@ -73,15 +65,15 @@ class TemplatePropertyTest extends TestCase
 
     public function testCollectInputPropertiesReturnsEmptyArrayIfTemplatePropertiesConfigIsEmpty(): void
     {
-        $result = $this->templateProperty->collectInputProperties('template');
+        $result = $this->templateProperty->collectInputProperties(new Template());
         $this->assertSame([], $result);
     }
 
     public function testCollectInputPropertiesReturnsArrayWithPropertiesIfTemplatePropertiesConfigIsNotEmpty(): void
     {
-        $this->templateFileMock->expects($this->once())->method('getPropertiesConfig')
-            ->willReturn([['name' => 'foo', 'description' => 'bar']]);
-        $result = $this->templateProperty->collectInputProperties('template');
+        $result = $this->templateProperty->collectInputProperties(
+            (new Template())->setPropertiesConfig([['name' => 'foo', 'description' => 'bar']])
+        );
         $this->assertCount(1, $result);
         $this->assertContainsOnlyInstancesOf(PropertyInterface::class, $result);
     }

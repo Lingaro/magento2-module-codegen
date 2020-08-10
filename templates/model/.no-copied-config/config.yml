@@ -1,5 +1,10 @@
+type: module
 description: This template creates a model with the corresponding repository, searchResult, resourceModel, collection, db_schema.xml and API
-afterGenerate: "1. After creating or changing db_schema.xml, please generate db_schema_whitelist.json file:\n
+afterGenerate: "1. To apply database changes, please run setup upgrade command:\n
+                \n
+                bin/magento setup:upgrade\n
+                \n
+                2. After creating or changing db_schema.xml you should generate db_schema_whitelist.json file:\n
                 \n
                 bin/magento setup:db-declaration:generate-whitelist --module-name {{ vendorName|pascal }}_{{ moduleName|pascal }}"
 properties:

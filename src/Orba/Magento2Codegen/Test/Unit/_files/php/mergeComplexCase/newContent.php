@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright Copyright © 2020 Codegen. All rights reserved.
+ * @author    info@orba.co
+ */
+declare (strict_types=1);
 
 namespace Namespace1;
 

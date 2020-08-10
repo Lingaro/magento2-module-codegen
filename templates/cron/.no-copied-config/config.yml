@@ -1,3 +1,4 @@
+type: module
 description: "This template is used to create a cron job and (optionally) a cron group"
 afterGenerate: "You should add your cron job logic to {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Cron\\{{ jobName|pascal }}::execute"
 properties:
@@ -14,42 +15,42 @@ properties:
   scheduleGenerateEvery:
     type: string
     required: true
-    default: 1
+    default: "1"
     description: How often the cron job is executed (in minutes). Schedules are stored in the database.
     depend:
       newCronGroup: true
   scheduleAheadFor:
     type: string
     required: true
-    default: 4
+    default: "4"
     description: How far in advance cron jobs will be scheduled (in minutes). For example, if this setting is set to 10 and the cron runs, cron jobs will be scheduled for the next 10 minutes.
     depend:
       newCronGroup: true
   scheduleLifetime:
     type: string
     required: true
-    default: 2
+    default: "2"
     description: The time (in minutes) that, if the cron job is not run after its scheduled time, it cannot be run, and its status is set to Missed.
     depend:
       newCronGroup: true
   historyCleanupEvery:
     type: string
     required: true
-    default: 10
+    default: "10"
     description: The time (in minutes) that the history of ended tasks is cleared from the database.
     depend:
       newCronGroup: true
   historySuccessLifetime:
     type: string
     required: true
-    default: 60
+    default: "60"
     description: The time (in minutes) for which the history of cron jobs with a Successful status remain in the database.
     depend:
       newCronGroup: true
   historyFailureLifetime:
     type: string
     required: true
-    default: 600
+    default: "600"
     description: The time (in minutes) for which the history of cron jobs with an Error status remain in the database.
     depend:
       newCronGroup: true

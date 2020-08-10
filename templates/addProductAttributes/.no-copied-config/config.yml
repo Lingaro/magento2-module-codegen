@@ -1,3 +1,4 @@
+type: module
 description: "This template creates data patch which adds custom attributes to product entity."
 afterGenerate: "1. To apply patch, please run setup upgrade command:
                 \n
@@ -86,14 +87,14 @@ properties:
         type: boolean
         description: Should attribute be visible by default on the backend products grid?
         default: false
-#        depend:
-#          item.is_used_in_grid: true
+        depend:
+          item.is_used_in_grid: true
       is_filterable_in_grid:
         type: boolean
         description: Should attribute be filterable on the backend products grid?
         default: false
-#        depend:
-#          item.is_used_in_grid: true
+        depend:
+          item.is_used_in_grid: true
       searchable:
         type: boolean
         description: Should attribute be searchable on the frontend?
@@ -101,15 +102,15 @@ properties:
       search_weight:
         type: string
         description: Float number between 0 and 10. The bigger the number is, the more important the attribute will be during search.
-        default: 1
-#        depend:
-#          item.searchable: true
+        default: "1"
+        depend:
+          item.searchable: true
       visible_in_advanced_search:
         type: boolean
         description: Should attribute be visible in advanced search on frontend?
         default: false
-#        depend:
-#          item.searchable: true
+        depend:
+          item.searchable: true
       comparable:
         type: boolean
         description: Should attribute be comparable on the frontend?
@@ -129,7 +130,7 @@ properties:
       position:
         type: string
         description: Integer describing position of attribute in layered navigation block
-        default: 0
+        default: "0"
       used_for_promo_rules:
         type: boolean
         description: Should attribute be used for defining promo rules?
@@ -158,9 +159,9 @@ properties:
         type: boolean
         description: Should WYSIWYG editor be enabled for attribute on backend?
         default: false
-#        depend:
-#          item.visible: true
-#          item.input: textarea
+        depend:
+          item.visible: true
+          item.input: textarea
       user_defined:
         type: boolean
         default: true
@@ -194,24 +195,31 @@ properties:
       apply_to_simple:
         type: boolean
         description: Should attribute be applied to simple products?
+        default: false
       apply_to_configurable:
         type: boolean
         description: Should attribute be applied to configurable products?
+        default: false
       apply_to_grouped:
         type: boolean
         description: Should attribute be applied to grouped products?
+        default: false
       apply_to_virtual:
         type: boolean
         description: Should attribute be applied to virtual products?
+        default: false
       apply_to_downloadable:
         type: boolean
         description: Should attribute be applied to downloadable products?
+        default: false
       apply_to_bundle:
         type: boolean
         description: Should attribute be applied to bundle products?
+        default: false
       apply_to_giftcard:
         type: boolean
         description: Should attribute be applied to giftcard products?
+        default: false
       options:
         type: string
         description: "Comma-separated custom options. Fill in only for select or multiselect attribute. Do not fill in if source model is used. Example: \"Male,Female\"."

@@ -1,0 +1,3 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_ImportExport:etc/import.xsd">
+    <entity name="{{ entityName|snake }}" label="{{ importEntityLabel }}" model="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Import\{{ entityName|pascal }}" behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic" />
+</config>

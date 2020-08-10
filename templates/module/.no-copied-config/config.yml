@@ -1,3 +1,4 @@
+type: basic
 description: 'This template is used to create basic configuration needed to start a custom module.'
 properties:
   vendorName:

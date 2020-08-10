@@ -2,24 +2,16 @@
 
 namespace Orba\Magento2Codegen\Model;
 
-class ArrayProperty extends AbstractProperty
+/**
+ * Class ArrayProperty
+ * @package Orba\Magento2Codegen\Model
+ */
+class ArrayProperty extends AbstractInputProperty
 {
-    const TYPE = 'array';
-
     /**
      * @var PropertyInterface[]
      */
     protected $children = [];
-
-    /**
-     * @param PropertyInterface[] $children
-     * @return $this
-     */
-    public function setChildren(array $children): PropertyInterface
-    {
-        $this->children = $children;
-        return $this;
-    }
 
     /**
      * @return PropertyInterface[]
@@ -27,5 +19,15 @@ class ArrayProperty extends AbstractProperty
     public function getChildren(): array
     {
         return $this->children;
+    }
+
+    /**
+     * @param PropertyInterface[] $children
+     * @return $this
+     */
+    public function setChildren(array $children): self
+    {
+        $this->children = $children;
+        return $this;
     }
 }

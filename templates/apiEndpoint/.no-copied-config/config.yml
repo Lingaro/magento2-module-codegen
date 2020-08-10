@@ -1,3 +1,4 @@
+type: module
 description: "This template is used to create a custom API endpoint."
 afterGenerate: |
     Make sure that method {{ serviceClass }}::{{ serviceMethod }} exists and accepts parameters from request.
@@ -24,7 +25,7 @@ properties:
     type: string
     required: true
     description: API version. In most cases, just use default value.
-    default: 1
+    default: "1"
   serviceClass:
     type: string
     required: true

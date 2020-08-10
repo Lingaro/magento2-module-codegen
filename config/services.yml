@@ -211,6 +211,36 @@ services:
       -
         - addMerger
         -
+          - '/\/cache\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/type': 'name'
+      -
+        - addMerger
+        -
+          - '/\/module\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/module': 'name'
+              '/config/module/sequence/module': 'name'
+      -
+        - addMerger
+        -
+          - '/\/app\/etc\/config\.php$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\ConfigPhpMerger'
+      -
+        - addMerger
+        -
+          - '/\/import\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/entity': 'name'
+      -
+        - addMerger
+        -
           - '/^.*\.php/'
           - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
       -
@@ -260,6 +290,7 @@ services:
         kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
         lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
         ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
+        pluralize: '@Orba\Magento2Codegen\Service\StringFilter\PluralizeFilter'
 
   Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
     arguments:
@@ -299,3 +330,16 @@ services:
       - method: setPropertyFactory
         arguments:
           - '@Orba\Magento2Codegen\Service\PropertyFactory'
+
+  Orba\Magento2Codegen\Service\TemplateBuilder:
+    arguments:
+      $templateTypes:
+        basic: '@Orba\Magento2Codegen\Service\TemplateType\Basic'
+        module: '@Orba\Magento2Codegen\Service\TemplateType\Module'
+        root: '@Orba\Magento2Codegen\Service\TemplateType\Root'
+
+  Orba\Magento2Codegen\Service\TemplateType\Module:
+    calls:
+      - method: setTemplateFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\TemplateFactory'

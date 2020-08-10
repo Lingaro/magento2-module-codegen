@@ -11,10 +11,12 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\Declare_;
 
 class Order
 {
     const ORDER = [
+        Declare_::class,
         Namespace_::class,
         Use_::class,
         Const_::class,

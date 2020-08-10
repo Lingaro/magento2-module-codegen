@@ -10,7 +10,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}" title="{{ entityName|pascal }}" sortOrder="10" />
+                <resource id="{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}" title="{{ entityName|pascal|pluralize }}" sortOrder="10" />
             </resource>
         </resources>
     </acl>
