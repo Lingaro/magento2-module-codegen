@@ -1,18 +1,20 @@
 {
     "name": "orba/magento2-codegen",
     "description": "Magento 2 Code Generator",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "require": {
         "php": "~7.2",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "instinct/kernel": "4.2",
-        "symfony/dependency-injection": "^4.0",
-        "symfony/config": "^4.0",
-        "symfony/console": "^4.0",
-        "symfony/yaml": "^4.0",
-        "symfony/filesystem": "^4.0",
-        "symfony/finder": "^4.0",
+        "symfony/dependency-injection": "^4.2 || ^5.0",
+        "symfony/config": "^4.2 || ^5.0",
+        "symfony/console": "^4.2 || ^5.0",
+        "symfony/yaml": "^4.2 || ^5.0",
+        "symfony/filesystem": "^4.2 || ^5.0",
+        "symfony/finder": "^4.2 || ^5.0",
+        "symfony/contracts": "^1.0.2",
+        "symfony/debug": "^2.4|~3.0|~4.0|~5.0",
+        "symfony/polyfill-ctype": "^1.8",
         "twig/twig": "^3.0",
         "nikic/php-parser": "^4.3",
         "ovidigital/js-object-to-json": "^1.0",
@@ -20,8 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Orba\\Magento2Codegen\\": "src/Orba/Magento2Codegen/"
-        }
+            "Orba\\Magento2Codegen\\": "src/Orba/Magento2Codegen/",
+            "Instinct\\Component\\Kernel\\": "src/instinct/kernel/"
+        },
+        "exclude-from-classmap": [
+            "src/instinct/kernel/Tests/"
+        ]
     },
     "scripts": {
         "setPermissionsBin": "chmod -R +x bin",
@@ -33,14 +39,20 @@
         ]
     },
     "bin": ["bin/codegen"],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/alquerci/kernel.git"
-        }
-    ],
     "require-dev": {
         "ext-simplexml": "*",
-        "phpunit/phpunit": "^8"
+        "phpunit/phpunit": "^8",
+        "psr/cache": "^1.0",
+        "psr/log": "^1.0",
+        "symfony/event-dispatcher": "^4.2 || ^5.0",
+        "symfony/phpunit-bridge": "^4.2 || ^5.0",
+        "symfony/var-dumper": "^4.2 || ^5.0"
+    },
+    "provide": {
+        "psr/log-implementation": "1.0"
+    },
+    "conflict": {
+        "symfony/config": "<3.4",
+        "symfony/dependency-injection": "<4.2"
     }
 }
