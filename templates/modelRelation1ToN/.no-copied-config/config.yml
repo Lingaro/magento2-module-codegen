@@ -1,5 +1,7 @@
 type: module
-description: Creates a 1 to N relation. Works only with entities from the module for now. Entities must be created before.
+description: "WARNING! This is an experimental template.
+              \n
+              \nCreates a 1 to N relation. Works only with entities from the module for now. Entities must be created before."
 afterGenerate: "1. To apply database changes, please run setup upgrade command:\n
                 \n
                 bin/magento setup:upgrade\n

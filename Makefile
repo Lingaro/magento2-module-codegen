@@ -14,7 +14,7 @@ GIT=git
 COMPOSER=composer
 PROJECT_FRAMEWORK_REPO=git@bitbucket.org:orbainternalprojects/skeleton.git
 EDITION=community
-VERSION=2.3.4-p2
+VERSION=2.4.1
 
 mount ?=
 

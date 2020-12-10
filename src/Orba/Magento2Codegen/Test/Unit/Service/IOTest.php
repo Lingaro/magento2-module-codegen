@@ -6,8 +6,8 @@ use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
-use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -73,11 +73,6 @@ class IOTest extends TestCase
     {
         /** @var MockObject|InputInterface $inputMock */
         $inputMock = $this->getMockBuilder(InputInterface::class)->getMockForAbstractClass();
-        $outputFormatterMock = $this->getMockBuilder(OutputFormatter::class)->disableOriginalConstructor()
-            ->getMock();
-        /** @var MockObject|OutputInterface $outputMock */
-        $outputMock = $this->getMockBuilder(OutputInterface::class)->getMockForAbstractClass();
-        $outputMock->expects($this->any())->method('getFormatter')->willReturn($outputFormatterMock);
-        $this->io->init($inputMock, $outputMock);
+        $this->io->init($inputMock, new NullOutput());
     }
 }

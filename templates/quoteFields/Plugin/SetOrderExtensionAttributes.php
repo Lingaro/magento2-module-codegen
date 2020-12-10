@@ -6,9 +6,9 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Plugin;
 
-use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Api\Data\OrderSearchResultInterface;
 
 class SetOrderExtensionAttributes
 {
@@ -27,13 +27,13 @@ class SetOrderExtensionAttributes
 
     /**
      * @param OrderRepositoryInterface $subject
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return SearchCriteriaInterface
+     * @param OrderSearchResultInterface $searchCriteria
+     * @return OrderSearchResultInterface
      */
     public function afterGetList(
         OrderRepositoryInterface $subject,
-        SearchCriteriaInterface $searchCriteria
-    ): SearchCriteriaInterface {
+        OrderSearchResultInterface $searchCriteria
+    ): OrderSearchResultInterface {
         foreach ($searchCriteria->getItems() as $entity) {
             $this->addExtensionAttributes($entity);
         }
@@ -65,7 +65,9 @@ class SetOrderExtensionAttributes
         $extensionAttributes = $order->getExtensionAttributes();
 
 {% for field in fields %}
-        $extensionAttributes->set{{ field.name|pascal }}($order->getData('{{ field.name|snake }}'));
+        if (!$extensionAttributes->get{{ field.name|pascal }}()) {
+            $extensionAttributes->set{{ field.name|pascal }}($order->getData('{{ field.name|snake }}'));
+        }
 {% endfor %}
 
         return $order;

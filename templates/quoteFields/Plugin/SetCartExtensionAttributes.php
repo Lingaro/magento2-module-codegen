@@ -6,9 +6,9 @@
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Plugin;
 
-use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\Data\CartInterface;
+use Magento\Quote\Api\Data\CartSearchResultsInterface;
 
 class SetCartExtensionAttributes
 {
@@ -39,13 +39,13 @@ class SetCartExtensionAttributes
 
     /**
      * @param CartRepositoryInterface $subject
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return SearchCriteriaInterface
+     * @param CartSearchResultsInterface $searchCriteria
+     * @return CartSearchResultsInterface
      */
     public function afterGetList(
         CartRepositoryInterface $subject,
-        SearchCriteriaInterface $searchCriteria
-    ): SearchCriteriaInterface {
+        CartSearchResultsInterface $searchCriteria
+    ): CartSearchResultsInterface {
         foreach ($searchCriteria->getItems() as $entity) {
             $this->addExtensionAttributes($entity);
         }
@@ -74,7 +74,9 @@ class SetCartExtensionAttributes
         $extensionAttributes = $quote->getExtensionAttributes();
 
 {% for field in fields %}
-        $extensionAttributes->set{{ field.name|pascal }}($quote->getData('{{ field.name|snake }}'));
+        if (!$extensionAttributes->get{{ field.name|pascal }}()) {
+            $extensionAttributes->set{{ field.name|pascal }}($quote->getData('{{ field.name|snake }}'));
+        }
 {% endfor %}
 
         return $quote;

@@ -1,0 +1,71 @@
+{
+    "name": "instinct/kernel",
+    "version": "4.2.3",
+    "type": "library",
+    "description": "Kernel Component - symfony/http-kernel without HTTP dependencies - It will be abandoned in July 2019",
+    "homepage": "https://github.com/alquerci/kernel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com",
+            "role": "Symfony Project Leader"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://symfony.com/contributors",
+            "role": "Symfony Developer"
+        },
+        {
+            "name": "Alexandre Quercia",
+            "email": "alquerci@email.com",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "symfony/contracts": "^1.0.2",
+        "symfony/config": "^4.1 || ^5.0",
+        "symfony/debug": "^2.4|~3.0|~4.0|~4.0",
+        "symfony/dependency-injection": "^4.2|| ^5.0",
+        "symfony/polyfill-ctype": "^1.8"
+    },
+    "require-dev": {
+        "psr/cache": "^1.0",
+        "psr/log": "^1.0",
+        "symfony/config": "self.version",
+        "symfony/console": "self.version",
+        "symfony/dependency-injection": "self.version",
+        "symfony/event-dispatcher": "self.version",
+        "symfony/filesystem": "self.version",
+        "symfony/phpunit-bridge": "self.version",
+        "symfony/var-dumper": "self.version"
+    },
+    "provide": {
+        "psr/log-implementation": "1.0"
+    },
+    "conflict": {
+        "symfony/config": "<3.4",
+        "symfony/dependency-injection": "<4.2"
+    },
+    "suggest": {
+        "symfony/console": "",
+        "symfony/http-kernel": "",
+        "symfony/var-dumper": "",
+        "symfony/yaml": ""
+    },
+    "autoload": {
+        "psr-4": { "Instinct\\Component\\Kernel\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.3-dev"
+        }
+    }
+}

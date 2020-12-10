@@ -14,7 +14,6 @@ properties:
     children:
       name:
         type: string
-        required: true
         description: Full class name with namespace
   attributes:
     type: array

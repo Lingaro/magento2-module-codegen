@@ -39,8 +39,10 @@ abstract class AbstractCommand extends Command
                 $validator->validate($input);
             }
             $this->_execute($input, $output);
+            return 0;
         } catch (Exception $e) {
             $this->io->getInstance()->error($e->getMessage());
+            return is_numeric($e->getCode()) ? (int) $e->getCode() : 1;
         }
     }
 

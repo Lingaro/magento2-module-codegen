@@ -9,6 +9,7 @@ In day-to-day Magento 2 development there are some common tasks which require de
 ## Supported Magento versions
 
 * 2.3.x
+* 2.4.x
 
 ## Installation
 

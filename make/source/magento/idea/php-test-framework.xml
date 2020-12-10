@@ -5,8 +5,8 @@
       <tool tool_name="PHPUnit">
         <cache>
           <versions>
-            <info id="interpreter-codegen-interpreter" version="8.5.4" />
-            <info id="interpreter-orba-interpreter" version="6.5.14" />
+            <info id="interpreter-codegen-interpreter" version="8.5.8" />
+            <info id="interpreter-orba-interpreter" version="9.1.5" />
           </versions>
         </cache>
       </tool>

@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2020-12-10
+### Added
+- Compatibility with Magento 2.4.x [ZZ01-115](https://orba.atlassian.net/browse/ZZ01-115)
+
+### Changed
+- `modelRelation1To1` and `modelRelation1ToN` templates marked as experimental
+
+### Fixed
+- `addProductAttributes` template: invalid XML declaration in extension_attributes.xml file [ZZ01-116](https://orba.atlassian.net/browse/ZZ01-116)
+- `addProductAttributes` template: patch dependencies are not generated [ZZ01-119](https://orba.atlassian.net/browse/ZZ01-119)
+- `configField` template: syntax error in generated code for global scope [ZZ01-120](https://orba.atlassian.net/browse/ZZ01-120)
+- `eventObserver` template: events.xml merged incorrectly [ZZ01-117](https://orba.atlassian.net/browse/ZZ01-117)
+- `jsModule` template: incorrect escaping of JSON config [ZZ01-118](https://orba.atlassian.net/browse/ZZ01-118)
+- `quoteFields` template: invalid interfaces used in generated code [ZZ01-112](https://orba.atlassian.net/browse/ZZ01-112)
+
+## [2.1.0] - Skipped (do not install this version)
+
 ## [2.0.0] - 2020-08-10
 ### Added
 - Template type definition [ZZ01-72](https://orba.atlassian.net/browse/ZZ01-72)

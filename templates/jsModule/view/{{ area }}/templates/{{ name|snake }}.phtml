@@ -12,5 +12,5 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ name|pascal }};
 /** @var $block Template */
 $viewModel = $block->getViewModel();
 ?>
-<div data-mage-init='<?= $block->escapeHtmlAttr($viewModel->getJsonConfig()) ?>'></div>
+<div data-mage-init='<?= $viewModel->getJsonConfig() ?>'></div>
 {% endif %}

@@ -146,13 +146,15 @@ class {{ patchName|pascal }} implements DataPatchInterface
      */
     public static function getDependencies(): array
     {
+{% if patchDependencies is not empty %}
         return [
-{% if hasPatchDependencies %}
 {% for item in patchDependencies %}
             {{ item.name }}::class,
 {% endfor %}
-{% endif %}
         ];
+{% else %}
+        return [];
+{% endif %}
     }
 
     /**

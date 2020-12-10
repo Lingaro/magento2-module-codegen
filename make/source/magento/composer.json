@@ -10,64 +10,74 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "version": "2.4.1",
     "require": {
-        "magento/product-community-edition": "2.3.4-p2"
-    },
-    "require-dev": {
-        "allure-framework/allure-phpunit": "~1.2.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-        "friendsofphp/php-cs-fixer": "~2.14.0",
-        "lusitanian/oauth": "~0.8.10",
-        "magento/magento-coding-standard": "~4.0.0",
-        "magento/magento2-functional-testing-framework": "2.5.3",
-        "orba/magento2-codegen": "*",
-        "pdepend/pdepend": "2.5.2",
-        "phpcompatibility/php-compatibility": "^9.3",
-        "phpmd/phpmd": "@stable",
-        "phpunit/phpunit": "~6.5.0",
-        "sebastian/phpcpd": "~3.0.0",
-        "squizlabs/php_codesniffer": "~3.4.0"
-    },
-    "conflict": {
-        "gene/bluefoot": "*"
+        "magento/product-community-edition": "2.4.1"
     },
     "autoload": {
-        "psr-4": {
-            "Magento\\Framework\\": "lib/internal/Magento/Framework/",
-            "Magento\\Setup\\": "setup/src/Magento/Setup/",
-            "Magento\\": "app/code/Magento/",
-            "Zend\\Mvc\\Controller\\": "setup/src/Zend/Mvc/Controller/"
-        },
+        "exclude-from-classmap": [
+            "**/dev/**",
+            "**/update/**",
+            "**/Test/**"
+        ],
+        "files": [
+            "app/etc/NonComposerComponentRegistration.php"
+        ],
         "psr-0": {
             "": [
                 "app/code/",
                 "generated/code/"
             ]
         },
-        "files": [
-            "app/etc/NonComposerComponentRegistration.php"
-        ],
-        "exclude-from-classmap": [
-            "**/dev/**",
-            "**/update/**",
-            "**/Test/**"
-        ]
+        "psr-4": {
+            "Magento\\": "app/code/Magento/",
+            "Magento\\Framework\\": "lib/internal/Magento/Framework/",
+            "Magento\\Setup\\": "setup/src/Magento/Setup/",
+            "Zend\\Mvc\\Controller\\": "setup/src/Zend/Mvc/Controller/"
+        }
+    },
+    "require-dev": {
+        "allure-framework/allure-phpunit": "~1.2.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+        "friendsofphp/php-cs-fixer": "~2.16.0",
+        "lusitanian/oauth": "~0.8.10",
+        "magento/magento-coding-standard": "*",
+        "magento/magento2-functional-testing-framework": "^3.0",
+        "orba/magento2-codegen": "*",
+        "pdepend/pdepend": "~2.7.1",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpmd/phpmd": "^2.8.0",
+        "phpstan/phpstan": ">=0.12.3 <=0.12.23",
+        "phpunit/phpunit": "^9",
+        "sebastian/phpcpd": "~5.0.0",
+        "squizlabs/php_codesniffer": "~3.5.4"
+    },
+    "conflict": {
+        "gene/bluefoot": "*"
     },
     "autoload-dev": {
         "psr-4": {
+            "Magento\\PhpStan\\": "dev/tests/static/framework/Magento/PhpStan/",
             "Magento\\Sniffs\\": "dev/tests/static/framework/Magento/Sniffs/",
-            "Magento\\Tools\\": "dev/tools/Magento/Tools/",
-            "Magento\\Tools\\Sanity\\": "dev/build/publication/sanity/Magento/Tools/Sanity/",
             "Magento\\TestFramework\\Inspection\\": "dev/tests/static/framework/Magento/TestFramework/Inspection/",
-            "Magento\\TestFramework\\Utility\\": "dev/tests/static/framework/Magento/TestFramework/Utility/"
+            "Magento\\TestFramework\\Utility\\": "dev/tests/static/framework/Magento/TestFramework/Utility/",
+            "Magento\\Tools\\": "dev/tools/Magento/Tools/",
+            "Magento\\Tools\\Sanity\\": "dev/build/publication/sanity/Magento/Tools/Sanity/"
         }
     },
-    "version": "2.3.4-p2",
     "minimum-stability": "stable",
+    "prefer-stable": true,
     "repositories": {
         "0": {
             "type": "composer",
             "url": "https://repo.magento.com/"
+        },
+        "local": {
+            "type": "path",
+            "url": "packages/*",
+            "options": {
+                "symlink": true
+            }
         },
         "codegen": {
             "type": "path",

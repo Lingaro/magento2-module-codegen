@@ -109,9 +109,10 @@ services:
         -
           - '/\/events\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
-          - idAttributes:
-            '/config/event': 'name'
-            '/config/event/observer': 'name'
+          -
+            idAttributes:
+              '/config/event': 'name'
+              '/config/event/observer': 'name'
       -
         - addMerger
         -

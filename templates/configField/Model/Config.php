@@ -31,7 +31,7 @@ class Config
         return $this->scopeConfig->getValue(
             static::XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ id|snake|upper }},
 {% if configScope == 'default' %}
-            ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
+            ScopeConfigInterface::SCOPE_TYPE_DEFAULT
 {% else %}
             ScopeInterface::SCOPE_{{ configScope|upper }},
             ${{ configScope }}Id
