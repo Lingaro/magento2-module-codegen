@@ -22336,11 +22336,11 @@
         },
         {
             "name": "orba/magento2-codegen",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "dist": {
                 "type": "path",
                 "url": "lib/internal/codegen",
-                "reference": "9b5fc350b2800f752ac0c94a40a13db516bebdd2"
+                "reference": "3545075bceedaa8edd825c0134dd952d014ea96e"
             },
             "require": {
                 "ext-dom": "*",
