@@ -2,7 +2,7 @@
 <!--
 /**
  * {{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}_index
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
 -->
