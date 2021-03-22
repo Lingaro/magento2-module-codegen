@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2021-03-22
+### Added
+- Template: `queueMessage` [ZZ01-62](https://orba.atlassian.net/browse/ZZ01-62)
+- Template: `widget` [ZZ01-105](https://orba.atlassian.net/browse/ZZ01-105)
+- Twig filter: `titleize` [ZZ01-105](https://orba.atlassian.net/browse/ZZ01-105)
+
+### Fixed
+- Missing event prefix in model classes [ZZ01-125](https://orba.atlassian.net/browse/ZZ01-125)
+
 ## [2.2.1] - 2020-12-15
 ### Added
 - `module` template: composer.json PHP version property [ZZ01-122](https://orba.atlassian.net/browse/ZZ01-122)

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/topology.xsd">
+    <exchange name="magento" type="topic" connection="amqp">
+        <binding id="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}.binding" topic="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}" destinationType="queue" destination="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}"/>
+    </exchange>
+</config>

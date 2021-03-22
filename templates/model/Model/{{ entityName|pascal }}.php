@@ -13,6 +13,9 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
 
 class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pascal }}Interface
 {
+
+    protected $_eventPrefix = '{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}';
+
     /**
      * @return void
      */

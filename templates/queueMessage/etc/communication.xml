@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © 2020 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Communication/etc/communication.xsd">
+    <topic name="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}" request="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ topic|pascal }}RequestInterface" />
+</config>

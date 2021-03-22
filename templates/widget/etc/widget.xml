@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="{{ vendorName|snake }}_{{ name|snake }}" class="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Widget\{{ name|pascal }}">
+        <label translate="true">{{ name|titleize }}</label>
+        <description translate="true">{{ description|raw }}</description>
+        <parameters>
+{% for item in parameters %}
+            <parameter xsi:type="{{ item.type }}"
+                       name="{{ item.name|snake }}"
+{% if item.selectOptionsSourceModel %}
+                       source_model="{{ item.selectOptionsSourceModel }}"
+{% endif %}
+{% if item.multiselectOptionsSourceModel %}
+                       source_model="{{ item.multiselectOptionsSourceModel }}"
+{% endif %}
+{% if item.required %}
+                       required="true"
+{% else %}
+                       required="false"
+{% endif %}
+{% if item.visible %}
+                       visible="true">
+{% else %}
+                       visible="false">
+{% endif %}
+                <label translate="true">{{ item.name|titleize }}</label>
+{% if item.blockClass %}
+                <block class="{{ item.blockClass }}" />
+{% endif %}
+{% if item.selectOptionsList %}
+                <options>
+{% set option_items = item.selectOptionsList|split(',') %}
+{% for option_item in option_items %}
+                    <option name="{{ option_item|snake }}" value="{{ option_item|snake }}">
+                        <label translate="true">{{ option_item|raw }}</label>
+                    </option>
+{% endfor %}
+                </options>
+{% endif %}
+{% if item.multiselectOptionsList %}
+                <options>
+{% set multioption_items = item.multiselectOptionsList|split(',') %}
+{% for multioption_item in multioption_items %}
+                    <option name="{{ multioption_item|snake }}" value="{{ multioption_item|snake }}">
+                        <label translate="true">{{ multioption_item|raw }}</label>
+                    </option>
+{% endfor %}
+                </options>
+{% endif %}
+            </parameter>
+{% endfor %}
+        </parameters>
+    </widget>
+</widgets>
