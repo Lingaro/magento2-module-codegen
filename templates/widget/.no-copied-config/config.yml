@@ -1,0 +1,98 @@
+type: module
+description: "This template is used to create a custom widget."
+afterGenerate: "1. Flush Magento config cache\n
+                \n
+                bin/magento cache:flush config\n
+                \n
+                2. Apply your widget logic to \\{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Block\\Widget\\{{ name|pascal }}{% if withTemplate == true %}\n
+                \n
+                3. Build your widget template in view/frontend/templates/widget/{{ name|snake }}.phtml{% endif %}"
+properties:
+  name:
+    type: string
+    required: true
+    description: "Widget name"
+  description:
+    type: string
+    description: "Widget short description"
+  withTemplate:
+    type: bool
+    default: true
+    description: "Should .phtml template be created for widget block?"
+  parameters:
+    type: array
+    description: "Widget parameters"
+    children:
+      name:
+        type: string
+        required: true
+        description: "Parameter name"
+      required:
+        type: boolean
+        description: "Is parameter value required?"
+        default: true
+      visible:
+        type: boolean
+        description: "Is parameter visible?"
+        default: true
+      type:
+        type: choice
+        required: true
+        options:
+          - text
+          - select
+          - multiselect
+          - block
+        description: "Type of widget parameter"
+      selectOptionsSourceType:
+        type: choice
+        required: true
+        options:
+          - set options manually
+          - use source model
+        description: "Type of options source for parameter"
+        depend:
+          item.type: select
+      selectOptionsList:
+        type: string
+        required: true
+        description: "Comma-separated options list (e.g. 'Option1,Option2')."
+        depend:
+          item.type: select
+          item.selectOptionsSourceType: set options manually
+      selectOptionsSourceModel:
+        type: string
+        required: true
+        description: "Full path to the source model class (e.g. 'Vendor\\Module\\Model\\Config\\Source\\Options')."
+        depend:
+          item.type: select
+          item.selectOptionsSourceType: use source model
+      multiselectOptionsSource:
+        type: choice
+        required: true
+        options:
+          - set options manually
+          - use source model
+        description: "Type of options source for parameter."
+        depend:
+          item.type: multiselect
+      multiselectOptionsList:
+        type: string
+        required: true
+        description: "Comma-separated options list (e.g. 'Option1,Option2')."
+        depend:
+          item.type: multiselect
+          item.multiselectOptionsSource: set options manually
+      multiselectOptionsSourceModel:
+        type: string
+        required: true
+        description: "Full path to the source model class (e.g. 'Vendor\\Module\\Model\\Config\\Source\\Options')."
+        depend:
+          item.type: multiselect
+          item.multiselectOptionsSource: use source model
+      blockClass:
+        type: string
+        required: true
+        description: "Full path to the block class (e.g. 'Vendor\\Module\\Adminhtml\\Block\\Widget\\Chooser')."
+        depend:
+          item.type: block

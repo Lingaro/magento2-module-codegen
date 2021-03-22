@@ -229,6 +229,14 @@ services:
       -
         - addMerger
         -
+          - '/\/widget\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/widgets/widget': 'id'
+      -
+        - addMerger
+        -
           - '/\/communication\.xml$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
@@ -330,6 +338,7 @@ services:
         lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
         ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
         pluralize: '@Orba\Magento2Codegen\Service\StringFilter\PluralizeFilter'
+        titleize: '@Orba\Magento2Codegen\Service\StringFilter\TitleizeFilter'
 
   Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
     arguments:
