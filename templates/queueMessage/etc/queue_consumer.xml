@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/consumer.xsd">
+    <consumer name="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}" queue="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}" connection="amqp" maxMessages="100"
+              consumerInstance="Magento\Framework\MessageQueue\Consumer" handler="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Queue\{{ topic|pascal }}Handler::process" />
+</config>

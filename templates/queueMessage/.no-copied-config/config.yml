@@ -1,0 +1,56 @@
+type: module
+description: This template is used to create queue message with publisher and handler using AMQP connection.
+afterGenerate: "1. Flush Magento config cache\n\n
+                bin/magento cache:flush config\n\n
+                2. Add the following configuration to your supervisord.conf file:\n\n
+                [program:{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}]\n
+                command=bin/magento queue:consumers:start %(program_name)s --single-thread --max-messages=100000\n
+                stdout_logfile=/dev/fd/1\n
+                stdout_logfile_maxbytes=0\n
+                stderr_logfile=/dev/fd/2\n
+                stderr_logfile_maxbytes=0\n
+                killasgroup=true\n
+                stopasgroup=true\n
+                autostart=true\n
+                autorestart=true\n\n
+                3. Reload supervisor\n\n
+                4. Add your queue handler logic to \\{{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Queue\\{{ topic|pascal }}Handler::process\n\n
+                5. Use your publisher where needed. Below you can find an exemplary usage:\n\n
+                use {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Api\\Data\\{{ topic|pascal }}RequestInterface;\n
+                use {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Api\\Data\\{{ topic|pascal }}RequestInterfaceFactory;\n
+                use {{ vendorName|pascal }}\\{{ moduleName|pascal }}\\Queue\\{{ topic|pascal }}Publisher;\n\n
+                ...\n\n
+                /** @var {{ topic|pascal }}RequestInterfaceFactory */\n
+                private $requestFactory;\n\n
+                /** @var {{ topic|pascal }}Publisher */\n
+                private $publisher;\n\n
+                ...\n\n
+                /** @var {{ topic|pascal }}RequestInterface $request */\n
+                $request = $this->requestFactory->create();
+                {% for item in requestFields %}
+                \n $request->set{{ item.name|pascal }}(${{ item.name|camel }});
+                {% endfor %}
+                \n $this->publisher->publish($request);"
+properties:
+  topic:
+    type: string
+    required: true
+    description: Short topic name
+  requestFields:
+    type: array
+    required: true
+    description: Message request fields
+    children:
+      name:
+        type: string
+        required: true
+        description: Field name
+      type:
+        type: choice
+        options:
+            - string
+            - int
+            - float
+            - bool
+            - array
+        description: Field type

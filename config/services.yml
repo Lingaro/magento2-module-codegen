@@ -229,6 +229,44 @@ services:
       -
         - addMerger
         -
+          - '/\/communication\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/topic': 'name'
+      -
+        - addMerger
+        -
+          - '/\/queue_consumer\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/consumer': 'name'
+      -
+        - addMerger
+        -
+          - '/\/queue_publisher\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/publisher': 'topic'
+              '/config/publisher/connection': 'name'
+      -
+        - addMerger
+        -
+          - '/\/queue_topology\.xml$/'
+          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          -
+            idAttributes:
+              '/config/exchange': ['name', 'connection']
+              '/config/exchange/arguments/argument': 'name'
+              '/config/exchange/arguments/argument(/item)+': 'name'
+              '/config/exchange/binding': 'id'
+              '/config/exchange/binding/arguments/argument': 'name'
+              '/config/exchange/binding/arguments/argument(/item)+': 'name'
+      -
+        - addMerger
+        -
           - '/\/app\/etc\/config\.php$/'
           - '@Orba\Magento2Codegen\Service\FileMerger\ConfigPhpMerger'
       -
