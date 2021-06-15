@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Ui\Component\Form\{{ entityName|pascal }};
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool;
@@ -13,32 +15,11 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
 
 class DataProvider extends AbstractDataProvider
 {
-    /**
-     * @var Collection
-     */
+    private FilterPool $filterPool;
+    private array $loadedData = [];
+
     protected $collection;
-    
-    /**
-     * @var FilterPool
-     */
-    protected $filterPool;
 
-    /**
-     * @var array
-     */
-    protected $loadedData;
-
-    /**
-     * Construct
-     *
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
-     * @param Collection $collection
-     * @param FilterPool $filterPool
-     * @param array $meta
-     * @param array $data
-     */
     public function __construct(
         $name,
         $primaryFieldName,
@@ -53,12 +34,7 @@ class DataProvider extends AbstractDataProvider
         $this->filterPool = $filterPool;
     }
 
-    /**
-     * Get data
-     *
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         if (!$this->loadedData) {
             $items = $this->collection->getItems();

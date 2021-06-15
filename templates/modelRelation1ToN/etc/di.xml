@@ -5,7 +5,6 @@
  * @author    {{ commentsUserEmail }}
  */
 -->
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}To{{ entity2Name|pascal }}RelationInterface" type="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}To{{ entity2Name|pascal }}Relation"/>
 </config>

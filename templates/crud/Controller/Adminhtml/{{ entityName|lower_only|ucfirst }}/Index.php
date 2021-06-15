@@ -5,25 +5,22 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends Action
+class Index extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+    public const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
 
-    /**
-     * @var PageFactory
-     */
-    protected $resultPageFactory;
+    private PageFactory $resultPageFactory;
 
-    /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
-     */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory
@@ -32,14 +29,9 @@ class Index extends Action
         $this->resultPageFactory = $resultPageFactory;
     }
 
-    /**
-     * Index action
-     *
-     * @return \Magento\Backend\Model\View\Result\Page
-     */
-    public function execute()
+    public function execute(): Page
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}');
         $resultPage->getConfig()->getTitle()->prepend(__('{{ entityName|pascal|pluralize }}'));

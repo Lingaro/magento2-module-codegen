@@ -1,41 +1,28 @@
 <?php
+
 /**
- * BackButton
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|pascal }}\Edit;
 
 use Magento\Backend\Block\Widget\Context;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class BackButton
- */
 class BackButton implements ButtonProviderInterface
 {
-    /**
-     * Url Builder
-     *
-     * @var \Magento\Framework\UrlInterface
-     */
-    protected $urlBuilder;
+    private UrlInterface $urlBuilder;
 
-    /**
-     * Constructor
-     *
-     * @param Context $context
-     */
     public function __construct(Context $context)
     {
         $this->urlBuilder = $context->getUrlBuilder();
     }
 
-    /**
-     * @return array
-     */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
             'label' => __('Back'),
@@ -45,12 +32,7 @@ class BackButton implements ButtonProviderInterface
         ];
     }
 
-    /**
-     * Get URL for back (reset) button
-     *
-     * @return string
-     */
-    public function getBackUrl()
+    public function getBackUrl(): string
     {
         return $this->urlBuilder->getUrl('*/*/');
     }

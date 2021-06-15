@@ -5,41 +5,29 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\Controller\ResultInterface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}RepositoryInterface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }};
 
 /**
- * Grid inline edit controller
- *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class InlineEdit extends Action
+class InlineEdit extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+    public const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
 
-    /**
-     * @var JsonFactory
-     */
-    private $jsonFactory;
+    private JsonFactory $jsonFactory;
+    private {{ entityName|pascal }}RepositoryInterface $repository;
 
-    /**
-     * @var {{ entityName|pascal }}RepositoryInterface
-     */
-    private $repository;
-
-    /**
-     * @param Context $context
-     * @param JsonFactory $jsonFactory
-     * @param {{ entityName|pascal }}RepositoryInterface $repository
-     */
     public function __construct(
         Context $context,
         JsonFactory $jsonFactory,
@@ -50,10 +38,7 @@ class InlineEdit extends Action
         $this->repository = $repository;
     }
 
-    /**
-     * @return ResultInterface
-     */
-    public function execute()
+    public function execute(): Json
     {
         /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
@@ -70,9 +55,11 @@ class InlineEdit extends Action
 
         try {
             foreach (array_keys($postItems) as ${{ entityName|camel }}Id) {
-                /** @var  {{ entityName|pascal }} ${{ entityName|camel }} */
+                /** @var {{ entityName|pascal }} ${{ entityName|camel }} */
                 ${{ entityName|camel }} = $this->repository->getById(${{ entityName|camel }}Id);
-                ${{ entityName|camel }}->setData(array_merge(${{ entityName|camel }}->getData(), $postItems[${{ entityName|camel }}Id]));
+                foreach ($postItems[${{ entityName|camel }}Id] as $key => $value) {
+                    ${{ entityName|camel }}->setData($key, $value);
+                }
                 $this->repository->save(${{ entityName|camel }});
             }
         } catch (Exception $e) {

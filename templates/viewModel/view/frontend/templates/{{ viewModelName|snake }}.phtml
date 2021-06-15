@@ -1,14 +1,15 @@
 <?php
-/*
+
+/**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-?>
-<?php
-use Magento\Framework\View\Element\Template;
-use {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }};
-/** @var $viewModel {{ viewModelName|pascal }} */
-/** @var $block Template */
+
+declare(strict_types=1);
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ viewModelName|pascal }} $viewModel */
 $viewModel = $block->getViewModel();
-// Add your template code here. Use $viewModel for getting your data.
 ?>
+<!-- Add your template code here. Use $viewModel for getting your data. -->

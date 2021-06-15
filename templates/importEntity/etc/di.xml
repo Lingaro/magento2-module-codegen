@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @copyright Copyright © 2020 Orba. All rights reserved.
- * @author    info@orba.co
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
  */
 -->
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
         <arguments>

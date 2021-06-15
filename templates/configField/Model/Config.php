@@ -1,8 +1,11 @@
 <?php
+
 /**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
@@ -11,22 +14,16 @@ use Magento\Store\Model\ScopeInterface;
 
 class Config
 {
-    const XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ id|snake|upper }} = '{{ sectionId|snake }}/{{ groupId|snake }}/{{ id|snake }}';
+    public const XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ id|snake|upper }} = '{{ sectionId|snake }}/{{ groupId|snake }}/{{ id|snake }}';
 
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
-    /**
-     * @param ScopeConfigInterface $scopeConfig
-     */
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function get{{ id|pascal }}({% if configScope != 'default' %}${{ configScope }}Id = null{% endif %})
+    public function get{{ id|pascal }}({% if configScope != 'default' %}${{ configScope }}Id = null{% endif %}): ?string
     {
         return $this->scopeConfig->getValue(
             static::XML_PATH_{{ sectionId|snake|upper }}_{{ groupId|snake|upper }}_{{ id|snake|upper }},

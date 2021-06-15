@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Grid;
 
 use Magento\Framework\Api\Search\AggregationInterface;
@@ -17,30 +19,11 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Psr\Log\LoggerInterface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }}\Collection as {{ entityName|pascal }}Collection;
 
-/**
- * Class Collection
- * Collection for displaying grid
- */
 class Collection extends {{ entityName|pascal }}Collection implements SearchResultInterface
 {
-    /**
-     * @var AggregationInterface
-     */
-    protected $aggregations;
+    private AggregationInterface $aggregations;
 
     /**
-     * @param EntityFactoryInterface $entityFactory
-     * @param LoggerInterface $logger
-     * @param FetchStrategyInterface $fetchStrategy
-     * @param ManagerInterface $eventManager
-     * @param mixed|null $mainTable
-     * @param AbstractDb $eventPrefix
-     * @param mixed $eventObject
-     * @param mixed $resourceModel
-     * @param string $model
-     * @param null $connection
-     * @param AbstractDb|null $resource
-     * 
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -52,7 +35,7 @@ class Collection extends {{ entityName|pascal }}Collection implements SearchResu
         $eventPrefix,
         $eventObject,
         $resourceModel,
-        $model = 'Magento\Framework\View\Element\UiComponent\DataProvider\Document',
+        $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
         $connection = null,
         AbstractDb $resource = null
     ) {
@@ -70,89 +53,55 @@ class Collection extends {{ entityName|pascal }}Collection implements SearchResu
         $this->setMainTable($mainTable);
     }
 
-    /**
-     * @return AggregationInterface
-     */
-    public function getAggregations()
+    public function getAggregations(): AggregationInterface
     {
         return $this->aggregations;
     }
 
-    /**
-     * @param AggregationInterface $aggregations
-     * @return $this
-     */
-    public function setAggregations($aggregations)
+    public function setAggregations($aggregations): void
     {
         $this->aggregations = $aggregations;
     }
 
-
     /**
      * Retrieve all ids for collection
      * Backward compatibility with EAV collection
-     *
-     * @param int $limit
-     * @param int $offset
-     * @return array
      */
-    public function getAllIds($limit = null, $offset = null)
+    public function getAllIds(?int $limit = null, ?int $offset = null): array
     {
         return $this->getConnection()->fetchCol($this->_getAllIdsSelect($limit, $offset), $this->_bindParams);
     }
 
-    /**
-     * Get search criteria.
-     *
-     * @return SearchCriteriaInterface|null
-     */
-    public function getSearchCriteria()
+    public function getSearchCriteria(): ?SearchCriteriaInterface
     {
         return null;
     }
 
     /**
-     * Set search criteria.
-     *
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null): Collection
     {
         return $this;
     }
 
-    /**
-     * Get total count.
-     *
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->getSize();
     }
 
     /**
-     * Set total count.
-     *
-     * @param int $totalCount
-     * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setTotalCount($totalCount)
+    public function setTotalCount($totalCount): Collection
     {
         return $this;
     }
 
     /**
-     * Set items list.
-     *
-     * @param \Magento\Framework\Api\ExtensibleDataInterface[] $items
-     * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setItems(array $items = null)
+    public function setItems(array $items = null): Collection
     {
         return $this;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
 
@@ -16,18 +16,11 @@ class {{ topic|pascal }}Request extends DataObject implements {{ topic|pascal }}
 {
 {% for item in requestFields %}
 
-    /**
-     * @return {{ item.type }}|null
-     */
     public function get{{ item.name|pascal }}(): ?{{ item.type }}
     {
         return $this->getData('{{ item.name|snake }}');
     }
 
-    /**
-     * @param {{ item.type }} $value
-     * @return void
-     */
     public function set{{ item.name|pascal }}({{ item.type }} $value): void
     {
         $this->setData('{{ item.name|snake }}', $value);

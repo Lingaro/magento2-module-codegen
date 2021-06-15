@@ -1,8 +1,11 @@
 <?php
+
 /**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Plugin;
 
@@ -12,23 +15,16 @@ use Magento\Sales\Api\Data\OrderSearchResultInterface;
 
 class SetOrderExtensionAttributes
 {
-
     /**
-     * @param OrderRepositoryInterface $subject
-     * @param OrderInterface $order
-     * @return OrderInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterGet(
-        OrderRepositoryInterface $subject,
-        OrderInterface $order
-    ): OrderInterface {
+    public function afterGet(OrderRepositoryInterface $subject, OrderInterface $order): OrderInterface
+    {
         return $this->addExtensionAttributes($order);
     }
 
     /**
-     * @param OrderRepositoryInterface $subject
-     * @param OrderSearchResultInterface $searchCriteria
-     * @return OrderSearchResultInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetList(
         OrderRepositoryInterface $subject,
@@ -41,14 +37,10 @@ class SetOrderExtensionAttributes
     }
 
     /**
-     * @param OrderRepositoryInterface $subject
-     * @param OrderInterface $order
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(
-        OrderRepositoryInterface $subject,
-        OrderInterface $order
-    ) {
-
+    public function beforeSave(OrderRepositoryInterface $subject, OrderInterface $order): void
+    {
         $extensionAttributes = $order->getExtensionAttributes();
 
 {% for field in fields %}
@@ -56,10 +48,6 @@ class SetOrderExtensionAttributes
 {% endfor %}
     }
 
-    /**
-     * @param OrderInterface $order
-     * @return OrderInterface
-     */
     private function addExtensionAttributes(OrderInterface $order): OrderInterface
     {
         $extensionAttributes = $order->getExtensionAttributes();

@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entityName|pascal }};
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
@@ -18,10 +20,7 @@ class Collection extends AbstractCollection
      */
     protected $_idFieldName = 'entity_id';
 
-    /**
-     * @return void
-     */
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init({{ entityName|pascal }}::class, {{ entityName|pascal }}ResourceModel::class);
     }

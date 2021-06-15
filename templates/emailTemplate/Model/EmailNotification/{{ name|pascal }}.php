@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\EmailNotification;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -14,29 +16,14 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Store\Model\Store;
 
 class {{ name|pascal }}
 {
-    /** @var TransportBuilder */
-    private $transportBuilder;
+    private TransportBuilder $transportBuilder;
+    private ScopeConfigInterface $scopeConfig;
+    private StoreManagerInterface $storeManager;
+    private SenderResolverInterface $senderResolver;
 
-    /** @var ScopeConfigInterface */
-    private $scopeConfig;
-
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
-    /** @var SenderResolverInterface */
-    private $senderResolver;
-
-    /**
-     * {{ name|pascal }} constructor.
-     * @param TransportBuilder $transportBuilder
-     * @param ScopeConfigInterface $scopeConfig
-     * @param StoreManagerInterface $storeManager
-     * @param SenderResolverInterface $senderResolver
-     */
     public function __construct(
         TransportBuilder $transportBuilder,
         ScopeConfigInterface $scopeConfig,
@@ -62,10 +49,9 @@ class {{ name|pascal }}
     public function send(
         $recipientEmail,
         array $templateParams = []{% if scope == 'frontend' %},
-        int $storeId = null{% endif %}
+        ?int $storeId = null{% endif %}
 
-    ): void
-    {
+    ): void {
         $templateXmlPath = '{{ configSection|snake }}/{{ configGroup|snake }}/{{ name|snake }}_template';
         $identityXmlPath = '{{ configSection|snake }}/{{ configGroup|snake }}/{{ name|snake }}_identity';
 

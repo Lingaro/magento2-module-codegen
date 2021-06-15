@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
 
@@ -14,14 +14,10 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ topic|pascal }}R
 
 class {{ topic|pascal }}Publisher
 {
-    const TOPIC = '{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}';
+    public const TOPIC = '{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}';
 
-    /** @var FrameworkPublisher */
-    private $frameworkPublisher;
+    private FrameworkPublisher $frameworkPublisher;
 
-    /**
-     * @param FrameworkPublisher $frameworkPublisher
-     */
     public function __construct(FrameworkPublisher $frameworkPublisher)
     {
         $this->frameworkPublisher = $frameworkPublisher;

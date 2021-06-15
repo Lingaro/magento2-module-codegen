@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!--
 /**
- * routes
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */

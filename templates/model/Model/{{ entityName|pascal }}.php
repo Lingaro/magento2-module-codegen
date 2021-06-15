@@ -13,48 +13,30 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
 
 class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pascal }}Interface
 {
-
     protected $_eventPrefix = '{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}';
 
-    /**
-     * @return void
-     */
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init({{ entityName|pascal }}ResourceModel::class);
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->_getData('entity_id');
     }
 
-    /**
-     * @param int $value
-     * @return void
-     */
     public function setId($value)
     {
         $this->setData('entity_id', $value);
     }
 {% for item in fields %}
 
-    /**
-     * @return {{ databaseTypeToPHP(item.databaseType) }}|null
-     */
-    public function get{{ item.name|pascal }}()
+    public function get{{ item.name|pascal }}(): ?{{ databaseTypeToPHP(item.databaseType) }}
     {
         return $this->getData('{{ item.name|snake }}');
     }
 
-    /**
-     * @param {{ databaseTypeToPHP(item.databaseType) }} $value
-     * @return void
-     */
-    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value)
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value): void
     {
         $this->setData('{{ item.name|snake }}', $value);
     }

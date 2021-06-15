@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|lower_only|ucfirst }};
 
 {% set parent_class = 'Action' %}
@@ -18,7 +20,7 @@ class {{ actionName|lower_only|ucfirst }} extends {{ parent_class }} implements 
 {
     public function execute()
     {
-        //put your work here
+        // Put your logic here
         return $this->_redirect('/');
     }
 }

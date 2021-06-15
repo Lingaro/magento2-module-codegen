@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
@@ -14,25 +16,10 @@ use Magento\Ui\Component\Listing\Columns\Column;
 
 class {{ entityName|pascal }}Actions extends Column
 {
-    /**
-     * Url path
-     */
-    const URL_PATH_EDIT = '{{ vendorName|snake }}_{{ moduleName|snake }}/{{ entityName|lower_only }}/edit';
+    public const URL_PATH_EDIT = '{{ vendorName|snake }}_{{ moduleName|snake }}/{{ entityName|lower_only }}/edit';
 
-    /**
-     * @var UrlInterface
-     */
-    protected $urlBuilder;
+    private UrlInterface $urlBuilder;
 
-    /**
-     * Constructor
-     *
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface $urlBuilder
-     * @param array $components
-     * @param array $data
-     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -44,13 +31,7 @@ class {{ entityName|pascal }}Actions extends Column
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
-    /**
-     * Prepare Data Source
-     *
-     * @param array $dataSource
-     * @return array
-     */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         if (isset($dataSource['data']['items'])) {
             $storeId = $this->context->getFilterParam('store_id');
