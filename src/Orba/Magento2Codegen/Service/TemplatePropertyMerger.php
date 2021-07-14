@@ -1,8 +1,21 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
+
+use function array_key_exists;
+use function array_merge;
+use function array_unique;
+use function is_array;
+use function is_null;
 
 class TemplatePropertyMerger
 {
@@ -17,12 +30,12 @@ class TemplatePropertyMerger
             } elseif (is_array($value)) {
                 if (!array_key_exists($key, $arr)) {
                     $arr[$key] = $value;
-                } else {
-                    if (is_null($arr[$key])) {
-                        $this->throwMixedPropertyTypesException();
-                    }
-                    $arr[$key] = array_unique(array_merge($arr[$key], $value));
+                    continue;
                 }
+                if (is_null($arr[$key])) {
+                    $this->throwMixedPropertyTypesException();
+                }
+                $arr[$key] = array_unique(array_merge($arr[$key], $value));
             }
         }
         return $arr;

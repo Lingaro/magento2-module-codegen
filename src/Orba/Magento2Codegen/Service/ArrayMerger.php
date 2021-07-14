@@ -1,13 +1,27 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use UnexpectedValueException;
 
+use function array_key_exists;
+use function array_shift;
+use function func_get_args;
+use function is_array;
+use function is_numeric;
+
 class ArrayMerger
 {
     /**
-     * @return array
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function arrayMergeRecursiveDistinct(): array
     {
@@ -30,18 +44,18 @@ class ArrayMerger
                 }
                 if (isset($base[$key]) && (is_array($value) || is_array($base[$key]))) {
                     $base[$key] = $this->arrayMergeRecursiveDistinct($base[$key], $append[$key]);
-                } else {
-                    if (!$canMergeBase || !$canMergeAppend) {
-                        throw new UnexpectedValueException('Can\'t merge non array into array');
-                    }
-                    elseif (is_numeric($key)) {
-                        if (!in_array($value, $base)) {
-                            $base[] = $value;
-                        }
-                    } else {
-                        $base[$key] = $value;
-                    }
+                    continue;
                 }
+                if (!$canMergeBase || !$canMergeAppend) {
+                    throw new UnexpectedValueException('Can\'t merge non array into array');
+                }
+                if (is_numeric($key)) {
+                    if (!in_array($value, $base)) {
+                        $base[] = $value;
+                    }
+                    continue;
+                }
+                $base[$key] = $value;
             }
         }
         return $base;

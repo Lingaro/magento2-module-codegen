@@ -12,7 +12,7 @@ CP=cp
 CAT=cat
 GIT=git
 COMPOSER=composer
-PROJECT_FRAMEWORK_REPO=git@bitbucket.org:orbainternalprojects/skeleton.git
+PROJECT_FRAMEWORK_REPO=
 EDITION=community
 VERSION=2.4.1
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
 namespace Orba\Magento2Codegen\Service\Twig;
 
 use Orba\Magento2Codegen\Service\StringFunction\FunctionInterface;
@@ -11,8 +16,11 @@ class FunctionsExtension extends AbstractExtension
     /**
      * @var FunctionInterface[]
      */
-    private $functions;
+    private array $functions;
 
+    /**
+     * @param FunctionInterface[] $functions
+     */
     public function __construct(array $functions = [])
     {
         $this->functions = $functions;

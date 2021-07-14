@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Model;
 
 interface InputPropertyInterface extends PropertyInterface
@@ -11,29 +18,14 @@ interface InputPropertyInterface extends PropertyInterface
 
     /**
      * @param mixed $value
-     * @return $this
      */
     public function setDefaultValue($value): self;
 
-    /**
-     * @return bool
-     */
     public function getRequired(): bool;
 
-    /**
-     * @param bool $value
-     * @return $this
-     */
     public function setRequired(bool $value): self;
 
-    /**
-     * @return array
-     */
     public function getDepend(): array;
 
-    /**
-     * @param array $value
-     * @return $this
-     */
     public function setDepend(array $value): self;
 }

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
@@ -12,10 +19,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class TemplateFactoryTest extends TestCase
 {
-    /**
-     * @var TemplateFactory
-     */
-    private $templateFactory;
+    private TemplateFactory $templateFactory;
 
     /**
      * @var MockObject|TemplateFile

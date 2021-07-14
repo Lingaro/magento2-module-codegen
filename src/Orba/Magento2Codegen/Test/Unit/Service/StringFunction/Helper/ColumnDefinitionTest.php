@@ -1,17 +1,26 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\StringFunction\Helper;
 
 use Orba\Magento2Codegen\Service\StringFunction\Helper\ColumnDefinition;
 use Orba\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
+use function array_diff;
+
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class ColumnDefinitionTest extends TestCase
 {
-    /**
-     * @var ColumnDefinition
-     */
-    private $columnDefinition;
+    private ColumnDefinition $columnDefinition;
 
     public function setUp(): void
     {
@@ -33,7 +42,7 @@ class ColumnDefinitionTest extends TestCase
     public function testGetPaddingReturnsFormattedStringWithDefaultValueForIntTypeIfLengthIsNull(string $type): void
     {
         $result = $this->columnDefinition->getPadding($type, null);
-        $this->assertRegExp('/padding="\d+"/', $result);
+        $this->assertMatchesRegularExpression('/padding="\d+"/', $result);
     }
 
     /**
@@ -60,7 +69,7 @@ class ColumnDefinitionTest extends TestCase
     public function testGetLengthReturnsFormattedStringWithDefaultValueForStringTypeIfLengthIsNull(string $type): void
     {
         $result = $this->columnDefinition->getLength($type, null);
-        $this->assertRegExp('/length="\d+"/', $result);
+        $this->assertMatchesRegularExpression('/length="\d+"/', $result);
     }
 
     /**
@@ -77,17 +86,17 @@ class ColumnDefinitionTest extends TestCase
      */
     public function testGetUnsignedReturnsEmptyStringForNotNumericType(string $type): void
     {
-        $result = $this->columnDefinition->getUnsigned($type, '1');
+        $result = $this->columnDefinition->getUnsigned($type, true);
         $this->assertSame('', $result);
     }
 
     /**
      * @dataProvider getNumericTypes()
      */
-    public function testGetUnsignedReturnsFormattedStringWithDefaultValueForNumericTypeIfUnsignedIsNull(string $type): void
+    public function testGetUnsignedReturnsFormattedStringWithDefaultValForNumericTypeIfUnsignedNull(string $type): void
     {
         $result = $this->columnDefinition->getUnsigned($type, null);
-        $this->assertRegExp('/unsigned="(true|false)"/', $result);
+        $this->assertMatchesRegularExpression('/unsigned="(true|false)"/', $result);
     }
 
     /**
@@ -104,15 +113,15 @@ class ColumnDefinitionTest extends TestCase
     public function testGetNullableReturnsFormattedStringWithFalseValueIfNullableIsNull(): void
     {
         $result = $this->columnDefinition->getNullable(null);
-        $this->assertRegExp('/nullable="false"/', $result);
+        $this->assertMatchesRegularExpression('/nullable="false"/', $result);
     }
 
     public function testGetNullableReturnsFormattedStringWithSpecifiedValue(): void
     {
         $resultTrue = $this->columnDefinition->getNullable(true);
         $resultFalse = $this->columnDefinition->getNullable(false);
-        $this->assertRegExp('/nullable="true"/', $resultTrue);
-        $this->assertRegExp('/nullable="false"/', $resultFalse);
+        $this->assertMatchesRegularExpression('/nullable="true"/', $resultTrue);
+        $this->assertMatchesRegularExpression('/nullable="false"/', $resultFalse);
     }
 
     /**
@@ -238,11 +247,13 @@ class ColumnDefinitionTest extends TestCase
     public function getNotNumericTypes(): array
     {
         $types = [];
-        foreach (array_diff(
-            DatabaseType::ALLOWED_TYPES,
-            DatabaseType::INT_TYPES,
-            DatabaseType::DECIMAL_TYPES
-                 ) as $type) {
+        foreach (
+            array_diff(
+                DatabaseType::ALLOWED_TYPES,
+                DatabaseType::INT_TYPES,
+                DatabaseType::DECIMAL_TYPES
+            ) as $type
+        ) {
             $types[] = [$type];
         };
         return $types;

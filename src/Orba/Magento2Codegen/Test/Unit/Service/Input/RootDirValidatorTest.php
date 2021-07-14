@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\Input;
 
 use InvalidArgumentException;
@@ -10,10 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class RootDirValidatorTest extends TestCase
 {
-    /**
-     * @var RootDirValidator
-     */
-    private $rootDirValidator;
+    private RootDirValidator $rootDirValidator;
 
     /**
      * @var MockObject|InputInterface

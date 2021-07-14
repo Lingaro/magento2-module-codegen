@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\{{ controllerName|lower_only|ucfirst }};
 
 {% set parent_class = 'Action' %}
@@ -19,10 +21,7 @@ use Magento\Framework\View\Result\PageFactory;
 
 class {{ actionName|lower_only|ucfirst }} extends {{ parent_class }} implements HttpGetActionInterface
 {
-    /**
-     * @var PageFactory
-     */
-    protected $pageFactory;
+    private PageFactory $pageFactory;
 
     public function __construct(Context $context, PageFactory $pageFactory)
     {
@@ -30,10 +29,7 @@ class {{ actionName|lower_only|ucfirst }} extends {{ parent_class }} implements 
         parent::__construct($context);
     }
 
-    /**
-     * @return Page
-     */
-    public function execute()
+    public function execute(): Page
     {
         /** @var Page $resultPage */
         $resultPage = $this->pageFactory->create();

@@ -1,8 +1,11 @@
 <?php
+
 /**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Plugin;
 
@@ -12,35 +15,24 @@ use Magento\Quote\Api\Data\CartSearchResultsInterface;
 
 class SetCartExtensionAttributes
 {
-
     /**
-     * @param CartRepositoryInterface $subject
-     * @param CartInterface $quote
-     * @return CartInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterGet(
-        CartRepositoryInterface $subject,
-        CartInterface $quote
-    ): CartInterface {
+    public function afterGet(CartRepositoryInterface $subject, CartInterface $quote): CartInterface
+    {
         return $this->addExtensionAttributes($quote);
     }
 
     /**
-     * @param CartRepositoryInterface $subject
-     * @param CartInterface $quote
-     * @return CartInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterGetForCustomer(
-        CartRepositoryInterface $subject,
-        CartInterface $quote
-    ): CartInterface {
+    public function afterGetForCustomer(CartRepositoryInterface $subject, CartInterface $quote): CartInterface
+    {
         return $this->addExtensionAttributes($quote);
     }
 
     /**
-     * @param CartRepositoryInterface $subject
-     * @param CartSearchResultsInterface $searchCriteria
-     * @return CartSearchResultsInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetList(
         CartRepositoryInterface $subject,
@@ -53,10 +45,9 @@ class SetCartExtensionAttributes
     }
 
     /**
-     * @param CartRepositoryInterface $subject
-     * @param CartInterface $quote
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(CartRepositoryInterface $subject, CartInterface $quote)
+    public function beforeSave(CartRepositoryInterface $subject, CartInterface $quote): void
     {
         $extensionAttributes = $quote->getExtensionAttributes();
 
@@ -65,10 +56,6 @@ class SetCartExtensionAttributes
 {% endfor %}
     }
 
-    /**
-     * @param CartInterface $quote
-     * @return CartInterface
-     */
     private function addExtensionAttributes(CartInterface $quote): CartInterface
     {
         $extensionAttributes = $quote->getExtensionAttributes();

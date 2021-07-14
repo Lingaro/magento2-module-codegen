@@ -1,39 +1,24 @@
 <?php
+
 /**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|pascal }}\Edit;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Registry;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class DeleteButton
- */
 class DeleteButton implements ButtonProviderInterface
 {
-    /**
-     * Url Builder
-     *
-     * @var \Magento\Framework\UrlInterface
-     */
-    protected $urlBuilder;
+    private UrlInterface $urlBuilder;
+    private Registry $registry;
 
-    /**
-     * Registry
-     *
-     * @var Registry
-     */
-    protected $registry;
-
-    /**
-     * Constructor
-     *
-     * @param Context $context
-     * @param Registry $registry
-     */
     public function __construct(
         Context $context,
         Registry $registry
@@ -42,32 +27,27 @@ class DeleteButton implements ButtonProviderInterface
         $this->registry = $registry;
     }
 
-    /**
-     * @return array
-     */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         if (!$this->registry->registry('entity_id')) {
             return [];
         }
 
-        $data = [
+        return [
             'label' => __('Delete'),
             'class' => 'delete',
             'id' => '{{ entityName|snake }}-edit-delete-button',
             'data_attribute' => [
                 'url' => $this->getDeleteUrl()
             ],
-            'on_click' => 'deleteConfirm(\'' . __("Are you sure you want to do delete this entity?") . '\', \'' . $this->getDeleteUrl() . '\')',
+            'on_click' => 'deleteConfirm(\''
+                . __("Are you sure you want to do delete this entity?")
+                . '\', \'' . $this->getDeleteUrl() . '\')',
             'sort_order' => 20,
         ];
-        return $data;
     }
 
-    /**
-     * @return string
-     */
-    public function getDeleteUrl()
+    public function getDeleteUrl(): string
     {
         return $this->urlBuilder->getUrl('*/*/delete', ['entity_id' => $this->registry->registry('entity_id')]);
     }

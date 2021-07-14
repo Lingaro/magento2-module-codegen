@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use InvalidArgumentException;
@@ -9,10 +16,7 @@ use Orba\Magento2Codegen\Test\Unit\TestCase;
 
 class CsvI18nMergerTest extends TestCase
 {
-    /**
-     * @var CsvI18nMerger
-     */
-    private $csvMerger;
+    private CsvI18nMerger $csvMerger;
 
     public function setUp(): void
     {
@@ -33,8 +37,11 @@ class CsvI18nMergerTest extends TestCase
 
     public function testMergeReturnsMergedCsvFile(): void
     {
-        $result = $this->csvMerger->merge('test1,Test 1'.PHP_EOL.'test2,Test 2', 'test2,Test2replaced'.PHP_EOL.'test3,Test 3');
-        $expected = 'test1,"Test 1"'.PHP_EOL.'test2,Test2replaced'.PHP_EOL.'test3,"Test 3"'.PHP_EOL;
-        $this->assertSame($expected,$result);
+        $result = $this->csvMerger->merge(
+            'test1,Test 1' . PHP_EOL . 'test2,Test 2',
+            'test2,Test2replaced' . PHP_EOL . 'test3,Test 3'
+        );
+        $expected = 'test1,"Test 1"' . PHP_EOL . 'test2,Test2replaced' . PHP_EOL . 'test3,"Test 3"' . PHP_EOL;
+        $this->assertSame($expected, $result);
     }
 }

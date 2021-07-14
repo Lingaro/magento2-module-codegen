@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
 use Magento\Framework\Model\AbstractModel;
@@ -13,7 +15,6 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
 
 class {{ entity2Name|pascal }} extends AbstractModel implements {{ entity2Name|pascal }}Interface
 {
-
     protected $_eventPrefix = '{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}';
 
     /**
@@ -32,5 +33,4 @@ class {{ entity2Name|pascal }} extends AbstractModel implements {{ entity2Name|p
     {
         $this->setData('{{ entityName|snake }}_id', $value);
     }
-
 }

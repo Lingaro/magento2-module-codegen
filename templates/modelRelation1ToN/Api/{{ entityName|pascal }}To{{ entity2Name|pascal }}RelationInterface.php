@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api;
 
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface;
@@ -13,9 +15,9 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entity2Name|pasc
 interface {{ entityName|pascal }}To{{ entity2Name|pascal }}RelationInterface
 {
     /**
-    * @param {{ entityName|pascal }}Interface ${{ entityName|camel }}
-    * @return {{ entity2Name|pascal }}Interface[]
-    */
+     * @param {{ entityName|pascal }}Interface ${{ entityName|camel }}
+     * @return {{ entity2Name|pascal }}Interface[]
+     */
     public function get{{ entity2Name|pascal|pluralize }}({{ entityName|pascal }}Interface ${{ entityName|camel }}): array;
 
     /**

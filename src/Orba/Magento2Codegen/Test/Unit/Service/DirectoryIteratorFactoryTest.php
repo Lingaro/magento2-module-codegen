@@ -1,20 +1,22 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use Orba\Magento2Codegen\Service\DirectoryIteratorFactory;
-use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use UnexpectedValueException;
 use RecursiveDirectoryIterator;
 
-
 class DirectoryIteratorFactoryTest extends TestCase
 {
-    /**
-     * @var TemplateDir
-     */
-    private $directoryIteratorFactory;
+    private DirectoryIteratorFactory $directoryIteratorFactory;
 
     public function setUp(): void
     {
@@ -36,11 +38,6 @@ class DirectoryIteratorFactoryTest extends TestCase
         $this->assertInstanceOf(RecursiveDirectoryIterator::class, $iterator);
     }
 
-    /**
-     * @param string $root
-     * @param string $path
-     * @return string
-     */
     private function getPath(string $root, string $path): string
     {
         $root = rtrim($root, '/');

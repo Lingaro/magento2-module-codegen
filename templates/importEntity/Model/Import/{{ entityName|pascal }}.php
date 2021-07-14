@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Import;
 
 use Exception;
@@ -24,30 +26,15 @@ use Magento\ImportExport\Model\ResourceModel\Import\Data;
 
 class {{ entityName|pascal }} extends AbstractEntity
 {
-    const ENTITY_CODE = '{{ entityName|snake }}';
-    const TABLE = '{{ entity_db_table }}';
-    const ENTITY_ID_COLUMN = '{{ entityIdColumn }}';
+    public const ENTITY_CODE = '{{ entityName|snake }}';
+    public const TABLE = '{{ entity_db_table }}';
+    public const ENTITY_ID_COLUMN = '{{ entityIdColumn }}';
 
-    /**
-     * If we should check column names
-     */
     protected $needColumnCheck = true;
-
-    /**
-     * Need to log in import history
-     */
     protected $logInHistory = true;
-
-    /**
-     * Permanent entity columns.
-     */
     protected $_permanentAttributes = [
         '{{ entityIdColumn }}'
     ];
-
-    /**
-     * Valid column names
-     */
     protected $validColumnNames = [
         '{{ entityIdColumn }}',
 {% for item in fields %}
@@ -104,33 +91,21 @@ class {{ entityName|pascal }} extends AbstractEntity
         $this->initMessageTemplates();
     }
 
-    /**
-     * Entity type code getter.
-     *
-     * @return string
-     */
-    public function getEntityTypeCode()
+    public function getEntityTypeCode(): string
     {
         return static::ENTITY_CODE;
     }
 
-    /**
-     * Get available columns
-     *
-     * @return array
-     */
     public function getValidColumnNames(): array
     {
         return $this->validColumnNames;
     }
 
     /**
-     * Row validation
-     *
      * @param array $rowData
      * @param int $rowNum
-     *
      * @return bool
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function validateRow(array $rowData, $rowNum): bool
     {
@@ -144,6 +119,7 @@ class {{ entityName|pascal }} extends AbstractEntity
          *
          * For each validation add entry to $this->_messageTemplates array
          */
+
         if (isset($this->_validatedRows[$rowNum])) {
             return !$this->getErrorAggregator()->isRowInvalid($rowNum);
         }
@@ -153,13 +129,6 @@ class {{ entityName|pascal }} extends AbstractEntity
         return !$this->getErrorAggregator()->isRowInvalid($rowNum);
     }
 
-    /**
-     * Import data
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
     protected function _importData(): bool
     {
         switch ($this->getBehavior()) {
@@ -177,11 +146,6 @@ class {{ entityName|pascal }} extends AbstractEntity
         return true;
     }
 
-    /**
-     * Delete entities
-     *
-     * @return bool
-     */
     private function deleteEntity(): bool
     {
         $rows = [];
@@ -208,11 +172,9 @@ class {{ entityName|pascal }} extends AbstractEntity
     }
 
     /**
-     * Save and replace entities
-     *
-     * @return void
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function saveAndReplaceEntity()
+    private function saveAndReplaceEntity(): void
     {
         $behavior = $this->getBehavior();
         $rows = [];
@@ -253,13 +215,6 @@ class {{ entityName|pascal }} extends AbstractEntity
         }
     }
 
-    /**
-     * Save entities
-     *
-     * @param array $entityData
-     *
-     * @return bool
-     */
     private function saveEntityFinish(array $entityData): bool
     {
         if ($entityData) {
@@ -282,13 +237,6 @@ class {{ entityName|pascal }} extends AbstractEntity
         return false;
     }
 
-    /**
-     * Delete entities
-     *
-     * @param array $entityIds
-     *
-     * @return bool
-     */
     private function deleteEntityFinish(array $entityIds): bool
     {
         if ($entityIds) {
@@ -307,19 +255,11 @@ class {{ entityName|pascal }} extends AbstractEntity
         return false;
     }
 
-    /**
-     * Get available columns
-     *
-     * @return array
-     */
     private function getAvailableColumns(): array
     {
         return $this->validColumnNames;
     }
 
-    /**
-     * Init Error Messages
-     */
     private function initMessageTemplates()
     {
         foreach ($this->_messageTemplates as $errorCode => $message) {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\TemplateType;
 
 use Orba\Magento2Codegen\Model\Template;
@@ -10,15 +17,8 @@ use RuntimeException;
 
 class Root implements TypeInterface
 {
-    /**
-     * @var PropertyBagFactory
-     */
-    private $propertyBagFactory;
-
-    /**
-     * @var RootCommandUtil
-     */
-    private $commandUtil;
+    private PropertyBagFactory $propertyBagFactory;
+    private RootCommandUtil $commandUtil;
 
     public function __construct(PropertyBagFactory $propertyBagFactory, RootCommandUtil $commandUtil)
     {

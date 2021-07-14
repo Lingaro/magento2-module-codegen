@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\Magento;
 
 use Orba\Magento2Codegen\Service\FilepathUtil;
@@ -10,10 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class DetectorTest extends TestCase
 {
-    /**
-     * @var Detector
-     */
-    private $detector;
+    private Detector $detector;
 
     /**
      * @var MockObject|FilepathUtil

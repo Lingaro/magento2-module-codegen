@@ -5,39 +5,25 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Result\PageFactory;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}Factory;
 
-class Edit extends Action
+class Edit extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+    public const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
 
-    /**
-     * @var Registry
-     */
-    protected $_coreRegistry = null;
+    private Registry $registry;
+    private PageFactory $resultPageFactory;
+    private {{ entityName|camel }}Factory $objectFactory;
 
-    /**
-     * @var PageFactory
-     */
-    protected $resultPageFactory;
-
-    /**
-     * @var {{ entityName|camel }}Factory $objectFactory
-     */
-    protected $objectFactory;
-
-    /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
-     * @param Registry $registry
-     * @param {{ entityName|camel}}Factory $objectFactory
-     */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
@@ -45,7 +31,7 @@ class Edit extends Action
         {{ entityName|camel}}Factory $objectFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->_coreRegistry = $registry;
+        $this->registry = $registry;
         $this->objectFactory = $objectFactory;
         parent::__construct($context);
     }
@@ -75,7 +61,7 @@ class Edit extends Action
             $objectInstance->addData($data);
         }
 
-        $this->_coreRegistry->register('entity_id', $id);
+        $this->registry->register('entity_id', $id);
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();

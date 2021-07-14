@@ -5,12 +5,10 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api;
 
-/**
- * Interface {{ entityName|pascal }}ManagementInterface
- * @package {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api
- */
 interface {{ entityName|pascal }}ManagementInterface
 {
     /**

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
@@ -8,30 +15,21 @@ use Orba\Magento2Codegen\Service\DirectoryIteratorFactory;
 use Orba\Magento2Codegen\Service\FinderFactory;
 use Orba\Magento2Codegen\Service\TemplateDir;
 use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class TemplateFileTest extends TestCase
 {
-    /**
-     * @var TemplateFile
-     */
-    private $templateFile;
-
-    /**
-     * @var MockObject|TemplateProcessorInterface
-     */
-    private $templateProcessorMock;
+    private TemplateFile $templateFile;
 
     public function setUp(): void
     {
-        $this->templateProcessorMock = $this->getMockBuilder(TemplateProcessorInterface::class)
-            ->getMockForAbstractClass();
         $this->templateFile = new TemplateFile(
             new TemplateDir(
                 new Config(new Processor(), new Parser()),
@@ -39,8 +37,7 @@ class TemplateFileTest extends TestCase
                 new Filesystem()
             ),
             new FinderFactory(),
-            new Parser(),
-            $this->templateProcessorMock
+            new Parser()
         );
     }
 
@@ -116,31 +113,25 @@ class TemplateFileTest extends TestCase
         $this->assertSame([], $result);
     }
 
-    public function testGetDependenciesReturnsArrayOfFirstLevelDependenciesIfDependenciesExistsAndNestedArgumentIsFalse(): void
+    public function testGetDependenciesReturnsArrayOfAllLevelsDependencies(): void
     {
-        $result = $this->templateFile->getDependencies('example', false);
-        $this->assertSame(['example2'], $result);
-    }
-
-    public function testGetDependenciesReturnsArrayOfAllLevelsDependenciesIfDependenciesExistsAndNestedArgumentIsTrue(): void
-    {
-        $result = $this->templateFile->getDependencies('example', true);
+        $result = $this->templateFile->getDependencies('example');
         $this->assertSame(['example2', 'emptyconfig'], $result);
     }
 
-    public function testGetTemplateFilesReturnsEmptyArrayIfTemplatesArrayIsEmpty()
+    public function testGetTemplateFilesReturnsEmptyArrayIfTemplatesArrayIsEmpty(): void
     {
         $result = $this->templateFile->getTemplateFiles([]);
         $this->assertSame([], $result);
     }
 
-    public function testGetTemplateFilesThrowsExceptionIfOneOfTheTemplatesDoesNotExist()
+    public function testGetTemplateFilesThrowsExceptionIfOneOfTheTemplatesDoesNotExist(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->templateFile->getTemplateFiles(['example', 'nonexistent']);
     }
 
-    public function testGetTemplateFilesReturnsArrayOfNonConfigFilesIfTemplatesArrayIsNotEmptyAndAllTemplatesExist()
+    public function testGetTemplateFilesReturnsNonConfigFilesIfTemplatesArrayIsNotEmptyAndAllTemplatesExist(): void
     {
         $result = $this->templateFile->getTemplateFiles(['example', 'example2']);
         $this->assertContainsOnlyInstancesOf(SplFileInfo::class, $result);

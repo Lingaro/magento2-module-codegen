@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName }}. All rights reserved.
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
 -->
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/publisher.xsd">
     <publisher topic="{{ vendorName|snake }}.{{ moduleName|snake }}.{{ topic|snake }}">
         <connection name="amqp" exchange="magento" />

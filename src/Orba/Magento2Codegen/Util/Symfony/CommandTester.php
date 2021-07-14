@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Util\Symfony;
 
 use Symfony\Component\Console\Command\Command;
@@ -14,9 +21,8 @@ class CommandTester
 {
     use TesterTrait;
 
-    private $command;
-    private $input;
-    private $statusCode;
+    private Command $command;
+    private ArrayInput $input;
 
     public function __construct(Command $command, ArrayInput $input, StreamOutput $output)
     {
@@ -47,11 +53,11 @@ class CommandTester
             $this->input->setInteractive($options['interactive']);
         }
 
-        $this->output->setDecorated(isset($options['decorated']) ? $options['decorated'] : false);
+        $this->output->setDecorated($options['decorated'] ?? false);
         if (isset($options['verbosity'])) {
             $this->output->setVerbosity($options['verbosity']);
         }
 
-        return $this->statusCode = $this->command->run($this->input, $this->output);
+        return $this->command->run($this->input, $this->output);
     }
 }

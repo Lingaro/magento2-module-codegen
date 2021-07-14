@@ -1,18 +1,18 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
 abstract class AbstractMerger implements MergerInterface
 {
-    /**
-     * @var array
-     */
-    protected $params = [];
-
-    /**
-     * @var bool
-     */
-    protected $experimental = false;
+    protected array $params = [];
+    protected bool $experimental = false;
 
     public function setParams(array $params): void
     {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Command\Template;
 
 use Orba\Magento2Codegen\Command\AbstractCommand;
@@ -11,29 +18,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListCommand extends AbstractCommand
 {
-    /**
-     * @var TemplateList
-     */
-    private $templateList;
-
-    /**
-     * @var TemplateFile
-     */
-    private $templateFile;
+    private TemplateList $templateList;
+    private TemplateFile $templateFile;
 
     public function __construct(
         IO $io,
         TemplateList $templateList,
         TemplateFile $templateFile,
         array $inputValidators = []
-    )
-    {
+    ) {
         $this->templateList = $templateList;
         $this->templateFile = $templateFile;
         parent::__construct($io, $inputValidators);
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('template:list')
@@ -41,7 +40,7 @@ class ListCommand extends AbstractCommand
             ->setHelp("This command checks all available templates to generate code from.");
     }
 
-    protected function _execute(InputInterface $input, OutputInterface $output): void
+    protected function executeInternal(InputInterface $input, OutputInterface $output): void
     {
         $this->io->getInstance()->writeln('Templates List');
         $templates = $this->templateList->getAll();

@@ -1,6 +1,16 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\StringFilter;
+
+use function preg_replace;
+use function strtolower;
 
 class SnakeCaseFilter implements FilterInterface
 {
@@ -11,7 +21,6 @@ class SnakeCaseFilter implements FilterInterface
         $text = preg_replace('/[^a-zA-Z0-9]/', '_', $text);
         $text = preg_replace('/_+/', '_', $text);
         $text = strtolower($text);
-        $text = trim($text, '_');
-        return $text;
+        return trim($text, '_');
     }
 }

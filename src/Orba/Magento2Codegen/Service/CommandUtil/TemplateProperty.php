@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Model\ConstProperty;
@@ -7,32 +14,17 @@ use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\Template as TemplateModel;
 use Orba\Magento2Codegen\Service\Config;
 use Orba\Magento2Codegen\Service\PropertyFactory;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
+
+use function array_merge;
 
 class TemplateProperty
 {
-    /**
-     * @var Config
-     */
-    private $config;
+    private Config $config;
+    private PropertyFactory $propertyFactory;
 
-    /**
-     * @var CollectorFactory
-     */
-    private $propertyValueCollectorFactory;
-
-    /**
-     * @var PropertyFactory
-     */
-    private $propertyFactory;
-
-    public function __construct(
-        Config $config,
-        CollectorFactory $propertyValueCollectorFactory,
-        PropertyFactory $propertyFactory
-    ) {
+    public function __construct(Config $config, PropertyFactory $propertyFactory)
+    {
         $this->config = $config;
-        $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
         $this->propertyFactory = $propertyFactory;
     }
 
@@ -53,7 +45,6 @@ class TemplateProperty
     }
 
     /**
-     * @param TemplateModel $template
      * @return PropertyInterface[]
      */
     public function collectInputProperties(TemplateModel $template): array

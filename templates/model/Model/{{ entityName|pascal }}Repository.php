@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}RepositoryInterface;
@@ -21,21 +23,9 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel\{{ entit
 
 class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}RepositoryInterface
 {
-
-    /**
-     * @var {{ entityName|pascal }}Factory
-     */
-    private ${{ entityName|camel }}Factory;
-
-    /**
-     * @var {{ entityName|pascal }}CollectionFactory
-     */
-    private ${{ entityName|camel }}CollectionFactory;
-
-    /**
-     * @var {{ entityName|pascal }}SearchResultInterfaceFactory
-     */
-    private $searchResultFactory;
+    private {{ entityName|pascal }}Factory ${{ entityName|camel }}Factory;
+    private {{ entityName|pascal }}CollectionFactory ${{ entityName|camel }}CollectionFactory;
+    private {{ entityName|pascal }}SearchResultInterfaceFactory $searchResultFactory;
 
     public function __construct(
         {{ entityName|pascal }}Factory ${{ entityName|camel }}Factory,
@@ -47,10 +37,7 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
         $this->searchResultFactory = ${{ entityName|camel }}SearchResultInterfaceFactory;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getById($id)
+    public function getById(int $id): {{ entityName|pascal }}Interface
     {
         ${{ entityName|camel }} = $this->{{ entityName|camel }}Factory->create();
         ${{ entityName|camel }}->getResource()->load(${{ entityName|camel }}, $id);
@@ -60,30 +47,19 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
         return ${{ entityName|camel }};
     }
 
-    /**
-     * @inheritDoc
-     * @throws AlreadyExistsException
-     */
-    public function save({{ entityName|pascal }}Interface ${{ entityName|camel }})
+    public function save({{ entityName|pascal }}Interface ${{ entityName|camel }}): void
     {
         /** @var ${{ entityName|camel }} {{ entityName|pascal }} **/
         ${{ entityName|camel }}->getResource()->save(${{ entityName|camel }});
     }
 
-    /**
-     * @inheritDoc
-     * @throws Exception
-     */
-    public function delete({{ entityName|pascal }}Interface ${{ entityName|camel }})
+    public function delete({{ entityName|pascal }}Interface ${{ entityName|camel }}): void
     {
         /** @var ${{ entityName|camel }} {{ entityName|pascal }} **/
         ${{ entityName|camel }}->getResource()->delete(${{ entityName|camel }});
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getList(SearchCriteriaInterface $searchCriteria)
+    public function getList(SearchCriteriaInterface $searchCriteria): {{ entityName|pascal }}SearchResultInterface
     {
         $collection = $this->{{ entityName|camel }}CollectionFactory->create();
         $this->addFiltersToCollection($searchCriteria, $collection);
@@ -93,7 +69,7 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
         return $this->buildSearchResult($searchCriteria, $collection);
     }
 
-    private function addFiltersToCollection(SearchCriteriaInterface $searchCriteria, Collection $collection)
+    private function addFiltersToCollection(SearchCriteriaInterface $searchCriteria, Collection $collection): void
     {
         foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
             $fields = $conditions = [];
@@ -105,7 +81,7 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
         }
     }
 
-    private function addSortOrdersToCollection(SearchCriteriaInterface $searchCriteria, Collection $collection)
+    private function addSortOrdersToCollection(SearchCriteriaInterface $searchCriteria, Collection $collection): void
     {
         foreach ((array) $searchCriteria->getSortOrders() as $sortOrder) {
             $direction = $sortOrder->getDirection() == SortOrder::SORT_ASC ? 'asc' : 'desc';
@@ -113,14 +89,16 @@ class {{ entityName|pascal }}Repository implements {{ entityName|pascal }}Reposi
         }
     }
 
-    private function addPagingToCollection(SearchCriteriaInterface $searchCriteria, Collection $collection)
+    private function addPagingToCollection(SearchCriteriaInterface $searchCriteria, Collection $collection): void
     {
         $collection->setPageSize($searchCriteria->getPageSize());
         $collection->setCurPage($searchCriteria->getCurrentPage());
     }
 
-    private function buildSearchResult(SearchCriteriaInterface $searchCriteria, Collection $collection)
-    {
+    private function buildSearchResult(
+        SearchCriteriaInterface $searchCriteria,
+        Collection $collection
+    ): {{ entityName|pascal }}SearchResultInterface {
         /** @var {{ entityName|pascal }}SearchResultInterface $searchResults */
         $searchResults = $this->searchResultFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);

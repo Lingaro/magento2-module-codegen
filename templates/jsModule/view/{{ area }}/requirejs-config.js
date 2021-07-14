@@ -1,3 +1,8 @@
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+
 var config = {
     "map": {
         "*": {

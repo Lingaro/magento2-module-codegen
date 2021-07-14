@@ -1,11 +1,21 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\StringFilter;
+
+use function preg_replace;
+use function str_replace;
+use function strtolower;
+use function ucfirst;
 
 /**
  * First letter capital, rest lower case, no underscore, for directory for controller
- * Class CapitalCaseFilter
- * @package Orba\Magento2Codegen\Service\StringFilter
  */
 class CapitalCaseFilter implements FilterInterface
 {
@@ -15,7 +25,6 @@ class CapitalCaseFilter implements FilterInterface
         $text = preg_replace('/([a-z0-9])([A-Z])/', '$1 $2', $text);
         $text = strtolower($text);
         $text = str_replace(' ', '', $text);
-        $text = ucfirst($text);
-        return $text;
+        return ucfirst($text);
     }
 }

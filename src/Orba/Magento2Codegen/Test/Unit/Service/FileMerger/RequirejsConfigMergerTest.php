@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use InvalidArgumentException;
@@ -11,17 +18,11 @@ use Orba\Magento2Codegen\Service\ArrayMerger;
 
 class RequirejsConfigMergerTest extends TestCase
 {
-    /**
-     * @var RequirejsConfigMerger
-     */
-    private $merger;
+    private RequirejsConfigMerger $merger;
 
     public function setUp(): void
     {
-        $this->merger = new RequirejsConfigMerger(
-            new JsonMerger(new ArrayMerger),
-            new JsConverter()
-        );
+        $this->merger = new RequirejsConfigMerger(new JsonMerger(new ArrayMerger()), new JsConverter());
     }
 
     /**
@@ -142,7 +143,7 @@ JS;
         $this->assertSame($expectedResult, $result);
     }
 
-    public function testMergeWillReturnMergedRequirejsConfigIfBothContentsHaveCommentsAtTheBeggining(): void
+    public function testMergeWillReturnMergedRequirejsConfigIfBothContentsHaveCommentsAtTheBeginning(): void
     {
         $oldContent = <<<JS
 /**

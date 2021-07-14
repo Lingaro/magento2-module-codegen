@@ -10,6 +10,7 @@
     <widget id="{{ vendorName|snake }}_{{ name|snake }}" class="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Widget\{{ name|pascal }}">
         <label translate="true">{{ name|titleize }}</label>
         <description translate="true">{{ description|raw }}</description>
+{% if parameters is not empty %}
         <parameters>
 {% for item in parameters %}
             <parameter xsi:type="{{ item.type }}"
@@ -57,5 +58,6 @@
             </parameter>
 {% endfor %}
         </parameters>
+{% endif %}
     </widget>
 </widgets>

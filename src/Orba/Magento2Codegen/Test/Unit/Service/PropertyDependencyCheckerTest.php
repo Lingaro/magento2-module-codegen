@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
@@ -9,22 +16,18 @@ use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class PropertyDependencyCheckerTest extends TestCase
 {
-    /**
-     * @var PropertyDependencyChecker
-     */
-    private $propertyDependencyChecker;
+    private PropertyDependencyChecker $propertyDependencyChecker;
+    private PropertyBag $propertyBag;
 
     /**
      * @var MockObject|InputPropertyInterface
      */
     private $propertyMock;
-
-    /**
-     * @var PropertyBag
-     */
-    private $propertyBag;
 
     public function setUp(): void
     {
@@ -80,7 +83,7 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testAreRootConditionsMetReturnsTrueIfMultipleRootDependenciesFoundInBagAndAllMetConditions(): void
+    public function testAreRootConditionsMetReturnsTrueIfRootDependenciesFoundInBagAndAllMetConditions(): void
     {
         $this->propertyBag->add(['property' => 'value', 'foo' => 'bar']);
         $this->propertyMock->expects($this->any())->method('getDepend')
@@ -89,7 +92,7 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testAreRootConditionsMetReturnsFalseIfMultipleRootDependenciesFoundInBagButTheLatterDoesNotMetConditions(): void
+    public function testAreRootConditionsMetReturnsFalseIfRootDependenciesFoundInBagButLatterDontMeetConds(): void
     {
         $this->propertyBag->add(['property' => 'value', 'foo' => 'bar']);
         $this->propertyMock->expects($this->any())->method('getDepend')
@@ -112,7 +115,7 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testAreScopeConditionsMetReturnsTrueIfThereIsScopeDependencyButScopeIsDifferentThenSpecifiedOne(): void
+    public function testAreScopeConditionsMetReturnsTrueIfThereIsScopeDependencyButScopeDifferentThanSpecified(): void
     {
         $this->propertyMock->expects($this->any())->method('getDepend')->willReturn(['foo.property' => 'value']);
         $result = $this->propertyDependencyChecker->areScopeConditionsMet('scope', $this->propertyMock, []);
@@ -148,7 +151,7 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testAreScopeConditionsMetReturnsTrueIfMultipleScopeDependenciesFoundInValuesAndAllMetConditions(): void
+    public function testAreScopeConditionsMetReturnsTrueIfScopeDependenciesFoundInValuesAndAllMetConditions(): void
     {
         $this->propertyMock->expects($this->any())->method('getDepend')
             ->willReturn(['scope.property' => 'value', 'scope.foo' => 'bar']);
@@ -157,7 +160,7 @@ class PropertyDependencyCheckerTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testAreScopeConditionsMetReturnsFalseIfMultipleScopeDependenciesFoundInValuesButTheLatterDoesNotMetConditions(): void
+    public function testAreScopeConditionsMetReturnsFalseIfScopeDependenciesFoundInValuesButLatterDontMeetConds(): void
     {
         $this->propertyMock->expects($this->any())->method('getDepend')
             ->willReturn(['scope.property' => 'value', 'scope.foo' => 'boo']);

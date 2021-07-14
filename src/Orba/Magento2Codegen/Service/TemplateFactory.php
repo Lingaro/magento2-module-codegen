@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
@@ -7,15 +14,8 @@ use Orba\Magento2Codegen\Model\Template;
 
 class TemplateFactory
 {
-    /**
-     * @var TemplateFile
-     */
-    private $templateFile;
-
-    /**
-     * @var TemplateBuilder
-     */
-    private $templateBuilder;
+    private TemplateFile $templateFile;
+    private TemplateBuilder $templateBuilder;
 
     public function __construct(TemplateFile $templateFile, TemplateBuilder $templateBuilder)
     {

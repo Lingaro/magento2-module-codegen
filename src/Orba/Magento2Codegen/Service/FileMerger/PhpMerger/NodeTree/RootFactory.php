@@ -1,50 +1,34 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
-/**
- * Class RootFactory
- * @package Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree
- */
 class RootFactory
 {
-    /** @var RelationFactory */
-    private $_relationFactory;
+    private RelationFactory $relationFactory;
+    private Order $order;
+    private NodeCleaner $nodeCleaner;
 
-    /** @var Order */
-    private $_order;
-
-    /** @var NodeCleaner */
-    private $_nodeCleaner;
-
-    /**
-     * RootFactory constructor.
-     * @param RelationFactory $relationFactory
-     * @param Order $order
-     * @param NodeCleaner $nodeCleaner
-     */
-    public function __construct(
-        RelationFactory $relationFactory,
-        Order $order,
-        NodeCleaner $nodeCleaner
-    )
+    public function __construct(RelationFactory $relationFactory, Order $order, NodeCleaner $nodeCleaner)
     {
-        $this->_relationFactory = $relationFactory;
-        $this->_order = $order;
-        $this->_nodeCleaner = $nodeCleaner;
+        $this->relationFactory = $relationFactory;
+        $this->order = $order;
+        $this->nodeCleaner = $nodeCleaner;
     }
 
-    /**
-     * @param string|null $name
-     * @return Root
-     */
-    public function create(string $name = null): Root
+    public function create(?string $name = null): Root
     {
         return new Root(
             $this,
-            $this->_relationFactory,
-            $this->_order,
-            $this->_nodeCleaner,
+            $this->relationFactory,
+            $this->order,
+            $this->nodeCleaner,
             $name
         );
     }

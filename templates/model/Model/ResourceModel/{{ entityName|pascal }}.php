@@ -5,18 +5,15 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class {{ entityName|pascal }} extends AbstractDb
 {
-    /**
-     * Initialize resource model
-     *
-     * @return void
-     */
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init('{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entityName|snake }}', 'entity_id');
     }

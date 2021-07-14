@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Model;
 
 abstract class AbstractInputProperty extends AbstractProperty implements InputPropertyInterface
@@ -7,24 +14,17 @@ abstract class AbstractInputProperty extends AbstractProperty implements InputPr
     /**
      * @var mixed
      */
-    protected $defaultValue;
+    protected $defaultValue = null;
 
-    /**
-     * @var bool
-     */
-    protected $required = false;
-
-    /**
-     * @var array
-     */
-    protected $depend = [];
+    protected bool $required = false;
+    protected array $depend = [];
 
     public function getDefaultValue()
     {
         return $this->defaultValue;
     }
 
-    public function setDefaultValue($value): InputPropertyInterface
+    public function setDefaultValue($value): self
     {
         $this->defaultValue = $value;
         return $this;
@@ -35,7 +35,7 @@ abstract class AbstractInputProperty extends AbstractProperty implements InputPr
         return $this->required;
     }
 
-    public function setRequired(bool $value): InputPropertyInterface
+    public function setRequired(bool $value): self
     {
         $this->required = $value;
         return $this;
@@ -46,7 +46,7 @@ abstract class AbstractInputProperty extends AbstractProperty implements InputPr
         return $this->depend;
     }
 
-    public function setDepend(array $value): InputPropertyInterface
+    public function setDepend(array $value): self
     {
         $this->depend = $value;
         return $this;

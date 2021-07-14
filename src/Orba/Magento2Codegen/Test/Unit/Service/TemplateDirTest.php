@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use Orba\Magento2Codegen\Service\Config;
@@ -12,17 +19,15 @@ use Symfony\Component\Yaml\Parser;
 
 class TemplateDirTest extends TestCase
 {
-    /**
-     * @var TemplateDir
-     */
-    private $templateDir;
+    private TemplateDir $templateDir;
 
     public function setUp(): void
     {
         $this->templateDir = new TemplateDir(
             new Config(new Processor(), new Parser()),
             new DirectoryIteratorFactory(),
-            new Filesystem());
+            new Filesystem()
+        );
     }
 
     public function testGetPathReturnsNullIfTemplateDoesNotExist(): void

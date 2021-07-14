@@ -1,8 +1,11 @@
 <?php
+
 /**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Cache;
 
@@ -15,34 +18,22 @@ class {{ cacheName|pascal }} extends TagScope
     /**
      * Cache type code unique among all cache types
      */
-    const TYPE_IDENTIFIER = '{{ cacheName|snake }}';
+    public const TYPE_IDENTIFIER = '{{ cacheName|snake }}';
 
     /**
      * Cache tag used to distinguish the cache type from all other cache
      */
-    const CACHE_TAG = '{{ cacheName|snake|upper }}_CACHE_TAG';
+    public const CACHE_TAG = '{{ cacheName|snake|upper }}_CACHE_TAG';
 
     /**
      * Cache lifetime
      */
-    const LIFETIME = {{ lifeTime }};
+    public const LIFETIME = {{ lifeTime }};
 
-    /**
-     * @var Serialize
-     */
-    protected $serializer;
+    private Serialize $serializer;
 
-    /**
-     * @var bool
-     */
-    protected $useBinarySerializer = false;
+    private bool $useBinarySerializer = false;
 
-    /**
-     * Cache constructor.
-     * @param FrontendPool $cacheFrontendPool
-     * @param Serialize $serializer
-     * @param string $tag
-     */
     public function __construct(
         FrontendPool $cacheFrontendPool,
         Serialize $serializer,
@@ -56,33 +47,29 @@ class {{ cacheName|pascal }} extends TagScope
         }
     }
 
-    /**
-     * @param mixed ...$args
-     * @return string
-     */
     public function getCacheId(...$args): string
     {
-        return self::TYPE_IDENTIFIER . '_' . md5(implode("_", $args));
+        return self::TYPE_IDENTIFIER . '_' . hash('sha256', implode("_", $args));
     }
 
     /**
-     * @param $data
-     * @param $identifier
+     * @param array|bool|float|int|mixed|string|null $data
+     * @param string $identifier
      * @param array $tags
-     * @param null $lifeTime
+     * @param int|null $lifeTime
      * @return bool
      */
-    public function save($data, $identifier, array $tags = [], $lifeTime = null)
+    public function save($data, $identifier, array $tags = [], $lifeTime = null): bool
     {
-        if (is_null($lifeTime)) {
+        if ($lifeTime === null) {
             $lifeTime = self::LIFETIME;
         }
         return parent::save($this->_serialize($data), $identifier, $tags, $lifeTime);
     }
 
     /**
-     * @param $identifier
-     * @return bool|mixed|string
+     * @param string $identifier
+     * @return array|bool|float|int|mixed|string|null
      */
     public function load($identifier)
     {
@@ -94,20 +81,16 @@ class {{ cacheName|pascal }} extends TagScope
         return $data;
     }
 
-    /**
-     * @param array $tags
-     * @return bool
-     */
-    public function cleanByTags(array $tags)
+    public function cleanByTags(array $tags): bool
     {
         return $this->clean(\Zend_Cache::CLEANING_MODE_MATCHING_TAG, $tags);
     }
 
     /**
-     * @param $data
-     * @return bool|string
+     * @param array|bool|float|int|mixed|string|null $data
+     * @return string|null
      */
-    private function _serialize($data)
+    private function _serialize($data): ?string
     {
         if ($this->useBinarySerializer) {
             return igbinary_serialize($data);
@@ -119,7 +102,7 @@ class {{ cacheName|pascal }} extends TagScope
      * @param $data
      * @return array|bool|float|int|mixed|string|null
      */
-    private function _unserialize($data)
+    private function _unserialize(string $data)
     {
         if ($this->useBinarySerializer) {
             return igbinary_unserialize($data);

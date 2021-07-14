@@ -1,17 +1,20 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Model;
 
-/**
- * Class ArrayProperty
- * @package Orba\Magento2Codegen\Model
- */
 class ArrayProperty extends AbstractInputProperty
 {
     /**
      * @var PropertyInterface[]
      */
-    protected $children = [];
+    protected array $children = [];
 
     /**
      * @return PropertyInterface[]
@@ -23,7 +26,6 @@ class ArrayProperty extends AbstractInputProperty
 
     /**
      * @param PropertyInterface[] $children
-     * @return $this
      */
     public function setChildren(array $children): self
     {

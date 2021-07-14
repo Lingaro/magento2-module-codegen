@@ -5,26 +5,23 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}Factory;
 
-class Delete extends Action
+class Delete extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+    public const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
 
-    /**
-     * @var {{ entityName|camel }}Factory $objectFactory
-     */
-    protected $objectFactory;
+    private {{ entityName|camel }}Factory $objectFactory;
 
-    /**
-     * @param Context $context
-     * @param {{ entityName|pascal}}Factory $objectFactory
-     */
     public function __construct(
         Context $context,
         {{ entityName|pascal}}Factory $objectFactory
@@ -33,13 +30,9 @@ class Delete extends Action
         parent::__construct($context);
     }
 
-    /**
-     * Delete action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
-     */
-    public function execute()
+    public function execute(): Redirect
     {
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('entity_id', null);
 
@@ -54,7 +47,7 @@ class Delete extends Action
         } catch (Exception $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());
         }
-        
+
         return $resultRedirect->setPath('*/*');
     }
 }

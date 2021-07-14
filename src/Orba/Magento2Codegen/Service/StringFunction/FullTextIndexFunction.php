@@ -1,23 +1,26 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\StringFunction;
 
 use Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter;
 use Orba\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
 
+use function implode;
+use function in_array;
+
 class FullTextIndexFunction implements FunctionInterface
 {
-    const FULLTEXT_TYPES = ['varchar'];
+    public const FULLTEXT_TYPES = ['varchar'];
 
-    /**
-     * @var SnakeCaseFilter
-     */
-    private $snakeCaseFilter;
-
-    /**
-     * @var DatabaseType
-     */
-    private $databaseTypeHelper;
+    private SnakeCaseFilter $snakeCaseFilter;
+    private DatabaseType $databaseTypeHelper;
 
     public function __construct(SnakeCaseFilter $snakeCaseFilter, DatabaseType $databaseTypeHelper)
     {
@@ -30,14 +33,6 @@ class FullTextIndexFunction implements FunctionInterface
         return $this->fullTextIndex(...$args);
     }
 
-    /**
-     * @param string $vendorName
-     * @param string $moduleName
-     * @param string $entityName
-     * @param array $fields
-     * @return string
-     * @throws \InvalidArgumentException
-     */
     private function fullTextIndex(string $vendorName, string $moduleName, string $entityName, array $fields): string
     {
         $cols = [];

@@ -21,47 +21,17 @@ use Magento\Framework\Api\SortOrderBuilder;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}RepositoryInterface;
 {% endif %}
 
-/**
- * Class {{ entityName|pascal }}Management
- * @package {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model
- */
 class {{ entityName|pascal }}Management implements {{ entityName|pascal }}ManagementInterface
 {
-{% if customEntityRepository is empty %}
-    /** @var {{ entityName|pascal }}RepositoryInterface  */
-{% else %}
-    /** @var {{ customEntityRepository }}  */
-{% endif %}
-    protected $entityRepository;
-
-    /** @var SearchCriteriaBuilder */
-    protected $searchBuilder;
-
+    private {% if customEntityRepository is empty %}{{ entityName|pascal }}RepositoryInterface{% else %}{{ customEntityRepository }}{% endif %} $entityRepository;
+    private SearchCriteriaBuilder $searchBuilder;
 {% if filters is not empty %}
-    /** @var FilterBuilder */
-    protected $filterBuilder;
-
+    private FilterBuilder $filterBuilder;
 {% endif %}
 {% if sorts is not empty %}
-    /** @var SortOrderBuilder */
-    protected $sortOrderBuilder;
+    private SortOrderBuilder $sortOrderBuilder;
+{% endif %}
 
-{% endif %}
-    /**
-     * {{ entityName|pascal }}Management constructor.
-     * @param SearchCriteriaBuilder $searchBuilder
-{% if filters is not empty %}
-     * @param FilterBuilder $filterBuilder,
-{% endif %}
-{% if sorts is not empty %}
-     * @param SortOrderBuilder $sortOrderBuilder,
-{% endif %}
-{% if customEntityRepository is empty %}
-     * @param {{ entityName|pascal }}RepositoryInterface $entityRepository
-{% else %}
-     * @param {{ customEntityRepository }} $entityRepository
-{% endif %}
-     */
     public function __construct(
         SearchCriteriaBuilder $searchBuilder,
 {% if filters is not empty %}
@@ -86,20 +56,6 @@ class {{ entityName|pascal }}Management implements {{ entityName|pascal }}Manage
         $this->entityRepository = $entityRepository;
     }
 
-    /**
-{% for item in filters %}
-{% if item.value is empty %}
-     * @param {{ item.type }} ${{ item.field|camel }}
-{% endif %}
-{% endfor %}
-     * @param int $pageSize
-     * @param int $currentPage
-{% if customEntityRepository is empty %}
-     * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface[]
-{% else %}
-     * @return {{ customEntityType }}[]
-{% endif %}
-     */
     public function {{ functionName|camel }}(
 {% for item in filters %}
 {% if item.value is empty %}

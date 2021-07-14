@@ -15,10 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class StringCollectorTest extends TestCase
 {
-    /**
-     * @var StringCollector
-     */
-    private $stringCollector;
+    private StringCollector $stringCollector;
 
     /**
      * @var MockObject|IO
@@ -46,7 +43,7 @@ class StringCollectorTest extends TestCase
         $this->stringCollector = new StringCollector($this->ioMock);
     }
 
-    public function testCollectValueThrowsExceptionIfPropertyIsNotStringProperty()
+    public function testCollectValueThrowsExceptionIfPropertyIsNotStringProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         /** @var ConstProperty|MockObject $propertyMock */
@@ -54,7 +51,7 @@ class StringCollectorTest extends TestCase
         $this->stringCollector->collectValue($propertyMock, $this->propertyBagMock);
     }
 
-    public function testCollectValueReturnsValueFromInputIfPropertyIsStringProperty()
+    public function testCollectValueReturnsValueFromInputIfPropertyIsStringProperty(): void
     {
         $this->ioInstanceMock->expects($this->once())->method('askQuestion')
             ->willReturn('foo');
@@ -64,7 +61,7 @@ class StringCollectorTest extends TestCase
         $this->assertSame('foo', $result);
     }
 
-    public function testCollectValueReturnsValueIfPropertyIsRequired()
+    public function testCollectValueReturnsValueIfPropertyIsRequired(): void
     {
         /** @var StringProperty|MockObject $stringPropertyMock */
         $stringPropertyMock = $this->getMockBuilder(StringProperty::class)->disableOriginalConstructor()->getMock();

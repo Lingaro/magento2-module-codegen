@@ -1,52 +1,36 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Model;
 
 use Orba\Magento2Codegen\Service\TemplateType\TypeInterface;
 
 class Template
 {
-    /**
-     * @var string|null
-     */
-    private $name;
-
-    /**
-     * @var string|null
-     */
-    private $description;
+    private ?string $name = null;
+    private ?string $description = null;
+    private ?string $afterGenerateConfig = null;
+    private array $propertiesConfig = [];
+    private ?TypeInterface $typeService;
+    private bool $isAbstract = false;
 
     /**
      * @var Template[]
      */
-    private $dependencies = [];
-
-    /**
-     * @var string|null
-     */
-    private $afterGenerateConfig;
-
-    /**
-     * @var array
-     */
-    private $propertiesConfig = [];
-
-    /**
-     * @var TypeInterface|null
-     */
-    private $typeService;
-
-    /**
-     * @var bool
-     */
-    private $isAbstract = false;
+    private array $dependencies = [];
 
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): Template
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -57,7 +41,7 @@ class Template
         return $this->description;
     }
 
-    public function setDescription(string $description): Template
+    public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
@@ -68,7 +52,7 @@ class Template
         return $this->dependencies;
     }
 
-    public function setDependencies(array $dependencies): Template
+    public function setDependencies(array $dependencies): self
     {
         $this->dependencies = $dependencies;
         return $this;
@@ -79,7 +63,7 @@ class Template
         return $this->afterGenerateConfig;
     }
 
-    public function setAfterGenerateConfig(string $afterGenerateConfig): Template
+    public function setAfterGenerateConfig(string $afterGenerateConfig): self
     {
         $this->afterGenerateConfig = $afterGenerateConfig;
         return $this;
@@ -90,7 +74,7 @@ class Template
         return $this->propertiesConfig;
     }
 
-    public function setPropertiesConfig(array $propertiesConfig): Template
+    public function setPropertiesConfig(array $propertiesConfig): self
     {
         $this->propertiesConfig = $propertiesConfig;
         return $this;
@@ -101,7 +85,7 @@ class Template
         return $this->typeService;
     }
 
-    public function setTypeService(TypeInterface $typeService): Template
+    public function setTypeService(TypeInterface $typeService): self
     {
         $this->typeService = $typeService;
         return $this;
@@ -112,7 +96,7 @@ class Template
         return $this->isAbstract;
     }
 
-    public function setIsAbstract(bool $isAbstract): Template
+    public function setIsAbstract(bool $isAbstract): self
     {
         $this->isAbstract = $isAbstract;
         return $this;

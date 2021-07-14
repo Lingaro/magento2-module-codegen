@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model;
 
 use Magento\Framework\Api\FilterBuilder;
@@ -18,25 +20,11 @@ use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\{{ entityName|pascal }}T
 
 class {{ entityName|pascal }}To{{ entity2Name|pascal }}Relation implements {{ entityName|pascal }}To{{ entity2Name|pascal }}RelationInterface
 {
-    /** @var {{ entity2Name|pascal }}RepositoryInterface */
-    protected ${{ entity2Name|camel }}Repository;
+    private {{ entity2Name|pascal }}RepositoryInterface ${{ entity2Name|camel }}Repository;
+    private {{ entityName|pascal }}RepositoryInterface ${{ entityName|camel }}Repository;
+    private FilterBuilder $filterBuilder;
+    private SearchCriteriaBuilder $searchBuilder;
 
-    /**  @var {{ entityName|pascal }}RepositoryInterface */
-    protected ${{ entityName|camel }}Repository;
-
-    /** @var FilterBuilder */
-    protected $filterBuilder;
-
-    /** @var SearchCriteriaBuilder */
-    protected $searchBuilder;
-
-    /**
-     * CountryToCityRepository constructor.
-     * @param {{ entity2Name|pascal }}RepositoryInterface ${{ entity2Name|camel }}Repository
-     * @param {{ entityName|pascal }}RepositoryInterface ${{ entityName|camel }}Repository
-     * @param FilterBuilder $filterBuilder
-     * @param SearchCriteriaBuilder $searchBuilder
-     */
     public function __construct(
         {{ entity2Name|pascal }}RepositoryInterface ${{ entity2Name|camel }}Repository,
         {{ entityName|pascal }}RepositoryInterface ${{ entityName|camel }}Repository,
@@ -50,9 +38,9 @@ class {{ entityName|pascal }}To{{ entity2Name|pascal }}Relation implements {{ en
     }
 
     /**
-    * @param {{ entityName|pascal }}Interface ${{ entityName|camel }}
-    * @return {{ entity2Name|pascal }}Interface[]
-    */
+     * @param {{ entityName|pascal }}Interface ${{ entityName|camel }}
+     * @return {{ entity2Name|pascal }}Interface[]
+     */
     public function get{{ entity2Name|pascal|pluralize }}({{ entityName|pascal }}Interface ${{ entityName|camel }}): array
     {
         $this->searchBuilder->addFilters([
@@ -74,7 +62,7 @@ class {{ entityName|pascal }}To{{ entity2Name|pascal }}Relation implements {{ en
     {
         try {
             $entityId = ${{ entity2Name|camel }}->get{{ entityName|pascal }}Id();
-            if(empty($entityId)) {
+            if (empty($entityId)) {
                 return null;
             }
 
@@ -83,5 +71,4 @@ class {{ entityName|pascal }}To{{ entity2Name|pascal }}Relation implements {{ en
             return null;
         }
     }
-
 }

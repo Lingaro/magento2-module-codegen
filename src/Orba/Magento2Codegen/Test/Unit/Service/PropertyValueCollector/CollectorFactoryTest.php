@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
@@ -11,16 +18,6 @@ use Orba\Magento2Codegen\Test\Unit\TestCase;
 
 class CollectorFactoryTest extends TestCase
 {
-    /**
-     * @var CollectorFactory
-     */
-    private $collectorFactory;
-
-    public function setUp(): void
-    {
-        $this->collectorFactory = new CollectorFactory();
-    }
-
     public function testCreateThrowsExceptionIfCollectorClassNotMapped(): void
     {
         $this->expectException(InvalidArgumentException::class);

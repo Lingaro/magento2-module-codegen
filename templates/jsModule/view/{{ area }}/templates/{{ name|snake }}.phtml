@@ -1,16 +1,17 @@
 {% if withBlock == true %}
 <?php
-/*
+
+/**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
-?>
-<?php
-use Magento\Framework\View\Element\Template;
-use {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ name|pascal }};
-/** @var $viewModel {{ name|pascal }} */
-/** @var $block Template */
+
+declare(strict_types=1);
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ name|pascal }} $viewModel */
 $viewModel = $block->getViewModel();
 ?>
-<div data-mage-init='<?= $viewModel->getJsonConfig() ?>'></div>
+<div data-mage-init='<?= $escaper->escapeHtmlAttr($viewModel->getJsonConfig()) ?>'></div>
 {% endif %}

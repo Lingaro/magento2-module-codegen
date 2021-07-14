@@ -1,8 +1,11 @@
 <?php
+
 /**
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
 
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Setup\Patch\Data;
 
@@ -14,15 +17,9 @@ use Magento\Framework\Setup\Patch\DataPatchInterface;
 
 class {{ patchName|pascal }} implements DataPatchInterface
 {
-    /**
-     * @var ModuleDataSetupInterface
-     */
-    private $moduleDataSetup;
+    private ModuleDataSetupInterface $moduleDataSetup;
 
-    /**
-     * @var EavSetupFactory
-     */
-    private $eavSetupFactory;
+    private EavSetupFactory $eavSetupFactory;
 
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
@@ -141,9 +138,6 @@ class {{ patchName|pascal }} implements DataPatchInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDependencies(): array
     {
 {% if patchDependencies is not empty %}
@@ -157,9 +151,6 @@ class {{ patchName|pascal }} implements DataPatchInterface
 {% endif %}
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAliases(): array
     {
         return [];

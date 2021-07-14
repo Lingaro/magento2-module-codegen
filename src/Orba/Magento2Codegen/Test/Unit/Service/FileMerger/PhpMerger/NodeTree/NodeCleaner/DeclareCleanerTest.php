@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
 
 use Orba\Magento2Codegen\Test\Unit\TestCase;
@@ -10,20 +17,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class DeclareCleanerTest extends TestCase
 {
-    /**
-     * @var DeclareCleaner
-     */
-    private $declareCleaner;
+    private DeclareCleaner $declareCleaner;
+    private Declare_ $declare;
 
     /**
      * @var MockObject|NodeChainNameResolver
      */
     private $nodeChainNameResolver;
-
-    /**
-     * @var Declare_
-     */
-    private $declare;
 
     public function setUp(): void
     {

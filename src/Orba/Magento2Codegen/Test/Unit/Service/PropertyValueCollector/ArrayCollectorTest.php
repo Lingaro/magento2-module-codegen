@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
@@ -18,10 +25,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ArrayCollectorTest extends TestCase
 {
-    /**
-     * @var ArrayCollector
-     */
-    private $arrayCollector;
+    private ArrayCollector $arrayCollector;
 
     /**
      * @var MockObject|IO
@@ -91,7 +95,7 @@ class ArrayCollectorTest extends TestCase
         $propertyMock = $this->getMockBuilder(ArrayProperty::class)->disableOriginalConstructor()->getMock();
         $propertyMock->expects($this->once())->method('getChildren')->willReturn([$childMock]);
         $propertyMock->expects($this->any())->method('getRequired')->willReturn(false);
-        $this->ioInstanceMock->expects($this->at(0))->method('confirm')->willReturn(true);
+        $this->ioInstanceMock->expects($this->any())->method('confirm')->willReturnOnConsecutiveCalls(true, false);
         $this->setCollectorFactory();
         $result = $this->arrayCollector->collectValue($propertyMock, $this->propertyBagMock);
         $this->assertIsArray($result);

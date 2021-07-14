@@ -1,18 +1,20 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\StringFilter;
 
 use Orba\Magento2Codegen\Service\StringFilter\CapitalCaseFilter;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
-/**
- * Class CapitalCaseFilterTest
- * @package Orba\Magento2Codegen\Test\Unit\Service\StringFilter
- */
 class CapitalCaseFilterTest extends TestCase
 {
-
-    private $capitalCaseFilter;
+    private CapitalCaseFilter $capitalCaseFilter;
 
     protected function setUp(): void
     {
@@ -21,8 +23,6 @@ class CapitalCaseFilterTest extends TestCase
 
     /**
      * @dataProvider filterProvider
-     * @param string $text
-     * @param string $expected
      */
     public function testFilterReturnsCorrectlyFilteredString(string $text, string $expected): void
     {
@@ -30,9 +30,6 @@ class CapitalCaseFilterTest extends TestCase
         self::assertSame($expected, $result);
     }
 
-    /**
-     * @return array
-     */
     public function filterProvider(): array
     {
         return [

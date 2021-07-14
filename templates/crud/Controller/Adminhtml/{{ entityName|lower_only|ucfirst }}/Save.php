@@ -5,25 +5,22 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\{{ entityName|pascal }}Factory;
 
-class Save extends Action
+class Save extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
+    public const ADMIN_RESOURCE = '{{ vendorName|pascal }}_{{ moduleName|pascal }}::{{ entityName|snake }}';
 
-    /**
-     * @var {{ entityName|camel}}Factory $objectFactory
-     */
-    protected $objectFactory;
+    private {{ entityName|camel}}Factory $objectFactory;
 
-    /**
-     * @param Context $context
-     * @param {{ entityName|camel}}Factory $objectFactory
-     */
     public function __construct(
         Context $context,
         {{ entityName|camel}}Factory $objectFactory
@@ -32,15 +29,10 @@ class Save extends Action
         parent::__construct($context);
     }
 
-    /**
-     * Save action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
-     */
-    public function execute()
+    public function execute(): Redirect
     {
         $data = $this->getRequest()->getParams();
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
             $params = [];

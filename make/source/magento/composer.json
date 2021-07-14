@@ -43,7 +43,7 @@
         "lusitanian/oauth": "~0.8.10",
         "magento/magento-coding-standard": "*",
         "magento/magento2-functional-testing-framework": "^3.0",
-        "orba/magento2-codegen": "*",
+        "orba/magento2-codegen": "^3",
         "pdepend/pdepend": "~2.7.1",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpmd/phpmd": "^2.8.0",

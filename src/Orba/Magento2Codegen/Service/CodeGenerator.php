@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use Exception;
@@ -7,37 +14,18 @@ use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Model\Template;
 use Orba\Magento2Codegen\Util\PropertyBag;
 
+use function array_merge;
+use function sprintf;
+use function trim;
+
 class CodeGenerator
 {
-    /**
-     * @var TemplateFile
-     */
-    private $templateFile;
-
-    /**
-     * @var TemplateProcessorInterface
-     */
-    private $templateProcessor;
-
-    /**
-     * @var CodeGeneratorUtil
-     */
-    private $codeGeneratorUtil;
-
-    /**
-     * @var FileMergerFactory
-     */
-    private $fileMergerFactory;
-
-    /**
-     * @var FilepathUtil
-     */
-    private $filepathUtil;
-
-    /**
-     * @var IO
-     */
-    private $io;
+    private TemplateFile $templateFile;
+    private TemplateProcessorInterface $templateProcessor;
+    private CodeGeneratorUtil $codeGeneratorUtil;
+    private FileMergerFactory $fileMergerFactory;
+    private FilepathUtil $filepathUtil;
+    private IO $io;
 
     public function __construct(
         TemplateFile $templateFile,
@@ -46,8 +34,7 @@ class CodeGenerator
         FileMergerFactory $fileMergerFactory,
         FilepathUtil $filepathUtil,
         IO $io
-    )
-    {
+    ) {
         $this->templateFile = $templateFile;
         $this->templateProcessor = $templateProcessor;
         $this->codeGeneratorUtil = $codeGeneratorUtil;
@@ -72,33 +59,38 @@ class CodeGenerator
             );
             $fileContent = $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag);
             if (!$dryRun) {
-                if(empty(trim($fileContent))) {
-                    $this->io->getInstance()->note(sprintf('File omitted because of no content: %s', $filePath));
-                    continue;
-                }
-                try {
-                    if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
-                        $merger = $this->fileMergerFactory->create($this->filepathUtil->getFilePath($filePath));
-                        $merged = false;
-                        if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath, $merger->isExperimental())) {
-                            try {
-                                $fileContent = $merger->merge($this->filepathUtil->getContent($filePath), $fileContent);
-                                $merged = true;
-                            } catch (Exception $e) {
-                                $this->io->getInstance()->error($e->getMessage());
-                            }
-                        }
-                        if (!$merged && !$this->codeGeneratorUtil->shouldOverride($filePath)) {
-                            $this->io->getInstance()->note(sprintf('File omitted: %s', $filePath));
-                            continue;
-                        }
+                $this->generateFile($fileContent, $filePath);
+            }
+        }
+    }
+
+    private function generateFile(string $fileContent, string $filePath): void
+    {
+        if (empty(trim($fileContent))) {
+            $this->io->getInstance()->note(sprintf('File omitted because of no content: %s', $filePath));
+            return;
+        }
+        try {
+            if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
+                $merger = $this->fileMergerFactory->create($this->filepathUtil->getFilePath($filePath));
+                $merged = false;
+                if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath, $merger->isExperimental())) {
+                    try {
+                        $fileContent = $merger->merge($this->filepathUtil->getContent($filePath), $fileContent);
+                        $merged = true;
+                    } catch (Exception $e) {
+                        $this->io->getInstance()->error($e->getMessage());
                     }
-                    $this->codeGeneratorUtil->generateFileWithContent($filePath, $fileContent);
-                    $this->io->getInstance()->note(sprintf('File saved: %s', $filePath));
-                } catch (Exception $e) {
-                    $this->io->getInstance()->error($e->getMessage());
+                }
+                if (!$merged && !$this->codeGeneratorUtil->shouldOverride($filePath)) {
+                    $this->io->getInstance()->note(sprintf('File omitted: %s', $filePath));
+                    return;
                 }
             }
+            $this->codeGeneratorUtil->generateFileWithContent($filePath, $fileContent);
+            $this->io->getInstance()->note(sprintf('File saved: %s', $filePath));
+        } catch (Exception $e) {
+            $this->io->getInstance()->error($e->getMessage());
         }
     }
 }

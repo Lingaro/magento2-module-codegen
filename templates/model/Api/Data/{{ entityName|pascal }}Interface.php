@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data;
 
 interface {{ entityName|pascal }}Interface
@@ -12,7 +14,7 @@ interface {{ entityName|pascal }}Interface
     /**
      * @return int|null
      */
-    public function getId();
+    public function getId(): ?int;
 
     /**
      * @param int $value
@@ -24,12 +26,12 @@ interface {{ entityName|pascal }}Interface
     /**
      * @return {{ databaseTypeToPHP(item.databaseType) }}|null
      */
-    public function get{{ item.name|pascal }}();
+    public function get{{ item.name|pascal }}(): ?{{ databaseTypeToPHP(item.databaseType) }};
 
     /**
      * @param {{ databaseTypeToPHP(item.databaseType) }} $value
      * @return void
      */
-    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value);
+    public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value): void;
 {% endfor %}
 }

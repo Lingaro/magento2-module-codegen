@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
@@ -19,23 +21,23 @@ interface {{ entityName|pascal }}RepositoryInterface
      * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById($id);
+    public function getById(int $id): {{ entityName|pascal }}Interface;
 
     /**
      * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface
      * @return void
      */
-    public function save({{ entityName|pascal }}Interface ${{ entityName|pascal }});
+    public function save({{ entityName|pascal }}Interface ${{ entityName|pascal }}): void;
 
     /**
      * @param \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}Interface
      * @return void
      */
-    public function delete({{ entityName|pascal }}Interface ${{ entityName|pascal }});
+    public function delete({{ entityName|pascal }}Interface ${{ entityName|pascal }}): void;
 
     /**
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data\{{ entityName|pascal }}SearchResultInterface
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function getList(SearchCriteriaInterface $searchCriteria): {{ entityName|pascal }}SearchResultInterface;
 }

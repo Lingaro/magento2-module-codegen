@@ -1,9 +1,9 @@
 {
     "name": "orba/magento2-codegen",
     "description": "Magento 2 Code Generator",
-    "version": "2.3.0",
+    "version": "3.0.0",
     "require": {
-        "php": "~7.2",
+        "php": "~7.4",
         "ext-dom": "*",
         "ext-libxml": "*",
         "symfony/dependency-injection": "^4.0 || ^5.0",
@@ -41,12 +41,14 @@
     "bin": ["bin/codegen"],
     "require-dev": {
         "ext-simplexml": "*",
-        "phpunit/phpunit": "^8",
+        "phpunit/phpunit": "^9",
         "psr/cache": "^1.0",
         "psr/log": "^1.0",
         "symfony/event-dispatcher": "^4.2 || ^5.0",
         "symfony/phpunit-bridge": "^4.2 || ^5.0",
-        "symfony/var-dumper": "^4.2 || ^5.0"
+        "symfony/var-dumper": "^4.2 || ^5.0",
+        "squizlabs/php_codesniffer": "^3.6",
+        "phpmd/phpmd": "^2.10"
     },
     "provide": {
         "psr/log-implementation": "1.0"

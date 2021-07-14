@@ -5,22 +5,17 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Block\Adminhtml\{{ entityName|pascal }}\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class SaveAndContinueButton
- */
 class SaveAndContinueButton implements ButtonProviderInterface
 {
-
-    /**
-     * @return array
-     */
-    public function getButtonData()
+    public function getButtonData(): array
     {
-        $data = [
+        return [
             'label' => __('Save and Continue Edit'),
             'class' => 'save',
             'data_attribute' => [
@@ -30,6 +25,5 @@ class SaveAndContinueButton implements ButtonProviderInterface
             ],
             'sort_order' => 80,
         ];
-        return $data;
     }
 }

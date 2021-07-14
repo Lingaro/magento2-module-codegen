@@ -1,21 +1,29 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
 
+use function file_exists;
+use function file_get_contents;
+use function is_null;
+use function ltrim;
+use function pathinfo;
+use function preg_match;
+use function rtrim;
+use function sprintf;
+use function str_replace;
+use function strpos;
+
 class FilepathUtil
 {
-    /**
-     * @var FinderFactory
-     */
-    private $finderFactory;
-
-    public function __construct(FinderFactory $finderFactory)
-    {
-        $this->finderFactory = $finderFactory;
-    }
-
     public function getAbsolutePath(string $filePath, string $rootDir): string
     {
         if (empty($filePath)) {
@@ -64,16 +72,12 @@ class FilepathUtil
         $fileName = pathinfo($filePath)['basename'];
         if (!$fileName) {
             throw new InvalidArgumentException(
-                sprintf('Specified file path does not have any file name: %s', $filePath)
+                'Specified file path does not have any file name: ' . $filePath
             );
         }
         return $fileName;
     }
 
-    /**
-     * @param string $filePath
-     * @return string
-     */
     public function getFilePath(string $filePath): string
     {
         if (!file_exists($filePath)) {
@@ -84,6 +88,9 @@ class FilepathUtil
         return $filePath;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ErrorControlOperator)
+     */
     public function getContent(string $filePath): string
     {
         return @file_get_contents($filePath) ?: '';

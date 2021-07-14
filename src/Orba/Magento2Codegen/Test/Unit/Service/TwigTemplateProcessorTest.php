@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection;
@@ -12,10 +19,7 @@ use Twig\Sandbox\SecurityError;
 
 class TwigTemplateProcessorTest extends TestCase
 {
-    /**
-     * @var TwigTemplateProcessor
-     */
-    private $twigTemplateProcessor;
+    private TwigTemplateProcessor $twigTemplateProcessor;
 
     public function setUp(): void
     {
@@ -64,8 +68,10 @@ class TwigTemplateProcessorTest extends TestCase
     {
         $propertyBag = new PropertyBag();
         $propertyBag['text'] = 'string';
-        $result = $this->twigTemplateProcessor
-            ->replacePropertiesInText('some {% if text==\'foo\' %}bar{% elseif text==\'string\' %}text{% endif %}', $propertyBag);
+        $result = $this->twigTemplateProcessor->replacePropertiesInText(
+            'some {% if text==\'foo\' %}bar{% elseif text==\'string\' %}text{% endif %}',
+            $propertyBag
+        );
         $this->assertSame('some text', $result);
     }
 

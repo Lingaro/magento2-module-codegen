@@ -1,10 +1,11 @@
 <?php
+
 /**
- * {{ commandName|pascal }}Command
- *
  * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
  * @author    {{ commentsUserEmail }}
  */
+
+declare(strict_types=1);
 
 {% set class_namespace = commandFilePath|replace({'/': '\\'})|split('\\', -1)|join('\\')|raw %}
 {% set class_name = commandFilePath|split('/')|last|raw %}
@@ -20,21 +21,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class {{ class_name }}Command extends Command
 {
-    public function __construct(string $name = null)
-    {
-        parent::__construct($name);
-    }
-
-    public function configure()
+    public function configure(): void
     {
         $this->setName('{{ commandName }}')
             ->setDescription('{{ commandDescription }}');
     }
 
     /**
-     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('Some actions here...');
     }

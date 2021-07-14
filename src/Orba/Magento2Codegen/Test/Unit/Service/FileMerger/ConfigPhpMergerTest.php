@@ -1,30 +1,29 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Service\FileMerger\ConfigPhpMerger;
 use Orba\Magento2Codegen\Service\FileMerger\Formatter\ConfigPhpFormatter;
 use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\FinderFactory;
 use Orba\Magento2Codegen\Service\ArrayMerger;
 use InvalidArgumentException;
 
 class ConfigPhpMergerTest extends TestCase
 {
-    /**
-     * @var FilepathUtil
-     */
-    private $filepathUtil;
-
-    /**
-     * @var ConfigPhpMerger
-     */
-    private $merger;
+    private FilepathUtil $filepathUtil;
+    private ConfigPhpMerger $merger;
 
     public function setUp(): void
     {
-        $this->filepathUtil = new FilepathUtil(new FinderFactory());
+        $this->filepathUtil = new FilepathUtil();
         $this->merger = new ConfigPhpMerger(new ConfigPhpFormatter(), new ArrayMerger());
     }
 

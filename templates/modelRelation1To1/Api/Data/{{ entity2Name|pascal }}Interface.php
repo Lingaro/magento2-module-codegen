@@ -5,6 +5,8 @@
  * @author    {{ commentsUserEmail }}
  */
 
+declare(strict_types=1);
+
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Api\Data;
 
 interface {{ entity2Name|pascal }}Interface
@@ -19,5 +21,4 @@ interface {{ entity2Name|pascal }}Interface
      * @return void
      */
     public function set{{ entityName|pascal }}Id(int $value);
-
 }

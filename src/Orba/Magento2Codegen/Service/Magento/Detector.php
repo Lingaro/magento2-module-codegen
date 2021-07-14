@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\Magento;
 
 use Orba\Magento2Codegen\Service\FilepathUtil;
@@ -7,18 +14,11 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Detector
 {
-    const MODULE_CONFIG_FILEPATH = 'etc/module.xml';
-    const ROOT_MAGENTO_TEST_FILEPATH = 'app/etc/NonComposerComponentRegistration.php';
+    private const MODULE_CONFIG_FILEPATH = 'etc/module.xml';
+    private const ROOT_MAGENTO_TEST_FILEPATH = 'app/etc/NonComposerComponentRegistration.php';
 
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var FilepathUtil
-     */
-    private $filepathUtil;
+    private Filesystem $filesystem;
+    private FilepathUtil $filepathUtil;
 
     public function __construct(Filesystem $filesystem, FilepathUtil $filepathUtil)
     {

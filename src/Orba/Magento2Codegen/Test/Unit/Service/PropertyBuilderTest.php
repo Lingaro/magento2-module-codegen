@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
@@ -14,12 +21,13 @@ use Orba\Magento2Codegen\Service\PropertyFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ */
 class PropertyBuilderTest extends TestCase
 {
-    /**
-     * @var PropertyBuilder
-     */
-    private $propertyBuilder;
+    private PropertyBuilder $propertyBuilder;
 
     public function setUp(): void
     {

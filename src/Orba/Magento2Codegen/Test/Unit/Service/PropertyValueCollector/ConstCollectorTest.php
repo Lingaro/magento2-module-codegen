@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
@@ -12,10 +19,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class ConstCollectorTest extends TestCase
 {
-    /**
-     * @var ConstCollector
-     */
-    private $constCollector;
+    private ConstCollector $constCollector;
 
     /**
      * @var MockObject|PropertyBag
@@ -29,7 +33,7 @@ class ConstCollectorTest extends TestCase
         $this->constCollector = new ConstCollector();
     }
 
-    public function testCollectValueThrowsExceptionIfPropertyIsNotConstProperty()
+    public function testCollectValueThrowsExceptionIfPropertyIsNotConstProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         /** @var StringProperty|MockObject $propertyMock */
@@ -37,7 +41,7 @@ class ConstCollectorTest extends TestCase
         $this->constCollector->collectValue($propertyMock, $this->propertyBagMock);
     }
 
-    public function testCollectValueReturnsPropertyValueIfPropertyIsConstProperty()
+    public function testCollectValueReturnsPropertyValueIfPropertyIsConstProperty(): void
     {
         /** @var ConstProperty|MockObject $propertyMock */
         $propertyMock = $this->getMockBuilder(ConstProperty::class)->disableOriginalConstructor()->getMock();

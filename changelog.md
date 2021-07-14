@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2021-07-14
+### Added
+- PHPCS setup for CI
+- PHPMD setup for CI
+
+### Changed
+- All templates refactored to use PHP 7.4 with strict typing and Magento coding standards
+- The whole codebase refactored to use PHP 7.4 with strict typing, PSR12 and the following PHPMD rule sets: cleancode, codesize, controversial, design, unusedcode
+- PHPUnit updated to version 9
+- Update of readme and dev docs
+- Update of all dependencies to current compatible versions
+
+### Fixed
+- `widget` template generating invalid XML if no properties were defined
+
 ## [2.3.0] - 2021-03-22
 ### Added
 - Template: `queueMessage` [ZZ01-62](https://orba.atlassian.net/browse/ZZ01-62)
