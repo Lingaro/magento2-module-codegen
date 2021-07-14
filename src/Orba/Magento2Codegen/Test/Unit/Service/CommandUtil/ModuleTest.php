@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Service\CodeGenerator;
@@ -17,10 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ModuleTest extends TestCase
 {
-    /**
-     * @var Module
-     */
-    private $module;
+    private Module $module;
 
     /**
      * @var MockObject|FilepathUtil

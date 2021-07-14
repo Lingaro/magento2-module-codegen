@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
@@ -14,10 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class BooleanCollectorTest extends TestCase
 {
-    /**
-     * @var BooleanCollector
-     */
-    private $booleanCollector;
+    private BooleanCollector $booleanCollector;
 
     /**
      * @var MockObject|IO
@@ -45,7 +49,7 @@ class BooleanCollectorTest extends TestCase
         $this->booleanCollector = new BooleanCollector($this->ioMock);
     }
 
-    public function testCollectValueThrowsExceptionIfPropertyIsNotBooleanProperty()
+    public function testCollectValueThrowsExceptionIfPropertyIsNotBooleanProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         /** @var ConstProperty|MockObject $propertyMock */
@@ -53,7 +57,7 @@ class BooleanCollectorTest extends TestCase
         $this->booleanCollector->collectValue($propertyMock, $this->propertyBagMock);
     }
 
-    public function testCollectValueReturnsValueFromInputIfPropertyIsBooleanProperty()
+    public function testCollectValueReturnsValueFromInputIfPropertyIsBooleanProperty(): void
     {
         $this->ioInstnaceMock->expects($this->once())->method('confirm')->willReturn(true);
         /** @var BooleanProperty|MockObject $propertyMock */
@@ -62,7 +66,7 @@ class BooleanCollectorTest extends TestCase
         $this->assertSame(true, $result);
     }
 
-    public function additionProvider()
+    public function additionProvider(): array
     {
         return [
             ['foo', true],

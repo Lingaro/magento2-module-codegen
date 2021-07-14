@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
@@ -9,13 +16,6 @@ use Orba\Magento2Codegen\Test\Unit\TestCase;
 
 class PropertyFactoryTest extends TestCase
 {
-    public function setUp(): void
-    {
-        $this->propertyFactory = new PropertyFactory([
-
-        ]);
-    }
-
     public function testCreateThrowsExceptionIfTypeNotDefined(): void
     {
         $this->expectException(InvalidArgumentException::class);

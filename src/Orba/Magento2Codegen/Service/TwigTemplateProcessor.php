@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection;
@@ -12,34 +19,26 @@ use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
 
+use function array_merge;
+
 class TwigTemplateProcessor implements TemplateProcessorInterface
 {
-    const ALLOWED_TAGS = ['if', 'for', 'set'];
-    const ALLOWED_FILTERS = ['escape', 'upper', 'lower', 'raw', 'split', 'join', 'map', 'trim', 'last', 'replace'];
-    const TEMPLATE_NAME = 'template';
-    const ALLOWED_FUNCTIONS = [];
+    private const ALLOWED_TAGS = ['if', 'for', 'set'];
+    private const ALLOWED_FILTERS = [
+        'escape', 'upper', 'lower', 'raw', 'split', 'join', 'map', 'trim', 'last', 'replace'
+    ];
+    private const TEMPLATE_NAME = 'template';
+    private const ALLOWED_FUNCTIONS = [];
 
-    /**
-     * @var FiltersExtension
-     */
-    private $filtersExtension;
-
-    /**
-     * @var FunctionsExtension
-     */
-    private $functionsExtension;
-
-    /**
-     * @var EscaperCollection
-     */
-    private $escaperCollection;
+    private FiltersExtension $filtersExtension;
+    private FunctionsExtension $functionsExtension;
+    private EscaperCollection $escaperCollection;
 
     public function __construct(
         FiltersExtension $filtersExtension,
         FunctionsExtension $functionsExtension,
         EscaperCollection $escaperCollection
-    )
-    {
+    ) {
         $this->filtersExtension = $filtersExtension;
         $this->functionsExtension = $functionsExtension;
         $this->escaperCollection = $escaperCollection;

@@ -1,17 +1,24 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
+use DOMDocument;
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\Magento\ConfigMergerFactory;
 use Throwable;
 
+use function str_replace;
+
 class XmlMerger extends AbstractMerger implements MergerInterface
 {
-    /**
-     * @var ConfigMergerFactory
-     */
-    private $mergerFactory;
+    private ConfigMergerFactory $mergerFactory;
 
     public function __construct(ConfigMergerFactory $mergerFactory)
     {
@@ -22,8 +29,8 @@ class XmlMerger extends AbstractMerger implements MergerInterface
     {
         $merger = $this->mergerFactory->create(
             $oldContent,
-            isset($this->params['idAttributes']) ? $this->params['idAttributes'] : [],
-            isset($this->params['typeAttributeName']) ? $this->params['typeAttributeName'] : null
+            $this->params['idAttributes'] ?? [],
+            $this->params['typeAttributeName'] ?? null
         );
         try {
             $merger->merge($newContent);
@@ -35,13 +42,9 @@ class XmlMerger extends AbstractMerger implements MergerInterface
         return $this->prettyPrint($outXML);
     }
 
-    /**
-     * @param string $xml
-     * @return string
-     */
-    private function prettyPrint(string $xml)
+    private function prettyPrint(string $xml): string
     {
-        $dom = new \DOMDocument();
+        $dom = new DOMDocument();
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml);

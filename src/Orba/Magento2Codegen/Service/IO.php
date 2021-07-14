@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use RuntimeException;
@@ -9,25 +16,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class IO
 {
-    /**
-     * @var bool
-     */
-    private $initialized = false;
-
-    /**
-     * @var SymfonyStyle
-     */
-    private $instance;
-
-    /**
-     * @var InputInterface
-     */
-    private $input;
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
+    private bool $initialized = false;
+    private SymfonyStyle $instance;
+    private InputInterface $input;
+    private OutputInterface $output;
 
     public function init(InputInterface $input, OutputInterface $output): void
     {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\TemplateType;
 
 use Orba\Magento2Codegen\Model\Template;
@@ -8,19 +15,14 @@ use Orba\Magento2Codegen\Service\TemplateFactory;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
+use function is_null;
+
 class Module implements TypeInterface
 {
-    const MODULE_TEMPLATE_NAME = 'module';
+    public const MODULE_TEMPLATE_NAME = 'module';
 
-    /**
-     * @var CommandUtil
-     */
-    private $commandUtil;
-
-    /**
-     * @var TemplateFactory
-     */
-    private $templateFactory;
+    private CommandUtil $commandUtil;
+    private ?TemplateFactory $templateFactory = null;
 
     public function __construct(CommandUtil $commandUtil)
     {

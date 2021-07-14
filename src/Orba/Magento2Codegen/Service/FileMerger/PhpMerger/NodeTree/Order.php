@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
 
 namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
@@ -13,39 +19,36 @@ use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\Declare_;
 
+use function array_merge;
+use function array_values;
+use function get_class;
+
 class Order
 {
-    const ORDER = [
+    private const ORDER = [
         Declare_::class,
         Namespace_::class,
         Use_::class,
         Const_::class,
         Class_::class,
         TraitUse::class,
-        Property::class,
         ClassConst::class,
+        Property::class,
         ClassMethod::class
     ];
 
-    private $_orderTable = [];
+    private array $orderTable = [];
 
-    /**
-     * Order constructor.
-     */
     public function __construct()
     {
         foreach (self::ORDER as $class) {
-            $this->_orderTable[$class] = [];
+            $this->orderTable[$class] = [];
         }
     }
 
-    /**
-     * @param $nodes
-     * @return array
-     */
     public function sort(array $nodes): array
     {
-        $orderTable = $this->_orderTable;
+        $orderTable = $this->orderTable;
         foreach ($nodes as $one) {
             $class = get_class($one);
             $orderTable[$class][] = $one;

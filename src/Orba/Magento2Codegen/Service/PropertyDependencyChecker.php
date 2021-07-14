@@ -1,10 +1,23 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
+
+use function array_key_exists;
+use function count;
+use function explode;
+use function sprintf;
+use function strpos;
 
 class PropertyDependencyChecker
 {

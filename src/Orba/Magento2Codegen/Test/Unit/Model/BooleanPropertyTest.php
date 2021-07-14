@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Model;
 
 use Orba\Magento2Codegen\Model\BooleanProperty;
@@ -7,10 +14,7 @@ use Orba\Magento2Codegen\Test\Unit\TestCase;
 
 class BooleanPropertyTest extends TestCase
 {
-    /**
-     * @var BooleanProperty
-     */
-    private $property;
+    private BooleanProperty $property;
 
     public function setUp(): void
     {
@@ -20,7 +24,7 @@ class BooleanPropertyTest extends TestCase
     /**
      * @dataProvider defaultValues
      */
-    public function testGetDefaultValueReturnsBool($defaultValue, bool $expectedValue)
+    public function testGetDefaultValueReturnsBool($defaultValue, bool $expectedValue): void
     {
         $this->property->setDefaultValue($defaultValue);
         $result = $this->property->getDefaultValue();

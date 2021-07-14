@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Command;
 
 use Exception;
@@ -11,15 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCommand extends Command
 {
-    /**
-     * @var IO
-     */
-    protected $io;
-
-    /**
-     * @var array
-     */
-    protected $inputValidators;
+    protected IO $io;
+    protected array $inputValidators;
 
     public function __construct(IO $io, array $inputValidators = [])
     {
@@ -28,17 +28,14 @@ abstract class AbstractCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             /** @var ValidatorInterface $validator */
             foreach ($this->inputValidators as $validator) {
                 $validator->validate($input);
             }
-            $this->_execute($input, $output);
+            $this->executeInternal($input, $output);
             return 0;
         } catch (Exception $e) {
             $this->io->getInstance()->error($e->getMessage());
@@ -46,7 +43,5 @@ abstract class AbstractCommand extends Command
         }
     }
 
-    protected function _execute(InputInterface $input, OutputInterface $output): void
-    {
-    }
+    abstract protected function executeInternal(InputInterface $input, OutputInterface $output): void;
 }

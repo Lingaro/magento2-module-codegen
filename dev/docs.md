@@ -4,7 +4,13 @@
 
 ### Automated (Orba developers only)
 
-You can use our experimental Makefile for setting up automatically Orbento Skeleton (clean Magento 2 with sample data and the whole environment needed for Codegen development). Simply run the following command and wait for magic to happen ;-).
+You can use our experimental Makefile for setting up automatically Orbento Skeleton (clean Magento 2 with sample data and the whole environment needed for Codegen development).
+
+To make it work you need to copy the `Makefile.dist` file and paste it as `Makefile`.
+Then fill in the missing `PROJECT_FRAMEWORK_REPO` variable.
+Please contact our DevOps team if you don't know what the Skeleton repo URL is.
+
+Then simply run the following command and wait for magic to happen ;-).
 
 ```
 make up
@@ -304,3 +310,26 @@ isAbstract: true
 If a user needs to take some additional steps after code is generated, their description may be added in `afterGenearte` root node of `config.yml` file. The content of this param is processed by Twig, so you can use properties inside.
 
 Check `viewModel` template for real life example.
+
+## Static code analysis
+
+### PHPCS
+
+We are validating the whole codebase with PHPCS. The standard that we chose is PSR12.
+
+You can validate your code before pushing it by running the following command from library root:
+
+```
+vendor/bin/phpcs --standard=PSR12 --ignore=./src/Orba/Magento2Codegen/Test/Unit/_files/* ./src/Orba/Magento2Codegen/
+```
+
+### PHPMD
+
+We are validating the whole codebase with PHPMD. The rule sets that we are applying are:
+cleancode, codesize, controversial, design, unusedcode.
+
+You can validate your code before pushing it by running the following command from library root:
+
+```
+vendor/bin/phpmd ./src/Orba/Magento2Codegen/ text cleancode,codesize,controversial,design,unusedcode
+```

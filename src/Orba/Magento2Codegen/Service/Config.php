@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use ArrayAccess;
@@ -8,14 +15,14 @@ use RuntimeException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Parser;
 
+use function file_exists;
+
 class Config implements ArrayAccess
 {
-    private $config;
+    private array $config;
 
-    public function __construct(
-        Processor $configProcessor,
-        Parser $yamlParser
-    ) {
+    public function __construct(Processor $configProcessor, Parser $yamlParser)
+    {
         $this->setConfig($configProcessor, $yamlParser, $this->getConfigPath());
     }
 
@@ -26,14 +33,20 @@ class Config implements ArrayAccess
 
     public function offsetGet($offset)
     {
-        return isset($this->config[$offset]) ? $this->config[$offset] : null;
+        return $this->config[$offset] ?? null;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function offsetSet($offset, $value): void
     {
         throw new RuntimeException('Config is read-only.');
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function offsetUnset($offset): void
     {
         throw new RuntimeException('Config is read-only.');
@@ -49,13 +62,8 @@ class Config implements ArrayAccess
 
     private function getConfigPath(): string
     {
-        $result = '/config/codegen.yml.dist';
-        if ($path = $this->getPath('/../../../codegen.yml')) {
-            $result = $path;
-        } elseif ($path = $this->getPath('/config/codegen.yml')) {
-            $result = $path;
-        }
-        return $result;
+        return $this->getPath('/../../../codegen.yml')
+            ?? ($this->getPath('/config/codegen.yml') ?? '/config/codegen.yml.dist');
     }
 
     private function getPath(string $relativePath): ?string

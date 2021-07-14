@@ -1,37 +1,48 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\FileMerger\Formatter;
+
+use function array_keys;
+use function count;
+use function implode;
+use function is_array;
+use function range;
+use function sprintf;
+use function str_repeat;
+use function var_export;
 
 /**
  * Copy of original magento class \Magento\Framework\App\DeploymentConfig\Writer\PhpFormatter
  * used for deployment configurations formatting
  *
  * A formatter for deployment configuration that presents it as a PHP-file that returns data
- *
- * Class ConfigPhpFormatter
- * @package Orba\Magento2Codegen\Service\FileMerger\Formatter
  */
 class ConfigPhpFormatter implements FormatterInterface
 {
     /**
      * 4 space indentation for array formatting.
      */
-    const INDENT = '    ';
+    private const INDENT = '    ';
 
     /**
      * Format deployment configuration.
      *
      * If $comments is present, each item will be added
      * as comment to the corresponding section
-     *
-     * @inheritdoc
      */
-    public function format($data, array $comments = [])
+    public function format(array $data, array $comments = []): string
     {
         if (!empty($comments) && is_array($data)) {
             return "<?php\nreturn [\n" . $this->formatData($data, $comments) . "\n];\n";
         }
-        return "<?php\nreturn " . $this->varExportShort($data, true) . ";\n";
+        return "<?php\nreturn " . $this->varExportShort($data, 1) . ";\n";
     }
 
     /**
@@ -39,10 +50,8 @@ class ConfigPhpFormatter implements FormatterInterface
      *
      * @param string[] $data
      * @param string[] $comments
-     * @param string $prefix
-     * @return string
      */
-    private function formatData($data, $comments = [], $prefix = '    ')
+    private function formatData(array $data, array $comments = [], string $prefix = '    '): string
     {
         $elements = [];
 
@@ -63,9 +72,9 @@ class ConfigPhpFormatter implements FormatterInterface
                     $elements[] = $prefix . $this->varExportShort($key) . ' => [';
                     $elements[] = $this->formatData($value, [], '    ' . $prefix);
                     $elements[] = $prefix . '],';
-                } else {
-                    $elements[] = $prefix . $this->varExportShort($key) . ' => ' . $this->varExportShort($value) . ',';
+                    continue;
                 }
+                $elements[] = $prefix . $this->varExportShort($key) . ' => ' . $this->varExportShort($value) . ',';
             }
             return implode("\n", $elements);
         }
@@ -80,10 +89,8 @@ class ConfigPhpFormatter implements FormatterInterface
      * default var_export functionality.
      *
      * @param mixed $var
-     * @param integer $depth
-     * @return string
      */
-    private function varExportShort($var, int $depth = 0)
+    private function varExportShort($var, int $depth = 0): string
     {
         if (null === $var) {
             return 'null';

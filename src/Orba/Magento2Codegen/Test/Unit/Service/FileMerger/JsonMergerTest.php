@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use Exception;
@@ -8,12 +15,15 @@ use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Service\ArrayMerger;
 use UnexpectedValueException;
 
+use function array_keys;
+use function array_merge;
+use function in_array;
+use function json_encode;
+use function json_last_error;
+
 class JsonMergerTest extends TestCase
 {
-    /**
-     * @var JsonMerger
-     */
-    private $jsonMerger;
+    private JsonMerger $jsonMerger;
 
     public function setUp(): void
     {
@@ -114,17 +124,11 @@ class JsonMergerTest extends TestCase
         $this->assertIsArray($resultArray['a0']);
         $this->assertEquals(['k1', 'k2', 'k3', 'k4'], array_keys($resultArray['a0']));
         $this->assertCount(3, $resultArray['a0']['k1']);
-        $this->assertTrue(in_array('ax0', $resultArray['a0']['k1']), true);
+        $this->assertTrue(in_array('ax0', $resultArray['a0']['k1']));
         $this->assertIsNotArray($resultArray['a0']['k4']);
         $this->assertEquals('bx0', $resultArray['a0']['k4']);
     }
 
-    /**
-     * @param array $oldArray
-     * @param array $newArray
-     * @return array
-     * @throws Exception
-     */
     private function getMergeResultAndAssertIntegrity(array $oldArray, array $newArray): array
     {
         $resultJson = $this->jsonMerger->merge(json_encode($oldArray), json_encode($newArray));
@@ -133,10 +137,7 @@ class JsonMergerTest extends TestCase
         $this->assertIsArray($resultArray);
         $entryKeys = array_keys(array_merge($oldArray, $newArray));
         $resultKeys = array_keys($resultArray);
-        $this->assertEquals(
-            $entryKeys,
-            $resultKeys
-        );
+        $this->assertEquals($entryKeys, $resultKeys);
         return $resultArray;
     }
 }

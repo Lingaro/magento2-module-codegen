@@ -1,17 +1,24 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\TemplatePropertyMerger;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
+use function array_key_exists;
+use function in_array;
+
 class TemplatePropertyMergerTest extends TestCase
 {
-    /**
-     * @var TemplatePropertyMerger
-     */
-    private $templatePropertyMerger;
+    private TemplatePropertyMerger $templatePropertyMerger;
 
     public function setUp(): void
     {

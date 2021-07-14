@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
@@ -10,15 +17,8 @@ use RuntimeException;
 
 abstract class AbstractInputCollector extends AbstractCollector
 {
-    /**
-     * @var IO
-     */
-    protected $io;
-
-    /**
-     * @var string
-     */
-    protected $questionPrefix = '';
+    protected IO $io;
+    protected string $questionPrefix = '';
 
     public function __construct(IO $io)
     {
@@ -30,7 +30,7 @@ abstract class AbstractInputCollector extends AbstractCollector
         $this->questionPrefix = $prefix;
     }
 
-    protected function _collectValue(PropertyInterface $property, PropertyBag $propertyBag)
+    protected function internalCollectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
         if (!$property instanceof InputPropertyInterface) {
             throw new RuntimeException('Invalid property type.');
@@ -50,10 +50,7 @@ abstract class AbstractInputCollector extends AbstractCollector
     }
 
     /**
-     * @param InputPropertyInterface $property
-     * @param PropertyBag $propertyBag
      * @return mixed
      */
-    protected abstract function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag);
-
+    abstract protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag);
 }

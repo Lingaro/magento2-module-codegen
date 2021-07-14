@@ -1,23 +1,28 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\FileMerger;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\JsConverter;
 
+use function rtrim;
+use function strlen;
+use function strpos;
+use function substr;
+
 class RequirejsConfigMerger extends AbstractMerger implements MergerInterface
 {
-    const VAR_CONFIG_STRING = 'var config = ';
+    private const VAR_CONFIG_STRING = 'var config = ';
 
-    /**
-     * @var JsonMerger
-     */
-    private $jsonMerger;
-
-    /**
-     * @var JsConverter
-     */
-    private $jsConverter;
+    private JsonMerger $jsonMerger;
+    private JsConverter $jsConverter;
 
     public function __construct(JsonMerger $jsonMerger, JsConverter $jsConverter)
     {
@@ -30,7 +35,7 @@ class RequirejsConfigMerger extends AbstractMerger implements MergerInterface
         $oldJson = $this->getJsObjectString($oldContent);
         $newJson = $this->getJsObjectString($newContent);
         return self::VAR_CONFIG_STRING . $this->jsonMerger
-                ->merge($oldJson, $newJson, JSON_PRETTY_PRINT + JSON_FORCE_OBJECT + JSON_UNESCAPED_SLASHES);
+            ->merge($oldJson, $newJson, JSON_PRETTY_PRINT + JSON_FORCE_OBJECT + JSON_UNESCAPED_SLASHES);
     }
 
     private function getJsObjectString(string $content): string

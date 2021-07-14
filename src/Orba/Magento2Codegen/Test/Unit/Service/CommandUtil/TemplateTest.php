@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Model\Template as TemplateModel;
-use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\IO;
@@ -18,22 +24,17 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class TemplateTest extends TestCase
 {
-    /**
-     * @var Template
-     */
-    private $template;
+    private Template $template;
 
     /**
      * @var MockObject|PropertyBagFactory
      */
     private $propertyBagFactoryMock;
-
-    /**
-     * @var MockObject|CodeGenerator
-     */
-    private $codeGeneratorMock;
 
     /**
      * @var MockObject|IO
@@ -64,8 +65,6 @@ class TemplateTest extends TestCase
     {
         $this->propertyBagFactoryMock = $this->getMockBuilder(PropertyBagFactory::class)
             ->disableOriginalConstructor()->getMock();
-        $this->codeGeneratorMock = $this->getMockBuilder(CodeGenerator::class)
-            ->disableOriginalConstructor()->getMock();
         $this->ioMock = $this->getMockBuilder(IO::class)
             ->disableOriginalConstructor()->getMock();
         $this->templatePropertyUtilMock = $this->getMockBuilder(TemplateProperty::class)
@@ -78,7 +77,6 @@ class TemplateTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $this->template = new Template(
             $this->propertyBagFactoryMock,
-            $this->codeGeneratorMock,
             $this->ioMock,
             $this->templatePropertyUtilMock,
             $this->propertyValueCollectorFactoryMock,

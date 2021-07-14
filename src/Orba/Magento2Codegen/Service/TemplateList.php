@@ -1,13 +1,17 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 class TemplateList
 {
-    /**
-     * @var TemplateDir
-     */
-    private $templateDir;
+    private TemplateDir $templateDir;
 
     public function __construct(TemplateDir $templateDir)
     {
@@ -15,9 +19,9 @@ class TemplateList
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         $templates = $this->templateDir->getTemplateNames();
         sort($templates);

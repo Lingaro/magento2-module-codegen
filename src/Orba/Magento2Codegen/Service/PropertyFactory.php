@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
@@ -11,7 +18,7 @@ class PropertyFactory
     /**
      * @var FactoryInterface[]
      */
-    private $map;
+    private array $map;
 
     public function __construct(array $map = [])
     {

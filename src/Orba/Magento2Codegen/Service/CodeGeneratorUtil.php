@@ -1,38 +1,31 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
 
+use function sprintf;
+
 class CodeGeneratorUtil
 {
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var FilepathUtil
-     */
-    private $filepathUtil;
-
-    /**
-     * @var IO
-     */
-    private $io;
-
-    /**
-     * @var TemplateDir
-     */
-    private $templateDir;
+    private Filesystem $filesystem;
+    private FilepathUtil $filepathUtil;
+    private IO $io;
+    private TemplateDir $templateDir;
 
     public function __construct(
         Filesystem $filesystem,
         FilepathUtil $filepathUtil,
         IO $io,
         TemplateDir $templateDir
-    )
-    {
+    ) {
         $this->filesystem = $filesystem;
         $this->filepathUtil = $filepathUtil;
         $this->io = $io;
@@ -60,7 +53,8 @@ class CodeGeneratorUtil
         return $this->io->getInstance()->confirm(
             sprintf('%s already exists, would you like to perform a merge?', $filePath)
             . ($isMergerExperimental
-                ? "\n <fg=yellow>Watchout! Experimental merger will be used. You will probably need to clean the file a little bit after merge.</>"
+                ? "\n <fg=yellow>Watchout! Experimental merger will be used. You will probably need to clean the file "
+                    . "a little bit after merge.</>"
                 : ''),
             !$isMergerExperimental
         );

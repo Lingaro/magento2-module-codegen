@@ -1,6 +1,16 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\StringFunction\Helper;
+
+use function array_merge;
+use function in_array;
 
 class ColumnDefinition
 {
@@ -76,9 +86,7 @@ class ColumnDefinition
     }
 
     /**
-     * @param string $token
      * @param mixed $value
-     * @return string
      */
     private function format(string $token, $value): string
     {

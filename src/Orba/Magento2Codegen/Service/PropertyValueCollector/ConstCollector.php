@@ -16,7 +16,7 @@ class ConstCollector extends AbstractCollector
         }
     }
 
-    protected function _collectValue(PropertyInterface $property, PropertyBag $propertyBag)
+    protected function internalCollectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
         /** @var ConstProperty $property */
         return $property->getValue();

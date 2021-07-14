@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
 
 use Orba\Magento2Codegen\Model\PropertyInterface;
@@ -10,15 +17,13 @@ abstract class AbstractCollector implements CollectorInterface
     public function collectValue(PropertyInterface $property, PropertyBag $propertyBag)
     {
         $this->validateProperty($property);
-        return $this->_collectValue($property, $propertyBag);
+        return $this->internalCollectValue($property, $propertyBag);
     }
 
-    protected abstract function validateProperty(PropertyInterface $property): void;
+    abstract protected function validateProperty(PropertyInterface $property): void;
 
     /**
-     * @param PropertyInterface $property
-     * @param PropertyBag $propertyBag
      * @return mixed
      */
-    protected abstract function _collectValue(PropertyInterface $property, PropertyBag $propertyBag);
+    abstract protected function internalCollectValue(PropertyInterface $property, PropertyBag $propertyBag);
 }

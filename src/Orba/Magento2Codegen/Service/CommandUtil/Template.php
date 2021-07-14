@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\Template as TemplateModel;
-use Orba\Magento2Codegen\Service\CodeGenerator;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
@@ -14,61 +19,28 @@ use Orba\Magento2Codegen\Service\PropertyBagFactory;
 use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
 use Orba\Magento2Codegen\Util\PropertyBag;
 
-/**
- * Class Template
- * @package Orba\Magento2Codegen\Service\CommandUtil
- */
+use function array_merge;
+
 class Template
 {
     public const ARG_TEMPLATE = 'template';
 
-    /**
-     * @var PropertyBagFactory
-     */
-    private $propertyBagFactory;
-
-    /**
-     * @var CodeGenerator
-     */
-    private $codeGenerator;
-
-    /**
-     * @var IO
-     */
-    private $io;
-
-    /**
-     * @var TemplateProperty
-     */
-    private $templatePropertyUtil;
-
-    /**
-     * @var CollectorFactory
-     */
-    private $propertyValueCollectorFactory;
-
-    /**
-     * @var TemplateProcessorInterface
-     */
-    private $templateProcessor;
-
-    /**
-     * @var PropertyDependencyChecker
-     */
-    private $propertyDependencyChecker;
+    private PropertyBagFactory $propertyBagFactory;
+    private IO $io;
+    private TemplateProperty $templatePropertyUtil;
+    private CollectorFactory $propertyValueCollectorFactory;
+    private TemplateProcessorInterface $templateProcessor;
+    private PropertyDependencyChecker $propertyDependencyChecker;
 
     public function __construct(
         PropertyBagFactory $propertyBagFactory,
-        CodeGenerator $codeGenerator,
         IO $io,
         TemplateProperty $templatePropertyUtil,
         CollectorFactory $propertyValueCollectorFactory,
         TemplateProcessorInterface $templateProcessor,
         PropertyDependencyChecker $propertyDependencyChecker
-    )
-    {
+    ) {
         $this->propertyBagFactory = $propertyBagFactory;
-        $this->codeGenerator = $codeGenerator;
         $this->io = $io;
         $this->templatePropertyUtil = $templatePropertyUtil;
         $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
@@ -76,9 +48,6 @@ class Template
         $this->propertyDependencyChecker = $propertyDependencyChecker;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplateName(): string
     {
         $template = $this->io->getInput()->getArgument(self::ARG_TEMPLATE);
@@ -89,10 +58,6 @@ class Template
         return $template;
     }
 
-    /**
-     * @param TemplateModel $template
-     * @param PropertyBag $propertyBag
-     */
     public function showInfoAfterGenerate(TemplateModel $template, PropertyBag $propertyBag): void
     {
         if ($template->getAfterGenerateConfig()) {
@@ -112,7 +77,6 @@ class Template
             $this->templatePropertyUtil->collectConstProperties(),
             $this->templatePropertyUtil->collectInputProperties($template)
         );
-        /** @var PropertyInterface[] $properties */
         foreach ($properties as $property) {
             if (
                 $property instanceof InputPropertyInterface

@@ -1,32 +1,28 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
 
+use function array_keys;
+use function is_array;
+use function str_replace;
+
 class TemplateDir
 {
-    const DIR = BP . '/templates';
+    public const DIR = BP . '/templates';
 
-    /**
-     * @var Config
-     */
-    private $config;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var DirectoryIteratorFactory
-     */
-    private $directoryIteratorFactory;
-
-    /**
-     * @var array|null
-     */
-    private $directories;
+    private Config $config;
+    private Filesystem $filesystem;
+    private DirectoryIteratorFactory $directoryIteratorFactory;
+    private ?array $directories = null;
 
     public function __construct(
         Config $config,
@@ -36,13 +32,12 @@ class TemplateDir
         $this->config = $config;
         $this->filesystem = $filesystem;
         $this->directoryIteratorFactory = $directoryIteratorFactory;
-
     }
 
     public function getPath(string $templateName): ?string
     {
         $directories = $this->getAllTemplateDirectories();
-        $dir = isset($directories[$templateName]) ? $directories[$templateName] : self::DIR;
+        $dir = $directories[$templateName] ?? self::DIR;
         $path = $dir . '/' . $templateName;
         if ($this->filesystem->exists($path)) {
             return $path;

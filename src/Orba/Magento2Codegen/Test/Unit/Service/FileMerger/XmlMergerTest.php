@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use InvalidArgumentException;
@@ -8,12 +15,12 @@ use Orba\Magento2Codegen\Service\Magento\ConfigMergerFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use SimpleXMLElement;
 
+use function array_diff;
+use function count;
+
 class XmlMergerTest extends TestCase
 {
-    /**
-     * @var XmlMerger
-     */
-    private $xmlMerger;
+    private XmlMerger $xmlMerger;
 
     public function setUp(): void
     {
@@ -38,7 +45,7 @@ class XmlMergerTest extends TestCase
         $this->xmlMerger->merge('<foo></foo>', '<bar></bar>');
     }
 
-    public function testMergeReturnsSecondXmlIfBothXmlsHaveJustTextStringInRootNode(): void
+    public function testMergeReturnsSecondXmlIfXmlsHaveJustTextStringInRootNode(): void
     {
         $result = $this->xmlMerger->merge('<foo>bar</foo>', '<foo>baz</foo>');
         $xml = new SimpleXMLElement($result);
@@ -46,7 +53,7 @@ class XmlMergerTest extends TestCase
         $this->assertSame('baz', (string) $xml);
     }
 
-    public function testMergeReturnsXmlWithOneChildNodeIfBothXmlsHaveJustOneChildNodeInRootNodeAndTheyAreTheSame(): void
+    public function testMergeReturnsOneNodeIfXmlsHaveOneNodeAndTheyAreTheSame(): void
     {
         $result = $this->xmlMerger->merge('<foo><hello /></foo>', '<foo><hello /></foo>');
         $xml = new SimpleXMLElement($result);
@@ -55,7 +62,7 @@ class XmlMergerTest extends TestCase
         $this->assertSame('hello', $children[0]->getName());
     }
 
-    public function testMergeReturnsXmlWithTwoChildrenNodesIfBothXmlsHaveJustOneChildNodeInRootNodeAndTheyAreDifferent(): void
+    public function testMergeReturnsTwoNodesIfXmlsHaveOneNodeButTheyAreDifferent(): void
     {
         $result = $this->xmlMerger->merge('<foo><hello /></foo>', '<foo><world /></foo>');
         $xml = new SimpleXMLElement($result);
@@ -69,7 +76,7 @@ class XmlMergerTest extends TestCase
         $this->assertSame([], $names);
     }
 
-    public function testMergeReturnsSecondXmlIfBothXmlsHaveJustOneChildNodeInRootNodeAndTheyHaveSameNamesButDifferentIdArgument(): void
+    public function testMergeReturnsSecondXmlIfXmlsHaveOneNodeWithSameNamesAndDifferentIdArgument(): void
     {
         $result = $this->xmlMerger
             ->merge('<foo><hello id="1" /></foo>', '<foo><hello id="2" /></foo>');
@@ -79,7 +86,7 @@ class XmlMergerTest extends TestCase
         $this->assertSame('2', (string) $children[0]['id']);
     }
 
-    public function testMergeReturnsXmlWithTwoChildNodesIfBothXmlsHaveJustOneChildNodeInRootNodeAndTheyHaveSameNamesButDifferentIdArgumentAndIdAttributeWasSet(): void
+    public function testMergeReturnsTwoNodesIfXmlsHaveOneNodeWithSameNamesDifferentIdArgumentAndIdAttributeIsSet(): void
     {
         $this->xmlMerger->setParams(['idAttributes' => ['/foo/hello' => 'id']]);
         $result = $this->xmlMerger
@@ -94,10 +101,13 @@ class XmlMergerTest extends TestCase
         $this->assertSame([], $ids);
     }
 
-    public function testMergeReturnsSecondXmlIfBothXmlsHaveJustOneChildNodeInRootNodeAndTheyHaveSameNamesButDifferentTypeArgument(): void
+    public function testMergeReturnsSecondXmlIfXmlsHaveOneNodeWithSameNamesButDifferentTypeArgument(): void
     {
         $this->xmlMerger->setParams(['typeAttributeName' => 'type']);
-        $result = $this->xmlMerger->merge('<foo><hello type="string">world</hello></foo>', '<foo><hello type="int">7</hello></foo>');
+        $result = $this->xmlMerger->merge(
+            '<foo><hello type="string">world</hello></foo>',
+            '<foo><hello type="int">7</hello></foo>'
+        );
         $xml = new SimpleXMLElement($result);
         $children = $xml->children();
         $this->assertSame(1, count($children));

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
@@ -7,47 +14,25 @@ use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
 
+use function array_merge;
+use function is_array;
+use function is_scalar;
+use function sprintf;
+
 class TemplateFile
 {
-    const TEMPLATE_CONFIG_FOLDER = '.no-copied-config';
-    const CONFIG_FILENAME = 'config.yml';
+    private const TEMPLATE_CONFIG_FOLDER = '.no-copied-config';
+    private const CONFIG_FILENAME = 'config.yml';
 
-    /**
-     * @var TemplateDir
-     */
-    private $templateDir;
+    private TemplateDir $templateDir;
+    private FinderFactory $finderFactory;
+    private Parser $yamlParser;
 
-    /**
-     * @var FinderFactory
-     */
-    private $finderFactory;
-
-    /**
-     * @var Parser
-     */
-    private $yamlParser;
-
-    /**
-     * @var TemplateProcessorInterface
-     */
-    private $templateProcessor;
-
-    /**
-     * @var bool
-     */
-    private $isAbstract;
-
-    public function __construct(
-        TemplateDir $templateDir,
-        FinderFactory $finderFactory,
-        Parser $yamlParser,
-        TemplateProcessorInterface $templateProcessor
-    )
+    public function __construct(TemplateDir $templateDir, FinderFactory $finderFactory, Parser $yamlParser)
     {
         $this->templateDir = $templateDir;
         $this->finderFactory = $finderFactory;
         $this->yamlParser = $yamlParser;
-        $this->templateProcessor = $templateProcessor;
     }
 
     public function exists(string $templateName): bool
@@ -61,12 +46,10 @@ class TemplateFile
     }
 
     /**
-     * @param string $templateName
-     * @param bool $nested
      * @return string[]
      * @throws InvalidArgumentException
      */
-    public function getDependencies(string $templateName, bool $nested = false): array
+    public function getDependencies(string $templateName): array
     {
         $parsedConfig = $this->getParsedConfig($templateName);
         $dependencies = [];
@@ -83,10 +66,8 @@ class TemplateFile
                 }
             }
         }
-        if ($nested) {
-            foreach ($dependencies as $dependency) {
-                $dependencies = array_merge($dependencies, $this->getDependencies($dependency, true));
-            }
+        foreach ($dependencies as $dependency) {
+            $dependencies = array_merge($dependencies, $this->getDependencies($dependency));
         }
         return $dependencies;
     }
@@ -113,7 +94,7 @@ class TemplateFile
 
     public function getIsAbstract(string $templateName): bool
     {
-        return (bool)$this->getRootConfig($templateName, 'isAbstract');
+        return (bool) $this->getRootConfig($templateName, 'isAbstract');
     }
 
     /**
@@ -125,9 +106,11 @@ class TemplateFile
         $files = [];
         foreach ($templateNames as $templateName) {
             $this->validateTemplateExistence($templateName);
-            foreach ($this->finderFactory->create()
+            foreach (
+                $this->finderFactory->create()
                          ->files()
-                         ->in($this->templateDir->getPath($templateName)) as $file) {
+                         ->in($this->templateDir->getPath($templateName)) as $file
+            ) {
                 $files[] = $file;
             }
         }
@@ -137,12 +120,9 @@ class TemplateFile
     private function getRootConfig(string $templateName, string $configName): string
     {
         $parsedConfig = $this->getParsedConfig($templateName);
-        return isset($parsedConfig[$configName]) ? $parsedConfig[$configName] : '';
+        return $parsedConfig[$configName] ?? '';
     }
 
-    /**
-     * @param string $templateName
-     */
     private function validateTemplateExistence(string $templateName): void
     {
         if (!$this->exists($templateName)) {
@@ -150,11 +130,11 @@ class TemplateFile
         }
     }
 
-    private function getFileFromTemplateConfig(string $fileName, string $templateName):? SplFileInfo
+    private function getFileFromTemplateConfig(string $templateName): ?SplFileInfo
     {
         try {
             $files = $this->finderFactory->create()
-                ->name($fileName)
+                ->name(self::CONFIG_FILENAME)
                 ->depth('< 1')
                 ->in($this->templateDir->getPath($templateName) . '/' . self::TEMPLATE_CONFIG_FOLDER);
         } catch (DirectoryNotFoundException $e) {
@@ -166,10 +146,10 @@ class TemplateFile
         return null;
     }
 
-    private function getParsedConfig(string $templateName)
+    private function getParsedConfig(string $templateName): array
     {
         $this->validateTemplateExistence($templateName);
-        $file = $this->getFileFromTemplateConfig(self::CONFIG_FILENAME, $templateName);
+        $file = $this->getFileFromTemplateConfig($templateName);
         if (!$file) {
             return [];
         }

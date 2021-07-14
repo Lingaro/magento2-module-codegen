@@ -1,4 +1,4 @@
-image: php:7.3-cli
+image: php:7.4-cli
 
 pipelines:
   default:
@@ -10,3 +10,5 @@ pipelines:
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer install
           - vendor/bin/phpunit --testsuite Codegen_Unit_Tests --configuration src/Orba/Magento2Codegen/Test/phpunit_unit.xml --do-not-cache-result
+          - vendor/bin/phpcs --standard=PSR12 --ignore=./src/Orba/Magento2Codegen/Test/Unit/_files/* ./src/Orba/Magento2Codegen/
+          - vendor/bin/phpmd ./src/Orba/Magento2Codegen/ text cleancode,codesize,controversial,design,unusedcode

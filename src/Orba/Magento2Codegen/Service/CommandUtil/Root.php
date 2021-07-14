@@ -1,20 +1,20 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Service\Magento\Detector;
 
 class Root
 {
-    /**
-     * @var Template
-     */
-    private $templateCommandUtil;
-
-    /**
-     * @var Detector
-     */
-    private $detector;
+    private Template $templateCommandUtil;
+    private Detector $detector;
 
     public function __construct(Template $templateCommandUtil, Detector $detector)
     {

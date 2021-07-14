@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
 
 namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
@@ -8,52 +14,36 @@ use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\Decla
 use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\NodeCleanerInterface;
 use PhpParser\Node;
 
-/**
- * Class NodeCleaner
- * @package Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree
- */
 class NodeCleaner
 {
     /**
-     * @var array|NodeCleanerInterface[]
+     * @var NodeCleanerInterface[]
      */
-    private $cleaners = [];
+    private array $cleaners;
 
-    /**
-     * NodeCleaner constructor.
-     * @param ClassMethodNodeCleaner $classMethodCleaner
-     * @param DeclareCleaner $declareCleaner
-     */
-    public function __construct(
-        ClassMethodNodeCleaner $classMethodCleaner,
-        DeclareCleaner $declareCleaner
-    ) {
+    public function __construct(ClassMethodNodeCleaner $classMethodCleaner, DeclareCleaner $declareCleaner)
+    {
         $this->cleaners = [
             $classMethodCleaner->getCode() => $classMethodCleaner,
-            $declareCleaner->getCode()     => $declareCleaner
+            $declareCleaner->getCode() => $declareCleaner
         ];
     }
 
     /**
-     * @param Node $node
-     * @param array|Node[] $nodes
-     * @return array
+     * @param Node[] $nodes
      */
     public function clean(Node $node, array $nodes): array
     {
-        if ($cleaner = $this->getCleaner($node)) {
+        $cleaner = $this->getCleaner($node);
+        if ($cleaner) {
             $nodes = $cleaner->clean($nodes);
         }
         return $nodes;
     }
 
-    /**
-     * @param Node $node
-     * @return NodeCleanerInterface|null
-     */
     private function getCleaner(Node $node): ?NodeCleanerInterface
     {
         $class = get_class($node);
-        return isset($this->cleaners[$class]) ? $this->cleaners[$class] : null;
+        return $this->cleaners[$class] ?? null;
     }
 }

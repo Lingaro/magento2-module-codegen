@@ -1,22 +1,28 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\FinderFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class FilepathUtilTest extends TestCase
 {
-    /**
-     * @var FilepathUtil
-     */
-    private $filepathUtil;
+    private FilepathUtil $filepathUtil;
 
     public function setUp(): void
     {
-        $this->filepathUtil = new FilepathUtil(new FinderFactory());
+        $this->filepathUtil = new FilepathUtil();
     }
 
     public function testGetAbsolutePathThrowsExceptionIfFilepathIsEmpty(): void

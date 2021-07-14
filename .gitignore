@@ -3,3 +3,4 @@
 /var/
 /config/codegen.yml
 /.phpunit.result.cache
+/Makefile

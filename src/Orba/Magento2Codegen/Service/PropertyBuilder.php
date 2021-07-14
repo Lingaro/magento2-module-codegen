@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use InvalidArgumentException;
@@ -11,10 +18,10 @@ use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Model\StringProperty;
 
-/**
- * Class PropertyBuilder
- * @package Orba\Magento2Codegen\Service
- */
+use function is_array;
+use function is_bool;
+use function is_string;
+
 class PropertyBuilder
 {
     public function addName(PropertyInterface $property, string $name): self
@@ -73,24 +80,7 @@ class PropertyBuilder
     public function addDefaultValue(InputPropertyInterface $property, array $config): self
     {
         if (isset($config['default'])) {
-            if ($property instanceof ChoiceProperty) {
-                if (empty($property->getOptions())) {
-                    throw new InvalidArgumentException('Array of options must be set before setting default value.');
-                }
-                if (!in_array($config['default'], $property->getOptions())) {
-                    throw new InvalidArgumentException('Default value must exist in options array.');
-                }
-            } else if ($property instanceof StringProperty) {
-                if (!is_string($config['default'])) {
-                    throw new InvalidArgumentException('Default value must be a string.');
-                }
-            } else if ($property instanceof BooleanProperty) {
-                if (!is_bool($config['default'])) {
-                    throw new InvalidArgumentException('Default value must be boolean.');
-                }
-            } else {
-                throw new InvalidArgumentException('Setting default value is not supported for this property.');
-            }
+            $this->validatePropertyForDefaultValue($property, $config);
             $property->setDefaultValue($config['default']);
         }
         return $this;
@@ -145,5 +135,31 @@ class PropertyBuilder
         }
         $property->setOptions($config['options']);
         return $this;
+    }
+
+    private function validatePropertyForDefaultValue(InputPropertyInterface $property, array $config): void
+    {
+        if ($property instanceof ChoiceProperty) {
+            if (empty($property->getOptions())) {
+                throw new InvalidArgumentException('Array of options must be set before setting default value.');
+            }
+            if (!in_array($config['default'], $property->getOptions())) {
+                throw new InvalidArgumentException('Default value must exist in options array.');
+            }
+            return;
+        }
+        if ($property instanceof StringProperty) {
+            if (!is_string($config['default'])) {
+                throw new InvalidArgumentException('Default value must be a string.');
+            }
+            return;
+        }
+        if ($property instanceof BooleanProperty) {
+            if (!is_bool($config['default'])) {
+                throw new InvalidArgumentException('Default value must be boolean.');
+            }
+            return;
+        }
+        throw new InvalidArgumentException('Setting default value is not supported for this property.');
     }
 }

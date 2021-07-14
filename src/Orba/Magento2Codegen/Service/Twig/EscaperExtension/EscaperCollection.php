@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service\Twig\EscaperExtension;
 
 class EscaperCollection
@@ -7,7 +14,7 @@ class EscaperCollection
     /**
      * @var EscaperInterface[]
      */
-    private $escapers;
+    private array $escapers;
 
     /**
      * @param EscaperInterface[] $escapers
@@ -17,7 +24,10 @@ class EscaperCollection
         $this->escapers = $escapers;
     }
 
-    public function getItems()
+    /**
+     * @return EscaperInterface[]
+     */
+    public function getItems(): array
     {
         return $this->escapers;
     }

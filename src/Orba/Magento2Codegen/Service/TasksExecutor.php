@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 namespace Orba\Magento2Codegen\Service;
 
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+
+use function str_replace;
 
 class TasksExecutor
 {
@@ -27,7 +36,6 @@ class TasksExecutor
             );
             $obj = new $className();
             if ($obj instanceof TaskInterface) {
-                /** @var TaskInterface $obj */
                 $obj->execute();
             }
         }

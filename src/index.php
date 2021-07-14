@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+declare(strict_types=1);
+
 $composerAutoload = __DIR__ . '/../../../../vendor/autoload.php';
 
 if (file_exists($composerAutoload)) {
