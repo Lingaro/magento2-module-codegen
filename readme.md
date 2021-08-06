@@ -25,8 +25,6 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 
 ## Available templates
 
-`productAttributes` - creates data patch which adds custom attributes to product entity
-
 `apiEndpoint` - creates an API endpoint
 
 `block` - creates a block and phtml template file for it
@@ -64,6 +62,8 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 `model` - creates a model with the corresponding repository, searchResult, resourceModel, collection, db_schema.xml and APIs
 
 `module` - creates basic configuration needed to start a custom module
+
+`productAttributes` - creates data patch which adds custom attributes to product entity
 
 `queueMessage` - creates queue message with publisher and handler using AMQP connection
 
