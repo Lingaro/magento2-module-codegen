@@ -25,7 +25,7 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 
 ## Available templates
 
-`addProductAttributes` - creates data patch which adds custom attributes to product entity
+`productAttributes` - creates data patch which adds custom attributes to product entity
 
 `apiEndpoint` - creates an API endpoint
 
