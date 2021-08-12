@@ -55,7 +55,7 @@ In the template files contents (and their names too!) you can:
    * folderScope
 4. Use [ifs](https://twig.symfony.com/doc/3.x/tags/if.html),
 5. Use [for loops](https://twig.symfony.com/doc/3.x/tags/for.html).
-   
+
 Each template dir has a special subdirectory `.no-copied-config`, which is not processed and copied as others. Inside there is a place for template config file.
 
 ### Template config
@@ -310,6 +310,73 @@ isAbstract: true
 If a user needs to take some additional steps after code is generated, their description may be added in `afterGenearte` root node of `config.yml` file. The content of this param is processed by Twig, so you can use properties inside.
 
 Check `viewModel` template for real life example.
+
+### Multiple copies of same file
+
+If you need to generate multiple copies of the same file for each item of some array property, you can name a file using the following syntax:
+
+```
+_loop(<property_name>):<file_name>
+```
+
+where `<property_name>` must be replaced with a name of an array property and `<file_name>` must be replaced with an actual filename.
+
+Two special properties that may be used in file content or in its name are added in such setup:
+
+* `_item` - consists the current item of looped array
+* `_key` - consists the current key of looped array
+
+**Exemplary usage:**
+
+Let's assume that `models` is an array property and it has just one child - `name`. Let's also assume that user filled in the array with two names: `foo_name`, `bar_name`.
+
+We can create the following file
+
+```
+/Model/_loop(models):{{ _item.name|pascal }}.php
+```
+
+with the following content.
+
+```php
+<?php
+class {{ _item.name|pascal }}
+{
+    // {{ _key }}
+}
+```
+
+Such setup will generate two files:
+
+```
+/Model/FooName.php
+```
+
+with the following content
+
+```php
+<?php
+class FooName
+{
+    // 0
+}
+```
+
+and
+
+```
+/Model/BarName.php
+```
+
+with the following content
+
+```php
+<?php
+class BarName
+{
+    // 1
+}
+```
 
 ## Static code analysis
 

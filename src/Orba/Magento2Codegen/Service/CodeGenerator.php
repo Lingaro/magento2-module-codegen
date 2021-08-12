@@ -13,9 +13,14 @@ use Exception;
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Model\Template;
 use Orba\Magento2Codegen\Util\PropertyBag;
+use RuntimeException;
+use Symfony\Component\Finder\SplFileInfo;
 
 use function array_merge;
+use function is_array;
+use function preg_match;
 use function sprintf;
+use function str_replace;
 use function trim;
 
 class CodeGenerator
@@ -53,14 +58,34 @@ class CodeGenerator
             $templateNames[] = $item->getName();
         }
         foreach ($this->templateFile->getTemplateFiles($templateNames) as $file) {
-            $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
-                $this->templateProcessor->replacePropertiesInText($file->getPathname(), $propertyBag),
-                $rootDir
-            );
-            $fileContent = $this->templateProcessor->replacePropertiesInText($file->getContents(), $propertyBag);
-            if (!$dryRun) {
-                $this->generateFile($fileContent, $filePath);
+            if (preg_match('/\/_loop\(([^)]{1,})\):/', $file->getPathname(), $matches)) {
+                $loopedPropertyName = $matches[1];
+                $this->validateLoopedPropertyName($loopedPropertyName, $propertyBag, $file);
+                foreach ($propertyBag[$loopedPropertyName] as $key => $item) {
+                    $pathName = str_replace('_loop(' . $loopedPropertyName . '):', '', $file->getPathname());
+                    $propertyBag->add(['_key' => $key, '_item' => $item]);
+                    $this->processSingleFile($rootDir, $pathName, $file->getContents(), $propertyBag, $dryRun);
+                }
+                continue;
             }
+            $this->processSingleFile($rootDir, $file->getPathname(), $file->getContents(), $propertyBag, $dryRun);
+        }
+    }
+
+    private function processSingleFile(
+        string $rootDir,
+        string $pathName,
+        string $content,
+        PropertyBag $propertyBag,
+        bool $dryRun
+    ): void {
+        $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
+            $this->templateProcessor->replacePropertiesInText($pathName, $propertyBag),
+            $rootDir
+        );
+        $fileContent = $this->templateProcessor->replacePropertiesInText($content, $propertyBag);
+        if (!$dryRun) {
+            $this->generateFile($fileContent, $filePath);
         }
     }
 
@@ -91,6 +116,27 @@ class CodeGenerator
             $this->io->getInstance()->note(sprintf('File saved: %s', $filePath));
         } catch (Exception $e) {
             $this->io->getInstance()->error($e->getMessage());
+        }
+    }
+
+    private function validateLoopedPropertyName(
+        string $loopedPropertyName,
+        PropertyBag $propertyBag,
+        SplFileInfo $file
+    ): void {
+        if (!isset($propertyBag[$loopedPropertyName])) {
+            throw new RuntimeException(sprintf(
+                'Property "%s" is not defined. The following file cannot be processed: %s',
+                $loopedPropertyName,
+                $file->getPathname()
+            ));
+        }
+        if (!is_array($propertyBag[$loopedPropertyName])) {
+            throw new RuntimeException(sprintf(
+                'Property "%s" is not an array. The following file cannot be processed: %s',
+                $loopedPropertyName,
+                $file->getPathname()
+            ));
         }
     }
 }
