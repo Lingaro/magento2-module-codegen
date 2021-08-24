@@ -1,0 +1,165 @@
+type: module
+description: "This template creates data patches which add custom attributes to customer entity."
+afterGenerate: "1. To apply patches, please run setup upgrade command:
+                \n
+                \nbin/magento setup:upgrade"
+properties:
+  attributes:
+    type: array
+    required: true
+    description: Define all new custom attributes for customer
+    children:
+      code:
+        type: string
+        required: true
+        description: Internal attribute code. Make sure you don't use more than 60 chars.
+      label:
+        type: string
+        required: true
+        description: Text displayed next to value on the frontend
+      type:
+        type: choice
+        options:
+          - datetime
+          - decimal
+          - int
+          - static
+          - text
+          - varchar
+        description: Database field type
+      input:
+        type: choice
+        options:
+          - boolean
+          - date
+          - multiselect
+          - select
+          - text
+          - textarea
+        description: Backend input type
+      note:
+        type: string
+        description: Comment displayed next to attribute input on backend
+      required:
+        type: boolean
+        description: Is attribute value required?
+        default: false
+      default:
+        type: string
+        description: Default attribute value
+      unique:
+        type: boolean
+        description: Should attribute value be unique among all customers?
+        default: false
+      system:
+        type: boolean
+        description: Is attribute a system attribute? (non-system attributes are added to custom_attributes)
+        default: false
+      validate_rules:
+        type: string
+        description: "Enter the validation rules in JSON format. Ex. {\"max_text_length\":255,\"min_text_length\":1}"
+      input_filter:
+        type: string
+        description: "Enter the input filter. Ex. trim"
+      frontend_class:
+        type: string
+        description: "HTML classes for input in the backend. You may use this for styling or simple validation, ex. \"validate-email\"."
+      is_used_in_grid:
+        type: boolean
+        description: Should attribute be available on the backend customer grid?
+        default: false
+      is_visible_in_grid:
+        type: boolean
+        description: Should attribute be visible by default on the backend customer grid?
+        default: false
+        depend:
+          item.is_used_in_grid: true
+      is_filterable_in_grid:
+        type: boolean
+        description: Should attribute be filterable on the backend customer grid?
+        default: false
+        depend:
+          item.is_used_in_grid: true
+      is_searchable_in_grid:
+        type: boolean
+        description: Should attribute be searchable on the backend customer grid?
+        default: false
+        depend:
+          item.is_used_in_grid: true
+      sort_order:
+        type: string
+        description: Integer describing position of attribute in customer detail form
+        default: "0"
+      visible:
+        type: boolean
+        description: Should attribute be visible?
+        default: true
+      user_defined:
+        type: boolean
+        default: true
+        description: Is the attribute user defined? (non user defined attributes cannot be deleted in admin panel)
+      source_model:
+        type: choice
+        options:
+          - existing
+          - custom
+          - skip
+        description: Source model - It provides data source to the attributes with field type select, multiselect, date etc. Select (1) existing to use already defined source model, (2) custom, to create your own and (3) skip if you don't want it now.
+      source_model_existing:
+        type: string
+        description: Enter the full class name with namespace of existing source model starting with (\).
+        depend:
+          item.source_model: 'existing'
+      source_model_custom:
+        type: array
+        description: Used for select and multiple select field type. Enter value and label for the select and multi-select fields.
+        children:
+          value:
+            type: string
+            required: true
+            description: enter the value
+          label:
+            type: string
+            required: true
+            description: enter the label
+        depend:
+          item.source_model: 'custom'
+      frontend_model:
+        type: string
+        description: Custom frontend model - full class name with namespace. Can be used for preparing a value before rendering on the frontend.
+      backend_model:
+        type: string
+        description: Custom backend model - full class name with namespace. It's a class where the provided value can be modified. It's useful for validation if some custom validation is required.
+      data_model:
+        type: string
+        description: Custom data model - full class name with namespace (usually left blank)
+      attribute_model:
+        type: string
+        description: Custom attribute model - full class name with namespace (usually left blank)
+      table:
+        type: string
+        description: Custom database table for storing attribute values (usually left blank)
+      adminhtml_customer:
+        type: boolean
+        description: Should attribute be applied to admin customer form in backend?
+        default: true
+      adminhtml_checkout:
+        type: boolean
+        description: Should attribute be applied to admin checkout form in backend?
+        default: true
+      customer_account_create:
+        type: boolean
+        description: Should attribute be applied to customer registration form on frontend?
+        default: true
+      customer_account_edit:
+        type: boolean
+        description: Should attribute be applied to customer account edit form on frontend?
+        default: true
+  patchDependencies:
+    type: array
+    required: false
+    description: List of patches after which the new patches should be loaded
+    children:
+      name:
+        type: string
+        description: Full class name with namespace

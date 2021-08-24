@@ -45,6 +45,8 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 
 `crud` - creates new entity and all CRUD actions in the admin panel for it
 
+`customerAttributes` - creates data patches which add custom attributes to customer entity
+
 `emailTemplate` - creates a system e-mail template with class for sending it and config for allowing admin to customize it
 
 `eventObserver` - creates event observer for given event
