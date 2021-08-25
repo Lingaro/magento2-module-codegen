@@ -21,10 +21,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use function sprintf;
+
 class GenerateCommand extends AbstractCommand
 {
     public const OPTION_DRY_RUN = 'dry-run';
     public const OPTION_ROOT_DIR = 'root-dir';
+    public const OPTION_FORCE_MERGE = 'force-merge';
+    public const FORCE_MERGE_ALL = 'all';
+    public const FORCE_MERGE_NONEXPERIMENTAL = 'nonexperimental';
 
     private ?string $templateName;
     private TemplateCommandUtil $templateUtil;
@@ -65,6 +70,16 @@ class GenerateCommand extends AbstractCommand
                 null,
                 InputOption::VALUE_NONE,
                 'If specified, no files will be generated.'
+            )->addOption(
+                self::OPTION_FORCE_MERGE,
+                null,
+                InputOption::VALUE_REQUIRED,
+                sprintf(
+                    'Use "%s" to automatically run all code mergers; '
+                    . 'use "%s" to automatically run non-experimental code mergers',
+                    self::FORCE_MERGE_ALL,
+                    self::FORCE_MERGE_NONEXPERIMENTAL
+                )
             );
     }
 

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Orba\Magento2Codegen\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 
 use function sprintf;
 
@@ -48,13 +49,18 @@ class CodeGeneratorUtil
         return !$this->filesystem->exists($filePath);
     }
 
-    public function shouldMerge(string $filePath, bool $isMergerExperimental): bool
+    public function shouldMerge(string $filePath, bool $isMergerExperimental, ?string $forceMerge = null): bool
     {
+        if ($forceMerge === GenerateCommand::FORCE_MERGE_ALL) {
+            return true;
+        } elseif ($forceMerge === GenerateCommand::FORCE_MERGE_NONEXPERIMENTAL && $isMergerExperimental === false) {
+            return true;
+        }
         return $this->io->getInstance()->confirm(
             sprintf('%s already exists, would you like to perform a merge?', $filePath)
             . ($isMergerExperimental
-                ? "\n <fg=yellow>Watchout! Experimental merger will be used. You will probably need to clean the file "
-                    . "a little bit after merge.</>"
+                ? "\n <fg=yellow>Watchout! Experimental merger will be used. You will probably need to "
+                . "clean the file a little bit after merge.</>"
                 : ''),
             !$isMergerExperimental
         );

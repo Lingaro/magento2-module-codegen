@@ -91,6 +91,8 @@ class CodeGenerator
 
     private function generateFile(string $fileContent, string $filePath): void
     {
+        $forceMerge = $this->io->getInput()->getOption(GenerateCommand::OPTION_FORCE_MERGE);
+
         if (empty(trim($fileContent))) {
             $this->io->getInstance()->note(sprintf('File omitted because of no content: %s', $filePath));
             return;
@@ -99,7 +101,15 @@ class CodeGenerator
             if (!$this->codeGeneratorUtil->canCopyWithoutOverriding($filePath)) {
                 $merger = $this->fileMergerFactory->create($this->filepathUtil->getFilePath($filePath));
                 $merged = false;
-                if ($merger && $this->codeGeneratorUtil->shouldMerge($filePath, $merger->isExperimental())) {
+                /* condition for code merger confirmation */
+                if (
+                        $merger
+                        && $this->codeGeneratorUtil->shouldMerge(
+                            $filePath,
+                            $merger->isExperimental(),
+                            $forceMerge
+                        )
+                ) {
                     try {
                         $fileContent = $merger->merge($this->filepathUtil->getContent($filePath), $fileContent);
                         $merged = true;
