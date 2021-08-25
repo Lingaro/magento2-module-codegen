@@ -3,4 +3,9 @@
 {% if item.note %}
 "{{ item.note|escape('csv')|raw }}","{{ item.note|escape('csv')|raw }}"
 {% endif %}
+{% if item.source_model_custom is not empty %}
+{% for item in item.source_model_custom %}
+"{{ item.label|escape('csv')|raw }}","{{ item.label|escape('csv')|raw }}"
+{% endfor %}
+{% endif %}
 {% endfor %}

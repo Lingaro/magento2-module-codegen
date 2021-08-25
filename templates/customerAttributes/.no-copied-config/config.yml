@@ -104,24 +104,24 @@ properties:
           - existing
           - custom
           - skip
-        description: Source model - It provides data source to the attributes with field type select, multiselect, date etc. Select (1) existing to use already defined source model, (2) custom, to create your own and (3) skip if you don't want it now.
+        description: Source model provides data source to select/multiselect attributes. Select (1) existing to use already defined source model, (2) custom to create your own, or (3) skip if you don't want to use source model.
       source_model_existing:
         type: string
-        description: Enter the full class name with namespace of existing source model starting with (\).
+        description: Full class name with namespace of existing source model.
         depend:
           item.source_model: 'existing'
       source_model_custom:
         type: array
-        description: Used for select and multiple select field type. Enter value and label for the select and multi-select fields.
+        description: Used for select and multiple select field type. Enter value and label for each option.
         children:
           value:
             type: string
             required: true
-            description: enter the value
+            description: Enter a value
           label:
             type: string
             required: true
-            description: enter the label
+            description: Enter a label
         depend:
           item.source_model: 'custom'
       frontend_model:
