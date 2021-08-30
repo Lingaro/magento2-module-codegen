@@ -29,6 +29,6 @@ class CollectorFactory
         if (!isset($this->map[get_class($property)])) {
             throw new InvalidArgumentException('There is no collector defined for this property.');
         }
-        return $this->map[get_class($property)];
+        return clone $this->map[get_class($property)];
     }
 }
