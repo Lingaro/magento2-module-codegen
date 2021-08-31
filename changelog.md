@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2021-08-31
+### Added
+- Template: `customerAttributes`
+- Possibility to generate multiple versions of same file - one for each item of array property
+- `--force-merge` option in `template:generate` command
+
+### Changed
+- `model` template: Collection Processor is now used for `getList` method of entity repository
+- `addProductAttributes` template:
+  - Renaming to `productAttributes`
+  - Refactoring of data patch file - now one file will be generated for each attribute specified in input
+  - Added ability to generate custom source model with values and labels specified in input 
+  - Revert patch added
+
+### Fixed
+- `template:generate` command questions corrupted for nested arrays
+
 ## [3.0.0] - 2021-07-14
 ### Added
 - PHPCS setup for CI
