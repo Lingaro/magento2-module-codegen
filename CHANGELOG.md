@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Template: `customerAttributes`
 - Possibility to generate multiple versions of same file - one for each item of array property
 - `--force-merge` option in `template:generate` command
+- Information about MIT license
 
 ### Changed
 - `model` template: Collection Processor is now used for `getList` method of entity repository
