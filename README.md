@@ -47,6 +47,8 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 
 `customerAttributes` - creates data patches which add custom attributes to customer entity
 
+`categoryAttributes` - creates data patches which add custom attributes to category entity along with ui_component needed to render these attributes
+
 `emailTemplate` - creates a system e-mail template with class for sending it and config for allowing admin to customize it
 
 `eventObserver` - creates event observer for given event

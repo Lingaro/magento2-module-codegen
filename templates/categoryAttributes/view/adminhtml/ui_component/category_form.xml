@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
+ * @author    {{ commentsUserEmail }}
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+{% if fieldset == 'existing' %}
+    <fieldset name="{{ fieldset_existing }}">
+{% endif %}
+{% if fieldset == 'custom' %}
+    <fieldset name="{{ fieldset_custom|snake }}" sortOrder="{{ sort_order }}">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">{{ fieldset_custom }}</label>
+        </settings>
+{% endif %}
+{% for item in attributes %}
+        <field name="{{ item.code|snake }}" sortOrder="{{ item.sort_order }}" {% if item.formElement == 'wysiwyg' %}template="ui/form/field" {% endif %}formElement="{{ item.formElement }}">
+            <argument name="data" xsi:type="array">
+{% if item.source_model == 'existing' %}
+                <item name="options" xsi:type="object">
+                    {{ item.source_model_existing }},
+                </item>
+{% endif %}
+{% if item.source_model == 'custom' %}
+                <item name="options" xsi:type="object">
+                    \{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Category\Attribute\Source\{{ item.code|pascal }}Source
+                </item>
+{% endif %}
+{% if item.formElement == 'wysiwyg' %}
+                <item name="config" xsi:type="array">
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="height" xsi:type="string">100px</item>
+                        <item name="add_variables" xsi:type="boolean">false</item>
+                        <item name="add_widgets" xsi:type="boolean">true</item>
+                        <item name="add_images" xsi:type="boolean">true</item>
+                        <item name="add_directives" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+{% endif %}
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">{{ item.required ? '1' : '0' }}</rule>
+                </validation>
+{% if item.formElement == 'imageUploader' %}
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+{% endif %}
+                <dataType>{{ item.type }}</dataType>
+                <label translate="true">{{ item.label }}</label>
+                <visible>{{ item.visible ? '1' : '0' }}</visible>
+                <required>{{ item.required ? '1' : '0' }}</required>
+            </settings>
+{% if item.formElement == 'imageUploader' %}
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>{{ item.required ? '1' : '0' }}</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="catalog/category_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Media Gallery</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>catalog/category</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+{% endif %}
+{% if item.formElement == 'wysiwyg' %}
+            <formElements>
+                <wysiwyg class="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg">
+                    <settings>
+                        <rows>10</rows>
+                        <wysiwyg>{{ item.wysiwyg_enabled }}</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+{% endif %}
+        </field>
+{% endfor %}
+    </fieldset>
+</form>

@@ -1,0 +1,174 @@
+type: module
+description: "This template creates data patches which adds category attributes."
+afterGenerate: "1. To apply patch, please run setup upgrade command:
+                \n
+                \nbin/magento setup:upgrade"
+properties:
+  fieldset:
+    type: choice
+    options:
+      - existing
+      - custom
+    description: 'The section in which the attribute will be visible in admin panel. Select "exisitng" to place the
+                 attribute in existing section, or "custom" to create your own custom section'
+  fieldset_existing:
+    type: string
+    required: true
+    description: The code of existing fieldset
+    default: 'general'
+    depend:
+      fieldset: 'existing'
+  fieldset_custom:
+    type: string
+    required: true
+    description: The name of custom fieldset
+    depend:
+      fieldset: 'custom'
+  sort_order:
+    type: string
+    description: The sort order of custom fieldset
+    default: '100'
+    depend:
+      fieldset: 'custom'
+  attributes:
+    type: array
+    required: true
+    description: Cateogry attributes definition
+    children:
+      code:
+        type: string
+        required: true
+        description: Internal attribute code. Make sure you don't use more than 60 chars.
+      label:
+        type: string
+        required: true
+        description: Text displayed next to value on the frontend
+      sort_order:
+        type: string
+        description: The sort order of the attribute
+        default: '100'
+      type:
+        type: choice
+        options:
+          - datetime
+          - decimal
+          - int
+          - static
+          - text
+          - varchar
+        description: 'Database field type. Hint: Choose "varchar" for image attribute.'
+      input:
+        type: choice
+        options:
+          - boolean
+          - date
+          - image
+          - multiselect
+          - price
+          - select
+          - text
+          - textarea
+        description: Backend input type
+      formElement:
+        type: choice
+        options:
+          - date
+          - input
+          - imageUploader
+          - multiselect
+          - select
+          - textarea
+          - wysiwyg
+        description: Form element is used in ui_component for form input type
+      note:
+        type: string
+        description: Comment displayed next to attribute input on backend
+      required:
+        type: boolean
+        required: true
+        description: Is attribute value required?
+        default: false
+      scope:
+        type: choice
+        options:
+          - store view
+          - website
+          - global
+        description: Attribute value saving scope
+      default:
+        type: string
+        description: Default attribute value
+      unique:
+        type: boolean
+        description: Should attribute value be unique among all categories?
+        default: false
+      frontend_class:
+        type: string
+        description: "HTML classes for input in the backend. You may use this for styling or simple validation,
+                     ex. \"validate-email\"."
+      visible:
+        type: boolean
+        description: Should attribute be visible in category page on backend?
+        default: true
+      wysiwyg_enabled:
+        type: boolean
+        description: Should WYSIWYG editor be enabled for attribute on backend?
+        default: true
+        depend:
+          item.visible: true
+          item.input: textarea
+          item.formElement: wysiwyg
+      source_model:
+        type: choice
+        options:
+          - existing
+          - custom
+          - skip
+        description: "Source model provides data source to select/multiselect attributes. Select \"existing\" to use
+                     already defined source model, \"custom\" to create your own, or \"skip\" if you don't want to use
+                     source model."
+      source_model_existing:
+        type: string
+        description: Full class name with namespace of existing source model.
+        depend:
+          item.source_model: 'existing'
+      source_model_custom:
+        type: array
+        description: Used for select and multiple select field type. Enter value and label for each option.
+        children:
+          value:
+            type: string
+            required: true
+            description: Enter a value
+          label:
+            type: string
+            required: true
+            description: Enter a label
+        depend:
+          item.source_model: 'custom'
+      frontend_model:
+        type: string
+        description: 'Custom frontend model - full class name with namespace. Can be used for preparing a value before
+                     rendering on the frontend.'
+      input_renderer:
+        type: string
+        description: 'Custom input renderer - full class name with namespace. Can be used if custom input rendering
+                     is needed on backend.'
+      backend_model:
+        type: string
+        description: "Custom backend model - full class name with namespace. It's a class where the provided value
+                    can be modified. It's useful for validation if some custom validation is required."
+      attribute_model:
+        type: string
+        description: Custom attribute model - full class name with namespace (usually left blank)
+      table:
+        type: string
+        description: Custom database table for storing attribute values (usually left blank)
+  patchDependencies:
+    type: array
+    required: false
+    description: List of patches after which the new patch should be loaded
+    children:
+      name:
+        type: string
+        description: Full class name with namespace
