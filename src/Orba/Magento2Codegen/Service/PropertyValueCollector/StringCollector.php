@@ -32,7 +32,7 @@ class StringCollector extends AbstractInputCollector
 
         if ($property->getRequired()) {
             $question->setValidator(function ($answer) {
-                if (empty($answer)) {
+                if ($answer === '') {
                     throw new ConsoleInvalidArgumentException('Value cannot be empty.');
                 }
                 return $answer;
