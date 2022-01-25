@@ -1,10 +1,4 @@
-<?xml version="1.0"?>
-<!--
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
--->
+{{ include(template_from_string(headerXML)) }}
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="{{ vendorName|snake }}_{{ moduleName|snake }}_{{ entity2Name|snake }}" resource="default" engine="innodb" comment="{{ entity2Name|pascal }} Table">

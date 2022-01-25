@@ -1,9 +1,4 @@
-<!--
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
--->
+{{ include(template_from_string(headerHTML)) }}
 <!--@subject {{ '{{' }}trans '{{ subject|raw }}'}} @-->
 {% if scope == 'frontend' %}
 {{ '{{' }}template config_path="design/email/header_template"}}

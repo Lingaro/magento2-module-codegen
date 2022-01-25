@@ -1,12 +1,4 @@
-<?php
-
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
-declare(strict_types=1);
-
+{{ include(template_from_string(headerPHP)) }}
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Controller\Adminhtml\{{ entityName|lower_only|ucfirst }};
 
 use Exception;

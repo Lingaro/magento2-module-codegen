@@ -16,6 +16,7 @@ use Orba\Magento2Codegen\Util\PropertyBag;
 use Twig\Environment;
 use Twig\Extension\EscaperExtension;
 use Twig\Extension\SandboxExtension;
+use Twig\Extension\StringLoaderExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
 
@@ -28,7 +29,7 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
         'escape', 'upper', 'lower', 'raw', 'split', 'join', 'map', 'trim', 'last', 'replace'
     ];
     private const TEMPLATE_NAME = 'template';
-    private const ALLOWED_FUNCTIONS = [];
+    private const ALLOWED_FUNCTIONS = ['include', 'template_from_string'];
 
     private FiltersExtension $filtersExtension;
     private FunctionsExtension $functionsExtension;
@@ -68,6 +69,7 @@ class TwigTemplateProcessor implements TemplateProcessorInterface
         foreach ($this->functionsExtension->getFunctions() as $function) {
             $customFunctions[] = $function->getName();
         }
+        $twig->addExtension(new StringLoaderExtension());
         $twig->addExtension(
             new SandboxExtension(
                 new SecurityPolicy(

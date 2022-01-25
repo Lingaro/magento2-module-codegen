@@ -1,10 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
--->
+{{ include(template_from_string(headerXML)) }}
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="{{ pageLayout }}" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
