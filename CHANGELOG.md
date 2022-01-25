@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2022-01-25
+### Added
+- Template: `categoryAttributes`
+- Possibility to add validators for string properties
+- `php_class_name` string property validator
+- New default properties:
+  - `copyrightComments` 
+  - `headerPHP` 
+  - `headerXML` 
+  - `headerHTML` 
+  - `headerJS` 
+  - `headerLESS` 
+
+### Changed
+- Header of each template file is now generated automatically basing on new default properties
+- All templates with properties expecting PHP class name were updated to use new `php_class_name` string property validator
+
+### Fixed
+- `required` validation fails if the answer to the question is "0"
+
 ## [3.1.0] - 2021-08-31
 ### Added
 - Template: `customerAttributes`

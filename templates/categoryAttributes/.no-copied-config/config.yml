@@ -1,5 +1,5 @@
 type: module
-description: "This template creates data patches which adds category attributes."
+description: "This template creates data patches which add category attributes."
 afterGenerate: "1. To apply patch, please run setup upgrade command:
                 \n
                 \nbin/magento setup:upgrade"

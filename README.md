@@ -31,6 +31,8 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 
 `cache` - creates a cache type
 
+`categoryAttributes` - creates data patches which add category attributes
+
 `configField` - creates config field for already existent group of store configuration
 
 `configGroup` - creates group for already existent section of store configuration
