@@ -1,13 +1,5 @@
 {% if _item.source_model == 'custom' %}
-<?php
-
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
-declare(strict_types=1);
-
+{{ include(template_from_string(headerPHP)) }}
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Product\Attribute\Source;
 
 class {{ _item.code|pascal }}Source extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource

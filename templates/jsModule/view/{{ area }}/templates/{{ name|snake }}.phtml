@@ -1,13 +1,5 @@
 {% if withBlock == true %}
-<?php
-
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
-declare(strict_types=1);
-
+{{ include(template_from_string(headerPHP)) }}
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \{{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel\{{ name|pascal }} $viewModel */

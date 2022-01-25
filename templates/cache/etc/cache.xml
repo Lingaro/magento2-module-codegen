@@ -1,10 +1,4 @@
-<?xml version="1.0"?>
-<!--
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
--->
+{{ include(template_from_string(headerXML)) }}
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
     <type name="{{ cacheName|snake }}" translate="label,description" instance="{{ vendorName|pascal }}\{{ moduleName|pascal }}\Model\Cache\{{ cacheName|pascal }}">
         <label>{{ label }}</label>

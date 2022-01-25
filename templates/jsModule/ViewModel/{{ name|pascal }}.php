@@ -1,12 +1,4 @@
-{% if withBlock %}<?php
-
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
-declare(strict_types=1);
-
+{% if withBlock %}{{ include(template_from_string(headerPHP)) }}
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;

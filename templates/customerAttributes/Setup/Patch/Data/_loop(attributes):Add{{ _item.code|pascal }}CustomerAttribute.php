@@ -1,12 +1,4 @@
-<?php
-
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
-declare(strict_types=1);
-
+{{ include(template_from_string(headerPHP)) }}
 namespace {{ vendorName|pascal }}\{{ moduleName|pascal }}\Setup\Patch\Data;
 
 use Magento\Customer\Model\Customer;

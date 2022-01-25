@@ -1,12 +1,4 @@
-<?php
-
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName}}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
-declare(strict_types=1);
-
+{{ include(template_from_string(headerPHP)) }}
 {% set class_namespace = commandFilePath|replace({'/': '\\'})|split('\\', -1)|join('\\')|raw %}
 {% set class_name = commandFilePath|split('/')|last|raw %}
 {% if class_namespace %}

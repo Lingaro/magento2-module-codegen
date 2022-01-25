@@ -1,10 +1,4 @@
-<?xml version="1.0"?>
-<!--
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
--->
+{{ include(template_from_string(headerXML)) }}
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/theme.xsd">
     <title>{{ vendorName|pascal }} {{ themeName|snake }}</title>
 {% if parent == 'other' %}

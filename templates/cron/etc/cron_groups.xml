@@ -1,11 +1,5 @@
 {% if newCronGroup == true %}
-<?xml version="1.0"?>
-<!--
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
--->
+{{ include(template_from_string(headerXML)) }}
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/cron_groups.xsd">
     <group id="{{ newGroupName|snake }}">
         <schedule_generate_every>{{ scheduleGenerateEvery }}</schedule_generate_every>

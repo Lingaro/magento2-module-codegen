@@ -1,8 +1,4 @@
-/**
- * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
- * @author    {{ commentsUserEmail }}
- */
-
+{{ include(template_from_string(headerJS)) }}
 define(['jquery'{% if type == 'jQuery widget' %}, 'jquery/ui'{% endif %}], function ($) {
     'use strict';
 
