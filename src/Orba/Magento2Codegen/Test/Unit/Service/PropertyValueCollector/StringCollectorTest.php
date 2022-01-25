@@ -9,6 +9,7 @@ use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
+use Orba\Magento2Codegen\Service\StringValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -32,6 +33,11 @@ class StringCollectorTest extends TestCase
      */
     private $propertyBagMock;
 
+    /**
+     * @var MockObject|StringValidator
+     */
+    private $stringValidatorMock;
+
     public function setUp(): void
     {
         $this->ioInstanceMock = $this->getMockBuilder(SymfonyStyle::class)
@@ -40,7 +46,9 @@ class StringCollectorTest extends TestCase
         $this->ioMock->expects($this->any())->method('getInstance')->willReturn($this->ioInstanceMock);
         $this->propertyBagMock = $this->getMockBuilder(PropertyBag::class)->disableOriginalConstructor()
             ->getMock();
-        $this->stringCollector = new StringCollector($this->ioMock);
+        $this->stringValidatorMock = $this->getMockBuilder(StringValidator::class)
+            ->disableOriginalConstructor()->getMock();
+        $this->stringCollector = new StringCollector($this->ioMock, $this->stringValidatorMock);
     }
 
     public function testCollectValueThrowsExceptionIfPropertyIsNotStringProperty(): void

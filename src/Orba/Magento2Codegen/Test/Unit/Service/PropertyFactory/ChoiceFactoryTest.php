@@ -12,6 +12,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
 use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory\ChoiceFactory;
+use Orba\Magento2Codegen\Service\StringValidator;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 
 class ChoiceFactoryTest extends TestCase

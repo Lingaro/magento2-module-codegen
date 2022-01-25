@@ -129,6 +129,8 @@ properties:
                      source model."
       source_model_existing:
         type: string
+        validators:
+          php_class_name: true
         description: Full class name with namespace of existing source model.
         depend:
           item.source_model: 'existing'
@@ -148,18 +150,26 @@ properties:
           item.source_model: 'custom'
       frontend_model:
         type: string
+        validators:
+          php_class_name: true
         description: 'Custom frontend model - full class name with namespace. Can be used for preparing a value before
                      rendering on the frontend.'
       input_renderer:
         type: string
+        validators:
+          php_class_name: true
         description: 'Custom input renderer - full class name with namespace. Can be used if custom input rendering
                      is needed on backend.'
       backend_model:
         type: string
+        validators:
+          php_class_name: true
         description: "Custom backend model - full class name with namespace. It's a class where the provided value
                     can be modified. It's useful for validation if some custom validation is required."
       attribute_model:
         type: string
+        validators:
+          php_class_name: true
         description: Custom attribute model - full class name with namespace (usually left blank)
       table:
         type: string
@@ -171,4 +181,6 @@ properties:
     children:
       name:
         type: string
+        validators:
+          php_class_name: true
         description: Full class name with namespace

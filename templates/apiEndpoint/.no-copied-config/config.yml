@@ -29,7 +29,9 @@ properties:
   serviceClass:
     type: string
     required: true
-    description: In most cases, this should be RepositoryInterface or ManagementInterface, e.g. "Magento\Catalog\Api\ProductRepositoryInterface"
+    validators:
+      php_class_name: true
+    description: In most cases, this should be RepositoryInterface or ManagementInterface, e.g. "\Magento\Catalog\Api\ProductRepositoryInterface"
   serviceMethod:
     type: string
     required: true

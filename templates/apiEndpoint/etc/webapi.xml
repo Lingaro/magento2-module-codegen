@@ -1,7 +1,7 @@
 {{ include(template_from_string(headerXML)) }}
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
     <route url="/V{{ endpointVersion }}{{ endpointPath }}" method="{{ endpointMethod }}">
-        <service class="{{ serviceClass }}" method="{{ serviceMethod }}"/>
+        <service class="{{ serviceClass|trim('\\', 'left') }}" method="{{ serviceMethod }}"/>
         <resources>
 {% for item in resources %}
             <resource ref="{{ item.name }}" />

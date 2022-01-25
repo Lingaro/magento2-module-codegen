@@ -10,10 +10,10 @@
             <parameter xsi:type="{{ item.type }}"
                        name="{{ item.name|snake }}"
 {% if item.selectOptionsSourceModel %}
-                       source_model="{{ item.selectOptionsSourceModel }}"
+                       source_model="{{ item.selectOptionsSourceModel|trim('\\', 'left') }}"
 {% endif %}
 {% if item.multiselectOptionsSourceModel %}
-                       source_model="{{ item.multiselectOptionsSourceModel }}"
+                       source_model="{{ item.multiselectOptionsSourceModel|trim('\\', 'left') }}"
 {% endif %}
 {% if item.required %}
                        required="true"
@@ -27,7 +27,7 @@
 {% endif %}
                 <label translate="true">{{ item.name|titleize }}</label>
 {% if item.blockClass %}
-                <block class="{{ item.blockClass }}" />
+                <block class="{{ item.blockClass|trim('\\', 'left') }}" />
 {% endif %}
 {% if item.selectOptionsList %}
                 <options>

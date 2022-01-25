@@ -14,6 +14,7 @@ use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory;
 use Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Orba\Magento2Codegen\Service\StringValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 

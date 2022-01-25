@@ -63,7 +63,9 @@ properties:
       selectOptionsSourceModel:
         type: string
         required: true
-        description: "Full path to the source model class (e.g. 'Vendor\\Module\\Model\\Config\\Source\\Options')."
+        validators:
+          php_class_name: true
+        description: "Full path to the source model class (e.g. '\\Vendor\\Module\\Model\\Config\\Source\\Options')."
         depend:
           item.type: select
           item.selectOptionsSourceType: use source model
@@ -86,13 +88,17 @@ properties:
       multiselectOptionsSourceModel:
         type: string
         required: true
-        description: "Full path to the source model class (e.g. 'Vendor\\Module\\Model\\Config\\Source\\Options')."
+        validators:
+          php_class_name: true
+        description: "Full path to the source model class (e.g. '\\Vendor\\Module\\Model\\Config\\Source\\Options')."
         depend:
           item.type: multiselect
           item.multiselectOptionsSource: use source model
       blockClass:
         type: string
         required: true
-        description: "Full path to the block class (e.g. 'Vendor\\Module\\Adminhtml\\Block\\Widget\\Chooser')."
+        validators:
+          php_class_name: true
+        description: "Full path to the block class (e.g. '\\Vendor\\Module\\Adminhtml\\Block\\Widget\\Chooser')."
         depend:
           item.type: block

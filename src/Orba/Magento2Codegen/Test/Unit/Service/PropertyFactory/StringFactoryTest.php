@@ -12,7 +12,9 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Orba\Magento2Codegen\Service\PropertyBuilder;
 use Orba\Magento2Codegen\Service\PropertyFactory\StringFactory;
+use Orba\Magento2Codegen\Service\PropertyStringValidatorsAdder;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Orba\Magento2Codegen\Service\StringValidator;
 
 class StringFactoryTest extends TestCase
 {
@@ -20,7 +22,8 @@ class StringFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->stringFactory = new StringFactory(new PropertyBuilder());
+        $validatorsAdderMock = $this->createPartialMock(PropertyStringValidatorsAdder::class, []);
+        $this->stringFactory = new StringFactory(new PropertyBuilder(), $validatorsAdderMock);
     }
 
     public function testCreateReturnsStringProperty(): void

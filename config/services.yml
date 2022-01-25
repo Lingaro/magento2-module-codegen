@@ -392,3 +392,8 @@ services:
       - method: setTemplateFactory
         arguments:
           - '@Orba\Magento2Codegen\Service\TemplateFactory'
+
+  Orba\Magento2Codegen\Service\StringValidator:
+    arguments:
+      $validators:
+        php_class_name: '@Orba\Magento2Codegen\Service\StringValidator\PhpClassNameValidator'

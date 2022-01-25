@@ -10,10 +10,14 @@ properties:
         description: Entity name
     customEntityType:
         type: string
+        validators:
+            php_class_name: true
         required: false
         description: Custom entity type e.g. \Orba\PhysicalStore\Api\Data\StoreInterface. If empty, will use default.
     customEntityRepository:
         type: string
+        validators:
+            php_class_name: true
         required: false
         description: Custom entity repository e.g. \Orba\PhysicalStore\Api\StoreRepositoryInterface. If empty, will use default.
     filters:

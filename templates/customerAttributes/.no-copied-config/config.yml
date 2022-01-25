@@ -104,9 +104,11 @@ properties:
           - existing
           - custom
           - skip
-        description: Source model provides data source to select/multiselect attributes. Select (1) existing to use already defined source model, (2) custom to create your own, or (3) skip if you don't want to use source model.
+        description: Source model provides data source to select/multiselect attributes. Select "existing" to use already defined source model, "custom" to create your own, or "skip" if you don't want to use source model.
       source_model_existing:
         type: string
+        validators:
+          php_class_name: true
         description: Full class name with namespace of existing source model.
         depend:
           item.source_model: 'existing'
@@ -126,15 +128,23 @@ properties:
           item.source_model: 'custom'
       frontend_model:
         type: string
+        validators:
+          php_class_name: true
         description: Custom frontend model - full class name with namespace. Can be used for preparing a value before rendering on the frontend.
       backend_model:
         type: string
+        validators:
+          php_class_name: true
         description: Custom backend model - full class name with namespace. It's a class where the provided value can be modified. It's useful for validation if some custom validation is required.
       data_model:
         type: string
+        validators:
+          php_class_name: true
         description: Custom data model - full class name with namespace (usually left blank)
       attribute_model:
         type: string
+        validators:
+          php_class_name: true
         description: Custom attribute model - full class name with namespace (usually left blank)
       table:
         type: string
@@ -162,4 +172,6 @@ properties:
     children:
       name:
         type: string
+        validators:
+          php_class_name: true
         description: Full class name with namespace

@@ -74,6 +74,8 @@ properties:
     default: true
   sourceModel:
     type: string
+    validators:
+      php_class_name: true
     description: Source Model of field
   validate:
     type: string

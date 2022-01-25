@@ -84,30 +84,35 @@ Properties definition should be placed in `properties` root node of `config.yml`
 
 ##### String
 
-String properties are the most common ones. For each of them you can define optional description, requiredness and default value. During template generation a user will be simply asked for a value of each string property.
+String properties are the most common ones. For each of them you can define optional description, requiredness and default value. You can also specify list of validators. During template generation a user will be simply asked for a value of each string property. In case of validation error a user will be prompted with an error message and asked for a value again.
 
 Exemplary config:
 
 ```yaml
 properties:
-  vendorName:
-    type: "string"
-    description: "A short name describing module"
-    default: "Orba"
+  sourceModel:
+    type: string
     required: true
+    validators:
+      php_class_name: true
+    description: Full class name with namespace of existing source model.
 ```
 
 Exemplary template file:
 
 ```twig
-Hi, I'm a vendor and my name is {{ vendorName }}.
+Hi, I'm a source model and my class name is {{ sourceModel }}.
 ```
 
-Let's say a user put "Acme" as an answer to "vendorName" question. It will produce the following result:
+Let's say a user put "\Acme\Foo\Bar" as an answer to "sourceModel" question. It will produce the following result:
 
 ```
-Hi, I'm a vendor and my name is Acme.
+Hi, I'm a source model and my class name is \Acme\Foo\Bar.
 ```
+
+List of supported validators:
+
+- `php_class_name` - checks if the value is correct PHP class name
 
 ##### Boolean
 
