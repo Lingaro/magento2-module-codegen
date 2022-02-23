@@ -1,0 +1,6 @@
+/demo export-ignore
+/make export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+bitbucket-pipelines.yml export-ignore
+Makefile.dist export-ignore
