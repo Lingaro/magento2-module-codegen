@@ -14,7 +14,7 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
         $this->_init({{ entityName|pascal }}ResourceModel::class);
     }
 
-    public function getId(): ?int
+    public function getId():
     {
         return $this->_getData('entity_id');
     }
