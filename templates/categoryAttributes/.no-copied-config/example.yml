@@ -1,0 +1,53 @@
+fieldset: custom
+fieldset_existing:
+fieldset_custom: Example fieldset
+sort_order: 200
+attributes:
+  -
+    code: example1
+    label: Example One
+    sort_order: 10
+    type: text
+    input: text
+    formElement: input
+    note: Example Note One
+    required: false
+    scope: store view
+    default: Default Example One
+    unique: false
+    frontend_class: validate-example
+    visible: true
+    wysiwyg_enabled:
+    source_model: skip
+    source_model_existing:
+    source_model_custom:
+    frontend_model:
+    input_renderer:
+    backend_model:
+    attribute_model:
+    table:
+  -
+    code: example2
+    label: Example Two
+    sort_order: 20
+    type: int
+    input: text
+    formElement: input
+    note: Example Note Two
+    required: false
+    scope: global
+    default: 13
+    unique: false
+    frontend_class:
+    visible: false
+    wysiwyg_enabled:
+    source_model: skip
+    source_model_existing:
+    source_model_custom:
+    frontend_model:
+    input_renderer:
+    backend_model:
+    attribute_model:
+    table:
+patchDependencies:
+

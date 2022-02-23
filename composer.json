@@ -1,7 +1,7 @@
 {
     "name": "orba/magento2-codegen",
     "description": "Magento 2 Code Generator",
-    "version": "3.2.0",
+    "version": "3.3.0",
     "license": "MIT",
     "require": {
         "php": "~7.4",
@@ -19,7 +19,8 @@
         "twig/twig": "^3.0",
         "nikic/php-parser": "^4.3",
         "ovidigital/js-object-to-json": "^1.0",
-        "icanboogie/inflector": "^2.0"
+        "icanboogie/inflector": "^2.0",
+        "adbario/php-dot-notation": "^2.2"
     },
     "autoload": {
         "psr-4": {

@@ -352,13 +352,26 @@ services:
   Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:
       $map:
-        'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
-        'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector'
-        'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector'
-        'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\BooleanCollector'
-        'Orba\Magento2Codegen\Model\ChoiceProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ChoiceCollector'
+        console:
+          'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
+          'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\StringCollector'
+          'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector'
+          'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\BooleanCollector'
+          'Orba\Magento2Codegen\Model\ChoiceProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ChoiceCollector'
+        yaml:
+          'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
+          'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\StringCollector'
+          'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\BooleanCollector'
+          'Orba\Magento2Codegen\Model\ChoiceProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\ChoiceCollector'
+          'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\ArrayCollector'
 
-  Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector:
+  Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector:
+    calls:
+      - method: setCollectorFactory
+        arguments:
+          - '@Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
+
+  Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\ArrayCollector:
     calls:
       - method: setCollectorFactory
         arguments:

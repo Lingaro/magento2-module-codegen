@@ -11,6 +11,7 @@ namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
 use Orba\Magento2Codegen\Command\Template\GenerateCommand;
 use Orba\Magento2Codegen\Model\Template as TemplateModel;
+use Orba\Magento2Codegen\Service\CommandUtil\PropertyCollector;
 use Orba\Magento2Codegen\Service\CommandUtil\Template;
 use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
 use Orba\Magento2Codegen\Service\IO;
@@ -75,13 +76,16 @@ class TemplateTest extends TestCase
             ->getMockForAbstractClass();
         $this->propertyDependencyChecker = $this->getMockBuilder(PropertyDependencyChecker::class)
             ->disableOriginalConstructor()->getMock();
+        $this->propertyCollectorMock = $this->getMockBuilder(PropertyCollector::class)
+            ->disableOriginalConstructor()->getMock();
         $this->template = new Template(
             $this->propertyBagFactoryMock,
             $this->ioMock,
             $this->templatePropertyUtilMock,
             $this->propertyValueCollectorFactoryMock,
             $this->templateProcessorMock,
-            $this->propertyDependencyChecker
+            $this->propertyDependencyChecker,
+            $this->propertyCollectorMock
         );
     }
 

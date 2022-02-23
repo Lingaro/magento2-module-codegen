@@ -1,30 +1,31 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
 
-use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 use function is_null;
 use function sprintf;
 
-class ArrayCollector extends AbstractInputCollector
+class ArrayCollector extends AbstractConsoleCollector
 {
     private ?CollectorFactory $collectorFactory = null;
     private PropertyDependencyChecker $propertyDependencyChecker;
+
+    protected string $propertyType = ArrayProperty::class;
 
     public function __construct(IO $io, PropertyDependencyChecker $propertyDependencyChecker)
     {
@@ -35,13 +36,6 @@ class ArrayCollector extends AbstractInputCollector
     public function setCollectorFactory(CollectorFactory $collectorFactory): void
     {
         $this->collectorFactory = $collectorFactory;
-    }
-
-    protected function validateProperty(PropertyInterface $property): void
-    {
-        if (!$property instanceof ArrayProperty) {
-            throw new InvalidArgumentException('Invalid property type.');
-        }
     }
 
     protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag): array
@@ -62,9 +56,9 @@ class ArrayCollector extends AbstractInputCollector
         ) {
             $item = [];
             foreach ($property->getChildren() as $child) {
-                $collector = $this->collectorFactory->create($child);
+                $collector = $this->collectorFactory->create('console', $child);
                 $questionPrefix = $this->questionPrefix . $property->getName() . '.' . $i . '.';
-                if ($collector instanceof AbstractInputCollector) {
+                if ($collector instanceof AbstractConsoleCollector) {
                     $collector->setQuestionPrefix($questionPrefix);
                 }
                 if (

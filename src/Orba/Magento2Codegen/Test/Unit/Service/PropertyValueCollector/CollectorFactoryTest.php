@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
@@ -22,15 +22,20 @@ class CollectorFactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $collectorFactory = new CollectorFactory();
-        $collectorFactory->create($this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass());
+        $collectorFactory->create(
+            'console',
+            $this->getMockBuilder(PropertyInterface::class)->getMockForAbstractClass()
+        );
     }
 
     public function testCreateReturnsCollectorIfItIsMapped(): void
     {
         $collectorFactory = new CollectorFactory([
-            ConstProperty::class => new ConstCollector()
+            'console' => [
+                ConstProperty::class => new ConstCollector()
+            ]
         ]);
-        $result = $collectorFactory->create(new ConstProperty());
+        $result = $collectorFactory->create('console', new ConstProperty());
         $this->assertInstanceOf(ConstCollector::class, $result);
     }
 }

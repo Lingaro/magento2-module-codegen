@@ -68,6 +68,9 @@ class CodeGeneratorUtil
 
     public function shouldOverride(string $filePath): bool
     {
+        if ($this->io->getInput()->getOption(GenerateCommand::OPTION_FORCE_OVERRIDE)) {
+            return true;
+        }
         return $this->io->getInstance()->confirm(
             sprintf('%s already exists, would you like to overwrite it?', $filePath),
             false

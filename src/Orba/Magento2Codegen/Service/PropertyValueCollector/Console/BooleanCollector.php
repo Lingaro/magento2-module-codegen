@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\BooleanProperty;
@@ -15,14 +15,9 @@ use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Util\PropertyBag;
 
-class BooleanCollector extends AbstractInputCollector
+class BooleanCollector extends AbstractConsoleCollector
 {
-    protected function validateProperty(PropertyInterface $property): void
-    {
-        if (!$property instanceof BooleanProperty) {
-            throw new InvalidArgumentException('Invalid property type.');
-        }
-    }
+    protected string $propertyType = BooleanProperty::class;
 
     protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag): bool
     {

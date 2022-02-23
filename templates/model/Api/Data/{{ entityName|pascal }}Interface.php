@@ -6,7 +6,7 @@ interface {{ entityName|pascal }}Interface
     /**
      * @return int|null
      */
-    public function getId(): ?int;
+    public function getId();
 
     /**
      * @param int $value

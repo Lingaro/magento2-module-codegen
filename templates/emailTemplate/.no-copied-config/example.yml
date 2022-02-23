@@ -1,0 +1,5 @@
+scope: frontend
+name: Example name
+subject: Example subject
+configSection: sales_email
+configGroup: order

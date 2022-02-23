@@ -1,21 +1,22 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
 
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\AbstractCollector;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
-abstract class AbstractInputCollector extends AbstractCollector
+abstract class AbstractConsoleCollector extends AbstractCollector
 {
     protected IO $io;
     protected string $questionPrefix = '';
