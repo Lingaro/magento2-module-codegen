@@ -19,7 +19,8 @@
         "twig/twig": "^3.0",
         "nikic/php-parser": "^4.3",
         "ovidigital/js-object-to-json": "^1.0",
-        "icanboogie/inflector": "^2.0"
+        "icanboogie/inflector": "^2.0",
+        "adbario/php-dot-notation": "^2.2"
     },
     "autoload": {
         "psr-4": {

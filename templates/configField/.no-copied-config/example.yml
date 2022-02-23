@@ -1,0 +1,17 @@
+sectionId: example_section
+groupId: example_group
+id: example
+label: Example label
+comment: Example comment
+type: select
+sortOrder: 13
+showInDefault: true
+showInWebsite: false
+showInStore: false
+canRestore: true
+sourceModel: \Magento\Config\Model\Config\Source\Yesno
+validate: validate-example
+dependencyPath:
+dependencyValue:
+configScope: default
+defaultValue: 1

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ChoiceProperty;
@@ -16,14 +16,9 @@ use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
-class ChoiceCollector extends AbstractInputCollector
+class ChoiceCollector extends AbstractConsoleCollector
 {
-    protected function validateProperty(PropertyInterface $property): void
-    {
-        if (!$property instanceof ChoiceProperty) {
-            throw new InvalidArgumentException('Invalid property type.');
-        }
-    }
+    protected string $propertyType = ChoiceProperty::class;
 
     protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag)
     {

@@ -137,24 +137,30 @@ bin/codegen template:info <template>
 
 3. Generate template:
 
-```bin/codegen template:generate <template>```
+```
+bin/codegen template:generate <template>
+```
 
-This command must be executed on the module root folder where the `registration.php` file is.
-You can also use option `--root-dir` to specify this path, if you execute it from a different location.
+For templates which type is `module` (most of them) this command must be executed on the module root folder where the `registration.php` file is.
 
-Examples:
+For templates which type is `root` this command must be executed on the Magento root folder.
+
+Example:
 
 ```
 cd /path/to/magento/app/code/Orba/TestModule
 ../../../../vendor/bin/codegen template:generate block
 ```
 
-```
-cd /path/to/magento/vendor
-bin/codegen --root-dir="/path/to/magento/app/code/Orba/TestModule" template:generate block
-```
+3.1. Options
 
-If specified root directory doesn't exist, it will be created automatically.
+| Long name        | Short name | Description                                                                                                               | Example                                                                                                      |
+|------------------|------------|---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| --root-dir       | -r         | If specified, code is generated on this root directory. If the directory doesn't exist, it will be created automatically. | `bin/codegen -r"/var/www/magento/app/code/Orba/TestModule" template:generate block`                          |
+| --force-merge    | -m         | Use "all" to automatically run all code mergers. Use "experimental" to automatically run non-experimental code mergers.   | `bin/codegen template:generate -mall block`                                                                  |
+| --force-override | -o         | If specified, all unmerged files will be automatically overridden.                                                        | `bin/codegen template:generate -o block`                                                                     |
+| --yaml-path      | -y         | If specified, property values will be collected from YAML file instead of console prompts.                                | `bin/codegen -y"lib/internal/codegen/templates/block/.no-copied-config/example.yml" template:generate block` |
+
 
 ## Contribution
 

@@ -31,6 +31,7 @@ class Template
     private CollectorFactory $propertyValueCollectorFactory;
     private TemplateProcessorInterface $templateProcessor;
     private PropertyDependencyChecker $propertyDependencyChecker;
+    private PropertyCollector $propertyCollectorUtil;
 
     public function __construct(
         PropertyBagFactory $propertyBagFactory,
@@ -38,7 +39,8 @@ class Template
         TemplateProperty $templatePropertyUtil,
         CollectorFactory $propertyValueCollectorFactory,
         TemplateProcessorInterface $templateProcessor,
-        PropertyDependencyChecker $propertyDependencyChecker
+        PropertyDependencyChecker $propertyDependencyChecker,
+        PropertyCollector $propertyCollectorUtil
     ) {
         $this->propertyBagFactory = $propertyBagFactory;
         $this->io = $io;
@@ -46,6 +48,7 @@ class Template
         $this->propertyValueCollectorFactory = $propertyValueCollectorFactory;
         $this->templateProcessor = $templateProcessor;
         $this->propertyDependencyChecker = $propertyDependencyChecker;
+        $this->propertyCollectorUtil = $propertyCollectorUtil;
     }
 
     public function getTemplateName(): string
@@ -84,7 +87,10 @@ class Template
             ) {
                 continue;
             }
-            $valueCollector = $this->propertyValueCollectorFactory->create($property);
+            $valueCollector = $this->propertyValueCollectorFactory->create(
+                $this->propertyCollectorUtil->getType(),
+                $property
+            );
             $propertyBag[$property->getName()] = $valueCollector->collectValue($property, $propertyBag);
         }
         return $propertyBag;

@@ -50,7 +50,6 @@ class CodeGenerator
 
     public function execute(Template $template, PropertyBag $propertyBag): void
     {
-        $dryRun = $this->io->getInput()->getOption(GenerateCommand::OPTION_DRY_RUN);
         $rootDir = $this->io->getInput()->getOption(GenerateCommand::OPTION_ROOT_DIR);
         $templateNames = [];
         foreach (array_merge([$template], $template->getDependencies()) as $item) {
@@ -64,11 +63,11 @@ class CodeGenerator
                 foreach ($propertyBag[$loopedPropertyName] as $key => $item) {
                     $pathName = str_replace('_loop(' . $loopedPropertyName . '):', '', $file->getPathname());
                     $propertyBag->add(['_key' => $key, '_item' => $item]);
-                    $this->processSingleFile($rootDir, $pathName, $file->getContents(), $propertyBag, $dryRun);
+                    $this->processSingleFile($rootDir, $pathName, $file->getContents(), $propertyBag);
                 }
                 continue;
             }
-            $this->processSingleFile($rootDir, $file->getPathname(), $file->getContents(), $propertyBag, $dryRun);
+            $this->processSingleFile($rootDir, $file->getPathname(), $file->getContents(), $propertyBag);
         }
     }
 
@@ -76,17 +75,14 @@ class CodeGenerator
         string $rootDir,
         string $pathName,
         string $content,
-        PropertyBag $propertyBag,
-        bool $dryRun
+        PropertyBag $propertyBag
     ): void {
         $filePath = $this->codeGeneratorUtil->getDestinationFilePath(
             $this->templateProcessor->replacePropertiesInText($pathName, $propertyBag),
             $rootDir
         );
         $fileContent = $this->templateProcessor->replacePropertiesInText($content, $propertyBag);
-        if (!$dryRun) {
-            $this->generateFile($fileContent, $filePath);
-        }
+        $this->generateFile($fileContent, $filePath);
     }
 
     private function generateFile(string $fileContent, string $filePath): void

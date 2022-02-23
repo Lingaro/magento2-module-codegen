@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * @copyright Copyright © 2022 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
 namespace Orba\Magento2Codegen\Service;
 
 use Orba\Magento2Codegen\Service\StringValidator\ValidatorInterface;
-use Symfony\Component\Console\Exception\InvalidArgumentException as ConsoleInvalidArgumentException;
 use InvalidArgumentException;
 
 class StringValidator
@@ -32,7 +36,6 @@ class StringValidator
     /**
      * @param string $value
      * @param array $requestedConditions
-     * @throws ConsoleInvalidArgumentException
      * @throws InvalidArgumentException;
      */
     public function validate(string $value, array $requestedConditions): void
@@ -48,11 +51,7 @@ class StringValidator
                     'Validation rule ' . $validatorKey . ' should implement ValidatorInterface'
                 );
             }
-            try {
-                $this->validators[$validatorKey]->validate($value, $condition);
-            } catch (InvalidArgumentException $e) {
-                throw new ConsoleInvalidArgumentException($e->getMessage(), 0, $e);
-            }
+            $this->validators[$validatorKey]->validate($value, $condition);
         }
     }
 }

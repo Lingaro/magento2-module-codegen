@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\InputPropertyInterface;
@@ -19,30 +19,16 @@ use Symfony\Component\Console\Question\Question;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\StringValidator;
 
-class StringCollector extends AbstractInputCollector
+class StringCollector extends AbstractConsoleCollector
 {
-    /**
-     * @var StringValidator
-     */
-    protected $stringValidator;
+    private StringValidator $stringValidator;
 
-    /**
-     * @param IO $io
-     * @param StringValidator $stringValidator
-     */
-    public function __construct(
-        IO $io,
-        StringValidator $stringValidator
-    ) {
+    protected string $propertyType = StringProperty::class;
+
+    public function __construct(IO $io, StringValidator $stringValidator)
+    {
         parent::__construct($io);
         $this->stringValidator = $stringValidator;
-    }
-
-    protected function validateProperty(PropertyInterface $property): void
-    {
-        if (!$property instanceof StringProperty) {
-            throw new InvalidArgumentException('Invalid property type.');
-        }
     }
 
     protected function collectValueFromInput(InputPropertyInterface $property, PropertyBag $propertyBag): string
@@ -59,7 +45,11 @@ class StringCollector extends AbstractInputCollector
                 throw new ConsoleInvalidArgumentException('Value cannot be empty.');
             }
             if ($answer !== '' && $propertyValidators) {
-                $stringValidator->validate($answer, $propertyValidators);
+                try {
+                    $stringValidator->validate($answer, $propertyValidators);
+                } catch (InvalidArgumentException $e) {
+                    throw new ConsoleInvalidArgumentException($e->getMessage());
+                }
             }
             return $answer;
         });

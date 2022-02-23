@@ -1,12 +1,17 @@
 <?php
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
+/**
+ * @copyright Copyright © 2022 Orba. All rights reserved.
+ * @author    info@orba.co
+ */
+
+namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ConstProperty;
 use Orba\Magento2Codegen\Model\StringProperty;
 use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\StringCollector;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\Console\StringCollector;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use Orba\Magento2Codegen\Service\StringValidator;

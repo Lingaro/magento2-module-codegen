@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ArrayProperty;
@@ -15,7 +15,7 @@ use Orba\Magento2Codegen\Model\ConstProperty;
 use Orba\Magento2Codegen\Model\PropertyInterface;
 use Orba\Magento2Codegen\Service\IO;
 use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\ArrayCollector;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector;
 use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;

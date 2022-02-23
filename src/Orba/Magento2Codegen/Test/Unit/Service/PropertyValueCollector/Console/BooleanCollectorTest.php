@@ -1,19 +1,19 @@
 <?php
 
 /**
- * @copyright Copyright © 2021 Orba. All rights reserved.
+ * @copyright Copyright © 2022 Orba. All rights reserved.
  * @author    info@orba.co
  */
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
+namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
 use Orba\Magento2Codegen\Model\ConstProperty;
 use Orba\Magento2Codegen\Model\BooleanProperty;
 use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\BooleanCollector;
+use Orba\Magento2Codegen\Service\PropertyValueCollector\Console\BooleanCollector;
 use Orba\Magento2Codegen\Test\Unit\TestCase;
 use Orba\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -64,16 +64,5 @@ class BooleanCollectorTest extends TestCase
         $propertyMock = $this->getMockBuilder(BooleanProperty::class)->disableOriginalConstructor()->getMock();
         $result = $this->booleanCollector->collectValue($propertyMock, $this->propertyBagMock);
         $this->assertSame(true, $result);
-    }
-
-    public function additionProvider(): array
-    {
-        return [
-            ['foo', true],
-            ['yes', true],
-            ['no', false],
-            ['1', true],
-            ['0', false]
-        ];
     }
 }
