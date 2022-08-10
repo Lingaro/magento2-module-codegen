@@ -36,6 +36,7 @@ class PropertyBag implements ArrayAccess
         unset($this->container[$offset]);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->container[$offset] ?? null;

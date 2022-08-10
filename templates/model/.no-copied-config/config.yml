@@ -15,7 +15,7 @@ properties:
   fields:
     type: array
     required: true
-    description: Define all database fields by filling property for each field
+    description: Define all database fields by filling property for each field. Primary key field will be generated automatically, so there is no need to add "id" field.
     children:
       name:
         type: string
