@@ -14,16 +14,17 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
         $this->_init({{ entityName|pascal }}ResourceModel::class);
     }
 
-    public function getId():
+    public function getId()
     {
-        return $this->_getData('entity_id');
+        return $this->getData('entity_id');
     }
 
-    public function setId($value)
+    public function setId($value): void
     {
         $this->setData('entity_id', $value);
     }
 {% for item in fields %}
+{% if item.name|lower_only != 'id' %}
 
     public function get{{ item.name|pascal }}(): ?{{ databaseTypeToPHP(item.databaseType) }}
     {
@@ -34,5 +35,6 @@ class {{ entityName|pascal }} extends AbstractModel implements {{ entityName|pas
     {
         $this->setData('{{ item.name|snake }}', $value);
     }
+{% endif %}
 {% endfor %}
 }

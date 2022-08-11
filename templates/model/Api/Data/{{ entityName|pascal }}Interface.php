@@ -12,8 +12,9 @@ interface {{ entityName|pascal }}Interface
      * @param int $value
      * @return void
      */
-    public function setId($value);
+    public function setId($value): void;
 {% for item in fields %}
+{% if item.name|lower_only != 'id' %}
 
     /**
      * @return {{ databaseTypeToPHP(item.databaseType) }}|null
@@ -25,5 +26,6 @@ interface {{ entityName|pascal }}Interface
      * @return void
      */
     public function set{{ item.name|pascal }}({{ databaseTypeToPHP(item.databaseType) }} $value): void;
+{% endif %}
 {% endfor %}
 }
