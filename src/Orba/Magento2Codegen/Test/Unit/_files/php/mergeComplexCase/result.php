@@ -4,9 +4,7 @@
  * Copyright © 2023 Lingaro sp. z o.o. All rights reserved.
  * See LICENSE for license details.
  */
-
 declare (strict_types=1);
-
 namespace Namespace1;
 
 use Namespace1\Extends1;
@@ -14,7 +12,6 @@ use Namespace2\Interface1;
 use Namespace1\ImportClass1;
 use Namespace2\Interface2;
 use Namespace1\ImportClass2;
-
 class Class1 extends Extends1 implements Interface1, Interface2
 {
     /**
