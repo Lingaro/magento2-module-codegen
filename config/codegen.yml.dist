@@ -2,28 +2,9 @@ defaultProperties:
   - { name: "commentsCompanyName", value: "Orba" }
   - { name: "commentsUserEmail", value: "info@orba.co" }
   - { name: "commentsYear", value: "2022" }
-  - { name: "copyrightComments", value: "/**
-                                         \n * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.
-                                         \n * @author    {{ commentsUserEmail }}
-                                         \n */" }
-  - { name: "headerPHP", value: "<?php
-                                 \n{% if copyrightComments is not empty %}
-                                 \n{{ include(template_from_string(copyrightComments)) }}
-                                 \n{% endif %}
-                                 \ndeclare(strict_types=1);
-                                 \n" }
-  - { name: "headerXML", value: "<?xml version=\"1.0\"?>
-                                 {% if copyrightComments is not empty %}
-                                 \n<!--
-                                 \n{{ include(template_from_string(copyrightComments)) }}
-                                 \n-->
-                                 {% endif %}" }
-  - { name: "headerHTML", value: "{% if copyrightComments is not empty %}
-                                 \n<!--
-                                 \n{{ include(template_from_string(copyrightComments)) }}
-                                 \n-->
-                                 {% endif %}" }
-  - { name: "headerJS", value: "{% if copyrightComments is not empty %}{{ include(template_from_string(copyrightComments)) }}
-                                \n{% endif %}" }
-  - { name: "headerLESS", value: "{% if copyrightComments is not empty %}{{ include(template_from_string(copyrightComments)) }}
-                                \n{% endif %}" }
+  - { name: "copyrightComments", value: "/**\n * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.\n * @author    {{ commentsUserEmail }}\n */" }
+  - { name: "headerPHP", value: "<?php\n\n{% if copyrightComments is not empty %}\n{{ include(template_from_string(copyrightComments)) }}\n{% endif %}\n\ndeclare(strict_types=1);\n" }
+  - { name: "headerXML", value: "<?xml version=\"1.0\"?>\n{% if copyrightComments is not empty %}\n<!--\n{{ include(template_from_string(copyrightComments)) }}\n-->{% endif %}" }
+  - { name: "headerHTML", value: "{% if copyrightComments is not empty %}\n<!--\n{{ include(template_from_string(copyrightComments)) }}\n-->{% endif %}" }
+  - { name: "headerJS", value: "{% if copyrightComments is not empty %}{{ include(template_from_string(copyrightComments)) }}\n{% endif %}" }
+  - { name: "headerLESS", value: "{% if copyrightComments is not empty %}{{ include(template_from_string(copyrightComments)) }}{% endif %}" }
