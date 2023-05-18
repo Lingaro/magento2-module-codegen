@@ -6,7 +6,6 @@ class {{ _item.code|pascal }}Source extends \Magento\Eav\Model\Entity\Attribute\
 {
     public function getAllOptions(): array
     {
-{% if _item.source_model_custom is not empty %}
         if ($this->_options === null) {
             $this->_options = [
 {% for item in _item.source_model_custom %}
@@ -15,7 +14,6 @@ class {{ _item.code|pascal }}Source extends \Magento\Eav\Model\Entity\Attribute\
             ];
         }
         return $this->_options;
-{% endif %}
     }
 }
 {% endif %}

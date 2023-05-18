@@ -1,10 +1,10 @@
 {
     "name": "orba/magento2-codegen",
     "description": "Magento 2 Code Generator",
-    "version": "3.3.0",
+    "version": "3.4.0",
     "license": "MIT",
     "require": {
-        "php": "~7.4",
+        "php": "~7.4.0 || ~8.1.0",
         "ext-dom": "*",
         "ext-libxml": "*",
         "symfony/dependency-injection": "^4.0 || ^5.0",

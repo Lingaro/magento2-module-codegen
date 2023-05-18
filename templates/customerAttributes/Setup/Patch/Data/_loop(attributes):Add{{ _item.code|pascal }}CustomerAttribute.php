@@ -48,7 +48,7 @@ class Add{{ _item.code|pascal }}CustomerAttribute implements DataPatchInterface,
 {% else %}
                 'type' => '{{ _item.type|snake }}',
 {% endif %}
-{% if _item.source_model == 'existing' %}
+{% if _item.source_model == 'existing' and _item.source_model_existing is not empty %}
                 'source' => {{ _item.source_model_existing }}::class,
 {% endif %}
 {% if _item.source_model == 'custom' %}
@@ -146,7 +146,9 @@ class Add{{ _item.code|pascal }}CustomerAttribute implements DataPatchInterface,
 {% if patchDependencies is not empty %}
         return [
 {% for item in patchDependencies %}
+{% if item.name is not empty %}
             {{ item.name }}::class,
+{% endif %}
 {% endfor %}
         ];
 {% else %}

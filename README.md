@@ -36,6 +36,8 @@ New entity with all admin CRUD actions in just a minute? Why not ;-)
 * 2.4.0
 * 2.4.1
 * 2.4.2
+* 2.4.3
+* 2.4.4
 
 Watchout: Minimal version of Magento's PHP is 7.4.
 
@@ -47,7 +49,7 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 
 `cache` - creates a cache type
 
-`categoryAttributes` - creates data patches which add category attributes
+`categoryAttributes` - creates data patches which add custom attributes to category entity along with ui_component needed to render these attributes
 
 `configField` - creates config field for already existent group of store configuration
 
@@ -64,8 +66,6 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 `crud` - creates new entity and all CRUD actions in the admin panel for it
 
 `customerAttributes` - creates data patches which add custom attributes to customer entity
-
-`categoryAttributes` - creates data patches which add custom attributes to category entity along with ui_component needed to render these attributes
 
 `emailTemplate` - creates a system e-mail template with class for sending it and config for allowing admin to customize it
 
