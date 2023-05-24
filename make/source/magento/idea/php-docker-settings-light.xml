@@ -15,17 +15,17 @@
                   </DockerVolumeBindingImpl>
                   <DockerVolumeBindingImpl>
                     <option name="containerPath" value="/var/www/magento/vendor" />
-                    <option name="hostPath" value="orba_dev_vendor" />
+                    <option name="hostPath" value="lingaro_dev_vendor" />
                   </DockerVolumeBindingImpl>
                   <DockerVolumeBindingImpl>
                     <option name="containerPath" value="/var/www/magento/generated" />
-                    <option name="hostPath" value="orba_dev_generated" />
+                    <option name="hostPath" value="lingaro_dev_generated" />
                   </DockerVolumeBindingImpl>
                   <!-- remove if you want to keep dev -->
                   <!--
                   <DockerVolumeBindingImpl>
                     <option name="containerPath" value="/var/www/magento/dev" />
-                    <option name="hostPath" value="orba_dev_dev" />
+                    <option name="hostPath" value="lingaro_dev_dev" />
                   </DockerVolumeBindingImpl>
                   -->
                 </list>
@@ -33,7 +33,7 @@
             </DockerContainerSettings>
           </value>
         </entry>
-        <entry key="orba-interpreter">
+        <entry key="lingaro-interpreter">
           <value>
             <DockerContainerSettings>
               <option name="version" value="1" />
@@ -45,17 +45,17 @@
                   </DockerVolumeBindingImpl>
                   <DockerVolumeBindingImpl>
                     <option name="containerPath" value="/var/www/magento/vendor" />
-                    <option name="hostPath" value="orba_dev_vendor" />
+                    <option name="hostPath" value="lingaro_dev_vendor" />
                   </DockerVolumeBindingImpl>
                   <DockerVolumeBindingImpl>
                     <option name="containerPath" value="/var/www/magento/generated" />
-                    <option name="hostPath" value="orba_dev_generated" />
+                    <option name="hostPath" value="lingaro_dev_generated" />
                   </DockerVolumeBindingImpl>
                   <!-- remove if you want to keep dev -->
                   <!--
                   <DockerVolumeBindingImpl>
                     <option name="containerPath" value="/var/www/magento/dev" />
-                    <option name="hostPath" value="orba_dev_dev" />
+                    <option name="hostPath" value="lingaro_dev_dev" />
                   </DockerVolumeBindingImpl>
                   -->
                 </list>

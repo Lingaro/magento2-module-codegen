@@ -93,7 +93,7 @@ class ModuleTest extends TestCase
 <?php
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Orba_Test',
+    'Lingaro_Test',
     __DIR__
 );
 PHP;
@@ -102,7 +102,7 @@ PHP;
         $this->propertyBagFactoryMock->expects($this->once())->method('create')
             ->willReturn(new PropertyBag());
         $result = $this->module->getPropertyBag();
-        $this->assertSame('Orba', $result['vendorName']);
+        $this->assertSame('Lingaro', $result['vendorName']);
         $this->assertSame('Test', $result['moduleName']);
     }
 

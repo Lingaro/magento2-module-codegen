@@ -98,7 +98,7 @@ class ArrayCollectorTest extends TestCase
     {
         $collectorFactory = new CollectorFactory([
             'yaml' => [
-                'Orba\Magento2Codegen\Model\BooleanProperty' => new BooleanCollector($this->dataProviderRegistry)
+                'Lingaro\Magento2Codegen\Model\BooleanProperty' => new BooleanCollector($this->dataProviderRegistry)
             ]
         ]);
         $this->arrayCollector->setCollectorFactory($collectorFactory);

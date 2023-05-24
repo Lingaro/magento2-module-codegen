@@ -1,7 +1,7 @@
 defaultProperties:
-  - { name: "commentsCompanyName", value: "Orba" }
+  - { name: "commentsCompanyName", value: "Lingaro" }
   - { name: "commentsUserEmail", value: "info@orba.co" }
-  - { name: "commentsYear", value: "2022" }
+  - { name: "commentsYear", value: "2023" }
   - { name: "copyrightComments", value: "/**\n * @copyright Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.\n * @author    {{ commentsUserEmail }}\n */" }
   - { name: "headerPHP", value: "<?php\n\n{% if copyrightComments is not empty %}\n{{ include(template_from_string(copyrightComments)) }}\n{% endif %}\n\ndeclare(strict_types=1);\n" }
   - { name: "headerXML", value: "<?xml version=\"1.0\"?>\n{% if copyrightComments is not empty %}\n<!--\n{{ include(template_from_string(copyrightComments)) }}\n-->{% endif %}" }

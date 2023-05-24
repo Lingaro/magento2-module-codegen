@@ -17,8 +17,8 @@ if (file_exists($composerAutoload)) {
 
 define('BP', dirname(__DIR__));
 
-use Orba\Magento2Codegen\Application;
-use Orba\Magento2Codegen\Kernel;
+use Lingaro\Magento2Codegen\Application;
+use Lingaro\Magento2Codegen\Kernel;
 
 $kernel = new Kernel('dev', true);
 $kernel->boot();

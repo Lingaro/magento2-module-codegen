@@ -33,7 +33,7 @@ else
 	$(MV) -t . ./$(PROJECT_TEMP_DIR)/*
 endif
 	$(RM) -d $(PROJECT_TEMP_DIR)
-	$(MAKE) new project=orba version=$(VERSION) edition=$(EDITION) ca=0
+	$(MAKE) new project=lingaro version=$(VERSION) edition=$(EDITION) ca=0
 	$(CAT) ./$(TEMP_DIR)/make/Makefile.append >> Makefile
 	$(CP) -rf ./$(TEMP_DIR)/make/source/magento ./source
 	$(MKDIR) -p source/magento/lib/internal/codegen

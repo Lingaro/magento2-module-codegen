@@ -22331,7 +22331,7 @@
             "time": "2021-07-03T13:36:55+00:00"
         },
         {
-            "name": "orba/magento2-codegen",
+            "name": "lingaro/magento2-codegen",
             "version": "3.0.0",
             "dist": {
                 "type": "path",
@@ -22380,7 +22380,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Orba\\Magento2Codegen\\": "src/Orba/Magento2Codegen/",
+                    "Lingaro\\Magento2Codegen\\": "src/Lingaro/Magento2Codegen/",
                     "Instinct\\Component\\Kernel\\": "src/instinct/kernel/"
                 },
                 "exclude-from-classmap": [

@@ -1,8 +1,7 @@
 {
-    "name": "orba/magento2-codegen",
+    "name": "lingaro/magento2-codegen",
     "description": "Magento 2 Code Generator",
     "version": "3.4.0",
-    "license": "MIT",
     "require": {
         "php": "~7.4.0 || ~8.1.0",
         "ext-dom": "*",
@@ -24,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Orba\\Magento2Codegen\\": "src/Orba/Magento2Codegen/",
+            "Lingaro\\Magento2Codegen\\": "src/Lingaro/Magento2Codegen/",
             "Instinct\\Component\\Kernel\\": "src/instinct/kernel/"
         },
         "exclude-from-classmap": [
@@ -58,5 +57,14 @@
     "conflict": {
         "symfony/config": "<3.4",
         "symfony/dependency-injection": "<4.2"
-    }
+    },
+    "authors": [
+        {
+            "name": "Lingaro sp. z o.o.",
+            "homepage": "https://lingarogroup.com/"
+        }
+    ],
+    "license": [
+        "MIT"
+    ]
 }

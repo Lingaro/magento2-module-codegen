@@ -7,7 +7,7 @@ properties:
   vendorName:
     type: string
     required: true
-    default: Orba
+    default: Lingaro
     description: Typically a company name
   themeName:
     type: string

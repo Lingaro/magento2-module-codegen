@@ -19,7 +19,7 @@
             </DockerContainerSettings>
           </value>
         </entry>
-        <entry key="orba-interpreter">
+        <entry key="lingaro-interpreter">
           <value>
             <DockerContainerSettings>
               <option name="version" value="1" />

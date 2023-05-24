@@ -6,7 +6,7 @@
         <cache>
           <versions>
             <info id="interpreter-codegen-interpreter" version="8.5.8" />
-            <info id="interpreter-orba-interpreter" version="9.1.5" />
+            <info id="interpreter-lingaro-interpreter" version="9.1.5" />
           </versions>
         </cache>
       </tool>

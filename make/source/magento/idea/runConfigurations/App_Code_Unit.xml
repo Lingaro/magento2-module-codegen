@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="App Code Unit - orba" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+  <configuration default="false" name="App Code Unit - lingaro" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
     <CommandLine>
       <PhpTestInterpreterSettings>
-        <option name="interpreterName" value="orba interpreter" />
+        <option name="interpreterName" value="lingaro interpreter" />
       </PhpTestInterpreterSettings>
     </CommandLine>
     <TestRunner configuration_file="/var/www/magento/dev/tests/unit/phpunit.xml.dist" directory="$PROJECT_DIR$/source/magento/app/code/" scope="XML" options="--testsuite Magento_Unit_Tests_App_Code" />

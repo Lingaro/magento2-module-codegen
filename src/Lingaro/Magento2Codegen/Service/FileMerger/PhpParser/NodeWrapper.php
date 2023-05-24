@@ -52,6 +52,6 @@ class NodeWrapper extends Node\Stmt
 
     public function getType(): string
     {
-        return 'Orba_Stmt_Wrapper';
+        return 'Lingaro_Stmt_Wrapper';
     }
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="orba-interpreter" name="orba interpreter" home="docker://DATA" debugger_id="php.debugger.XDebug">
+      <interpreter id="lingaro-interpreter" name="lingaro interpreter" home="docker://DATA" debugger_id="php.debugger.XDebug">
         <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="orbaco/magento-php-v2:2.4.1-dev" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
       </interpreter>
       <interpreter id="codegen-interpreter" name="codegen interpreter" home="docker://DATA" debugger_id="php.debugger.XDebug">
@@ -12,7 +12,7 @@
   </component>
   <component name="PhpInterpretersPhpInfoCache">
     <phpInfoCache>
-      <interpreter name="orba interpreter">
+      <interpreter name="lingaro interpreter">
         <phpinfo binary_type="PHP" php_cli="/usr/local/bin/php" path_separator=":" version="7.4.11">
           <additional_php_ini>/usr/local/etc/php/conf.d/docker-php-ext-bcmath.ini, /usr/local/etc/php/conf.d/docker-php-ext-calendar.ini, /usr/local/etc/php/conf.d/docker-php-ext-exif.ini, /usr/local/etc/php/conf.d/docker-php-ext-gd.ini, /usr/local/etc/php/conf.d/docker-php-ext-geoip.ini, /usr/local/etc/php/conf.d/docker-php-ext-gettext.ini, /usr/local/etc/php/conf.d/docker-php-ext-gmp.ini, /usr/local/etc/php/conf.d/docker-php-ext-imap.ini, /usr/local/etc/php/conf.d/docker-php-ext-intl.ini, /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini, /usr/local/etc/php/conf.d/docker-php-ext-mailparse.ini, /usr/local/etc/php/conf.d/docker-php-ext-msgpack.ini, /usr/local/etc/php/conf.d/docker-php-ext-oauth.ini, /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini, /usr/local/etc/php/conf.d/docker-php-ext-pcntl.ini, /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini, /usr/local/etc/php/conf.d/docker-php-ext-pspell.ini, /usr/local/etc/php/conf.d/docker-php-ext-raphf.ini, /usr/local/etc/php/conf.d/docker-php-ext-shmop.ini, /usr/local/etc/php/conf.d/docker-php-ext-soap.ini, /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini, /usr/local/etc/php/conf.d/docker-php-ext-sodium.ini, /usr/local/etc/php/conf.d/docker-php-ext-ssh2.ini, /usr/local/etc/php/conf.d/docker-php-ext-sysvmsg.ini, /usr/local/etc/php/conf.d/docker-php-ext-sysvsem.ini, /usr/local/etc/php/conf.d/docker-php-ext-sysvshm.ini, /usr/local/etc/php/conf.d/docker-php-ext-tidy.ini, /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini, /usr/local/etc/php/conf.d/docker-php-ext-xmlrpc.ini, /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini, /usr/local/etc/php/conf.d/docker-php-ext-zip.ini</additional_php_ini>
           <configuration_file>/usr/local/etc/php/php.ini</configuration_file>
@@ -174,14 +174,14 @@
   </component>
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="orba.local" id="orba-server" name="orba.local" port="443" use_path_mappings="true" />
+      <server host="lingaro.local" id="lingaro-server" name="lingaro.local" port="443" use_path_mappings="true" />
     </servers>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
   <component name="PhpUnit">
     <phpunit_settings>
-      <phpunit_by_interpreter interpreter_id="orba-interpreter" configuration_file_path="/var/www/magento/dev/tests/unit/phpunit.xml.dist" custom_loader_path="/var/www/magento/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
-      <phpunit_by_interpreter interpreter_id="codegen-interpreter" configuration_file_path="/var/www/magento/lib/internal/codegen/src/Orba/Magento2Codegen/Test/phpunit_unit.xml" custom_loader_path="/var/www/magento/lib/internal/codegen/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
+      <phpunit_by_interpreter interpreter_id="lingaro-interpreter" configuration_file_path="/var/www/magento/dev/tests/unit/phpunit.xml.dist" custom_loader_path="/var/www/magento/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
+      <phpunit_by_interpreter interpreter_id="codegen-interpreter" configuration_file_path="/var/www/magento/lib/internal/codegen/src/Lingaro/Magento2Codegen/Test/phpunit_unit.xml" custom_loader_path="/var/www/magento/lib/internal/codegen/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
     </phpunit_settings>
   </component>
 </project>

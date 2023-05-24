@@ -47,7 +47,7 @@ class RequirejsConfigMergerTest extends TestCase
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module"
+            "someModule": "Lingaro_Codegen/js/some_module"
         }
     }
 }
@@ -56,7 +56,7 @@ JS;
 var config = {
     "map": {
         "*": {
-            "otherModule": "Orba_Codegen/js/other_module"
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 }
@@ -65,8 +65,8 @@ JS;
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module",
-            "otherModule": "Orba_Codegen/js/other_module"
+            "someModule": "Lingaro_Codegen/js/some_module",
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 }
@@ -81,7 +81,7 @@ JS;
 var config = {
     map: {
         '*': {
-            someModule: 'Orba_Codegen/js/some_module'
+            someModule: 'Lingaro_Codegen/js/some_module'
         }
     }
 }
@@ -90,7 +90,7 @@ JS;
 var config = {
     map: {
         '*': {
-            otherModule: 'Orba_Codegen/js/other_module'
+            otherModule: 'Lingaro_Codegen/js/other_module'
         }
     }
 }
@@ -99,8 +99,8 @@ JS;
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module",
-            "otherModule": "Orba_Codegen/js/other_module"
+            "someModule": "Lingaro_Codegen/js/some_module",
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 }
@@ -115,7 +115,7 @@ JS;
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module"
+            "someModule": "Lingaro_Codegen/js/some_module"
         }
     }
 };
@@ -124,7 +124,7 @@ JS;
 var config = {
     "map": {
         "*": {
-            "otherModule": "Orba_Codegen/js/other_module"
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 };
@@ -133,8 +133,8 @@ JS;
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module",
-            "otherModule": "Orba_Codegen/js/other_module"
+            "someModule": "Lingaro_Codegen/js/some_module",
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 }
@@ -153,7 +153,7 @@ JS;
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module"
+            "someModule": "Lingaro_Codegen/js/some_module"
         }
     }
 };
@@ -166,7 +166,7 @@ JS;
 var config = {
     "map": {
         "*": {
-            "otherModule": "Orba_Codegen/js/other_module"
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 };
@@ -175,8 +175,8 @@ JS;
 var config = {
     "map": {
         "*": {
-            "someModule": "Orba_Codegen/js/some_module",
-            "otherModule": "Orba_Codegen/js/other_module"
+            "someModule": "Lingaro_Codegen/js/some_module",
+            "otherModule": "Lingaro_Codegen/js/other_module"
         }
     }
 }
