@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Service\Magento\Detector;
+use Lingaro\Magento2Codegen\Service\Magento\Detector;
 
 class Root
 {

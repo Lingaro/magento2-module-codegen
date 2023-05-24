@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\CsvI18nMerger;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\CsvConverter;
+use Lingaro\Magento2Codegen\Service\CsvConverter;
 
 class Processor
 {

@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
-use Orba\Magento2Codegen\Service\Config;
-use Orba\Magento2Codegen\Service\PropertyFactory;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Service\CommandUtil\TemplateProperty;
+use Lingaro\Magento2Codegen\Service\Config;
+use Lingaro\Magento2Codegen\Service\PropertyFactory;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class TemplatePropertyTest extends TestCase

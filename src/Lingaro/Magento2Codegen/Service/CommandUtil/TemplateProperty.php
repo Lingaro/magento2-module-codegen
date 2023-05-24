@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Model\Template as TemplateModel;
-use Orba\Magento2Codegen\Service\Config;
-use Orba\Magento2Codegen\Service\PropertyFactory;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Model\Template as TemplateModel;
+use Lingaro\Magento2Codegen\Service\Config;
+use Lingaro\Magento2Codegen\Service\PropertyFactory;
 
 use function array_merge;
 

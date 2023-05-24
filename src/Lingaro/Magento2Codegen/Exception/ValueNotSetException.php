@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Exception;
+namespace Lingaro\Magento2Codegen\Exception;
 
 class ValueNotSetException extends \InvalidArgumentException
 {

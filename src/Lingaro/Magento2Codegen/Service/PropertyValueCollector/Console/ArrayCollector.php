@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console;
 
-use Orba\Magento2Codegen\Model\ArrayProperty;
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\ArrayProperty;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\PropertyDependencyChecker;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 use function is_null;

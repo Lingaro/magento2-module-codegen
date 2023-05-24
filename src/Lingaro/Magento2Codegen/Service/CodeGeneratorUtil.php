@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Orba\Magento2Codegen\Command\Template\GenerateCommand;
+use Lingaro\Magento2Codegen\Command\Template\GenerateCommand;
 
 use function sprintf;
 

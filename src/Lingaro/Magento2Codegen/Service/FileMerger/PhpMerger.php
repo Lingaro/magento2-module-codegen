@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger;
 
 use Exception;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTreeFactory;
-use Orba\Magento2Codegen\Service\FileMerger\PhpParser\NodeWrapper;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTreeFactory;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpParser\NodeWrapper;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter;

@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger;
 
 abstract class AbstractMerger implements MergerInterface
 {

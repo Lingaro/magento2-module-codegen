@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\StringFunction;
+namespace Lingaro\Magento2Codegen\Service\StringFunction;
 
-use Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter;
-use Orba\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
+use Lingaro\Magento2Codegen\Service\StringFilter\SnakeCaseFilter;
+use Lingaro\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
 
 use function implode;
 use function in_array;

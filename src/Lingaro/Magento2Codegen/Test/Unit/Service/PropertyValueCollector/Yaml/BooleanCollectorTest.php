@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Yaml;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Yaml;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\BooleanProperty;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\BooleanCollector;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProvider;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProviderRegistry;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\BooleanProperty;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\BooleanCollector;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProvider;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProviderRegistry;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 class BooleanCollectorTest extends TestCase
 {

@@ -10,7 +10,7 @@ declare(strict_types=1);
 /**
  * Magento configuration XML DOM utility
  */
-namespace Orba\Magento2Codegen\Util\Magento\Config;
+namespace Lingaro\Magento2Codegen\Util\Magento\Config;
 
 use DOMAttr;
 use DOMCdataSection;

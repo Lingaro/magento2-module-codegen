@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Console;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\BooleanProperty;
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\BooleanProperty;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 class BooleanCollector extends AbstractConsoleCollector
 {

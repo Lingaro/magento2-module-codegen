@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
-use Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection;
-use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
-use Orba\Magento2Codegen\Service\Twig\FunctionsExtension;
-use Orba\Magento2Codegen\Service\TwigTemplateProcessor;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection;
+use Lingaro\Magento2Codegen\Service\Twig\FiltersExtension;
+use Lingaro\Magento2Codegen\Service\Twig\FunctionsExtension;
+use Lingaro\Magento2Codegen\Service\TwigTemplateProcessor;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use Twig\Sandbox\SecurityError;
 
 class TwigTemplateProcessorTest extends TestCase

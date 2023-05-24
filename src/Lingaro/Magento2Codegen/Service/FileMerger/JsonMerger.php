@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger;
 
 use Exception;
-use Orba\Magento2Codegen\Service\ArrayMerger;
+use Lingaro\Magento2Codegen\Service\ArrayMerger;
 
 use function json_decode;
 use function json_encode;

@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Exception\ValueNotSetException;
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Model\StringProperty;
-use Orba\Magento2Codegen\Service\StringValidator;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Exception\ValueNotSetException;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Model\StringProperty;
+use Lingaro\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 class StringCollector extends AbstractYamlCollector
 {

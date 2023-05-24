@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen;
+namespace Lingaro\Magento2Codegen;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Console\Command\Command;

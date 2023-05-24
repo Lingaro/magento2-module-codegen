@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\Twig;
+namespace Lingaro\Magento2Codegen\Service\Twig;
 
-use Orba\Magento2Codegen\Service\StringFilter\FilterInterface;
+use Lingaro\Magento2Codegen\Service\StringFilter\FilterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 

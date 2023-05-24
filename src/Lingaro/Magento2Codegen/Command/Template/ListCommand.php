@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Command\Template;
+namespace Lingaro\Magento2Codegen\Command\Template;
 
-use Orba\Magento2Codegen\Command\AbstractCommand;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplateList;
+use Lingaro\Magento2Codegen\Command\AbstractCommand;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\TemplateFile;
+use Lingaro\Magento2Codegen\Service\TemplateList;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

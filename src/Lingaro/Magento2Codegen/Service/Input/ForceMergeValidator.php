@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\Input;
+namespace Lingaro\Magento2Codegen\Service\Input;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Command\Template\GenerateCommand;
+use Lingaro\Magento2Codegen\Command\Template\GenerateCommand;
 use Symfony\Component\Console\Input\InputInterface;
 
 class ForceMergeValidator implements ValidatorInterface

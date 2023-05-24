@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger;
 
-use Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger\Processor;
+use Lingaro\Magento2Codegen\Service\FileMerger\CsvI18nMerger\Processor;
 
 class CsvI18nMerger extends AbstractMerger implements MergerInterface
 {

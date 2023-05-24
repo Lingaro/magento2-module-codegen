@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\CsvConverter;
-use Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\CsvConverter;
+use Lingaro\Magento2Codegen\Service\FileMerger\CsvI18nMerger;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class CsvI18nMergerTest extends TestCase
 {

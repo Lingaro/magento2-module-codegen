@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\Twig;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\Twig;
 
-use Orba\Magento2Codegen\Service\StringFunction\FunctionInterface;
-use Orba\Magento2Codegen\Service\Twig\FunctionsExtension;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringFunction\FunctionInterface;
+use Lingaro\Magento2Codegen\Service\Twig\FunctionsExtension;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use Twig\TwigFunction;
 
 class FunctionsExtensionTest extends TestCase

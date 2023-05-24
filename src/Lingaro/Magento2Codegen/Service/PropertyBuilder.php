@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ArrayProperty;
-use Orba\Magento2Codegen\Model\BooleanProperty;
-use Orba\Magento2Codegen\Model\ChoiceProperty;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Model\StringProperty;
+use Lingaro\Magento2Codegen\Model\ArrayProperty;
+use Lingaro\Magento2Codegen\Model\BooleanProperty;
+use Lingaro\Magento2Codegen\Model\ChoiceProperty;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Model\StringProperty;
 
 use function is_array;
 use function is_bool;

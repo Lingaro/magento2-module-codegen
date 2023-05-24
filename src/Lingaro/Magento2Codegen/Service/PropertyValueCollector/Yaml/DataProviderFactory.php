@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml;
 
 use InvalidArgumentException;
 use Symfony\Component\Yaml\Exception\ParseException;

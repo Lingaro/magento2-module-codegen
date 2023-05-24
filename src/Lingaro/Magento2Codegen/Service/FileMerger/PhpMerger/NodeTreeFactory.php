@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger;
 
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
 
 class NodeTreeFactory
 {

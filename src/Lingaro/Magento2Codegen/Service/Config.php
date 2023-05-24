@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
 use ArrayAccess;
-use Orba\Magento2Codegen\Configuration;
+use Lingaro\Magento2Codegen\Configuration;
 use RuntimeException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Parser;

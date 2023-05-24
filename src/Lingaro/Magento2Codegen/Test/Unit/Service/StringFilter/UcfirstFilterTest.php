@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\StringFilter;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\StringFilter;
 
-use Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringFilter\UcfirstFilter;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class UcfirstFilterTest extends TestCase
 {

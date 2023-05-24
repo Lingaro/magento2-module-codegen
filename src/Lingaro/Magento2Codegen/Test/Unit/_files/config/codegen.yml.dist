@@ -1,5 +1,5 @@
 defaultProperties:
-  - { name: "commentsCompanyName", value: "Orba" }
+  - { name: "commentsCompanyName", value: "Lingaro" }
   - { name: "commentsUserEmail", value: "info@orba.co" }
   - { name: "commentsYear", value: "2020" }
 templateDirectories:

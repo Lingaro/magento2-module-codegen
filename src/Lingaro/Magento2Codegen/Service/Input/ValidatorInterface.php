@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\Input;
+namespace Lingaro\Magento2Codegen\Service\Input;
 
 use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;

@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\Magento;
+namespace Lingaro\Magento2Codegen\Service\Magento;
 
-use Orba\Magento2Codegen\Util\Magento\Config\Dom;
+use Lingaro\Magento2Codegen\Util\Magento\Config\Dom;
 
 class ConfigMergerFactory
 {

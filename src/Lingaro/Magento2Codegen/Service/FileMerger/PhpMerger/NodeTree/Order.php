@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;

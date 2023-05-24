@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml;
 
-use Orba\Magento2Codegen\Exception\ValueInvalidException;
-use Orba\Magento2Codegen\Exception\ValueNotSetException;
-use Orba\Magento2Codegen\Model\ArrayProperty;
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Exception\ValueInvalidException;
+use Lingaro\Magento2Codegen\Exception\ValueNotSetException;
+use Lingaro\Magento2Codegen\Model\ArrayProperty;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Service\PropertyDependencyChecker;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 use function array_keys;

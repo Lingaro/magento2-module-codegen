@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
 use InvalidArgumentException;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;

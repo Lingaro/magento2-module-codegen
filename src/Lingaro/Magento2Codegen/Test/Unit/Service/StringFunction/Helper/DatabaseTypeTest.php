@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\StringFunction\Helper;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\StringFunction\Helper;
 
 use Exception;
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class DatabaseTypeTest extends TestCase
 {

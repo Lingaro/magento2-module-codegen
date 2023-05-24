@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Service\CommandUtil\Root;
-use Orba\Magento2Codegen\Service\CommandUtil\Template;
-use Orba\Magento2Codegen\Service\Magento\Detector;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Root;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Template;
+use Lingaro\Magento2Codegen\Service\Magento\Detector;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class RootTest extends TestCase

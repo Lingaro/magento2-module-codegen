@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Command\Template;
+namespace Lingaro\Magento2Codegen\Command\Template;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Command\AbstractCommand;
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Service\CodeGenerator;
-use Orba\Magento2Codegen\Service\CommandUtil\PropertyCollector as PropertyCollectorCommandUtil;
-use Orba\Magento2Codegen\Service\CommandUtil\Template as TemplateCommandUtil;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\TemplateFactory;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Command\AbstractCommand;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Service\CodeGenerator;
+use Lingaro\Magento2Codegen\Service\CommandUtil\PropertyCollector as PropertyCollectorCommandUtil;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Template as TemplateCommandUtil;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\TemplateFactory;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

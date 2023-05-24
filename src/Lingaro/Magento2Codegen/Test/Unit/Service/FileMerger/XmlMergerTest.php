@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\FileMerger\XmlMerger;
-use Orba\Magento2Codegen\Service\Magento\ConfigMergerFactory;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger;
+use Lingaro\Magento2Codegen\Service\Magento\ConfigMergerFactory;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use SimpleXMLElement;
 
 use function array_diff;

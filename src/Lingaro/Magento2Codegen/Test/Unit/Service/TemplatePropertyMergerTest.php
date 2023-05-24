@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\TemplatePropertyMerger;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\TemplatePropertyMerger;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 use function array_key_exists;
 use function in_array;

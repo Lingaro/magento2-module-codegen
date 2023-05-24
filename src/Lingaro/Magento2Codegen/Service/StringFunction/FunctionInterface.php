@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\StringFunction;
+namespace Lingaro\Magento2Codegen\Service\StringFunction;
 
 interface FunctionInterface
 {

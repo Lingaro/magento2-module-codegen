@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ChoiceProperty;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ChoiceCollector;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\ChoiceProperty;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\ChoiceCollector;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Style\SymfonyStyle;
 

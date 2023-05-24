@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
-use Orba\Magento2Codegen\Service\DirectoryIteratorFactory;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\DirectoryIteratorFactory;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use UnexpectedValueException;
 use RecursiveDirectoryIterator;
 

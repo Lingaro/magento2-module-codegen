@@ -5,12 +5,12 @@
  * See LICENSE for license details.
  */
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 class ConstCollector extends AbstractCollector
 {

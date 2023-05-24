@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\Config;
-use Orba\Magento2Codegen\Service\DirectoryIteratorFactory;
-use Orba\Magento2Codegen\Service\FinderFactory;
-use Orba\Magento2Codegen\Service\TemplateDir;
-use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\Config;
+use Lingaro\Magento2Codegen\Service\DirectoryIteratorFactory;
+use Lingaro\Magento2Codegen\Service\FinderFactory;
+use Lingaro\Magento2Codegen\Service\TemplateDir;
+use Lingaro\Magento2Codegen\Service\TemplateFile;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;

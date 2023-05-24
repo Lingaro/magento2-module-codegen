@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\TemplateType;
+namespace Lingaro\Magento2Codegen\Service\TemplateType;
 
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Service\CommandUtil\Module as CommandUtil;
-use Orba\Magento2Codegen\Service\TemplateFactory;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Module as CommandUtil;
+use Lingaro\Magento2Codegen\Service\TemplateFactory;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 use function is_null;

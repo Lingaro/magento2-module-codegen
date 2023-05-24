@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\StringFunction;
+namespace Lingaro\Magento2Codegen\Service\StringFunction;
 
-use Orba\Magento2Codegen\Service\StringFunction\Helper\ColumnDefinition;
-use Orba\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
+use Lingaro\Magento2Codegen\Service\StringFunction\Helper\ColumnDefinition;
+use Lingaro\Magento2Codegen\Service\StringFunction\Helper\DatabaseType;
 
 use function preg_replace;
 use function trim;

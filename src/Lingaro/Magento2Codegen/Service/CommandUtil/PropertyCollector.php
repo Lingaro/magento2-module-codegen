@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Command\Template\GenerateCommand;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProviderFactory;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProviderRegistry;
+use Lingaro\Magento2Codegen\Command\Template\GenerateCommand;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProviderFactory;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\DataProviderRegistry;
 
 class PropertyCollector
 {

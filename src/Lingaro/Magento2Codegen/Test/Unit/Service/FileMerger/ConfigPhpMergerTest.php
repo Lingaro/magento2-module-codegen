@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\FileMerger;
 
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Service\FileMerger\ConfigPhpMerger;
-use Orba\Magento2Codegen\Service\FileMerger\Formatter\ConfigPhpFormatter;
-use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\ArrayMerger;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\FileMerger\ConfigPhpMerger;
+use Lingaro\Magento2Codegen\Service\FileMerger\Formatter\ConfigPhpFormatter;
+use Lingaro\Magento2Codegen\Service\FilepathUtil;
+use Lingaro\Magento2Codegen\Service\ArrayMerger;
 use InvalidArgumentException;
 
 class ConfigPhpMergerTest extends TestCase

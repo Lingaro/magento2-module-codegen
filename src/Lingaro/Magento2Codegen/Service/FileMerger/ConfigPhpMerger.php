@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\FileMerger\Formatter\ConfigPhpFormatter;
-use Orba\Magento2Codegen\Service\ArrayMerger;
+use Lingaro\Magento2Codegen\Service\FileMerger\Formatter\ConfigPhpFormatter;
+use Lingaro\Magento2Codegen\Service\ArrayMerger;
 use PhpParser\Node\Stmt;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;

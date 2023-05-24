@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Command;
+namespace Lingaro\Magento2Codegen\Command;
 
 use Exception;
-use Orba\Magento2Codegen\Service\Input\ValidatorInterface;
-use Orba\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\Input\ValidatorInterface;
+use Lingaro\Magento2Codegen\Service\IO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

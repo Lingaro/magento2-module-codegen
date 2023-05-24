@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml;
 
-use Orba\Magento2Codegen\Exception\ValueNotAllowedException;
-use Orba\Magento2Codegen\Exception\ValueNotSetException;
-use Orba\Magento2Codegen\Model\ChoiceProperty;
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Exception\ValueNotAllowedException;
+use Lingaro\Magento2Codegen\Exception\ValueNotSetException;
+use Lingaro\Magento2Codegen\Model\ChoiceProperty;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 use function in_array;
 

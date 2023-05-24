@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Service\TemplateType\TypeInterface;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Service\TemplateType\TypeInterface;
 use RuntimeException;
 
 use function is_scalar;

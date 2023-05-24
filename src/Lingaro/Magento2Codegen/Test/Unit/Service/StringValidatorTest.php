@@ -5,11 +5,11 @@
  * See LICENSE for license details.
  */
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
-use Orba\Magento2Codegen\Service\StringValidator;
-use Orba\Magento2Codegen\Service\StringValidator\ValidatorInterface;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Service\StringValidator\ValidatorInterface;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use InvalidArgumentException;
 
 class StringValidatorTest extends TestCase

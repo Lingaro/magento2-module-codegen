@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\Twig;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\Twig;
 
-use Orba\Magento2Codegen\Service\StringFilter\FilterInterface;
-use Orba\Magento2Codegen\Service\Twig\FiltersExtension;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringFilter\FilterInterface;
+use Lingaro\Magento2Codegen\Service\Twig\FiltersExtension;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use Twig\TwigFilter;
 
 class FiltersExtensionTest extends TestCase

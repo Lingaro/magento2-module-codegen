@@ -7,20 +7,20 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use Exception;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTreeFactory;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver\NodeChainNameResolver;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\DeclareCleaner;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Order;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RelationFactory;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
-use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTreeFactory;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver\NodeChainNameResolver;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\DeclareCleaner;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Order;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RelationFactory;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
+use Lingaro\Magento2Codegen\Service\FilepathUtil;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 use function trim;
 

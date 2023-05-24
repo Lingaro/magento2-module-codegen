@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
-use Orba\Magento2Codegen\Model\InputPropertyInterface;
-use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\InputPropertyInterface;
+use Lingaro\Magento2Codegen\Service\PropertyDependencyChecker;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 

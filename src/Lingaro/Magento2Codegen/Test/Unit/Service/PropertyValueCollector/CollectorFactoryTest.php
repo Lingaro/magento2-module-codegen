@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\ConstCollector;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class CollectorFactoryTest extends TestCase
 {

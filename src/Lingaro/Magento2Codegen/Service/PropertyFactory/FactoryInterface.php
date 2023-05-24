@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyFactory;
+namespace Lingaro\Magento2Codegen\Service\PropertyFactory;
 
-use Orba\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
 
 interface FactoryInterface
 {

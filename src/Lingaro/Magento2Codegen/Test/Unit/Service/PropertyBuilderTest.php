@@ -7,19 +7,19 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ArrayProperty;
-use Orba\Magento2Codegen\Model\BooleanProperty;
-use Orba\Magento2Codegen\Model\ChoiceProperty;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Model\StringProperty;
-use Orba\Magento2Codegen\Service\PropertyBuilder;
-use Orba\Magento2Codegen\Service\PropertyFactory;
-use Orba\Magento2Codegen\Service\StringValidator;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\ArrayProperty;
+use Lingaro\Magento2Codegen\Model\BooleanProperty;
+use Lingaro\Magento2Codegen\Model\ChoiceProperty;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Model\StringProperty;
+use Lingaro\Magento2Codegen\Service\PropertyBuilder;
+use Lingaro\Magento2Codegen\Service\PropertyFactory;
+use Lingaro\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**

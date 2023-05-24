@@ -5,9 +5,9 @@
  * See LICENSE for license details.
  */
 
-namespace Orba\Magento2Codegen\Service\Twig;
+namespace Lingaro\Magento2Codegen\Service\Twig;
 
-use Orba\Magento2Codegen\Service\StringFunction\FunctionInterface;
+use Lingaro\Magento2Codegen\Service\StringFunction\FunctionInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

@@ -5,16 +5,16 @@
  * See LICENSE for license details.
  */
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\PropertyValueCollector\Console;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Model\StringProperty;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\Console\StringCollector;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
-use Orba\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Model\StringProperty;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\StringCollector;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Service\StringValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;

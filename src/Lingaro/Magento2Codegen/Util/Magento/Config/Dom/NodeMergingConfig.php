@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Util\Magento\Config\Dom;
+namespace Lingaro\Magento2Codegen\Util\Magento\Config\Dom;
 
 /**
  * Configuration of identifier attributes to be taken into account during merging

@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\Input;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\Input;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\Input\RootDirValidator;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\Input\RootDirValidator;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\InputInterface;
 

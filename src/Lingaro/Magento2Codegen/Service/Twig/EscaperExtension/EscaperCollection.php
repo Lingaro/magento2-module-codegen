@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\Twig\EscaperExtension;
+namespace Lingaro\Magento2Codegen\Service\Twig\EscaperExtension;
 
 class EscaperCollection
 {

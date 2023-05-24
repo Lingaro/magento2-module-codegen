@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
-use Orba\Magento2Codegen\Model\ArrayProperty;
-use Orba\Magento2Codegen\Service\PropertyBuilder;
-use Orba\Magento2Codegen\Service\PropertyFactory;
-use Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Model\ArrayProperty;
+use Lingaro\Magento2Codegen\Service\PropertyBuilder;
+use Lingaro\Magento2Codegen\Service\PropertyFactory;
+use Lingaro\Magento2Codegen\Service\PropertyFactory\ArrayFactory;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 

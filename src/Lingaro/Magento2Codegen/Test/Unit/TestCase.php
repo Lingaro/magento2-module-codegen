@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit;
+namespace Lingaro\Magento2Codegen\Test\Unit;
 
 use function define;
 use function defined;

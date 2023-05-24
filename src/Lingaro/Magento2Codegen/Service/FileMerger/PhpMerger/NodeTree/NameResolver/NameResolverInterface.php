@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver;
 
 use PhpParser\Node;
 

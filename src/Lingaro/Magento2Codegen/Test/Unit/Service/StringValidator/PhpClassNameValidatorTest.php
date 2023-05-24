@@ -5,11 +5,11 @@
  * See LICENSE for license details.
  */
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\StringValidator;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\StringValidator;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\StringValidator\PhpClassNameValidator;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\StringValidator\PhpClassNameValidator;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class PhpClassNameValidatorTest extends TestCase
 {

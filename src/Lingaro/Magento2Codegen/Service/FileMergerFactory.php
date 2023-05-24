@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
-use Orba\Magento2Codegen\Service\FileMerger\MergerInterface;
+use Lingaro\Magento2Codegen\Service\FileMerger\MergerInterface;
 
 use function preg_match;
 

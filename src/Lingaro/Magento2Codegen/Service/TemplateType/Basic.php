@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\TemplateType;
+namespace Lingaro\Magento2Codegen\Service\TemplateType;
 
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Service\PropertyBagFactory;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Service\PropertyBagFactory;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 class Basic implements TypeInterface
 {

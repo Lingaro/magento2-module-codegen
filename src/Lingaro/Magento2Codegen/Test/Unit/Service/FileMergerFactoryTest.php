@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
-use Orba\Magento2Codegen\Service\FileMerger\MergerInterface;
-use Orba\Magento2Codegen\Service\FileMergerFactory;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\FileMerger\MergerInterface;
+use Lingaro\Magento2Codegen\Service\FileMergerFactory;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class FileMergerFactoryTest extends TestCase

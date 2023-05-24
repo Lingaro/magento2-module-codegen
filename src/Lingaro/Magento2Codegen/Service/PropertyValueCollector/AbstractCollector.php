@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyValueCollector;
+namespace Lingaro\Magento2Codegen\Service\PropertyValueCollector;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 
 abstract class AbstractCollector implements CollectorInterface
 {

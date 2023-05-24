@@ -5,9 +5,9 @@
  * See LICENSE for license details.
  */
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
-use Orba\Magento2Codegen\Service\StringValidator\ValidatorInterface;
+use Lingaro\Magento2Codegen\Service\StringValidator\ValidatorInterface;
 use InvalidArgumentException;
 
 class StringValidator

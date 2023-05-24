@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger;
 
 use Exception;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Root;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
-use Orba\Magento2Codegen\Service\FileMerger\PhpParser\NodeWrapper;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\Root;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\RootFactory;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpParser\NodeWrapper;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;

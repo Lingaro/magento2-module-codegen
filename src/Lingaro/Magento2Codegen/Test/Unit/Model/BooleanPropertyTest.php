@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Model;
+namespace Lingaro\Magento2Codegen\Test\Unit\Model;
 
-use Orba\Magento2Codegen\Model\BooleanProperty;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\BooleanProperty;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class BooleanPropertyTest extends TestCase
 {

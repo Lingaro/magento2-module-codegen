@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\PropertyFactory;
+namespace Lingaro\Magento2Codegen\Service\PropertyFactory;
 
-use Orba\Magento2Codegen\Model\ArrayProperty;
-use Orba\Magento2Codegen\Model\PropertyInterface;
-use Orba\Magento2Codegen\Service\PropertyFactory;
+use Lingaro\Magento2Codegen\Model\ArrayProperty;
+use Lingaro\Magento2Codegen\Model\PropertyInterface;
+use Lingaro\Magento2Codegen\Service\PropertyFactory;
 use RuntimeException;
 
 use function is_null;

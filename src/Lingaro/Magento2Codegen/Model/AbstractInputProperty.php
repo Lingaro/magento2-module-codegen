@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Model;
+namespace Lingaro\Magento2Codegen\Model;
 
 abstract class AbstractInputProperty extends AbstractProperty implements InputPropertyInterface
 {

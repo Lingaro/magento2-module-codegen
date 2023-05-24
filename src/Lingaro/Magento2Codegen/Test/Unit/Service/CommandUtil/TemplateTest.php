@@ -7,20 +7,20 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Command\Template\GenerateCommand;
-use Orba\Magento2Codegen\Model\Template as TemplateModel;
-use Orba\Magento2Codegen\Service\CommandUtil\PropertyCollector;
-use Orba\Magento2Codegen\Service\CommandUtil\Template;
-use Orba\Magento2Codegen\Service\CommandUtil\TemplateProperty;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\PropertyDependencyChecker;
-use Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
-use Orba\Magento2Codegen\Service\PropertyBagFactory;
-use Orba\Magento2Codegen\Service\TemplateProcessorInterface;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Command\Template\GenerateCommand;
+use Lingaro\Magento2Codegen\Model\Template as TemplateModel;
+use Lingaro\Magento2Codegen\Service\CommandUtil\PropertyCollector;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Template;
+use Lingaro\Magento2Codegen\Service\CommandUtil\TemplateProperty;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\PropertyDependencyChecker;
+use Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory;
+use Lingaro\Magento2Codegen\Service\PropertyBagFactory;
+use Lingaro\Magento2Codegen\Service\TemplateProcessorInterface;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;

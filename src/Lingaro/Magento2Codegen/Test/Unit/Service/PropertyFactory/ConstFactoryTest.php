@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\PropertyFactory;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\PropertyFactory;
 
-use Orba\Magento2Codegen\Model\ConstProperty;
-use Orba\Magento2Codegen\Service\PropertyBuilder;
-use Orba\Magento2Codegen\Service\PropertyFactory\ConstFactory;
-use Orba\Magento2Codegen\Service\StringValidator;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\ConstProperty;
+use Lingaro\Magento2Codegen\Service\PropertyBuilder;
+use Lingaro\Magento2Codegen\Service\PropertyFactory\ConstFactory;
+use Lingaro\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 
 class ConstFactoryTest extends TestCase
 {

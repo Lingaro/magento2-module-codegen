@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Service\CodeGenerator;
-use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\Magento\Detector;
-use Orba\Magento2Codegen\Service\PropertyBagFactory;
-use Orba\Magento2Codegen\Service\TemplateFactory;
-use Orba\Magento2Codegen\Service\TemplateType\Module as ModuleTemplateType;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Service\CodeGenerator;
+use Lingaro\Magento2Codegen\Service\FilepathUtil;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\Magento\Detector;
+use Lingaro\Magento2Codegen\Service\PropertyBagFactory;
+use Lingaro\Magento2Codegen\Service\TemplateFactory;
+use Lingaro\Magento2Codegen\Service\TemplateType\Module as ModuleTemplateType;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 
 use function preg_match;

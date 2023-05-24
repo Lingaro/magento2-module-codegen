@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service;
+namespace Lingaro\Magento2Codegen\Service;
 
 use Exception;
-use Orba\Magento2Codegen\Command\Template\GenerateCommand;
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Command\Template\GenerateCommand;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 

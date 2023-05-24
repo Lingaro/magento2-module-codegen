@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Service\FileMerger;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Service\JsConverter;
+use Lingaro\Magento2Codegen\Service\JsConverter;
 
 use function rtrim;
 use function strlen;

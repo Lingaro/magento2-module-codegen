@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner;
 
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver\NodeChainNameResolver;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NameResolver\NodeChainNameResolver;
 use PhpParser\Node\Stmt\ClassMethod;
 
 class ClassMethodNodeCleaner implements NodeCleanerInterface

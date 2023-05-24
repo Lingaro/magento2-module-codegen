@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\Formatter;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\Formatter;
 
 use function array_keys;
 use function count;

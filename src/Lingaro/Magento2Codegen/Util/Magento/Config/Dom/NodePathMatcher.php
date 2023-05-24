@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Util\Magento\Config\Dom;
+namespace Lingaro\Magento2Codegen\Util\Magento\Config\Dom;
 
 use function preg_match;
 

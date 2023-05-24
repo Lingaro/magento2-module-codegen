@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
+namespace Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree;
 
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\DeclareCleaner;
-use Orba\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\NodeCleanerInterface;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\ClassMethodNodeCleaner;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\DeclareCleaner;
+use Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger\NodeTree\NodeCleaner\NodeCleanerInterface;
 use PhpParser\Node;
 
 class NodeCleaner

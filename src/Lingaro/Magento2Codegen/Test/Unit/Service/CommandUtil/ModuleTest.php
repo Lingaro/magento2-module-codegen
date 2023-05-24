@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\CommandUtil;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\CommandUtil;
 
-use Orba\Magento2Codegen\Service\CodeGenerator;
-use Orba\Magento2Codegen\Service\CommandUtil\Module;
-use Orba\Magento2Codegen\Service\CommandUtil\Template;
-use Orba\Magento2Codegen\Service\FilepathUtil;
-use Orba\Magento2Codegen\Service\IO;
-use Orba\Magento2Codegen\Service\Magento\Detector;
-use Orba\Magento2Codegen\Service\PropertyBagFactory;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Util\PropertyBag;
+use Lingaro\Magento2Codegen\Service\CodeGenerator;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Module;
+use Lingaro\Magento2Codegen\Service\CommandUtil\Template;
+use Lingaro\Magento2Codegen\Service\FilepathUtil;
+use Lingaro\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\Magento\Detector;
+use Lingaro\Magento2Codegen\Service\PropertyBagFactory;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Util\PropertyBag;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 use Symfony\Component\Console\Style\SymfonyStyle;

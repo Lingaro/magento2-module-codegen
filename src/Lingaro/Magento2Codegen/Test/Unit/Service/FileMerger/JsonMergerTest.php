@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service\FileMerger;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service\FileMerger;
 
 use Exception;
-use Orba\Magento2Codegen\Service\FileMerger\JsonMerger;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
-use Orba\Magento2Codegen\Service\ArrayMerger;
+use Lingaro\Magento2Codegen\Service\FileMerger\JsonMerger;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Service\ArrayMerger;
 use UnexpectedValueException;
 
 use function array_keys;

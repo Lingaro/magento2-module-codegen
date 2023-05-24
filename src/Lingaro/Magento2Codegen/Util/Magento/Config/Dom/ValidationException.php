@@ -10,7 +10,7 @@ declare(strict_types=1);
 /**
  * \Exception that should be thrown by DOM model when incoming xml is not valid.
  */
-namespace Orba\Magento2Codegen\Util\Magento\Config\Dom;
+namespace Lingaro\Magento2Codegen\Util\Magento\Config\Dom;
 
 use InvalidArgumentException;
 

@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\StringProperty;
-use Orba\Magento2Codegen\Service\PropertyStringValidatorsAdder;
-use Orba\Magento2Codegen\Service\StringValidator;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\StringProperty;
+use Lingaro\Magento2Codegen\Service\PropertyStringValidatorsAdder;
+use Lingaro\Magento2Codegen\Service\StringValidator;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class PropertyStringValidatorsAdderTest extends TestCase

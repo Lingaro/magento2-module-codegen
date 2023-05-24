@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Test\Unit\Service;
+namespace Lingaro\Magento2Codegen\Test\Unit\Service;
 
 use InvalidArgumentException;
-use Orba\Magento2Codegen\Model\Template;
-use Orba\Magento2Codegen\Service\TemplateBuilder;
-use Orba\Magento2Codegen\Service\TemplateFactory;
-use Orba\Magento2Codegen\Service\TemplateFile;
-use Orba\Magento2Codegen\Service\TemplateType\TypeInterface;
-use Orba\Magento2Codegen\Test\Unit\TestCase;
+use Lingaro\Magento2Codegen\Model\Template;
+use Lingaro\Magento2Codegen\Service\TemplateBuilder;
+use Lingaro\Magento2Codegen\Service\TemplateFactory;
+use Lingaro\Magento2Codegen\Service\TemplateFile;
+use Lingaro\Magento2Codegen\Service\TemplateType\TypeInterface;
+use Lingaro\Magento2Codegen\Test\Unit\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 

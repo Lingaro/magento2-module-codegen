@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Service\StringFilter;
+namespace Lingaro\Magento2Codegen\Service\StringFilter;
 
 use function str_replace;
 

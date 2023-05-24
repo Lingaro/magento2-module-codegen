@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen;
+namespace Lingaro\Magento2Codegen;
 
-use Orba\Magento2Codegen\Service\IO;
+use Lingaro\Magento2Codegen\Service\IO;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Model;
+namespace Lingaro\Magento2Codegen\Model;
 
-use Orba\Magento2Codegen\Service\TemplateType\TypeInterface;
+use Lingaro\Magento2Codegen\Service\TemplateType\TypeInterface;
 
 class Template
 {

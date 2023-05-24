@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Orba\Magento2Codegen\Util;
+namespace Lingaro\Magento2Codegen\Util;
 
 use ArrayAccess;
 
