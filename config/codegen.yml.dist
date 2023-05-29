@@ -1,5 +1,5 @@
 defaultProperties:
-  - { name: "commentsCompanyName", value: "Lingaro sp. z o.o." }
+  - { name: "commentsCompanyName", value: "Lingaro sp. z o.o" }
   - { name: "commentsYear", value: "2023" }
   - { name: "copyrightComments", value: "/**\n * Copyright © {{ commentsYear }} {{ commentsCompanyName|raw }}. All rights reserved.\n * See LICENSE for license details.\n */" }
   - { name: "headerPHP", value: "<?php\n\n{% if copyrightComments is not empty %}\n{{ include(template_from_string(copyrightComments)) }}\n{% endif %}\n\ndeclare(strict_types=1);\n" }
