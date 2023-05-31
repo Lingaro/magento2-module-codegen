@@ -8,9 +8,12 @@
 declare(strict_types=1);
 
 $composerAutoload = __DIR__ . '/../../../../vendor/autoload.php';
+$composerPackagesAutoload = __DIR__ . '/../../../vendor/autoload.php';
 
 if (file_exists($composerAutoload)) {
     require_once $composerAutoload;
+} elseif (file_exists($composerPackagesAutoload)) {
+    require_once $composerPackagesAutoload;
 } else {
     require_once __DIR__ . '/../vendor/autoload.php';
 }
