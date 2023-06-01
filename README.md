@@ -32,12 +32,12 @@ New entity with all admin CRUD actions in just a minute? Why not ;-)
 
 ## Supported Magento versions
 
-* 2.3.7
 * 2.4.0
 * 2.4.1
 * 2.4.2
 * 2.4.3
 * 2.4.4
+* 2.4.5
 
 Watchout: Minimal version of Magento's PHP is 7.4.
 
