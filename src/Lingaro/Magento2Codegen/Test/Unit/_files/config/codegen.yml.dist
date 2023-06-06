@@ -1,0 +1,6 @@
+defaultProperties:
+  - { name: "commentsCompanyName", value: "Lingaro sp. z o.o" }
+  - { name: "commentsYear", value: "2023" }
+templateDirectories:
+  - { path: 'extra/templates/source1' }
+  - { path: 'extra/templates/source2' }

@@ -4,7 +4,7 @@ properties:
   vendorName:
     type: string
     required: true
-    default: Orba
+    default: Lingaro
     description: Typically a company name
   moduleName:
     type: string
@@ -13,5 +13,5 @@ properties:
   phpVersion:
     type: string
     required: true
-    default: "~7.4.0"
+    default: "~8.1.0"
     description: PHP version used in composer.json file
