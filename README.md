@@ -1,6 +1,6 @@
 # Magento 2 Code Generator
 
-Created by [Orba](https://orba.co)
+Created by [Lingaro](https://lingarogroup.com)
 
 Inspired by https://github.com/staempfli/magento2-code-generator
 
@@ -32,12 +32,12 @@ New entity with all admin CRUD actions in just a minute? Why not ;-)
 
 ## Supported Magento versions
 
-* 2.3.7
 * 2.4.0
 * 2.4.1
 * 2.4.2
 * 2.4.3
 * 2.4.4
+* 2.4.5
 
 Watchout: Minimal version of Magento's PHP is 7.4.
 
@@ -104,7 +104,7 @@ Watchout: Minimal version of Magento's PHP is 7.4.
 Recommended way to install this app is to add it as Magento's Composer dev dependency:
 
 ```
-composer require --dev orba/magento2-codegen
+composer require --dev lingaro/magento2-codegen
 ```
 
 If you don't want to attach this app to your Magento, you can also simply clone the repository and use it as a standalone library.
@@ -112,14 +112,14 @@ Don't forget to run `composer install` to install all required dependencies.
 
 ## Configuration
 
-Create your custom config file (not needed for Orba developers) either in package `config` directory or in your Magento root directory:
+Create your custom config file (not needed for Lingaro developers) either in package `config` directory or in your Magento root directory:
 
 ```
-cp vendor/orba/magento2-codegen/config/codegen.yml.dist vendor/orba/magento2-codegen/config/codegen.yml
+cp vendor/lingaro/magento2-codegen/config/codegen.yml.dist vendor/lingaro/magento2-codegen/config/codegen.yml
 ```
 or
 ```
-cp vendor/orba/magento2-codegen/config/codegen.yml.dist codegen.yml
+cp vendor/lingaro/magento2-codegen/config/codegen.yml.dist codegen.yml
 ```
 
 and edit default values.
@@ -164,7 +164,7 @@ For templates which type is `root` this command must be executed on the Magento 
 Example:
 
 ```
-cd /path/to/magento/app/code/Orba/TestModule
+cd /path/to/magento/app/code/Lingaro/TestModule
 ../../../../vendor/bin/codegen template:generate block
 ```
 
@@ -172,7 +172,7 @@ cd /path/to/magento/app/code/Orba/TestModule
 
 | Long name        | Short name | Description                                                                                                               | Example                                                                                                      |
 |------------------|------------|---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| --root-dir       | -r         | If specified, code is generated on this root directory. If the directory doesn't exist, it will be created automatically. | `bin/codegen -r"/var/www/magento/app/code/Orba/TestModule" template:generate block`                          |
+| --root-dir       | -r         | If specified, code is generated on this root directory. If the directory doesn't exist, it will be created automatically. | `bin/codegen -r"/var/www/magento/app/code/Lingaro/TestModule" template:generate block`                       |
 | --force-merge    | -m         | Use "all" to automatically run all code mergers. Use "experimental" to automatically run non-experimental code mergers.   | `bin/codegen template:generate -mall block`                                                                  |
 | --force-override | -o         | If specified, all unmerged files will be automatically overridden.                                                        | `bin/codegen template:generate -o block`                                                                     |
 | --yaml-path      | -y         | If specified, property values will be collected from YAML file instead of console prompts.                                | `bin/codegen -y"lib/internal/codegen/templates/block/.no-copied-config/example.yml" template:generate block` |

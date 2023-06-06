@@ -11,23 +11,23 @@ services:
   Symfony\Component\Config\Definition\Processor:
     class: '\Symfony\Component\Config\Definition\Processor'
 
-  Orba\Magento2Codegen\:
-    resource: '../src/Orba/Magento2Codegen'
-    exclude: '../src/Orba/Magento2Codegen/Test'
+  Lingaro\Magento2Codegen\:
+    resource: '../src/Lingaro/Magento2Codegen'
+    exclude: '../src/Lingaro/Magento2Codegen/Test'
 
-  Orba\Magento2Codegen\Application:
+  Lingaro\Magento2Codegen\Application:
     public: true
 
-  Orba\Magento2Codegen\Service\IO:
+  Lingaro\Magento2Codegen\Service\IO:
     public: true
 
-  Orba\Magento2Codegen\Service\FileMergerFactory:
+  Lingaro\Magento2Codegen\Service\FileMergerFactory:
     calls:
       -
         - addMerger
         -
           - '/\/di\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/preference': 'for'
@@ -40,7 +40,7 @@ services:
         - addMerger
         -
           - '/\/db_schema\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/schema/table': 'name'
@@ -53,7 +53,7 @@ services:
         - addMerger
         -
           - '/\/routes\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/router': 'id'
@@ -63,7 +63,7 @@ services:
         - addMerger
         -
           - '/\/menu\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/menu/add': 'id'
@@ -71,7 +71,7 @@ services:
         - addMerger
         -
           - '/\/acl\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/acl/resources/resource': 'id'
@@ -80,7 +80,7 @@ services:
         - addMerger
         -
           - '/\/system\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/system/tab': 'id'
@@ -91,7 +91,7 @@ services:
         - addMerger
         -
           - '/\/cron_groups\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/group': 'id'
@@ -99,7 +99,7 @@ services:
         - addMerger
         -
           - '/\/crontab\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/group': 'id'
@@ -108,7 +108,7 @@ services:
         - addMerger
         -
           - '/\/events\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/event': 'name'
@@ -117,12 +117,12 @@ services:
         - addMerger
         -
           - '/\/config\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
       -
         - addMerger
         -
           - '/\/layout\/.*\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/page/update': 'handle'
@@ -136,7 +136,7 @@ services:
         - addMerger
         -
           - '/\/extension_attributes\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/extension_attributes': 'for'
@@ -146,7 +146,7 @@ services:
         - addMerger
         -
           - '/\/fieldset\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
              idAttributes:
                '/config/scope': 'id'
@@ -157,7 +157,7 @@ services:
         - addMerger
         -
           - '/\/view\/.*\/ui_component\/.*_form\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/form/argument(/item)*': 'name'
@@ -173,7 +173,7 @@ services:
         - addMerger
         -
             - '/\/view\/.*\/ui_component\/.*_listing\.xml$/'
-            - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+            - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
             -
               idAttributes:
                 '/listing/argument(/item)*': 'name'
@@ -195,7 +195,7 @@ services:
         - addMerger
         -
           - '/\/email_templates\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/template': 'id'
@@ -203,7 +203,7 @@ services:
         - addMerger
         -
           - '/\/webapi\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/routes/route': ['url', 'method']
@@ -213,7 +213,7 @@ services:
         - addMerger
         -
           - '/\/cache\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/type': 'name'
@@ -221,7 +221,7 @@ services:
         - addMerger
         -
           - '/\/module\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/module': 'name'
@@ -230,7 +230,7 @@ services:
         - addMerger
         -
           - '/\/widget\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/widgets/widget': 'id'
@@ -238,7 +238,7 @@ services:
         - addMerger
         -
           - '/\/communication\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/topic': 'name'
@@ -246,7 +246,7 @@ services:
         - addMerger
         -
           - '/\/queue_consumer\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/consumer': 'name'
@@ -254,7 +254,7 @@ services:
         - addMerger
         -
           - '/\/queue_publisher\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/publisher': 'topic'
@@ -263,7 +263,7 @@ services:
         - addMerger
         -
           - '/\/queue_topology\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/exchange': ['name', 'connection']
@@ -276,12 +276,12 @@ services:
         - addMerger
         -
           - '/\/app\/etc\/config\.php$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\ConfigPhpMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\ConfigPhpMerger'
       -
         - addMerger
         -
           - '/\/import\.xml$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\XmlMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger'
           -
             idAttributes:
               '/config/entity': 'name'
@@ -289,124 +289,124 @@ services:
         - addMerger
         -
           - '/^.*\.php/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\PhpMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger'
       -
         - addMerger
         -
           - '/\/i18n\/.*\.csv$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\CsvI18nMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\CsvI18nMerger'
       -
         - addMerger
         -
           - '/^.*\.json/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\JsonMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\JsonMerger'
       -
         - addMerger
         -
           - '/\/requirejs-config\.js$/'
-          - '@Orba\Magento2Codegen\Service\FileMerger\RequirejsConfigMerger'
+          - '@Lingaro\Magento2Codegen\Service\FileMerger\RequirejsConfigMerger'
 
-  Orba\Magento2Codegen\Service\FileMerger\XmlMerger:
+  Lingaro\Magento2Codegen\Service\FileMerger\XmlMerger:
     shared: false
 
-  Orba\Magento2Codegen\Service\FileMerger\PhpMerger:
+  Lingaro\Magento2Codegen\Service\FileMerger\PhpMerger:
     shared: false
 
-  Orba\Magento2Codegen\Service\FileMerger\JsonMerger:
+  Lingaro\Magento2Codegen\Service\FileMerger\JsonMerger:
     shared: false
 
-  Orba\Magento2Codegen\Command\Template\GenerateCommand:
+  Lingaro\Magento2Codegen\Command\Template\GenerateCommand:
     arguments:
       $inputValidators:
-        - '@Orba\Magento2Codegen\Service\Input\RootDirValidator'
-        - '@Orba\Magento2Codegen\Service\Input\ForceMergeValidator'
+        - '@Lingaro\Magento2Codegen\Service\Input\RootDirValidator'
+        - '@Lingaro\Magento2Codegen\Service\Input\ForceMergeValidator'
 
-  Orba\Magento2Codegen\Service\TemplateProcessorInterface:
-    class: '\Orba\Magento2Codegen\Service\TwigTemplateProcessor'
+  Lingaro\Magento2Codegen\Service\TemplateProcessorInterface:
+    class: '\Lingaro\Magento2Codegen\Service\TwigTemplateProcessor'
 
-  Orba\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection:
+  Lingaro\Magento2Codegen\Service\Twig\EscaperExtension\EscaperCollection:
     arguments:
       $escapers:
-        csv: '@Orba\Magento2Codegen\Service\Twig\EscaperExtension\CsvEscaper'
+        csv: '@Lingaro\Magento2Codegen\Service\Twig\EscaperExtension\CsvEscaper'
 
-  Orba\Magento2Codegen\Service\Twig\FiltersExtension:
+  Lingaro\Magento2Codegen\Service\Twig\FiltersExtension:
     arguments:
       $filters:
-        camel: '@Orba\Magento2Codegen\Service\StringFilter\CamelCaseFilter'
-        pascal: '@Orba\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
-        snake: '@Orba\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
-        kebab: '@Orba\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
-        lower_only: '@Orba\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
-        ucfirst: '@Orba\Magento2Codegen\Service\StringFilter\UcfirstFilter'
-        pluralize: '@Orba\Magento2Codegen\Service\StringFilter\PluralizeFilter'
-        titleize: '@Orba\Magento2Codegen\Service\StringFilter\TitleizeFilter'
+        camel: '@Lingaro\Magento2Codegen\Service\StringFilter\CamelCaseFilter'
+        pascal: '@Lingaro\Magento2Codegen\Service\StringFilter\PascalCaseFilter'
+        snake: '@Lingaro\Magento2Codegen\Service\StringFilter\SnakeCaseFilter'
+        kebab: '@Lingaro\Magento2Codegen\Service\StringFilter\KebabCaseFilter'
+        lower_only: '@Lingaro\Magento2Codegen\Service\StringFilter\LowerOnlyCaseFilter'
+        ucfirst: '@Lingaro\Magento2Codegen\Service\StringFilter\UcfirstFilter'
+        pluralize: '@Lingaro\Magento2Codegen\Service\StringFilter\PluralizeFilter'
+        titleize: '@Lingaro\Magento2Codegen\Service\StringFilter\TitleizeFilter'
 
-  Orba\Magento2Codegen\Service\Twig\FunctionsExtension:
+  Lingaro\Magento2Codegen\Service\Twig\FunctionsExtension:
     arguments:
       $functions:
-        columnDefinition: '@Orba\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
-        databaseTypeToPHP: '@Orba\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
-        fullTextIndex: '@Orba\Magento2Codegen\Service\StringFunction\FullTextIndexFunction'
-        folderScope: '@Orba\Magento2Codegen\Service\StringFunction\FolderScopeFunction'
+        columnDefinition: '@Lingaro\Magento2Codegen\Service\StringFunction\ColumnDefinitionFunction'
+        databaseTypeToPHP: '@Lingaro\Magento2Codegen\Service\StringFunction\DatabaseTypeToPHPFunction'
+        fullTextIndex: '@Lingaro\Magento2Codegen\Service\StringFunction\FullTextIndexFunction'
+        folderScope: '@Lingaro\Magento2Codegen\Service\StringFunction\FolderScopeFunction'
 
-  Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
+  Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory:
     arguments:
       $map:
         console:
-          'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
-          'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\StringCollector'
-          'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector'
-          'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\BooleanCollector'
-          'Orba\Magento2Codegen\Model\ChoiceProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ChoiceCollector'
+          'Lingaro\Magento2Codegen\Model\ConstProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
+          'Lingaro\Magento2Codegen\Model\StringProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\StringCollector'
+          'Lingaro\Magento2Codegen\Model\ArrayProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector'
+          'Lingaro\Magento2Codegen\Model\BooleanProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\BooleanCollector'
+          'Lingaro\Magento2Codegen\Model\ChoiceProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\ChoiceCollector'
         yaml:
-          'Orba\Magento2Codegen\Model\ConstProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
-          'Orba\Magento2Codegen\Model\StringProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\StringCollector'
-          'Orba\Magento2Codegen\Model\BooleanProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\BooleanCollector'
-          'Orba\Magento2Codegen\Model\ChoiceProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\ChoiceCollector'
-          'Orba\Magento2Codegen\Model\ArrayProperty': '@Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\ArrayCollector'
+          'Lingaro\Magento2Codegen\Model\ConstProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\ConstCollector'
+          'Lingaro\Magento2Codegen\Model\StringProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\StringCollector'
+          'Lingaro\Magento2Codegen\Model\BooleanProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\BooleanCollector'
+          'Lingaro\Magento2Codegen\Model\ChoiceProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\ChoiceCollector'
+          'Lingaro\Magento2Codegen\Model\ArrayProperty': '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\ArrayCollector'
 
-  Orba\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector:
+  Lingaro\Magento2Codegen\Service\PropertyValueCollector\Console\ArrayCollector:
     calls:
       - method: setCollectorFactory
         arguments:
-          - '@Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
+          - '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
 
-  Orba\Magento2Codegen\Service\PropertyValueCollector\Yaml\ArrayCollector:
+  Lingaro\Magento2Codegen\Service\PropertyValueCollector\Yaml\ArrayCollector:
     calls:
       - method: setCollectorFactory
         arguments:
-          - '@Orba\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
+          - '@Lingaro\Magento2Codegen\Service\PropertyValueCollector\CollectorFactory'
 
-  Orba\Magento2Codegen\Service\PropertyFactory:
+  Lingaro\Magento2Codegen\Service\PropertyFactory:
     arguments:
       $map:
-        const: '@Orba\Magento2Codegen\Service\PropertyFactory\ConstFactory'
-        string: '@Orba\Magento2Codegen\Service\PropertyFactory\StringFactory'
-        array: '@Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory'
-        boolean: '@Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
-        bool: '@Orba\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
-        choice: '@Orba\Magento2Codegen\Service\PropertyFactory\ChoiceFactory'
+        const: '@Lingaro\Magento2Codegen\Service\PropertyFactory\ConstFactory'
+        string: '@Lingaro\Magento2Codegen\Service\PropertyFactory\StringFactory'
+        array: '@Lingaro\Magento2Codegen\Service\PropertyFactory\ArrayFactory'
+        boolean: '@Lingaro\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
+        bool: '@Lingaro\Magento2Codegen\Service\PropertyFactory\BooleanFactory'
+        choice: '@Lingaro\Magento2Codegen\Service\PropertyFactory\ChoiceFactory'
 
-  Orba\Magento2Codegen\Service\PropertyFactory\ArrayFactory:
+  Lingaro\Magento2Codegen\Service\PropertyFactory\ArrayFactory:
     calls:
       - method: setPropertyFactory
         arguments:
-          - '@Orba\Magento2Codegen\Service\PropertyFactory'
+          - '@Lingaro\Magento2Codegen\Service\PropertyFactory'
 
-  Orba\Magento2Codegen\Service\TemplateBuilder:
+  Lingaro\Magento2Codegen\Service\TemplateBuilder:
     arguments:
       $templateTypes:
-        basic: '@Orba\Magento2Codegen\Service\TemplateType\Basic'
-        module: '@Orba\Magento2Codegen\Service\TemplateType\Module'
-        root: '@Orba\Magento2Codegen\Service\TemplateType\Root'
+        basic: '@Lingaro\Magento2Codegen\Service\TemplateType\Basic'
+        module: '@Lingaro\Magento2Codegen\Service\TemplateType\Module'
+        root: '@Lingaro\Magento2Codegen\Service\TemplateType\Root'
 
-  Orba\Magento2Codegen\Service\TemplateType\Module:
+  Lingaro\Magento2Codegen\Service\TemplateType\Module:
     calls:
       - method: setTemplateFactory
         arguments:
-          - '@Orba\Magento2Codegen\Service\TemplateFactory'
+          - '@Lingaro\Magento2Codegen\Service\TemplateFactory'
 
-  Orba\Magento2Codegen\Service\StringValidator:
+  Lingaro\Magento2Codegen\Service\StringValidator:
     arguments:
       $validators:
-        php_class_name: '@Orba\Magento2Codegen\Service\StringValidator\PhpClassNameValidator'
+        php_class_name: '@Lingaro\Magento2Codegen\Service\StringValidator\PhpClassNameValidator'
