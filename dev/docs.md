@@ -2,7 +2,7 @@
 
 ## Dev environment
 
-### Automated (Orba developers only)
+### Automated (Lingaro developers only)
 
 You can use our experimental Makefile for setting up automatically Orbento Skeleton (clean Magento 2 with sample data and the whole environment needed for Codegen development).
 
@@ -20,11 +20,11 @@ Watchout: You need to install Docker and Docker Compose on your machine. Also, s
 
 Watchout: You will be asked by script for sudo password. This is needed for automated generation of hosts.
 
-When the environment is ready (`[info] Running regular mode...` should be visible in your command line), you can open project dir in PHPStorm and start working with all the toys like PHP Unit and XDebug already configured. Your dev Magento will be available through https://orba.local URL. Codegen files will be placed in `source/magento/lib/internal/codegen`.
+When the environment is ready (`[info] Running regular mode...` should be visible in your command line), you can open project dir in PHPStorm and start working with all the toys like PHP Unit and XDebug already configured. Your dev Magento will be available through https://lingaro.local URL. Codegen files will be placed in `source/magento/lib/internal/codegen`.
 
 ### Manual
 
-If you are not lucky enough to work in Orba, you can use whatever local environment you prefer. Just remember to use `composer install` so you get all required dependencies and your PHP version (and required modules) is checked. 
+If you are not lucky enough to work in Lingaro, you can use whatever local environment you prefer. Just remember to use `composer install` so you get all required dependencies and your PHP version (and required modules) is checked. 
 
 ## Working with templates
 
@@ -48,7 +48,7 @@ In the template files contents (and their names too!) you can:
    * kebab (converts a string to kebab-case),
    * lower_only (removes all characters except letters and digits and converts string to lowercase)
    * ucfirst (makes first letter of a string capital)
-3. Use functions (see: `src/Orba/Magento2Codegen/Service/StringFunction/*` to check what they do)
+3. Use functions (see: `src/Lingaro/Magento2Codegen/Service/StringFunction/*` to check what they do)
    * columnDefinition
    * databaseTypeToPHP
    * fullTextIndex
@@ -392,7 +392,7 @@ We are validating the whole codebase with PHPCS. The standard that we chose is P
 You can validate your code before pushing it by running the following command from library root:
 
 ```
-vendor/bin/phpcs --standard=PSR12 --ignore=./src/Orba/Magento2Codegen/Test/Unit/_files/* ./src/Orba/Magento2Codegen/
+vendor/bin/phpcs --standard=PSR12 --ignore=./src/Lingaro/Magento2Codegen/Test/Unit/_files/* ./src/Lingaro/Magento2Codegen/
 ```
 
 ### PHPMD
@@ -403,5 +403,5 @@ cleancode, codesize, controversial, design, unusedcode.
 You can validate your code before pushing it by running the following command from library root:
 
 ```
-vendor/bin/phpmd ./src/Orba/Magento2Codegen/ text cleancode,codesize,controversial,design,unusedcode
+vendor/bin/phpmd ./src/Lingaro/Magento2Codegen/ text cleancode,codesize,controversial,design,unusedcode
 ```
