@@ -22,12 +22,12 @@ class CommandTester
     use TesterTrait;
 
     private Command $command;
-    private ArrayInput $input;
+    private ArrayInput $inputArray;
 
-    public function __construct(Command $command, ArrayInput $input, StreamOutput $output)
+    public function __construct(Command $command, ArrayInput $inputArray, StreamOutput $output)
     {
         $this->command = $command;
-        $this->input = $input;
+        $this->inputArray = $inputArray;
         $this->output = $output;
     }
 
@@ -46,11 +46,11 @@ class CommandTester
     public function execute(array $options = []): int
     {
         if ($this->inputs) {
-            $this->input->setStream(self::createStream($this->inputs));
+            $this->inputArray->setStream(self::createStream($this->inputs));
         }
 
         if (isset($options['interactive'])) {
-            $this->input->setInteractive($options['interactive']);
+            $this->inputArray->setInteractive($options['interactive']);
         }
 
         $this->output->setDecorated($options['decorated'] ?? false);
