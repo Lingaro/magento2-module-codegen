@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Lingaro\Magento2Codegen\Util\Symfony;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Console\Tester\TesterTrait;
 
@@ -21,10 +21,11 @@ class CommandTester
 {
     use TesterTrait;
 
+    /** @var InputInterface */
+    private $input;
     private Command $command;
-    private ArrayInput $input;
 
-    public function __construct(Command $command, ArrayInput $input, StreamOutput $output)
+    public function __construct(Command $command, InputInterface $input, StreamOutput $output)
     {
         $this->command = $command;
         $this->input = $input;

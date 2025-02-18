@@ -12,7 +12,7 @@
         "symfony/yaml": "^4.0 || ^5.0",
         "symfony/filesystem": "^4.0 || ^5.0",
         "symfony/finder": "^4.0 || ^5.0",
-        "symfony/contracts": "^1.0.2",
+        "symfony/service-contracts": "^1.1 || ^2",
         "symfony/debug": "^2.4 || ~3.0 || ~4.0 || ~5.0",
         "symfony/polyfill-ctype": "^1.8",
         "twig/twig": "^3.0",
