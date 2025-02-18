@@ -1,7 +1,7 @@
 {
     "name": "lingaro/magento2-codegen",
     "description": "Magento 2 Code Generator",
-    "version": "4.0.0",
+    "version": "4.1.0",
     "require": {
         "php": "~7.4.0 || ~8.1.0",
         "ext-dom": "*",
